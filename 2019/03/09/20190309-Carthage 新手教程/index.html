@@ -1,0 +1,390 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Carthage 新手教程 | 轩辕十四</title><meta name="keywords" content="Carthage"><meta name="author" content="轩辕十四"><meta name="copyright" content="轩辕十四"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Carthage 新手教程"><meta name="application-name" content="Carthage 新手教程"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="Carthage 新手教程"><meta property="og:url" content="https://regulusleow.github.io/2019/03/09/20190309-Carthage 新手教程/index.html"><meta property="og:site_name" content="轩辕十四"><meta property="og:description" content="Carthage 与 Cocoapods 的不同Cocoapods 是由来已久的 Cocoa 依赖管理工具，那么为什么 Carthage 项目被创建？ 首先，Cocoapods（默认情况下）会自动的为你的应用程序和所有依赖创建和更新 Xcode workspace。Carthage 用 xcodeb"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://regulusleow.github.io/posts_images/Carthage.png"><meta property="article:author" content="轩辕十四"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://regulusleow.github.io/posts_images/Carthage.png"><meta name="description" content="Carthage 与 Cocoapods 的不同Cocoapods 是由来已久的 Cocoa 依赖管理工具，那么为什么 Carthage 项目被创建？ 首先，Cocoapods（默认情况下）会自动的为你的应用程序和所有依赖创建和更新 Xcode workspace。Carthage 用 xcodeb"><link rel="shortcut icon" href="/avatar_images/avatar.png"><link rel="canonical" href="https://regulusleow.github.io/2019/03/09/20190309-Carthage%20%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: {"mode":"api","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: {"skills":null},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":0},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: 轩辕十四","link":"链接: ","source":"来源: 轩辕十四","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '轩辕十四',
+  title: 'Carthage 新手教程',
+  postAI: '',
+  pageFillDescription: 'Carthage 与 Cocoapods 的不同, Carthage 安装, 使用 homebrew 安装, 查看版本和升级, 卸载, Carthage 配置第三方库（iOStvOSwatchOS）, 创建 Cartfile 文件, 用 Xcode 打开x2F编辑 Cartfile, 添加依赖库, GitHub Repositories, Git repositories, Binary only frameworks, 版本要求, Example Cartfile, 安装x2F编辑 Cartfile 中的项目, clone 项目然后编译成 framework：, Carthage 文件夹中文件说明, Cartfile.resolved, Carthage 文件夹, With submodules, 更新Framework的版本, 打开 Cartfile, 修改版本, 更新, 更新指定库, 引入 Carthage 依赖库到 Xcode与的不同是由来已久的依赖管理工具那么为什么项目被创建首先默认情况下会自动的为你的应用程序和所有依赖创建和更新用构建框架的二进制文件但是并没有将他们整合到用户项目中的目的是让用户使用起来更简单而则是更灵活减少对项目的侵入性的目标在其文件中有如下描述对比之下被创建成一个松散的依赖管理者没有中心项目清单这减少了维护工作并避免了任何中心故障点通俗的讲就是去中心化然而项目被发现就变的更加困难用户必须去使用的页面或者其他类似的页面就比较简单的可以在终端搜索需要使用的库项目还必须具有所谓的文件其中包括有关项目的元数据并指定应如何构建它使用去构建依赖而不是将它们集成到单个工作区中它没有类似的规范文件但你的依赖项必须包含到自己的项目中该项目描述了如何构建其产品最终我们创建了因为我们想要一个最简单的工具一个可以完成工作而不必承担责任的依赖管理器并且并没有为框架作者创造额外的工作提供了许多惊人的功能但是在中这些功能永远不会出现因为这会增加额外的复杂性安装使用安装查看版本和升级查看版本升级卸载配置第三方库创建文件用打开编辑添加依赖库现在支持的三个来源是存储库存储库和通过提供的仅二进制框架未来可能会添加其他可能的来源如果你想看到具体的东西请提使用关键字指定存储库和源是用于表单指定或通过其使用预构建的二进制下载功能因此对源使用或协议是没有意义的并且这是一个错误其他存储库使用关键字指定仅作为已编译的二进制文件提供的依赖项使用关键字和链接链接或没有方案的相对或绝对路径返回二进制项目规范版本要求支持多种版本要求指及以上版本指版本指版本为特指对象任何内容都被允许二进制源不支持这种形式如果没有指定任何版本任何版本的依赖都将被允许默认使用最新版本安装编辑中的项目项目然后编译成不指定会为所有的平台编译查看更多关于命令的选项利用命令来编译如果你想用其他版的进行编译执行下面这条命令把的路径改为另一版本就可以所有的文件会被编译到当前路径的文件夹中打开文件夹文件夹中文件说明运行命令后一个叫的文件将会被创建到同级目录下此文件准确指定了每个依赖项选择的版本并列出了所有依赖项甚至是嵌套的版本强烈建议将该文件加入到版本控制中告知其他开发者当前使用的版本虽然文件是人类可读和可扩展的但你不能修改它文件的格式非常严格列出依赖项的顺序对于构建过程很重要文件夹包含对应平台编译好的包含编译所使用的源代码除非你使用否则不要修改这里的代码和会覆盖这里的代码清除你的修改如果在引导项目的依赖项时给出了标志或者中的依赖项将作为子模块提供这允许你对依赖项进行更改并提交这些更改更新的版本打开修改版本更新更新指定库引入依赖库到在中找到需要添加的拖拽对应的到工程的中进入工程的点击添加添加如下脚本命令在下添加要使用的框架的路径例如将复制框架的路径添加到例如为什么需要指定使用来管理第三方库在编译并运行的时候会有一个阶段叫这个阶段通过跑一个脚本的形式把所有依赖的第三方库都复制到的目录里这个阶段通常会花秒不等这取决于你的依赖的第三方库数量默认情况下每次你的时候都会进行一次这个操作尽管你的第三方库没有任何改变所以我们需要指定在指定输出文件的情况下只会在发生更改时去进行操作这样就节省了时间',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2024-01-22 14:20:55',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/avatar_images/avatar.png"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">轩辕十四</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><span> 归档</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><span> 分类</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/about/"><span> 关于</span></a></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Activity/" style="font-size: 1.05rem;">Activity<sup>1</sup></a><a href="/tags/C/" style="font-size: 1.05rem;">C<sup>9</sup></a><a href="/tags/Carthage/" style="font-size: 1.05rem;">Carthage<sup>1</sup></a><a href="/tags/CocoaPods/" style="font-size: 1.05rem;">CocoaPods<sup>2</sup></a><a href="/tags/Docker/" style="font-size: 1.05rem;">Docker<sup>1</sup></a><a href="/tags/FFmpeg/" style="font-size: 1.05rem;">FFmpeg<sup>1</sup></a><a href="/tags/Git/" style="font-size: 1.05rem;">Git<sup>3</sup></a><a href="/tags/Gitlab/" style="font-size: 1.05rem;">Gitlab<sup>1</sup></a><a href="/tags/JavaScript/" style="font-size: 1.05rem;">JavaScript<sup>2</sup></a><a href="/tags/Jenkins/" style="font-size: 1.05rem;">Jenkins<sup>1</sup></a><a href="/tags/Objective-C/" style="font-size: 1.05rem;">Objective-C<sup>5</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>10</sup></a><a href="/tags/RxSwift/" style="font-size: 1.05rem;">RxSwift<sup>11</sup></a><a href="/tags/SQLite/" style="font-size: 1.05rem;">SQLite<sup>1</sup></a><a href="/tags/ShareSDK/" style="font-size: 1.05rem;">ShareSDK<sup>1</sup></a><a href="/tags/Swift/" style="font-size: 1.05rem;">Swift<sup>33</sup></a><a href="/tags/Xcode/" style="font-size: 1.05rem;">Xcode<sup>2</sup></a><a href="/tags/fastlane/" style="font-size: 1.05rem;">fastlane<sup>1</sup></a><a href="/tags/framework/" style="font-size: 1.05rem;">framework<sup>1</sup></a><a href="/tags/git/" style="font-size: 1.05rem;">git<sup>2</sup></a><a href="/tags/homebrew/" style="font-size: 1.05rem;">homebrew<sup>1</sup></a><a href="/tags/iOS/" style="font-size: 1.05rem;">iOS<sup>13</sup></a><a href="/tags/iOS%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" style="font-size: 1.05rem;">iOS工作日志<sup>1</sup></a><a href="/tags/macOS/" style="font-size: 1.05rem;">macOS<sup>8</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.05rem;">前端<sup>2</sup></a><a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 1.05rem;">开发工具<sup>2</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" style="font-size: 1.05rem;">数据结构与算法<sup>1</sup></a><a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 1.05rem;">数组<sup>1</sup></a><a href="/tags/%E6%97%A5%E5%BF%97/" style="font-size: 1.05rem;">日志<sup>2</sup></a><a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 1.05rem;">源码<sup>2</sup></a><a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 1.05rem;">环境配置<sup>1</sup></a><a href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" style="font-size: 1.05rem;">生命周期<sup>1</sup></a><a href="/tags/%E7%94%B5%E4%BF%A1/" style="font-size: 1.05rem;">电信<sup>1</sup></a><a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" style="font-size: 1.05rem;">科学上网<sup>7</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.05rem;">算法<sup>1</sup></a><a href="/tags/%E7%AE%A1%E7%90%86/" style="font-size: 1.05rem;">管理<sup>1</sup></a><a href="/tags/%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/" style="font-size: 1.05rem;">终端命令<sup>2</sup></a><a href="/tags/%E8%BD%AC%E5%B8%96%E6%97%A5%E5%BF%97/" style="font-size: 1.05rem;">转帖日志<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">九月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/06/"><span class="card-archive-list-date">六月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/05/"><span class="card-archive-list-date">五月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/04/"><span class="card-archive-list-date">四月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">三月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">9</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">二月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">七月 2022</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%97%A5%E5%BF%97/" itemprop="url">日志</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/Carthage/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Carthage</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Carthage 新手教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2019-03-08T16:00:00.000Z" title="发表于 2019-03-09 00:00:00">2019-03-09</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-01-22T06:20:55.609Z" title="更新于 2024-01-22 14:20:55">2024-01-22</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为成都"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>成都</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/posts_images/Carthage.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://regulusleow.github.io/2019/03/09/20190309-Carthage%20%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"><header><a class="post-meta-categories" href="/categories/%E6%97%A5%E5%BF%97/" itemprop="url">日志</a><a href="/tags/Carthage/" tabindex="-1" itemprop="url">Carthage</a><h1 id="CrawlerTitle" itemprop="name headline">Carthage 新手教程</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">轩辕十四</span><time itemprop="dateCreated datePublished" datetime="2019-03-08T16:00:00.000Z" title="发表于 2019-03-09 00:00:00">2019-03-09</time><time itemprop="dateCreated datePublished" datetime="2024-01-22T06:20:55.609Z" title="更新于 2024-01-22 14:20:55">2024-01-22</time></header><h2 id="Carthage-与-Cocoapods-的不同"><a href="#Carthage-与-Cocoapods-的不同" class="headerlink" title="Carthage 与 Cocoapods 的不同"></a>Carthage 与 Cocoapods 的不同</h2><p>Cocoapods 是由来已久的 Cocoa 依赖管理工具，那么为什么 Carthage 项目被创建？</p>
+<p>首先，Cocoapods（默认情况下）会自动的为你的应用程序和所有依赖创建和更新 <code>Xcode workspace</code>。Carthage 用 <code>xcodebuild</code> 构建框架（framework）的二进制文件，但是并没有将他们整合到用户项目中。Cocoapods 的目的是让用户使用起来更简单，而 Carthage 则是更灵活，减少对项目的侵入性。</p>
+<p>Cocoapods 的目标在其<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/CocoaPods/blob/1703a3464674baecf54bd7e766f4b37ed8fc43f7/README.md">README</a>文件中有如下描述：</p>
+<blockquote>
+<p>… to improve discoverability of, and engagement in, third party open-source libraries, by creating a more centralized ecosystem.</p>
+</blockquote>
+<p>对比之下，Carthage 被创建成一个松散（decentralized）的依赖管理者，没有中心项目清单，这减少了维护工作并避免了任何中心故障点（通俗的讲就是去中心化）。然而，项目被发现就变的更加困难 – 用户必须去使用 GitHub 的 <a target="_blank" rel="noopener" href="https://github.com/trending?l=swift">Trending</a> 页面或者其他类似的页面（Cocoapods 就比较简单的可以在终端搜索需要使用的库）。</p>
+<span id="more"></span>
+
+<p>Cocoapods 项目还必须具有所谓的 <code>podspec</code> 文件，其中包括有关项目的元数据，并指定应如何构建它。Carthage 使用 <code>xcodebuild</code> 去构建依赖，而不是将它们集成到单个工作区中，它没有类似的规范文件，但你的依赖项必须包含到自己的 Xcode 项目中，该项目描述了如何构建其产品。</p>
+<p>最终，我们创建了 Carthage，因为我们想要一个最简单的工具 – 一个可以完成工作而不必承担 Xcode 责任的依赖管理器，并且并没有为框架作者创造额外的工作。Cocoapods 提供了许多惊人的功能，但是在 Carthage 中，这些功能永远不会出现，因为这会增加额外的复杂性。</p>
+<h2 id="Carthage-安装"><a href="#Carthage-安装" class="headerlink" title="Carthage 安装"></a>Carthage 安装</h2><h3 id="使用-homebrew-安装"><a href="#使用-homebrew-安装" class="headerlink" title="使用 homebrew 安装"></a>使用 homebrew 安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install carthage</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看版本和升级"><a href="#查看版本和升级" class="headerlink" title="查看版本和升级"></a>查看版本和升级</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 查看版本：</span><br><span class="line">carthage version</span><br><span class="line">// 升级：</span><br><span class="line">brew upgrade carthage</span><br></pre></td></tr></table></figure>
+
+<h3 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew uninstall carthage</span><br></pre></td></tr></table></figure>
+
+<h2 id="Carthage-配置第三方库（iOS，tvOS，watchOS）"><a href="#Carthage-配置第三方库（iOS，tvOS，watchOS）" class="headerlink" title="Carthage 配置第三方库（iOS，tvOS，watchOS）"></a>Carthage 配置第三方库（iOS，tvOS，watchOS）</h2><h3 id="创建-Cartfile-文件"><a href="#创建-Cartfile-文件" class="headerlink" title="创建 Cartfile 文件"></a>创建 Cartfile 文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd to your project</span><br><span class="line">touch Cartfile</span><br></pre></td></tr></table></figure>
+
+<h3 id="用-Xcode-打开-编辑-Cartfile"><a href="#用-Xcode-打开-编辑-Cartfile" class="headerlink" title="用 Xcode 打开&#x2F;编辑 Cartfile"></a>用 Xcode 打开&#x2F;编辑 Cartfile</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open -a Xcode Cartfile</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加依赖库"><a href="#添加依赖库" class="headerlink" title="添加依赖库"></a>添加依赖库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">github &quot;Alamofire/Alamofire&quot; == 4.5</span><br><span class="line">github &quot;Alamofire/AlamofireImage&quot; ~&gt; 3.2</span><br></pre></td></tr></table></figure>
+
+<p>现在支持的三个来源是 GitHub 存储库，Git 存储库和通过 https 提供的仅二进制框架。未来可能会添加其他可能的来源。如果你想看到具体的东西，请提 <a target="_blank" rel="noopener" href="https://github.com/Carthage/Carthage/issues/new">issue</a>。</p>
+<h4 id="GitHub-Repositories"><a href="#GitHub-Repositories" class="headerlink" title="GitHub Repositories"></a>GitHub Repositories</h4><p>使用 <code>github</code> 关键字指定 GitHub 存储库（<code>GitHub.com</code> 和 <code>GitHub Enterprise</code>）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">github &quot;ReactiveCocoa/ReactiveCocoa&quot; # GitHub.com</span><br><span class="line">github &quot;https://enterprise.local/ghe/desktop/git-error-translations&quot; # GitHub Enterprise</span><br></pre></td></tr></table></figure>
+
+<p><code>github</code> 源是用于 <code>owner/repo</code> 表单指定或通过其 <code>web API</code> 使用预构建的二进制下载功能，因此对 <code>github</code> 源 使用 <code>git</code> 或 <code>ssh</code> 协议是没有意义的，并且这是一个错误。</p>
+<h4 id="Git-repositories"><a href="#Git-repositories" class="headerlink" title="Git repositories"></a>Git repositories</h4><p>其他 Git 存储库使用 <code>git</code> 关键字指定：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git &quot;https://enterprise.local/desktop/git-error-translations2.git&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Binary-only-frameworks"><a href="#Binary-only-frameworks" class="headerlink" title="Binary only frameworks"></a>Binary only frameworks</h4><p>仅作为已编译的二进制文件 <code>.frameworks</code> 提供的依赖项使用 <code>binary</code> 关键字和 <code>https：//</code> 链接，<code>file：//</code> 链接，或没有方案的相对或绝对路径，返回<a target="_blank" rel="noopener" href="https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#binary-project-specification">二进制项目规范</a>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">binary &quot;https://my.domain.com/release/MyFramework.json&quot;   // Remote Hosted</span><br><span class="line">binary &quot;file:///some/Path/MyFramework.json&quot;               // Locally hosted at file path</span><br><span class="line">binary &quot;relative/path/MyFramework.json&quot;                   // Locally hosted at relative path to CWD</span><br><span class="line">binary &quot;/absolute/path/MyFramework.json&quot;                  // Locally hosted at absolute path</span><br></pre></td></tr></table></figure>
+
+<h3 id="版本要求"><a href="#版本要求" class="headerlink" title="版本要求"></a>版本要求</h3><p>Carthage 支持多种版本要求：</p>
+<ol>
+<li><code>&gt;= 1.0</code> 指“1.0 及以上版本”。</li>
+<li><code>~&gt; 1.0</code> 指“1.x 版本”</li>
+<li><code>== 1.0</code> 指“版本为 1.0”</li>
+<li><code>&quot;some-branch-or-tag-or-commit&quot;</code> 特指 <code>git</code> 对象（<code>git rev-parse</code> 任何内容都被允许）。<ul>
+<li>Note：<code>二进制源</code> 不支持这种形式。</li>
+</ul>
+</li>
+</ol>
+<p>如果没有指定任何版本，任何版本的依赖都将被允许（默认使用最新版本）。</p>
+<h3 id="Example-Cartfile"><a href="#Example-Cartfile" class="headerlink" title="Example Cartfile"></a>Example Cartfile</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Require version 2.3.1 or later</span><br><span class="line">github &quot;ReactiveCocoa/ReactiveCocoa&quot; &gt;= 2.3.1</span><br><span class="line"></span><br><span class="line"># Require version 1.x</span><br><span class="line">github &quot;Mantle/Mantle&quot; ~&gt; 1.0    # (1.0 or later, but less than 2.0)</span><br><span class="line"></span><br><span class="line"># Require exactly version 0.4.1</span><br><span class="line">github &quot;jspahrsummers/libextobjc&quot; == 0.4.1</span><br><span class="line"></span><br><span class="line"># Use the latest version</span><br><span class="line">github &quot;jspahrsummers/xcconfigs&quot;</span><br><span class="line"></span><br><span class="line"># Use the branch</span><br><span class="line">github &quot;jspahrsummers/xcconfigs&quot; &quot;branch&quot;</span><br><span class="line"></span><br><span class="line"># Use a project from GitHub Enterprise</span><br><span class="line">github &quot;https://enterprise.local/ghe/desktop/git-error-translations&quot;</span><br><span class="line"></span><br><span class="line"># Use a project from any arbitrary server, on the &quot;development&quot; branch</span><br><span class="line">git &quot;https://enterprise.local/desktop/git-error-translations2.git&quot; &quot;development&quot;</span><br><span class="line"></span><br><span class="line"># Use a local project</span><br><span class="line">git &quot;file:///directory/to/project&quot; &quot;branch&quot;</span><br><span class="line"></span><br><span class="line"># A binary only framework</span><br><span class="line">binary &quot;https://my.domain.com/release/MyFramework.json&quot; ~&gt; 2.3</span><br><span class="line"></span><br><span class="line"># A binary only framework via file: url</span><br><span class="line">binary &quot;file:///some/local/path/MyFramework.json&quot; ~&gt; 2.3</span><br><span class="line"></span><br><span class="line"># A binary only framework via local relative path from Current Working Directory to binary project specification</span><br><span class="line">binary &quot;relative/path/MyFramework.json&quot; ~&gt; 2.3</span><br><span class="line"></span><br><span class="line"># A binary only framework via absolute path to binary project specification</span><br><span class="line">binary &quot;/absolute/path/MyFramework.json&quot; ~&gt; 2.3</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装-编辑-Cartfile-中的项目"><a href="#安装-编辑-Cartfile-中的项目" class="headerlink" title="安装&#x2F;编辑 Cartfile 中的项目"></a>安装&#x2F;编辑 Cartfile 中的项目</h2><h3 id="clone-项目，然后编译成-framework："><a href="#clone-项目，然后编译成-framework：" class="headerlink" title="clone 项目，然后编译成 framework："></a>clone 项目，然后编译成 <code>framework</code>：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 不指定 platform 会为所有的平台编译（Mac / iOS / tvOS / watchOS）</span><br><span class="line">// 查看更多关于 update 命令的选项：`carthage help update`</span><br><span class="line">carthage update --platform iOS</span><br></pre></td></tr></table></figure>
+
+<p>Cartfile 利用 <code>xcode-select</code> 命令来编译 <code>framework</code>，如果你想用其他版的 Xcode 进行编译，执行下面这条命令，把 <code>xcode-select</code> 的路径改为另一版本 Xcode 就可以。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xcode-select -s /Applications/Xcode-beta.app/Contents/Developer</span><br></pre></td></tr></table></figure>
+
+<p>所有的文件会被编译到当前路径的 Carthage 文件夹中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 打开文件夹</span><br><span class="line">open Carthage</span><br></pre></td></tr></table></figure>
+
+<h3 id="Carthage-文件夹中文件说明"><a href="#Carthage-文件夹中文件说明" class="headerlink" title="Carthage 文件夹中文件说明:"></a>Carthage 文件夹中文件说明:</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/my_pictures/20190309/1.png"></p>
+<h4 id="Cartfile-resolved"><a href="#Cartfile-resolved" class="headerlink" title="Cartfile.resolved"></a>Cartfile.resolved</h4><p>运行 <code>carthage update --platform iOS</code> 命令后，一个叫 <code>Cartfile.resolved</code> 的文件将会被创建到 Cartfile 同级目录下。此文件准确指定了每个依赖项选择的版本，并列出了所有依赖项（甚至是嵌套的版本）。</p>
+<p>强烈建议将该文件加入到版本控制中，告知其他开发者，当前使用的版本。</p>
+<p>虽然 <code>Cartfile.resolved</code> 文件是人类可读和可扩展的，但你不能修改它。文件的格式非常严格，列出依赖项的顺序对于构建过程很重要。</p>
+<h4 id="Carthage-文件夹"><a href="#Carthage-文件夹" class="headerlink" title="Carthage 文件夹"></a>Carthage 文件夹</h4><ul>
+<li>Build<br>  包含对应平台编译好的Framework</li>
+<li>Checkouts<br>  包含编译 <code>framework</code> 所使用的源代码（除非你使用 <a target="_blank" rel="noopener" href="https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#with-submodules">submodules</a> ，否则不要修改这里的代码，<code>carthage update</code> 和 <code>carthage checkout</code> 会覆盖这里的代码，清除你的修改）。</li>
+</ul>
+<h4 id="With-submodules"><a href="#With-submodules" class="headerlink" title="With submodules"></a>With submodules</h4><p>如果在引导项目的依赖项时给出了 <code>--use-submodules</code> 标志，<code>updated</code> 或者 <code>checked out</code> <code>Carthage/Checkouts</code> 中的依赖项将作为 <code>Git</code> 子模块（submodules）提供。这允许你对依赖项进行更改，并提交这些更改。</p>
+<h2 id="更新Framework的版本"><a href="#更新Framework的版本" class="headerlink" title="更新Framework的版本"></a>更新Framework的版本</h2><h3 id="打开-Cartfile"><a href="#打开-Cartfile" class="headerlink" title="打开 Cartfile"></a>打开 Cartfile</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open -a Xcode Cartfile</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改版本"><a href="#修改版本" class="headerlink" title="修改版本"></a>修改版本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// github &quot;Alamofire/Alamofire&quot; == 4.5</span><br><span class="line">github &quot;Alamofire/Alamofire&quot; ~&gt; 4.5.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">carthage update --platform iOS</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新指定库"><a href="#更新指定库" class="headerlink" title="更新指定库"></a>更新指定库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">carthage update SVProgressHUD --platform iOS</span><br></pre></td></tr></table></figure>
+
+<h2 id="引入-Carthage-依赖库到-Xcode"><a href="#引入-Carthage-依赖库到-Xcode" class="headerlink" title="引入 Carthage 依赖库到 Xcode"></a>引入 Carthage 依赖库到 Xcode</h2><ol>
+<li>在 <code>Carthage -&gt; Build</code> 中找到需要添加的 <code>framework</code>。</li>
+<li>拖拽对应的 <code>framework</code> 到 Xcode 工程的 <code>Linked Frameworks and Libraries</code> 中。</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/my_pictures/20190309/2.gif"></p>
+<ol start="3">
+<li>进入工程的 <code>target -&gt; Build Phases</code>，点击 <code>+</code>，添加 <code>New Run Script Phase</code>:</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/my_pictures/20190309/3.png"></p>
+<p>添加如下脚本命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/bin/carthage copy-frameworks</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>Input Files</code> 下添加要使用的框架的路径。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework</span><br></pre></td></tr></table></figure>
+
+<p>将复制框架的路径添加到 <code>Output Files</code>。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework</span><br></pre></td></tr></table></figure>
+
+<p>为什么需要指定 <code>Output Files</code>。</p>
+<p>使用 Carthage 来管理第三方库，在编译并运行 App 的时候，会有一个阶段叫：<code>Carthage Copy Frameworks</code>。这个阶段通过跑一个脚本的形式把所有依赖的第三方库都复制到 App 的目录里。</p>
+<p>这个阶段通常会花 1~x 秒不等，这取决于你的 App 依赖的第三方库数量。默认情况下，每次你 <code>Build &amp; Run</code> 的时候，都会进行一次这个操作——尽管你的第三方库没有任何改变。</p>
+<p>所以我们需要指定 <code>Output Files</code>，在 <code>Output Files</code> 指定输出文件的情况下，Xcode 只会在 <code>framework</code> 发生更改时去进行 <code>copy framework</code> 操作，这样就节省了时间。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/avatar_images/avatar.png" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/avatar_images/avatar.png" title="头像" alt="头像"></a><div class="post-copyright__author_name">轩辕十四</div><div class="post-copyright__author_desc"></div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://regulusleow.github.io/2019/03/09/20190309-Carthage%20%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://regulusleow.github.io/2019/03/09/20190309-Carthage 新手教程/')">Carthage 新手教程</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://regulusleow.github.io/2019/03/09/20190309-Carthage%20%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=Carthage 新手教程&amp;url=https://regulusleow.github.io/2019/03/09/20190309-Carthage%20%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/&amp;pic=/posts_images/Carthage.png" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://regulusleow.github.io" target="_blank">轩辕十四</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/Carthage/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>Carthage<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="/posts_images/TypeScript.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/02/08/20190208-Python%20%E5%AD%A6%E4%B9%A0%E4%BA%8C%E4%B9%8B%E5%87%BD%E6%95%B0/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/posts_images/python.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python 学习二之函数</div></div></a></div><div class="next-post pull-right"><a href="/2019/04/02/20190402-layerClass/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/posts_images/ios.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">layerClass</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/avatar_images/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description">Stay hungry. Stay foolish.</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">轩辕十四</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/regulusleow" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="mailto:wujiafengwork@gmail.com" target="_blank" title="Email"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Carthage-%E4%B8%8E-Cocoapods-%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="toc-number">1.</span> <span class="toc-text">Carthage 与 Cocoapods 的不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Carthage-%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">Carthage 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-homebrew-%E5%AE%89%E8%A3%85"><span class="toc-number">2.1.</span> <span class="toc-text">使用 homebrew 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%89%88%E6%9C%AC%E5%92%8C%E5%8D%87%E7%BA%A7"><span class="toc-number">2.2.</span> <span class="toc-text">查看版本和升级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD"><span class="toc-number">2.3.</span> <span class="toc-text">卸载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Carthage-%E9%85%8D%E7%BD%AE%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%EF%BC%88iOS%EF%BC%8CtvOS%EF%BC%8CwatchOS%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">Carthage 配置第三方库（iOS，tvOS，watchOS）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-Cartfile-%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">创建 Cartfile 文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8-Xcode-%E6%89%93%E5%BC%80-%E7%BC%96%E8%BE%91-Cartfile"><span class="toc-number">3.2.</span> <span class="toc-text">用 Xcode 打开&#x2F;编辑 Cartfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="toc-number">3.3.</span> <span class="toc-text">添加依赖库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GitHub-Repositories"><span class="toc-number">3.3.1.</span> <span class="toc-text">GitHub Repositories</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git-repositories"><span class="toc-number">3.3.2.</span> <span class="toc-text">Git repositories</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Binary-only-frameworks"><span class="toc-number">3.3.3.</span> <span class="toc-text">Binary only frameworks</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E8%A6%81%E6%B1%82"><span class="toc-number">3.4.</span> <span class="toc-text">版本要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example-Cartfile"><span class="toc-number">3.5.</span> <span class="toc-text">Example Cartfile</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-%E7%BC%96%E8%BE%91-Cartfile-%E4%B8%AD%E7%9A%84%E9%A1%B9%E7%9B%AE"><span class="toc-number">4.</span> <span class="toc-text">安装&#x2F;编辑 Cartfile 中的项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#clone-%E9%A1%B9%E7%9B%AE%EF%BC%8C%E7%84%B6%E5%90%8E%E7%BC%96%E8%AF%91%E6%88%90-framework%EF%BC%9A"><span class="toc-number">4.1.</span> <span class="toc-text">clone 项目，然后编译成 framework：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Carthage-%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">4.2.</span> <span class="toc-text">Carthage 文件夹中文件说明:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cartfile-resolved"><span class="toc-number">4.2.1.</span> <span class="toc-text">Cartfile.resolved</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Carthage-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">4.2.2.</span> <span class="toc-text">Carthage 文件夹</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#With-submodules"><span class="toc-number">4.2.3.</span> <span class="toc-text">With submodules</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0Framework%E7%9A%84%E7%89%88%E6%9C%AC"><span class="toc-number">5.</span> <span class="toc-text">更新Framework的版本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80-Cartfile"><span class="toc-number">5.1.</span> <span class="toc-text">打开 Cartfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%89%88%E6%9C%AC"><span class="toc-number">5.2.</span> <span class="toc-text">修改版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%8C%87%E5%AE%9A%E5%BA%93"><span class="toc-number">5.4.</span> <span class="toc-text">更新指定库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%85%A5-Carthage-%E4%BE%9D%E8%B5%96%E5%BA%93%E5%88%B0-Xcode"><span class="toc-number">6.</span> <span class="toc-text">引入 Carthage 依赖库到 Xcode</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/01/22/20240122-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%A5%E5%B8%B8%E7%B1%BB%E5%9E%8B/" title="TypeScript学习之日常类型"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/posts_images/TypeScript.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TypeScript学习之日常类型"/></a><div class="content"><a class="title" href="/2024/01/22/20240122-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%A5%E5%B8%B8%E7%B1%BB%E5%9E%8B/" title="TypeScript学习之日常类型">TypeScript学习之日常类型</a><time datetime="2024-01-21T16:00:00.000Z" title="发表于 2024-01-22 00:00:00">2024-01-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/09/25/20230925-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B/" title="TypeScript学习之基础类型"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/posts_images/TypeScript.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TypeScript学习之基础类型"/></a><div class="content"><a class="title" href="/2023/09/25/20230925-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B/" title="TypeScript学习之基础类型">TypeScript学习之基础类型</a><time datetime="2023-09-24T16:00:00.000Z" title="发表于 2023-09-25 00:00:00">2023-09-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/09/19/20230919-Android%20%E5%AD%A6%E4%B9%A0%E4%B9%8B%20Activity/" title="Android 学习之 Activity 生命周期"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/posts_images/android.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android 学习之 Activity 生命周期"/></a><div class="content"><a class="title" href="/2023/09/19/20230919-Android%20%E5%AD%A6%E4%B9%A0%E4%B9%8B%20Activity/" title="Android 学习之 Activity 生命周期">Android 学习之 Activity 生命周期</a><time datetime="2023-09-18T16:00:00.000Z" title="发表于 2023-09-19 00:00:00">2023-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/09/09/20230909-Docker%20%E4%B8%AD%20gitlab%20%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81%E5%BF%98%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E/" title="Docker 中 gitlab 登录密码忘了怎么办？"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/posts_images/gitlab.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Docker 中 gitlab 登录密码忘了怎么办？"/></a><div class="content"><a class="title" href="/2023/09/09/20230909-Docker%20%E4%B8%AD%20gitlab%20%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81%E5%BF%98%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E/" title="Docker 中 gitlab 登录密码忘了怎么办？">Docker 中 gitlab 登录密码忘了怎么办？</a><time datetime="2023-09-08T16:00:00.000Z" title="发表于 2023-09-09 00:00:00">2023-09-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/20/20230620-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E5%85%AB%E3%80%91/" title="C 语言重拾【八】结构和其他数据形式"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/posts_images/C.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C 语言重拾【八】结构和其他数据形式"/></a><div class="content"><a class="title" href="/2023/06/20/20230620-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E5%85%AB%E3%80%91/" title="C 语言重拾【八】结构和其他数据形式">C 语言重拾【八】结构和其他数据形式</a><time datetime="2023-06-19T16:00:00.000Z" title="发表于 2023-06-20 00:00:00">2023-06-20</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2018 - 2024 By <a class="footer-bar-link" href="/" title="轩辕十四" target="_blank">轩辕十四</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">115</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">18</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><span> 归档</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><span> 分类</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/about/"><span> 关于</span></a></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Activity/" style="font-size: 0.88rem;">Activity<sup>1</sup></a><a href="/tags/C/" style="font-size: 0.88rem;">C<sup>9</sup></a><a href="/tags/Carthage/" style="font-size: 0.88rem;">Carthage<sup>1</sup></a><a href="/tags/CocoaPods/" style="font-size: 0.88rem;">CocoaPods<sup>2</sup></a><a href="/tags/Docker/" style="font-size: 0.88rem;">Docker<sup>1</sup></a><a href="/tags/FFmpeg/" style="font-size: 0.88rem;">FFmpeg<sup>1</sup></a><a href="/tags/Git/" style="font-size: 0.88rem;">Git<sup>3</sup></a><a href="/tags/Gitlab/" style="font-size: 0.88rem;">Gitlab<sup>1</sup></a><a href="/tags/JavaScript/" style="font-size: 0.88rem;">JavaScript<sup>2</sup></a><a href="/tags/Jenkins/" style="font-size: 0.88rem;">Jenkins<sup>1</sup></a><a href="/tags/Objective-C/" style="font-size: 0.88rem;">Objective-C<sup>5</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>10</sup></a><a href="/tags/RxSwift/" style="font-size: 0.88rem;">RxSwift<sup>11</sup></a><a href="/tags/SQLite/" style="font-size: 0.88rem;">SQLite<sup>1</sup></a><a href="/tags/ShareSDK/" style="font-size: 0.88rem;">ShareSDK<sup>1</sup></a><a href="/tags/Swift/" style="font-size: 0.88rem;">Swift<sup>33</sup></a><a href="/tags/Xcode/" style="font-size: 0.88rem;">Xcode<sup>2</sup></a><a href="/tags/fastlane/" style="font-size: 0.88rem;">fastlane<sup>1</sup></a><a href="/tags/framework/" style="font-size: 0.88rem;">framework<sup>1</sup></a><a href="/tags/git/" style="font-size: 0.88rem;">git<sup>2</sup></a><a href="/tags/homebrew/" style="font-size: 0.88rem;">homebrew<sup>1</sup></a><a href="/tags/iOS/" style="font-size: 0.88rem;">iOS<sup>13</sup></a><a href="/tags/iOS%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" style="font-size: 0.88rem;">iOS工作日志<sup>1</sup></a><a href="/tags/macOS/" style="font-size: 0.88rem;">macOS<sup>8</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 0.88rem;">前端<sup>2</sup></a><a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 0.88rem;">开发工具<sup>2</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" style="font-size: 0.88rem;">数据结构与算法<sup>1</sup></a><a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 0.88rem;">数组<sup>1</sup></a><a href="/tags/%E6%97%A5%E5%BF%97/" style="font-size: 0.88rem;">日志<sup>2</sup></a><a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 0.88rem;">源码<sup>2</sup></a><a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 0.88rem;">环境配置<sup>1</sup></a><a href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" style="font-size: 0.88rem;">生命周期<sup>1</sup></a><a href="/tags/%E7%94%B5%E4%BF%A1/" style="font-size: 0.88rem;">电信<sup>1</sup></a><a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" style="font-size: 0.88rem;">科学上网<sup>7</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 0.88rem;">算法<sup>1</sup></a><a href="/tags/%E7%AE%A1%E7%90%86/" style="font-size: 0.88rem;">管理<sup>1</sup></a><a href="/tags/%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/" style="font-size: 0.88rem;">终端命令<sup>2</sup></a><a href="/tags/%E8%BD%AC%E5%B8%96%E6%97%A5%E5%BF%97/" style="font-size: 0.88rem;">转帖日志<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.cbd.int/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script async src="/anzhiyu/random.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
