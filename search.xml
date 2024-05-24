@@ -1648,31 +1648,6 @@
     
     
     <entry>
-      <title>为 Playground 手动运行添加快捷键</title>
-      <link href="/2018/04/13/20180413-%E4%B8%BA%20Playground%20%E6%89%8B%E5%8A%A8%E8%BF%90%E8%A1%8C%E6%B7%BB%E5%8A%A0%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
-      <url>/2018/04/13/20180413-%E4%B8%BA%20Playground%20%E6%89%8B%E5%8A%A8%E8%BF%90%E8%A1%8C%E6%B7%BB%E5%8A%A0%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
-      
-        <content type="html"><![CDATA[<p>我在使用 Playground 的时候，喜欢将自定运行（Automatically Run）修改为手动运行（Manually Run），因为自动运行有时会导致我的 Xcode 卡住，体验非常不好。但是 Playground 并没有相应的快捷键去手动执行 Playground，这又导致手动运行的时候操作繁琐，每次都要靠鼠标去点，作为一个程序员怎么能忍受这种没有效率的操作 😂。接下来我们为手动执行 Playground 添加一个快捷键。</p><h3 id="打开系统偏好设置中的快捷键设置"><a href="#打开系统偏好设置中的快捷键设置" class="headerlink" title="打开系统偏好设置中的快捷键设置"></a>打开系统偏好设置中的快捷键设置</h3><hr><p>系统偏好设置 -&gt; 键盘 -&gt; 快捷键</p><p>选中最后一个，<code>应用快捷键</code></p><p><img src="/my_pictures/20180413/1.png"></p><span id="more"></span><h3 id="设置快捷键"><a href="#设置快捷键" class="headerlink" title="设置快捷键"></a>设置快捷键</h3><hr><p>点击加号，添加一个快捷键。应用程序选择 Xcode，菜单标题填写 <code>Execute Playground</code>，快捷键设置为自己想要的快捷键即可。</p><ul><li>注意：快捷键不能设置成 <code>command + R</code> 因为这会和 Xcode 本身的运行快捷键冲突。</li></ul><p><img src="/my_pictures/20180413/2.png"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 工作日志 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Xcode </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>KVC 和 Properties有什么区别？【译】</title>
       <link href="/2018/04/13/20180413-KVC%E5%92%8CProperties%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/"/>
       <url>/2018/04/13/20180413-KVC%E5%92%8CProperties%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/</url>
@@ -1690,6 +1665,31 @@
         <tags>
             
             <tag> iOS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>为 Playground 手动运行添加快捷键</title>
+      <link href="/2018/04/13/20180413-%E4%B8%BA%20Playground%20%E6%89%8B%E5%8A%A8%E8%BF%90%E8%A1%8C%E6%B7%BB%E5%8A%A0%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
+      <url>/2018/04/13/20180413-%E4%B8%BA%20Playground%20%E6%89%8B%E5%8A%A8%E8%BF%90%E8%A1%8C%E6%B7%BB%E5%8A%A0%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
+      
+        <content type="html"><![CDATA[<p>我在使用 Playground 的时候，喜欢将自定运行（Automatically Run）修改为手动运行（Manually Run），因为自动运行有时会导致我的 Xcode 卡住，体验非常不好。但是 Playground 并没有相应的快捷键去手动执行 Playground，这又导致手动运行的时候操作繁琐，每次都要靠鼠标去点，作为一个程序员怎么能忍受这种没有效率的操作 😂。接下来我们为手动执行 Playground 添加一个快捷键。</p><h3 id="打开系统偏好设置中的快捷键设置"><a href="#打开系统偏好设置中的快捷键设置" class="headerlink" title="打开系统偏好设置中的快捷键设置"></a>打开系统偏好设置中的快捷键设置</h3><hr><p>系统偏好设置 -&gt; 键盘 -&gt; 快捷键</p><p>选中最后一个，<code>应用快捷键</code></p><p><img src="/my_pictures/20180413/1.png"></p><span id="more"></span><h3 id="设置快捷键"><a href="#设置快捷键" class="headerlink" title="设置快捷键"></a>设置快捷键</h3><hr><p>点击加号，添加一个快捷键。应用程序选择 Xcode，菜单标题填写 <code>Execute Playground</code>，快捷键设置为自己想要的快捷键即可。</p><ul><li>注意：快捷键不能设置成 <code>command + R</code> 因为这会和 Xcode 本身的运行快捷键冲突。</li></ul><p><img src="/my_pictures/20180413/2.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工作日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Xcode </tag>
             
         </tags>
       
@@ -1823,11 +1823,11 @@
     
     
     <entry>
-      <title>RxSwift 文档：Schedulers</title>
-      <link href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/"/>
-      <url>/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/</url>
+      <title>RxSwift 文档：函数响应式编程</title>
+      <link href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E5%87%BD%E6%95%B0%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+      <url>/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E5%87%BD%E6%95%B0%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/</url>
       
-        <content type="html"><![CDATA[<h2 id="Schedulers-调度器"><a href="#Schedulers-调度器" class="headerlink" title="Schedulers - 调度器"></a>Schedulers - 调度器</h2><hr><p><code>Schedulers</code> 是 Rx 实现多线程的核心模块，它主要用于控制任务在哪个线程或队列运行。</p><p>如果你曾经使用过 <code>GCD</code>， 那你对以下代码应该不会陌生：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 后台取得数据，主线程处理结果</span></span><br><span class="line"><span class="type">DispatchQueue</span>.global(qos: .userInitiated).async &#123;</span><br><span class="line">    <span class="keyword">let</span> data <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">Data</span>(contentsOf: url)</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="keyword">self</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><span id="more"></span><p>如果用 <code>RxSwift</code> 来实现，大致是这样的：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> rxData: <span class="type">Observable</span>&lt;<span class="type">Data</span>&gt; <span class="operator">=</span> <span class="operator">...</span></span><br><span class="line">    </span><br><span class="line">rxData</span><br><span class="line">    .subscribeOn(<span class="type">ConcurrentDispatchQueueScheduler</span>(qos: .userInitiated))</span><br><span class="line">    .observeOn(<span class="type">MainScheduler</span>.instance)</span><br><span class="line">    .subscribe(onNext: &#123; [<span class="keyword">weak</span> <span class="keyword">self</span>] data <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">self</span><span class="operator">?</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure><h4 id="使用-subscribeOn"><a href="#使用-subscribeOn" class="headerlink" title="使用 subscribeOn"></a>使用 <code>subscribeOn</code></h4><p>我们用 <code>subscribeOn</code> 来决定数据序列的构建函数在哪个 <code>Scheduler</code> 上运行。以上例子中，由于获取 <code>Data</code> 需要花很长的时间，所以用 <code>subscribeOn</code> 切换到后台 <code>Scheduler</code> 来获取 <code>Data</code>。这样可以避免主线程被阻塞。</p><h4 id="使用-observeOn"><a href="#使用-observeOn" class="headerlink" title="使用 observeOn"></a>使用 <code>observeOn</code></h4><p>我们用 <code>observeOn</code> 来决定在哪个 <code>Scheduler</code> 监听这个数据序列。以上例子中，通过使用 <code>observeOn</code> 方法切换到主线程来监听并且处理结果。</p><p>一个比较典型的例子就是，在后台发起网络请求，然后解析数据，最后在主线程刷新页面。你就可以先用 <code>subscribeOn</code> 切到后台去发送请求并解析数据，最后用 <code>observeOn</code> 切换到主线程更新页面。</p><h4 id="MainScheduler"><a href="#MainScheduler" class="headerlink" title="MainScheduler"></a>MainScheduler</h4><p><code>MainScheduler</code> 代表主线程。如果你需要执行一些和 UI 相关的任务，就需要切换到该 <code>Scheduler</code> 运行。</p><h4 id="SerialDispatchQueueScheduler"><a href="#SerialDispatchQueueScheduler" class="headerlink" title="SerialDispatchQueueScheduler"></a>SerialDispatchQueueScheduler</h4><p><code>SerialDispatchQueueScheduler</code> 抽象了窜行 <code>DispatchQueue</code>。如果你需要执行一些窜行任务，可以切换到这个 <code>Scheduler</code> 运行。</p><h4 id="ConcurrentDispatchQueueScheduler"><a href="#ConcurrentDispatchQueueScheduler" class="headerlink" title="ConcurrentDispatchQueueScheduler"></a>ConcurrentDispatchQueueScheduler</h4><p><code>ConcurrentDispatchQueueScheduler</code> 抽象了并行 <code>DispatchQueue</code>。如果你需要执行一些并发任务，可以切换到这个 <code>Scheduler</code> 运行。</p><h4 id="OperationQueueScheduler"><a href="#OperationQueueScheduler" class="headerlink" title="OperationQueueScheduler"></a>OperationQueueScheduler</h4><p><code>OperationQueueScheduler</code> 抽象了 <code>NSOperationQueue</code>。</p><p>它具备 <code>NSOperationQueue</code> 的一些特点，例如，你可以通过设置 <code>maxConcurrentOperationCount</code>，来控制同时执行并发任务的最大数量。</p>]]></content>
+        <content type="html"><![CDATA[<h3 id="函数响应式编程"><a href="#函数响应式编程" class="headerlink" title="函数响应式编程"></a>函数响应式编程</h3><hr><p>函数响应式编程是种编程范式。它是通过构建函数操作数据序列，然后对这些序列做出响应的编程方式。它结合了函数式编程以及响应式编程。</p><h4 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h4><p><strong>函数式编程是种编程范式，它需要我们将函数作为参数传递，或者作为返回值返还。我们可以通过组合不同的函数来得到想要的结果。</strong></p><p>函数试编程的优点：</p><ul><li>灵活</li><li>高复用</li><li>简洁</li><li>易维护</li><li>适应各种需求变化</li></ul><h4 id="函数式编程-函数响应式编程"><a href="#函数式编程-函数响应式编程" class="headerlink" title="函数式编程 -&gt; 函数响应式编程"></a>函数式编程 -&gt; 函数响应式编程</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设用户在进入页面到离开页面期间，总共点击按钮 3 次</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 按钮点击序列</span></span><br><span class="line"><span class="keyword">let</span> taps: <span class="type">Array</span>&lt;<span class="type">Void</span>&gt; <span class="operator">=</span> [(), (), ()]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次点击后弹出提示框</span></span><br><span class="line">taps.forEach &#123; showAlert() &#125;</span><br></pre></td></tr></table></figure><span id="more"></span><p>这样处理点击事件是非常理想的，但是问题是这个序列里面的元素（点击事件）是异步产生的，传统序列是无法描叙这种元素异步产生的情况。为了解决这个问题，于是就产生了可被监听的序列 <code>Observable&lt;Element&gt;</code> 。它也是一个序列，只不过这个序列里面的元素可以是同步产生的，也可以是异步产生的:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按钮点击序列</span></span><br><span class="line"><span class="keyword">let</span> taps: <span class="type">Observable</span>&lt;<span class="type">Void</span>&gt; <span class="operator">=</span> button.rx.tap.asObservable()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次点击后弹出提示框</span></span><br><span class="line">taps.subscribe(onNext: &#123; showAlert() &#125;)</span><br></pre></td></tr></table></figure><p>这里 <code>taps</code> 就是按钮点击事件的序列。然后我们通过弹出提示框，来对每一次点击事件做出响应。这种编程方式叫做响应式编程。我们结合函数式编程以及响应式编程就得到了函数响应式编程。</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">passwordOutlet.rx.text.orEmpty</span><br><span class="line">    .map &#123; <span class="variable">$0</span>.characters.count <span class="operator">&gt;=</span> minimalPasswordLength &#125;</span><br><span class="line">    .bind(to: passwordValidOutlet.rx.isHidden)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure><p><strong>我们通过不同的构建函数，来创建所需要的数据序列。最后通过适当的方式来响应这个序列。这就是函数响应式编程。</strong></p>]]></content>
       
       
       <categories>
@@ -1848,11 +1848,11 @@
     
     
     <entry>
-      <title>RxSwift 文档：函数响应式编程</title>
-      <link href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E5%87%BD%E6%95%B0%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-      <url>/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E5%87%BD%E6%95%B0%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/</url>
+      <title>RxSwift 文档：Schedulers</title>
+      <link href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/"/>
+      <url>/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/</url>
       
-        <content type="html"><![CDATA[<h3 id="函数响应式编程"><a href="#函数响应式编程" class="headerlink" title="函数响应式编程"></a>函数响应式编程</h3><hr><p>函数响应式编程是种编程范式。它是通过构建函数操作数据序列，然后对这些序列做出响应的编程方式。它结合了函数式编程以及响应式编程。</p><h4 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h4><p><strong>函数式编程是种编程范式，它需要我们将函数作为参数传递，或者作为返回值返还。我们可以通过组合不同的函数来得到想要的结果。</strong></p><p>函数试编程的优点：</p><ul><li>灵活</li><li>高复用</li><li>简洁</li><li>易维护</li><li>适应各种需求变化</li></ul><h4 id="函数式编程-函数响应式编程"><a href="#函数式编程-函数响应式编程" class="headerlink" title="函数式编程 -&gt; 函数响应式编程"></a>函数式编程 -&gt; 函数响应式编程</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设用户在进入页面到离开页面期间，总共点击按钮 3 次</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 按钮点击序列</span></span><br><span class="line"><span class="keyword">let</span> taps: <span class="type">Array</span>&lt;<span class="type">Void</span>&gt; <span class="operator">=</span> [(), (), ()]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次点击后弹出提示框</span></span><br><span class="line">taps.forEach &#123; showAlert() &#125;</span><br></pre></td></tr></table></figure><span id="more"></span><p>这样处理点击事件是非常理想的，但是问题是这个序列里面的元素（点击事件）是异步产生的，传统序列是无法描叙这种元素异步产生的情况。为了解决这个问题，于是就产生了可被监听的序列 <code>Observable&lt;Element&gt;</code> 。它也是一个序列，只不过这个序列里面的元素可以是同步产生的，也可以是异步产生的:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按钮点击序列</span></span><br><span class="line"><span class="keyword">let</span> taps: <span class="type">Observable</span>&lt;<span class="type">Void</span>&gt; <span class="operator">=</span> button.rx.tap.asObservable()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次点击后弹出提示框</span></span><br><span class="line">taps.subscribe(onNext: &#123; showAlert() &#125;)</span><br></pre></td></tr></table></figure><p>这里 <code>taps</code> 就是按钮点击事件的序列。然后我们通过弹出提示框，来对每一次点击事件做出响应。这种编程方式叫做响应式编程。我们结合函数式编程以及响应式编程就得到了函数响应式编程。</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">passwordOutlet.rx.text.orEmpty</span><br><span class="line">    .map &#123; <span class="variable">$0</span>.characters.count <span class="operator">&gt;=</span> minimalPasswordLength &#125;</span><br><span class="line">    .bind(to: passwordValidOutlet.rx.isHidden)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure><p><strong>我们通过不同的构建函数，来创建所需要的数据序列。最后通过适当的方式来响应这个序列。这就是函数响应式编程。</strong></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="Schedulers-调度器"><a href="#Schedulers-调度器" class="headerlink" title="Schedulers - 调度器"></a>Schedulers - 调度器</h2><hr><p><code>Schedulers</code> 是 Rx 实现多线程的核心模块，它主要用于控制任务在哪个线程或队列运行。</p><p>如果你曾经使用过 <code>GCD</code>， 那你对以下代码应该不会陌生：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 后台取得数据，主线程处理结果</span></span><br><span class="line"><span class="type">DispatchQueue</span>.global(qos: .userInitiated).async &#123;</span><br><span class="line">    <span class="keyword">let</span> data <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">Data</span>(contentsOf: url)</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="keyword">self</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><span id="more"></span><p>如果用 <code>RxSwift</code> 来实现，大致是这样的：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> rxData: <span class="type">Observable</span>&lt;<span class="type">Data</span>&gt; <span class="operator">=</span> <span class="operator">...</span></span><br><span class="line">    </span><br><span class="line">rxData</span><br><span class="line">    .subscribeOn(<span class="type">ConcurrentDispatchQueueScheduler</span>(qos: .userInitiated))</span><br><span class="line">    .observeOn(<span class="type">MainScheduler</span>.instance)</span><br><span class="line">    .subscribe(onNext: &#123; [<span class="keyword">weak</span> <span class="keyword">self</span>] data <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">self</span><span class="operator">?</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure><h4 id="使用-subscribeOn"><a href="#使用-subscribeOn" class="headerlink" title="使用 subscribeOn"></a>使用 <code>subscribeOn</code></h4><p>我们用 <code>subscribeOn</code> 来决定数据序列的构建函数在哪个 <code>Scheduler</code> 上运行。以上例子中，由于获取 <code>Data</code> 需要花很长的时间，所以用 <code>subscribeOn</code> 切换到后台 <code>Scheduler</code> 来获取 <code>Data</code>。这样可以避免主线程被阻塞。</p><h4 id="使用-observeOn"><a href="#使用-observeOn" class="headerlink" title="使用 observeOn"></a>使用 <code>observeOn</code></h4><p>我们用 <code>observeOn</code> 来决定在哪个 <code>Scheduler</code> 监听这个数据序列。以上例子中，通过使用 <code>observeOn</code> 方法切换到主线程来监听并且处理结果。</p><p>一个比较典型的例子就是，在后台发起网络请求，然后解析数据，最后在主线程刷新页面。你就可以先用 <code>subscribeOn</code> 切到后台去发送请求并解析数据，最后用 <code>observeOn</code> 切换到主线程更新页面。</p><h4 id="MainScheduler"><a href="#MainScheduler" class="headerlink" title="MainScheduler"></a>MainScheduler</h4><p><code>MainScheduler</code> 代表主线程。如果你需要执行一些和 UI 相关的任务，就需要切换到该 <code>Scheduler</code> 运行。</p><h4 id="SerialDispatchQueueScheduler"><a href="#SerialDispatchQueueScheduler" class="headerlink" title="SerialDispatchQueueScheduler"></a>SerialDispatchQueueScheduler</h4><p><code>SerialDispatchQueueScheduler</code> 抽象了窜行 <code>DispatchQueue</code>。如果你需要执行一些窜行任务，可以切换到这个 <code>Scheduler</code> 运行。</p><h4 id="ConcurrentDispatchQueueScheduler"><a href="#ConcurrentDispatchQueueScheduler" class="headerlink" title="ConcurrentDispatchQueueScheduler"></a>ConcurrentDispatchQueueScheduler</h4><p><code>ConcurrentDispatchQueueScheduler</code> 抽象了并行 <code>DispatchQueue</code>。如果你需要执行一些并发任务，可以切换到这个 <code>Scheduler</code> 运行。</p><h4 id="OperationQueueScheduler"><a href="#OperationQueueScheduler" class="headerlink" title="OperationQueueScheduler"></a>OperationQueueScheduler</h4><p><code>OperationQueueScheduler</code> 抽象了 <code>NSOperationQueue</code>。</p><p>它具备 <code>NSOperationQueue</code> 的一些特点，例如，你可以通过设置 <code>maxConcurrentOperationCount</code>，来控制同时执行并发任务的最大数量。</p>]]></content>
       
       
       <categories>
@@ -2048,31 +2048,6 @@
     
     
     <entry>
-      <title>Escaping Closures - Swift</title>
-      <link href="/2018/03/19/20180319-Escaping%20Closures%20-%20Swift/"/>
-      <url>/2018/03/19/20180319-Escaping%20Closures%20-%20Swift/</url>
-      
-        <content type="html"><![CDATA[<h3 id="逃逸闭包和非逃逸闭包"><a href="#逃逸闭包和非逃逸闭包" class="headerlink" title="逃逸闭包和非逃逸闭包"></a>逃逸闭包和非逃逸闭包</h3><hr><p><strong>逃逸闭包（escaping closure）</strong>，什么是逃逸闭包？苹果官方给的定义是：当一个闭包作为一个参数传递给函数，但是它是在函数返回之后调用的，这时候，这个闭包就称为<strong>逃逸闭包</strong>。当你声明一个将闭包作为参数的函数时，你可以在参数的类型之前用 <code>@escaping</code> 来表明这个闭包是允许逃逸的。</p><p>闭包可以逃逸的一种方式是存储在函数之外定义的变量中。作为例子，许多启动异步操作的函数都将闭包参数放在异步执行完毕之后的操作中执行（completion handler）。该函数在开始操作后返回，但在操作完成之前不会调用闭包 — 闭包需要逃逸，稍后调用，举个例子：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> completionHandlers: [() -&gt; <span class="type">Void</span>] <span class="operator">=</span> []</span><br><span class="line"><span class="keyword">func</span> <span class="title function_">someFunctionWithEscapingClosure</span>(<span class="params">completionHandler</span>: <span class="keyword">@escaping</span> () -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">    completionHandlers.append(completionHandler)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><span id="more"></span><p><code>someFunctionWithEscapingClosure(_ :)</code> 函数将闭包作为其参数，并将其添加到在函数外声明的数组中。如果你没有用 <code>@escaping</code>  来标记这个函数的参数，你会得到一个编译时的错误。</p><p>将一个闭包用 <code>@escaping</code> 来标记的话，意味着你需要在闭包中明确的引用自身 <code>self</code> ，例如，在下面的代码中，传递给 <code>someFunctionWithEscapingClosure(_:)</code> 的闭包是逃逸闭包，这就意味着它必须要明确的引用自身 <code>self</code> ， 相比之下，传递给 <code>someFunctionWithNonescapingClosure(_:)</code> 的闭包是非逃逸闭包，这意味着它可以隐式的引用自身。</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">someFunctionWithNonescapingClosure</span>(<span class="params">closure</span>: () -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">    closure()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> x <span class="operator">=</span> <span class="number">10</span></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">doSomething</span>() &#123;</span><br><span class="line">        someFunctionWithEscapingClosure &#123; <span class="keyword">self</span>.x <span class="operator">=</span> <span class="number">100</span> &#125;</span><br><span class="line">        someFunctionWithNonescapingClosure &#123; x <span class="operator">=</span> <span class="number">200</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> instance <span class="operator">=</span> <span class="type">SomeClass</span>()</span><br><span class="line">instance.doSomething()</span><br><span class="line"><span class="built_in">print</span>(instance.x)</span><br><span class="line"><span class="comment">// Prints &quot;200&quot;</span></span><br><span class="line"></span><br><span class="line">completionHandlers.first<span class="operator">?</span>()</span><br><span class="line"><span class="built_in">print</span>(instance.x)</span><br><span class="line"><span class="comment">// Prints &quot;100&quot;</span></span><br></pre></td></tr></table></figure><h3 id="非逃逸闭包示意图"><a href="#非逃逸闭包示意图" class="headerlink" title="非逃逸闭包示意图"></a>非逃逸闭包示意图</h3><hr><p><img src="/my_pictures/20180319001/1.png" alt="非逃逸闭包示意图"></p><h3 id="逃逸闭包示意图"><a href="#逃逸闭包示意图" class="headerlink" title="逃逸闭包示意图"></a>逃逸闭包示意图</h3><hr><p><img src="/my_pictures/20180319001/2.png" alt="逃逸闭包示意图"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 编程语言 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Swift </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>8 Mistakes to Avoid while Using RxSwift</title>
       <link href="/2018/03/19/20180319-8%20Mistakes%20to%20Avoid%20while%20Using%20RxSwift/"/>
       <url>/2018/03/19/20180319-8%20Mistakes%20to%20Avoid%20while%20Using%20RxSwift/</url>
@@ -2090,6 +2065,31 @@
         <tags>
             
             <tag> RxSwift </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Escaping Closures - Swift</title>
+      <link href="/2018/03/19/20180319-Escaping%20Closures%20-%20Swift/"/>
+      <url>/2018/03/19/20180319-Escaping%20Closures%20-%20Swift/</url>
+      
+        <content type="html"><![CDATA[<h3 id="逃逸闭包和非逃逸闭包"><a href="#逃逸闭包和非逃逸闭包" class="headerlink" title="逃逸闭包和非逃逸闭包"></a>逃逸闭包和非逃逸闭包</h3><hr><p><strong>逃逸闭包（escaping closure）</strong>，什么是逃逸闭包？苹果官方给的定义是：当一个闭包作为一个参数传递给函数，但是它是在函数返回之后调用的，这时候，这个闭包就称为<strong>逃逸闭包</strong>。当你声明一个将闭包作为参数的函数时，你可以在参数的类型之前用 <code>@escaping</code> 来表明这个闭包是允许逃逸的。</p><p>闭包可以逃逸的一种方式是存储在函数之外定义的变量中。作为例子，许多启动异步操作的函数都将闭包参数放在异步执行完毕之后的操作中执行（completion handler）。该函数在开始操作后返回，但在操作完成之前不会调用闭包 — 闭包需要逃逸，稍后调用，举个例子：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> completionHandlers: [() -&gt; <span class="type">Void</span>] <span class="operator">=</span> []</span><br><span class="line"><span class="keyword">func</span> <span class="title function_">someFunctionWithEscapingClosure</span>(<span class="params">completionHandler</span>: <span class="keyword">@escaping</span> () -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">    completionHandlers.append(completionHandler)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><span id="more"></span><p><code>someFunctionWithEscapingClosure(_ :)</code> 函数将闭包作为其参数，并将其添加到在函数外声明的数组中。如果你没有用 <code>@escaping</code>  来标记这个函数的参数，你会得到一个编译时的错误。</p><p>将一个闭包用 <code>@escaping</code> 来标记的话，意味着你需要在闭包中明确的引用自身 <code>self</code> ，例如，在下面的代码中，传递给 <code>someFunctionWithEscapingClosure(_:)</code> 的闭包是逃逸闭包，这就意味着它必须要明确的引用自身 <code>self</code> ， 相比之下，传递给 <code>someFunctionWithNonescapingClosure(_:)</code> 的闭包是非逃逸闭包，这意味着它可以隐式的引用自身。</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">someFunctionWithNonescapingClosure</span>(<span class="params">closure</span>: () -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">    closure()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> x <span class="operator">=</span> <span class="number">10</span></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">doSomething</span>() &#123;</span><br><span class="line">        someFunctionWithEscapingClosure &#123; <span class="keyword">self</span>.x <span class="operator">=</span> <span class="number">100</span> &#125;</span><br><span class="line">        someFunctionWithNonescapingClosure &#123; x <span class="operator">=</span> <span class="number">200</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> instance <span class="operator">=</span> <span class="type">SomeClass</span>()</span><br><span class="line">instance.doSomething()</span><br><span class="line"><span class="built_in">print</span>(instance.x)</span><br><span class="line"><span class="comment">// Prints &quot;200&quot;</span></span><br><span class="line"></span><br><span class="line">completionHandlers.first<span class="operator">?</span>()</span><br><span class="line"><span class="built_in">print</span>(instance.x)</span><br><span class="line"><span class="comment">// Prints &quot;100&quot;</span></span><br></pre></td></tr></table></figure><h3 id="非逃逸闭包示意图"><a href="#非逃逸闭包示意图" class="headerlink" title="非逃逸闭包示意图"></a>非逃逸闭包示意图</h3><hr><p><img src="/my_pictures/20180319001/1.png" alt="非逃逸闭包示意图"></p><h3 id="逃逸闭包示意图"><a href="#逃逸闭包示意图" class="headerlink" title="逃逸闭包示意图"></a>逃逸闭包示意图</h3><hr><p><img src="/my_pictures/20180319001/2.png" alt="逃逸闭包示意图"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 编程语言 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Swift </tag>
             
         </tags>
       
