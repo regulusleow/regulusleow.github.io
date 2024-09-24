@@ -1141,7 +1141,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/01/29/20180129-%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AE%9A%E6%9C%9F%E6%9B%B4%E6%96%B0%20Homebrew/">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/01/29/20180129-Swift%20%E4%BD%BF%E7%94%A8%20warning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/avatar_images/avatar.png">
@@ -1159,7 +1159,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/01/29/20180129-%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AE%9A%E6%9C%9F%E6%9B%B4%E6%96%B0%20Homebrew/" class="post-title-link" itemprop="url">你应该定期更新 Homebrew</a>
+          <a href="/2018/01/29/20180129-Swift%20%E4%BD%BF%E7%94%A8%20warning/" class="post-title-link" itemprop="url">Swift 使用 warning</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1178,7 +1178,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">日志</span></a>
+          <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">工作日志</span></a>
         </span>
     </span>
 
@@ -1191,8 +1191,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/01/29/20180129-%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AE%9A%E6%9C%9F%E6%9B%B4%E6%96%B0%20Homebrew/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/29/20180129-你应该定期更新 Homebrew/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2018/01/29/20180129-Swift%20%E4%BD%BF%E7%94%A8%20warning/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/29/20180129-Swift 使用 warning/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1206,11 +1206,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="为什么要定期更新"><a href="#为什么要定期更新" class="headerlink" title="为什么要定期更新"></a>为什么要定期更新</h3><hr>
-<p>我发现不少人都不会经常更新，或者只在必须用某个工具的新版本的时候才更新。他们的看法是，更新有可能产生一些意外的问题，反正当前环境足够稳定可以用，干嘛自找麻烦呢？<br>这个看法对也不对。对是因为，更新产生的潜在问题不可避免。不对是因为总有一天你需要升级的，也许是为了某个工具的新特性，也许是为了修复软件的漏洞，也许你安装的包非要依赖另一个包的新版本，等等。如果隔了很长一段时间才升级，那潜在的小问题可能就会变成大问题。<br>另一个有意思的现象是，当碰到比较破坏性的事情，比如 Mac OS 大版本更新后，很多人会选择重装 Homebrew 然后顺带安装最新版的包。很少人会去装一个指定的旧版本（除了特殊项目需要）。这说明他们不是不想用新版本，而是不想痛苦地更新。<br>既然总有一天需要更新，而更新带来问题不可避免，那为什么不更新得频繁点呢？这个道理跟 Git 的冲突解决有相似性。长时间不 pull&#x2F;push 的代码更容易产生冲突，一个解决方法就是频繁地 commit &amp; merge 。<br>我现在试着一个月更新一次，两次下来发现这些好处：</p>
+          <p>在 Swift 中无法使用 <code>#warning</code> ，Swift 中有如下的标记：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//<span class="doctag">FIXME:</span> - 待修复</span></span><br><span class="line"><span class="comment">//<span class="doctag">TODO:</span> - 接下来要做的事情</span></span><br><span class="line"><span class="comment">//MARK: - 标记</span></span><br><span class="line">注: 添加<span class="string">&quot;-&quot;</span> 可以显示分割线<span class="operator">-----</span><span class="type">Swift3下有效</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来给 <code>TODO:</code> 和 <code>FIXME:</code> 加上警告，实现类似的效果：</p>
+<p>Build Phases —&gt;  add a new Build Phases —&gt; New run script phase</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/01/29/20180129-%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AE%9A%E6%9C%9F%E6%9B%B4%E6%96%B0%20Homebrew/#more" rel="contents">
+              <a class="btn" href="/2018/01/29/20180129-Swift%20%E4%BD%BF%E7%94%A8%20warning/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
