@@ -299,7 +299,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/01/29/20180129-%E5%AE%89%E8%A3%85CocoaPods/">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/avatar_images/avatar.png">
@@ -317,7 +317,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/01/29/20180129-%E5%AE%89%E8%A3%85CocoaPods/" class="post-title-link" itemprop="url">安装CocoaPods</a>
+          <a href="/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/" class="post-title-link" itemprop="url">终端命令启动Sublime Text 3 和 VS Code</a>
         </h2>
 
         <div class="post-meta-container">
@@ -349,8 +349,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/01/29/20180129-%E5%AE%89%E8%A3%85CocoaPods/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/29/20180129-安装CocoaPods/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/29/20180129-终端命令启动Sublime Text 3 和 VS Code/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -364,18 +364,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="更新系统的gem"><a href="#更新系统的gem" class="headerlink" title="更新系统的gem"></a>更新系统的gem</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem update --system</span><br></pre></td></tr></table></figure>
-
-<h4 id="安装CocoaPods"><a href="#安装CocoaPods" class="headerlink" title="安装CocoaPods"></a>安装CocoaPods</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods</span><br></pre></td></tr></table></figure>
-
-<h4 id="这时候可能会出现下面的错误"><a href="#这时候可能会出现下面的错误" class="headerlink" title="这时候可能会出现下面的错误"></a>这时候可能会出现下面的错误</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:  While executing gem ... (Errno::EPERM)</span><br><span class="line">    Operation not permitted - /usr/bin/fuzzy_match</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>因为在<code>OS X El Capitan</code>版本之后，之前的命令就不适用了，我们可以用如下的命令来安装CocoaPods</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install -n /usr/local/bin cocoapods</span><br></pre></td></tr></table></figure>
-
-
+          <p>加入软连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 如果你是sublime 2</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s <span class="string">&quot;/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl&quot;</span> /usr/local/bin/subl </span><br><span class="line"></span><br><span class="line">// 如果你是sublime 3</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br><span class="line"></span><br><span class="line">// vs code</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code /usr/local/bin/code</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -500,7 +490,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/01/29/20180129-%E5%AE%89%E8%A3%85CocoaPods/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/avatar_images/avatar.png">
@@ -518,7 +508,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/" class="post-title-link" itemprop="url">终端命令启动Sublime Text 3 和 VS Code</a>
+          <a href="/2018/01/29/20180129-%E5%AE%89%E8%A3%85CocoaPods/" class="post-title-link" itemprop="url">安装CocoaPods</a>
         </h2>
 
         <div class="post-meta-container">
@@ -550,8 +540,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/29/20180129-终端命令启动Sublime Text 3 和 VS Code/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2018/01/29/20180129-%E5%AE%89%E8%A3%85CocoaPods/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/29/20180129-安装CocoaPods/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -565,8 +555,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>加入软连接：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 如果你是sublime 2</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s <span class="string">&quot;/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl&quot;</span> /usr/local/bin/subl </span><br><span class="line"></span><br><span class="line">// 如果你是sublime 3</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br><span class="line"></span><br><span class="line">// vs code</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code /usr/local/bin/code</span><br></pre></td></tr></table></figure>
+          <h4 id="更新系统的gem"><a href="#更新系统的gem" class="headerlink" title="更新系统的gem"></a>更新系统的gem</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem update --system</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装CocoaPods"><a href="#安装CocoaPods" class="headerlink" title="安装CocoaPods"></a>安装CocoaPods</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods</span><br></pre></td></tr></table></figure>
+
+<h4 id="这时候可能会出现下面的错误"><a href="#这时候可能会出现下面的错误" class="headerlink" title="这时候可能会出现下面的错误"></a>这时候可能会出现下面的错误</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:  While executing gem ... (Errno::EPERM)</span><br><span class="line">    Operation not permitted - /usr/bin/fuzzy_match</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>因为在<code>OS X El Capitan</code>版本之后，之前的命令就不适用了，我们可以用如下的命令来安装CocoaPods</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install -n /usr/local/bin cocoapods</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
