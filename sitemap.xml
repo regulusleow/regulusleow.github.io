@@ -1164,13 +1164,6 @@
   </url>
   
   <url>
-    <loc>https://regulusleow.github.io/tags/Git/</loc>
-    <lastmod>2024-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://regulusleow.github.io/tags/CocoaPods/</loc>
     <lastmod>2024-09-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -1178,7 +1171,21 @@
   </url>
   
   <url>
+    <loc>https://regulusleow.github.io/tags/Git/</loc>
+    <lastmod>2024-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://regulusleow.github.io/tags/RxSwift/</loc>
+    <lastmod>2024-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://regulusleow.github.io/tags/iOS/</loc>
     <lastmod>2024-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1193,13 +1200,6 @@
   
   <url>
     <loc>https://regulusleow.github.io/tags/Objective-C/</loc>
-    <lastmod>2024-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://regulusleow.github.io/tags/iOS/</loc>
     <lastmod>2024-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1374,20 +1374,6 @@
   </url>
   
   <url>
-    <loc>https://regulusleow.github.io/tags/JavaScript/</loc>
-    <lastmod>2024-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://regulusleow.github.io/tags/%E5%89%8D%E7%AB%AF/</loc>
-    <lastmod>2024-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://regulusleow.github.io/tags/Activity/</loc>
     <lastmod>2024-09-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -1396,6 +1382,20 @@
   
   <url>
     <loc>https://regulusleow.github.io/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</loc>
+    <lastmod>2024-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://regulusleow.github.io/tags/JavaScript/</loc>
+    <lastmod>2024-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://regulusleow.github.io/tags/%E5%89%8D%E7%AB%AF/</loc>
     <lastmod>2024-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1523,14 +1523,14 @@
   </url>
   
   <url>
-    <loc>https://regulusleow.github.io/categories/TypeScript/</loc>
+    <loc>https://regulusleow.github.io/categories/Android/</loc>
     <lastmod>2024-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://regulusleow.github.io/categories/Android/</loc>
+    <loc>https://regulusleow.github.io/categories/TypeScript/</loc>
     <lastmod>2024-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
