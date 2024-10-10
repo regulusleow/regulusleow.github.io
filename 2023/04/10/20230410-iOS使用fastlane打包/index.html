@@ -28,7 +28,7 @@
 <meta property="og:description" content="在一款 App 从开发到上架都会经历 编译 -&gt; 打包 -&gt; 签名 -&gt; 推送 App Store Connect -&gt; 提审 -&gt; 上架 的过程。其中编译打包这种重复且繁琐的工作公司内都会有一个 CI 平台去负责，我们今天就来了解一下 CI 的编译打包流程是怎样的。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-24T09:02:22.203Z">
+<meta property="article:modified_time" content="2024-10-10T08:20:38.383Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="fastlane">
@@ -158,18 +158,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">117</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -284,7 +284,7 @@
 <!-- more -->
 
 <h2 id="使用-fastlane-执行打包流程"><a href="#使用-fastlane-执行打包流程" class="headerlink" title="使用 fastlane 执行打包流程"></a>使用 fastlane 执行打包流程</h2><h3 id="Ruby-安装环境"><a href="#Ruby-安装环境" class="headerlink" title="Ruby 安装环境"></a>Ruby 安装环境</h3><p>首先我们需要安装一套开发用的 Ruby 环境，macOS 中不推荐直接使用系统的 Ruby。我们可以用多种方式来管理我们的 Ruby 环境，例如 <code>rvm</code>，<code>rebnv</code>，<code>homebrew</code>。由于本人是通过 <code>homebrew</code> 安装的 Ruby 环境，所以本篇只介绍 <code>homebrew</code> 的管理方式，其他方式请自行查阅资料。</p>
-<p>对于使用 <code>homebrew</code> 安装 Ruby 可以看我之前的这片文章，这里有详细的说明：[使用 Homebrew 管理 Ruby](<a href="https://regulusleow.github.io/2023/03/27/20230327-%E4%BD%BF%E7%94%A8">https://regulusleow.github.io/2023/03/27/20230327-使用</a> Homebrew 管理 Ruby&#x2F;)</p>
+<p>对于使用 <code>homebrew</code> 安装 Ruby 可以看我之前的这片文章，这里有详细的说明：<a href="https://regulusleow.github.io/2023/03/27/20230327-%E4%BD%BF%E7%94%A8%20Homebrew%20%E7%AE%A1%E7%90%86%20Ruby/">使用 Homebrew 管理 Ruby</a></p>
 <h3 id="fastlane-的安装"><a href="#fastlane-的安装" class="headerlink" title="fastlane 的安装"></a>fastlane 的安装</h3><p>Ruby 环境设置完毕后我们就可以开始安装 <code>fastlane</code>，同样使用 <code>homebrew</code> 的方式：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install fastlane</span><br></pre></td></tr></table></figure>
 
@@ -347,8 +347,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/04/08/20230408-%E7%BC%96%E8%AF%91ojbc4%E6%BA%90%E7%A0%81/" rel="prev" title="编译 objc4-866.9 源码">
-                  <i class="fa fa-angle-left"></i> 编译 objc4-866.9 源码
+                <a href="/2023/04/08/20230408-%E7%BC%96%E8%AF%91Swift%E6%BA%90%E7%A0%81/" rel="prev" title="编译 Swift 5.8 源码">
+                  <i class="fa fa-angle-left"></i> 编译 Swift 5.8 源码
                 </a>
             </div>
             <div class="post-nav-item">

@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.21.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="在 iOS 开发中，证书管理一直是一个重要且复杂的话题。随着 fastlane 的更新，我们处理证书信息的方式也在不断演进。今天，我想分享我在使用 fastlane 读取和加密 iOS 证书信息时的经历，以及如何应对 fastlane 更新带来的变化。">
+    <meta name="description" content="在 iOS 开发中，证书管理一直是一个重要且复杂的话题。随着 fastlane 的更新，我们处理证书信息的方式也在不断演进。今天，我想分享我在使用 fastlane 读取和加密 iOS 证书信息时的经历，以及如何应对 fastlane 更新带来的变化。 初始方法：直接读取证书文件最初，我创建了一个自定义的 fastlane Action 来直接读取 .cer 文件，这里使用的是 OpenSSL 进">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何使用 fastlane 读取 iOS 证书信息">
 <meta property="og:url" content="https://regulusleow.github.io/2024/09/23/20240923-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8fastlane%E8%AF%BB%E5%8F%96iOS%E8%AF%81%E4%B9%A6%E4%BF%A1%E6%81%AF/index.html">
 <meta property="og:site_name" content="轩辕十四">
-<meta property="og:description" content="在 iOS 开发中，证书管理一直是一个重要且复杂的话题。随着 fastlane 的更新，我们处理证书信息的方式也在不断演进。今天，我想分享我在使用 fastlane 读取和加密 iOS 证书信息时的经历，以及如何应对 fastlane 更新带来的变化。">
+<meta property="og:description" content="在 iOS 开发中，证书管理一直是一个重要且复杂的话题。随着 fastlane 的更新，我们处理证书信息的方式也在不断演进。今天，我想分享我在使用 fastlane 读取和加密 iOS 证书信息时的经历，以及如何应对 fastlane 更新带来的变化。 初始方法：直接读取证书文件最初，我创建了一个自定义的 fastlane Action 来直接读取 .cer 文件，这里使用的是 OpenSSL 进">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-09-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-24T08:55:55.485Z">
+<meta property="article:modified_time" content="2024-10-10T08:20:38.384Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="fastlane">
@@ -158,18 +158,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">117</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -272,12 +272,12 @@
     
     
     <div class="post-body" itemprop="articleBody"><p>在 iOS 开发中，证书管理一直是一个重要且复杂的话题。随着 fastlane 的更新，我们处理证书信息的方式也在不断演进。今天，我想分享我在使用 fastlane 读取和加密 iOS 证书信息时的经历，以及如何应对 fastlane 更新带来的变化。</p>
-<span id="more"></span>
-
 <h2 id="初始方法：直接读取证书文件"><a href="#初始方法：直接读取证书文件" class="headerlink" title="初始方法：直接读取证书文件"></a><strong>初始方法：直接读取证书文件</strong></h2><p>最初，我创建了一个自定义的 fastlane Action 来直接读取 .cer 文件，这里使用的是 OpenSSL 进行解密：</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ReadSpecificFileAction</span> &lt; <span class="title class_ inherited__">Action</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">self</span>.decrypt_specific_file(<span class="symbol">path:</span> <span class="literal">nil</span>, <span class="symbol">password:</span> <span class="literal">nil</span>, <span class="symbol">hash_algorithm:</span> <span class="string">&quot;MD5&quot;</span>)</span><br><span class="line">    stored_data = <span class="title class_">Base64</span>.decode64(<span class="title class_">File</span>.read(path))</span><br><span class="line">    salt = stored_data[<span class="number">8</span>..<span class="number">15</span>]</span><br><span class="line">    data_to_decrypt = stored_data[<span class="number">16</span>..-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    decipher = <span class="symbol">:</span><span class="symbol">:OpenSSL</span><span class="symbol">:</span><span class="symbol">:Cipher</span>.new(<span class="string">&#x27;AES-256-CBC&#x27;</span>)</span><br><span class="line">    decipher.decrypt</span><br><span class="line">    decipher.pkcs5_keyivgen(password, salt, <span class="number">1</span>, hash_algorithm)</span><br><span class="line"></span><br><span class="line">    decrypted_data = decipher.update(data_to_decrypt) + decipher.final</span><br><span class="line"></span><br><span class="line">    <span class="title class_">File</span>.binwrite(path, decrypted_data)</span><br><span class="line">  <span class="keyword">rescue</span> =&gt; error</span><br><span class="line">    fallback_hash_algorithm = <span class="string">&quot;SHA256&quot;</span></span><br><span class="line">    <span class="keyword">if</span> hash_algorithm != fallback_hash_algorithm</span><br><span class="line">      decrypt_specific_file(<span class="symbol">path:</span> path, <span class="symbol">password:</span> password, <span class="symbol">hash_algorithm:</span> fallback_hash_algorithm)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="variable constant_">UI</span>.error(error.to_s)</span><br><span class="line">      <span class="variable constant_">UI</span>.crash!(<span class="string">&quot;Error decrypting &#x27;<span class="subst">#&#123;path&#125;</span>&#x27;&quot;</span>)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
 <p>这种方法简单直接，但随着 fastlane 的更新，fastlane 应该是修改了加密解密的逻辑，上面的方案已经无法使用，我们需要寻找新的实现方案。</p>
+<span id="more"></span>
+
 <h2 id="寻找新的实现方案"><a href="#寻找新的实现方案" class="headerlink" title="寻找新的实现方案"></a>寻找新的实现方案</h2><h3 id="Step-1-查阅-fastlane-match-插件的官方文档"><a href="#Step-1-查阅-fastlane-match-插件的官方文档" class="headerlink" title="Step 1: 查阅 fastlane match 插件的官方文档"></a>Step 1: 查阅 fastlane match 插件的官方文档</h3><p>在阅读 <code>match</code> 文档的过程中我看到一个手动解密的信息，原文如下：</p>
 <blockquote>
 <h3 id="Manual-Decrypt"><a href="#Manual-Decrypt" class="headerlink" title="Manual Decrypt"></a>Manual Decrypt</h3><p>If you want to manually decrypt or encrypt a file, you can use the companion script <code>match_file</code>:</p>
@@ -346,6 +346,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2024/10/01/20241001-Ruby-%E9%AD%94%E6%B3%95%EF%BC%9A%E7%94%A8-Monkey-Patching-%E8%A7%A3%E5%86%B3-Fastlane-Gym-%E7%9A%84%E6%B8%85%E7%90%86%E5%9B%B0%E5%A2%83/" rel="next" title="Ruby 魔法：用 Monkey Patching 解决 Fastlane Gym 的清理困境">
+                  Ruby 魔法：用 Monkey Patching 解决 Fastlane Gym 的清理困境 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
