@@ -152,7 +152,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">118</span>
+          <span class="site-state-item-count">119</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -191,6 +191,118 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/03/14/20180314-%E5%86%85%E5%AD%98%EF%BC%9A%E6%A0%88%E5%92%8C%E5%A0%86%EF%BC%88C%20:%20Swift%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/03/14/20180314-%E5%86%85%E5%AD%98%EF%BC%9A%E6%A0%88%E5%92%8C%E5%A0%86%EF%BC%88C%20:%20Swift%EF%BC%89/" class="post-title-link" itemprop="url">内存：栈和堆（C / Swift）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-03-14 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-14T00:00:00+08:00">2018-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">底层原理</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/03/14/20180314-%E5%86%85%E5%AD%98%EF%BC%9A%E6%A0%88%E5%92%8C%E5%A0%86%EF%BC%88C%20:%20Swift%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/14/20180314-内存：栈和堆（C : Swift）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="栈（C-语言描述）"><a href="#栈（C-语言描述）" class="headerlink" title="栈（C 语言描述）"></a>栈（C 语言描述）</h3><hr>
+<p>什么是栈（Stack）？这是计算机内存中的一个特殊区域，它存储由每个函数创建的临时变量（包括 <code>main()</code> 函数）。栈是一个“LIFO”（后进先出）的数据结构。它是被 CPU 管理和优化的。每次函数声明一个新变量时，它都被“压入”栈中。然后每次函数退出时，所有由该函数压入栈的变量都被释放（也就是说，它们被删除）。一旦释放栈变量，该区域的内存就可用于其他栈变量。</p>
+<p>使用栈来存储变量的优点是内存是自动为你管理的。你无需手动分配内存，或者在你不再需要时释放内存。更重要的是，由于 CPU 如此高效地组织栈内存，读取和写入栈变量的速度非常快。</p>
+<p>理解栈的关键是这样一个概念：当一个函数退出时，它的所有变量都从栈中弹出（因此永远丢失）。因此栈变量本质上是本地的。这与我们之前看到的一个概念（称为变量范围）或局部变量或全局变量有关。 C 编程中的一个常见错误是尝试访问某个函数内栈上创建的变量，该函数在该函数之外的某个地方（即该函数退出后）从该程序中创建。</p>
+<p>要记住栈的另一个特性是，可以存储在栈上的变量的大小有一个限制（随OS变化）。对于在堆中分配的变量，情况并非如此。</p>
+<p><strong>栈的总结：</strong> </p>
+<ul>
+<li>随着函数压入和弹出局部变量，栈增长和缩小 </li>
+<li>没有必要自己管理内存，变量内存被自动的分配和释放 </li>
+<li>栈具有大小限制 </li>
+<li>栈变量仅在创建它们的函数正在运行时才存在</li>
+</ul>
+<h3 id="堆（C-语言描述）"><a href="#堆（C-语言描述）" class="headerlink" title="堆（C 语言描述）"></a>堆（C 语言描述）</h3><hr>
+<p>堆是计算机内存中的一个区域，不会自动为你进行内存管理，并且不受 CPU 的严格管理。它是一个更自由的内存区域（并且更大）。要在堆上分配内存，必须使用 <code>malloc()</code> 或 <code>calloc()</code> ，它们是内置的 C 函数。一旦你在堆上分配了内存，当你不再需要它的时候，你就有责任使用 <code>free()</code> 来释放内存。如果你没有做到这一点，你的程序将会有所谓的内存泄漏。也就是说，堆上的内存仍然会被留出（并且不会被其他进程使用）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/14/20180314-%E5%86%85%E5%AD%98%EF%BC%9A%E6%A0%88%E5%92%8C%E5%A0%86%EF%BC%88C%20:%20Swift%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1101,114 +1213,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/02/12/20180212-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%83%EF%BC%89%E3%80%90Python%E4%B8%AD%E7%9A%84%E5%8C%85%E3%80%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/10/20180210-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E3%80%90%E6%A8%A1%E5%9D%97%E3%80%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/02/10/20180210-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E3%80%90%E6%A8%A1%E5%9D%97%E3%80%91/" class="post-title-link" itemprop="url">Python 学习笔记（六）【模块】</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-02-10 00:00:00" itemprop="dateCreated datePublished" datetime="2018-02-10T00:00:00+08:00">2018-02-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/02/10/20180210-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E3%80%90%E6%A8%A1%E5%9D%97%E3%80%91/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/10/20180210-Python 学习笔记（六）【模块】/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>Python 模块(Module)，是一个 Python 文件，以 .py 结尾，包含了 Python 对象定义和Python语句。<br>模块让你能够有逻辑地组织你的 Python 代码段。<br>把相关的代码分配到一个模块里能让你的代码更好用，更易懂。<br>模块能定义函数，类和变量，模块里也能包含可执行的代码。  </p>
-</blockquote>
-<h5 id="import-语句"><a href="#import-语句" class="headerlink" title="import 语句"></a>import 语句</h5><hr>
-<p><strong>模块的引入</strong></p>
-<p>模块定义好后，我们可以使用 import 语句来引入模块，语法如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> module1[, module2[,... moduleN]</span><br></pre></td></tr></table></figure>
-
-<p>比如要引用模块 math，就可以在文件最开始的地方用 import math 来引入。在调用 math 模块中的函数时，必须这样引用：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">模块名.函数名</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/02/10/20180210-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E3%80%90%E6%A8%A1%E5%9D%97%E3%80%91/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

@@ -152,7 +152,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">118</span>
+          <span class="site-state-item-count">119</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -191,6 +191,114 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/05/20180205-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89%E3%80%90%E5%9F%BA%E7%A1%80%E8%A1%A5%E5%85%A8%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/05/20180205-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89%E3%80%90%E5%9F%BA%E7%A1%80%E8%A1%A5%E5%85%A8%E3%80%91/" class="post-title-link" itemprop="url">Python 学习笔记（三）【基础补全】</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-02-05 00:00:00" itemprop="dateCreated datePublished" datetime="2018-02-05T00:00:00+08:00">2018-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/02/05/20180205-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89%E3%80%90%E5%9F%BA%E7%A1%80%E8%A1%A5%E5%85%A8%E3%80%91/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/05/20180205-Python 学习笔记（三）【基础补全】/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Python-基础语法"><a href="#Python-基础语法" class="headerlink" title="Python 基础语法"></a>Python 基础语法</h2><h3 id="Python-标识符"><a href="#Python-标识符" class="headerlink" title="Python 标识符"></a>Python 标识符</h3><hr>
+<ul>
+<li>在 Python 里，标识符由字母、数字、下划线组成。</li>
+<li>在 Python 中，所有标识符可以包括英文、数字以及下划线(_)，但不能以数字开头。</li>
+<li>Python 中的标识符是区分大小写的。</li>
+<li>以下划线开头的标识符是有特殊意义的。以单下划线开头<code> _foo</code> 的代表不能直接访问的类属性，需通过类提供的接口进行访问，不能用<code>from xxx import *</code> 而导入；</li>
+<li>以双下划线开头的 <code>__foo</code> 代表类的私有成员；以双下划线开头和结尾的 <code>__foo__</code> 代表 Python 里特殊方法专用的标识，如 <code>__init__()</code> 代表类的构造函数。</li>
+<li>Python 可以同一行显示多条语句，方法是用分号 <code>;</code> 分开，如：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span> <span class="string">&#x27;hello&#x27;</span>;<span class="built_in">print</span> <span class="string">&#x27;runoob&#x27;</span>;</span><br><span class="line">hello</span><br><span class="line">runoob</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/02/05/20180205-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89%E3%80%90%E5%9F%BA%E7%A1%80%E8%A1%A5%E5%85%A8%E3%80%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -616,98 +724,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/" class="post-title-link" itemprop="url">终端命令启动Sublime Text 3 和 VS Code</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-01-29 00:00:00" itemprop="dateCreated datePublished" datetime="2018-01-29T00:00:00+08:00">2018-01-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">日志</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/29/20180129-终端命令启动Sublime Text 3 和 VS Code/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>加入软连接：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 如果你是sublime 2</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s <span class="string">&quot;/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl&quot;</span> /usr/local/bin/subl </span><br><span class="line"></span><br><span class="line">// 如果你是sublime 3</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br><span class="line"></span><br><span class="line">// vs code</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code /usr/local/bin/code</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/01/29/20180129-%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%20Git%20%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -782,6 +798,98 @@
 <p>等安装好了之后，git 就又可以用了。</p>
 <p>如果不行可以试试下面的命令：</p>
 <figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --reset</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/" class="post-title-link" itemprop="url">终端命令启动Sublime Text 3 和 VS Code</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-01-29 00:00:00" itemprop="dateCreated datePublished" datetime="2018-01-29T00:00:00+08:00">2018-01-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">日志</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/29/20180129-终端命令启动Sublime Text 3 和 VS Code/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>加入软连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 如果你是sublime 2</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s <span class="string">&quot;/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl&quot;</span> /usr/local/bin/subl </span><br><span class="line"></span><br><span class="line">// 如果你是sublime 3</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br><span class="line"></span><br><span class="line">// vs code</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code /usr/local/bin/code</span><br></pre></td></tr></table></figure>
       
     </div>
 

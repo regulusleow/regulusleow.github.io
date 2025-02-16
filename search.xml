@@ -116,30 +116,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Swift 使用 warning</title>
-    <url>/2018/01/29/20180129-Swift%20%E4%BD%BF%E7%94%A8%20warning/</url>
-    <content><![CDATA[<p>在 Swift 中无法使用 <code>#warning</code> ，Swift 中有如下的标记：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">//<span class="doctag">FIXME:</span> - 待修复</span></span><br><span class="line"><span class="comment">//<span class="doctag">TODO:</span> - 接下来要做的事情</span></span><br><span class="line"><span class="comment">//MARK: - 标记</span></span><br><span class="line">注: 添加<span class="string">&quot;-&quot;</span> 可以显示分割线<span class="operator">-----</span><span class="type">Swift3下有效</span></span><br></pre></td></tr></table></figure>
-
-<p>接下来给 <code>TODO:</code> 和 <code>FIXME:</code> 加上警告，实现类似的效果：</p>
-<p>Build Phases —&gt;  add a new Build Phases —&gt; New run script phase</p>
-<span id="more"></span>
-
-<p>添加如下的代码:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable constant_">TAGS</span>=<span class="string">&quot;TODO:|FIXME:&quot;</span></span><br><span class="line">echo <span class="string">&quot;searching $&#123;SRCROOT&#125; for $&#123;TAGS&#125;&quot;</span></span><br><span class="line">find <span class="string">&quot;$&#123;SRCROOT&#125;&quot;</span> \( -name <span class="string">&quot;*.swift&quot;</span> \) -print0 | xargs -<span class="number">0</span> egrep --<span class="keyword">with</span>-filename --line-number --only-matching <span class="string">&quot;($TAGS).*\$&quot;</span> | perl -p -e <span class="string">&quot;s/($TAGS)/ warning: \$1/&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如图：</p>
-<p><img src="/my_pictures/20180129/1.png"></p>
-<p><img src="/my_pictures/20180129/2.png"></p>
-]]></content>
-      <categories>
-        <category>工作日志</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python 学习笔记（二）【文件的简单操作】</title>
     <url>/2018/01/15/20180115-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E3%80%90%E6%96%87%E4%BB%B6%E7%9A%84%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C%E3%80%91/</url>
     <content><![CDATA[<p>在 python 中简单的打开一个文件可以用 <code>open(name, model)</code> 的方式<br><code>name</code> 文件路径。<br><code>model</code> 打开的方式。</p>
@@ -174,6 +150,30 @@
       </categories>
       <tags>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Swift 使用 warning</title>
+    <url>/2018/01/29/20180129-Swift%20%E4%BD%BF%E7%94%A8%20warning/</url>
+    <content><![CDATA[<p>在 Swift 中无法使用 <code>#warning</code> ，Swift 中有如下的标记：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">//<span class="doctag">FIXME:</span> - 待修复</span></span><br><span class="line"><span class="comment">//<span class="doctag">TODO:</span> - 接下来要做的事情</span></span><br><span class="line"><span class="comment">//MARK: - 标记</span></span><br><span class="line">注: 添加<span class="string">&quot;-&quot;</span> 可以显示分割线<span class="operator">-----</span><span class="type">Swift3下有效</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来给 <code>TODO:</code> 和 <code>FIXME:</code> 加上警告，实现类似的效果：</p>
+<p>Build Phases —&gt;  add a new Build Phases —&gt; New run script phase</p>
+<span id="more"></span>
+
+<p>添加如下的代码:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable constant_">TAGS</span>=<span class="string">&quot;TODO:|FIXME:&quot;</span></span><br><span class="line">echo <span class="string">&quot;searching $&#123;SRCROOT&#125; for $&#123;TAGS&#125;&quot;</span></span><br><span class="line">find <span class="string">&quot;$&#123;SRCROOT&#125;&quot;</span> \( -name <span class="string">&quot;*.swift&quot;</span> \) -print0 | xargs -<span class="number">0</span> egrep --<span class="keyword">with</span>-filename --line-number --only-matching <span class="string">&quot;($TAGS).*\$&quot;</span> | perl -p -e <span class="string">&quot;s/($TAGS)/ warning: \$1/&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如图：</p>
+<p><img src="/my_pictures/20180129/1.png"></p>
+<p><img src="/my_pictures/20180129/2.png"></p>
+]]></content>
+      <categories>
+        <category>工作日志</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
       </tags>
   </entry>
   <entry>
@@ -255,18 +255,6 @@
       </tags>
   </entry>
   <entry>
-    <title>终端命令启动Sublime Text 3 和 VS Code</title>
-    <url>/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/</url>
-    <content><![CDATA[<p>加入软连接：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 如果你是sublime 2</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s <span class="string">&quot;/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl&quot;</span> /usr/local/bin/subl </span><br><span class="line"></span><br><span class="line">// 如果你是sublime 3</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br><span class="line"></span><br><span class="line">// vs code</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code /usr/local/bin/code</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>日志</category>
-      </categories>
-      <tags>
-        <tag>终端命令</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>重装系统提示没有 Git 的解决方式</title>
     <url>/2018/01/29/20180129-%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%20Git%20%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F/</url>
     <content><![CDATA[<p>执行 git 命令后，提示信息如下：</p>
@@ -283,6 +271,18 @@
       </categories>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>终端命令启动Sublime Text 3 和 VS Code</title>
+    <url>/2018/01/29/20180129-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8Sublime%20Text%203%20%E5%92%8C%20VS%20Code/</url>
+    <content><![CDATA[<p>加入软连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 如果你是sublime 2</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s <span class="string">&quot;/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl&quot;</span> /usr/local/bin/subl </span><br><span class="line"></span><br><span class="line">// 如果你是sublime 3</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br><span class="line"></span><br><span class="line">// vs code</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code /usr/local/bin/code</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>日志</category>
+      </categories>
+      <tags>
+        <tag>终端命令</tag>
       </tags>
   </entry>
   <entry>
@@ -780,6 +780,37 @@
       </tags>
   </entry>
   <entry>
+    <title>配置 git 代理</title>
+    <url>/2018/02/08/20180208-%E9%85%8D%E7%BD%AE%20git%20%E4%BB%A3%E7%90%86/</url>
+    <content><![CDATA[<blockquote>
+<p>当我们再做开发，从github上面下载库的时候，总是很慢。pod setup 那是更加的慢。这里我们配置一下代理，速度立马就上去了。  </p>
+</blockquote>
+<p>Git 目前支持的三种协议 <code>git://</code>、<code>ssh://</code> 和 <code>http://</code> ，其代理配置各不相同： <code>core.gitproxy</code> 用于 <code>git://</code> 协议， <code>http.proxy</code> 用于 <code>http://</code> 协议， <code>ssh://</code> 协议的代理需要配置 <code>ssh</code> 的 <code>ProxyCommand</code> 参数。</p>
+<span id="more"></span>
+
+<p>1、配置http和https代理</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">$ git config --<span class="keyword">global</span> http.proxy http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1087</span></span><br><span class="line">$ git config --<span class="keyword">global</span> https.proxy https://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1087</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 删除代理</span></span><br><span class="line">$ git config --<span class="keyword">global</span> --unset http.proxy</span><br><span class="line">$ git config --<span class="keyword">global</span> --unset https.proxy</span><br><span class="line"></span><br><span class="line">$ npm config delete proxy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置socks5代理</span></span><br><span class="line">$ git config --<span class="keyword">global</span> http.proxy <span class="string">&#x27;socks5://127.0.0.1:1086&#x27;</span></span><br><span class="line">$ git config --<span class="keyword">global</span> https.proxy <span class="string">&#x27;socks5://127.0.0.1:1086&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、 配置git代理</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git config --global core.gitproxy github.com</span><br></pre></td></tr></table></figure>
+
+<p>后面的 <code>github.com</code> 是根据情况而定，这里配置的是github的 <code>git.proxy</code></p>
+<p><strong>ssh代理没有试过，略</strong></p>
+<p>终端中执行 <code>clone</code> 命令，速度应该很快了。</p>
+<blockquote>
+<p><strong>sourcetree</strong> 速度也会变快，因为它的 <code>clone</code> 操作，其实也是调用 <code>git clone</code> 命令。  </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>日志</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>自定义OS X的window button</title>
     <url>/2018/02/08/20180208-%E8%87%AA%E5%AE%9A%E4%B9%89OS%20X%E7%9A%84window%20button/</url>
     <content><![CDATA[<blockquote>
@@ -844,37 +875,6 @@
       </categories>
       <tags>
         <tag>macOS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>配置 git 代理</title>
-    <url>/2018/02/08/20180208-%E9%85%8D%E7%BD%AE%20git%20%E4%BB%A3%E7%90%86/</url>
-    <content><![CDATA[<blockquote>
-<p>当我们再做开发，从github上面下载库的时候，总是很慢。pod setup 那是更加的慢。这里我们配置一下代理，速度立马就上去了。  </p>
-</blockquote>
-<p>Git 目前支持的三种协议 <code>git://</code>、<code>ssh://</code> 和 <code>http://</code> ，其代理配置各不相同： <code>core.gitproxy</code> 用于 <code>git://</code> 协议， <code>http.proxy</code> 用于 <code>http://</code> 协议， <code>ssh://</code> 协议的代理需要配置 <code>ssh</code> 的 <code>ProxyCommand</code> 参数。</p>
-<span id="more"></span>
-
-<p>1、配置http和https代理</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">$ git config --<span class="keyword">global</span> http.proxy http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1087</span></span><br><span class="line">$ git config --<span class="keyword">global</span> https.proxy https://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1087</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 删除代理</span></span><br><span class="line">$ git config --<span class="keyword">global</span> --unset http.proxy</span><br><span class="line">$ git config --<span class="keyword">global</span> --unset https.proxy</span><br><span class="line"></span><br><span class="line">$ npm config delete proxy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置socks5代理</span></span><br><span class="line">$ git config --<span class="keyword">global</span> http.proxy <span class="string">&#x27;socks5://127.0.0.1:1086&#x27;</span></span><br><span class="line">$ git config --<span class="keyword">global</span> https.proxy <span class="string">&#x27;socks5://127.0.0.1:1086&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>2、 配置git代理</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git config --global core.gitproxy github.com</span><br></pre></td></tr></table></figure>
-
-<p>后面的 <code>github.com</code> 是根据情况而定，这里配置的是github的 <code>git.proxy</code></p>
-<p><strong>ssh代理没有试过，略</strong></p>
-<p>终端中执行 <code>clone</code> 命令，速度应该很快了。</p>
-<blockquote>
-<p><strong>sourcetree</strong> 速度也会变快，因为它的 <code>clone</code> 操作，其实也是调用 <code>git clone</code> 命令。  </p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>日志</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -1032,20 +1032,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 学习笔记（八）【File(文件) 方法】</title>
-    <url>/2018/02/15/20180215-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AB%EF%BC%89%E3%80%90File(%E6%96%87%E4%BB%B6)%20%E6%96%B9%E6%B3%95%E3%80%91/</url>
-    <content><![CDATA[<p>file 对象使用 open 函数来创建，下表列出了 file 对象常用的函数：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">file.close()</span><br><span class="line"><span class="comment"># 关闭文件。关闭后文件不能再进行读写操作。</span></span><br><span class="line"></span><br><span class="line">file.flush()</span><br><span class="line"><span class="comment"># 刷新文件内部缓冲，直接把内部缓冲区的数据立刻写入文件, 而不是被动的等待输出缓冲区写入。</span></span><br><span class="line"></span><br><span class="line">file.fileno()</span><br><span class="line"><span class="comment"># 返回一个整型的文件描述符(file descriptor FD 整型), 可以用在如os模块的read方法等一些底层操作上。</span></span><br><span class="line"></span><br><span class="line">file.isatty()</span><br><span class="line"><span class="comment"># 如果文件连接到一个终端设备返回 True，否则返回 False。</span></span><br><span class="line"></span><br><span class="line">file.<span class="built_in">next</span>()</span><br><span class="line"><span class="comment"># 返回文件下一行。</span></span><br><span class="line"></span><br><span class="line">file.read([size])</span><br><span class="line"><span class="comment"># 从文件读取指定的字节数，如果未给定或为负则读取所有。</span></span><br><span class="line"></span><br><span class="line">file.readline([size])</span><br><span class="line"><span class="comment"># 读取整行，包括 &quot;\n&quot; 字符。</span></span><br><span class="line"></span><br><span class="line">file.readlines([sizehint])</span><br><span class="line"><span class="comment"># 读取所有行并返回列表，若给定sizeint&gt;0，则是设置一次读多少字节，这是为了减轻读取压力。</span></span><br><span class="line"></span><br><span class="line">file.seek(offset[, whence])</span><br><span class="line"><span class="comment"># 设置文件当前位置</span></span><br><span class="line"></span><br><span class="line">file.tell()</span><br><span class="line"><span class="comment"># 返回文件当前位置。</span></span><br><span class="line"></span><br><span class="line">file.truncate([size])</span><br><span class="line"><span class="comment"># 截取文件，截取的字节通过size指定，默认为当前文件位置。</span></span><br><span class="line"></span><br><span class="line">file.write(<span class="built_in">str</span>)</span><br><span class="line"><span class="comment"># 将字符串写入文件，没有返回值。</span></span><br><span class="line"></span><br><span class="line">file.writelines(sequence)</span><br><span class="line"><span class="comment"># 向文件写入一个序列字符串列表，如果需要换行则要自己加入每行的换行符。</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>编程语言</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>修改 VPS 的 SSH 端口</title>
     <url>/2018/02/25/20180225-%E4%BF%AE%E6%94%B9%20VPS%20%E7%9A%84%20SSH%20%E7%AB%AF%E5%8F%A3/</url>
     <content><![CDATA[<p>如果你发现连不上你的 VPS了，那么有一种可能就是端口被封，我们需要改一下 VPS 端口了。</p>
@@ -1079,6 +1065,20 @@
       </categories>
       <tags>
         <tag>电信</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 学习笔记（八）【File(文件) 方法】</title>
+    <url>/2018/02/15/20180215-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AB%EF%BC%89%E3%80%90File(%E6%96%87%E4%BB%B6)%20%E6%96%B9%E6%B3%95%E3%80%91/</url>
+    <content><![CDATA[<p>file 对象使用 open 函数来创建，下表列出了 file 对象常用的函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">file.close()</span><br><span class="line"><span class="comment"># 关闭文件。关闭后文件不能再进行读写操作。</span></span><br><span class="line"></span><br><span class="line">file.flush()</span><br><span class="line"><span class="comment"># 刷新文件内部缓冲，直接把内部缓冲区的数据立刻写入文件, 而不是被动的等待输出缓冲区写入。</span></span><br><span class="line"></span><br><span class="line">file.fileno()</span><br><span class="line"><span class="comment"># 返回一个整型的文件描述符(file descriptor FD 整型), 可以用在如os模块的read方法等一些底层操作上。</span></span><br><span class="line"></span><br><span class="line">file.isatty()</span><br><span class="line"><span class="comment"># 如果文件连接到一个终端设备返回 True，否则返回 False。</span></span><br><span class="line"></span><br><span class="line">file.<span class="built_in">next</span>()</span><br><span class="line"><span class="comment"># 返回文件下一行。</span></span><br><span class="line"></span><br><span class="line">file.read([size])</span><br><span class="line"><span class="comment"># 从文件读取指定的字节数，如果未给定或为负则读取所有。</span></span><br><span class="line"></span><br><span class="line">file.readline([size])</span><br><span class="line"><span class="comment"># 读取整行，包括 &quot;\n&quot; 字符。</span></span><br><span class="line"></span><br><span class="line">file.readlines([sizehint])</span><br><span class="line"><span class="comment"># 读取所有行并返回列表，若给定sizeint&gt;0，则是设置一次读多少字节，这是为了减轻读取压力。</span></span><br><span class="line"></span><br><span class="line">file.seek(offset[, whence])</span><br><span class="line"><span class="comment"># 设置文件当前位置</span></span><br><span class="line"></span><br><span class="line">file.tell()</span><br><span class="line"><span class="comment"># 返回文件当前位置。</span></span><br><span class="line"></span><br><span class="line">file.truncate([size])</span><br><span class="line"><span class="comment"># 截取文件，截取的字节通过size指定，默认为当前文件位置。</span></span><br><span class="line"></span><br><span class="line">file.write(<span class="built_in">str</span>)</span><br><span class="line"><span class="comment"># 将字符串写入文件，没有返回值。</span></span><br><span class="line"></span><br><span class="line">file.writelines(sequence)</span><br><span class="line"><span class="comment"># 向文件写入一个序列字符串列表，如果需要换行则要自己加入每行的换行符。</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1119,62 +1119,6 @@
 <li><span class="exturl" data-url="aHR0cHM6Ly9zYW5kZXNoc2FyZGFyLmNvbS8yMDE3LzA2LzI5L3N3aWZ0LWlzLWR5bmFtaWMtYW5kLXN0cm9uZy10eXBlLWxhbmd1YWdlLw==">Swift is Dynamic and strong type language<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hYzk5MzY2MTEyZjU=">关于 Swift 的 5 个误区<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Swift 进阶【二】集合类型协议</title>
-    <url>/2018/02/28/20180228-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E4%BA%8C%E3%80%91%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B%E5%8D%8F%E8%AE%AE/</url>
-    <content><![CDATA[<h3 id="序列（Sequence）"><a href="#序列（Sequence）" class="headerlink" title="序列（Sequence）"></a>序列（Sequence）</h3><hr>
-<p>Sequence定义：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">Sequence</span> &#123;</span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Iterator</span>: <span class="type">IteratorProtocol</span></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">makeIterator</span>() -&gt; <span class="type">Iterator</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>要实现一个Sequence，首先需要提供一个返回<strong>迭代器（iterator）</strong>的<code>makeIterator()</code> 方法。<br>对于迭代器，它是一个满足 <code>IteratorProtocol</code> 协议的类型。</p>
-<p>IteratorProtocol协议的定义：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">IteratorProtocol</span> &#123;</span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Element</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">next</span>() -&gt; <span class="type">Element</span>?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p><strong>IteratorProtocol 协议中唯一的一个方法是 next()，这个方法需要在每次被调用时返回序列中的下一个值。当序列被耗尽时，next() 应该返回 nil</strong></p>
-<p>关联类型 <code>Element</code> 指定了迭代器产生的值的类型。</p>
-<p>举几个例子进行体会：</p>
-<p>1、斐波那契数列</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 菲波那切数列</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">FibsIterator</span>: <span class="title class_ inherited__">IteratorProtocol</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> state <span class="operator">=</span> (<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">next</span>() -&gt; <span class="type">Int</span>? &#123;</span><br><span class="line">        <span class="keyword">let</span> upcomingNumber <span class="operator">=</span> state.<span class="number">0</span></span><br><span class="line">        state <span class="operator">=</span> (state.<span class="number">1</span>, state.<span class="number">0</span> <span class="operator">+</span> state.<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> upcomingNumber <span class="operator">&gt;</span> <span class="number">1000</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> upcomingNumber</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> iterator <span class="operator">=</span> <span class="type">FibsIterator</span>()</span><br><span class="line"><span class="keyword">while</span> <span class="keyword">let</span> number <span class="operator">=</span> iterator.next() &#123;</span><br><span class="line">    <span class="built_in">print</span>(number)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987</span></span><br></pre></td></tr></table></figure>
-
-<p>2、返回字符串切片</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 依次返回字符串的切片</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">PrefixIterator</span>: <span class="title class_ inherited__">IteratorProtocol</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> string: <span class="type">String</span></span><br><span class="line">    <span class="keyword">var</span> offset: <span class="type">String</span>.<span class="type">Index</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">init</span>(<span class="params">str</span>: <span class="type">String</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.string <span class="operator">=</span> str</span><br><span class="line">        <span class="keyword">self</span>.offset <span class="operator">=</span> str.startIndex</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">next</span>() -&gt; <span class="type">String</span>? &#123;</span><br><span class="line">        <span class="keyword">guard</span> offset <span class="operator">&lt;</span> string.endIndex <span class="keyword">else</span> &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">        offset <span class="operator">=</span> string.index(after: offset)</span><br><span class="line">        <span class="keyword">return</span> <span class="type">String</span>(string[string.startIndex<span class="operator">..&lt;</span>offset])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> strIterator <span class="operator">=</span> <span class="type">PrefixIterator</span>(str: <span class="string">&quot;ABCDEFG&quot;</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="keyword">let</span> str <span class="operator">=</span> strIterator.next() &#123;</span><br><span class="line">    <span class="built_in">print</span>(str)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// A</span></span><br><span class="line"><span class="comment">// AB</span></span><br><span class="line"><span class="comment">// ABC</span></span><br><span class="line"><span class="comment">// ABCD</span></span><br><span class="line"><span class="comment">// ABCDE</span></span><br><span class="line"><span class="comment">// ABCDEF</span></span><br><span class="line"><span class="comment">// ABCDEFG</span></span><br></pre></td></tr></table></figure>
-
-<p>再定义一个PrefixSequence类型：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 实现PrefixIterator的sequence协议，之后可以用for来进行循环</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">PrefixSequence</span>: <span class="title class_ inherited__">Sequence</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> str: <span class="type">String</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">makeIterator</span>() -&gt; <span class="type">PrefixIterator</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">PrefixIterator</span>(str: str)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> str <span class="keyword">in</span> <span class="type">PrefixSequence</span>(str: <span class="string">&quot;ABCDEFGHIJKLMN&quot;</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(str)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现了sequence协议，就可以使用sequence协议中提供的所有方法</span></span><br><span class="line"><span class="keyword">let</span> lower <span class="operator">=</span> <span class="type">PrefixSequence</span>(str: <span class="string">&quot;ABCDEFGHIJKLMN&quot;</span>).map &#123; <span class="keyword">return</span> <span class="variable">$0</span>.lowercased() &#125;</span><br><span class="line"><span class="built_in">print</span>(lower.prefix(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="集合类型"><a href="#集合类型" class="headerlink" title="集合类型"></a>集合类型</h3><hr>
-<p>集合类型 (Collection) 指的是那些稳定的序列，它们能够被多次遍历且保持一致。和序列不同，集合类型不能是无限的。</p>
-<p>Collection 协议是建立在 Sequence 协议上的。除了从 Sequence 继承了全部方法以外，得益于可以获取指定位置的元素以及稳定迭代的保证，集合还获取了一些新的能力。比如 count 属性，如果序列是不稳定的，那么对序列计数将会消耗序列中的元素，这显然不是我们的目的。但是对于稳定的集合类型，我们就可以对其进行计数。</p>
-<p>集合类型在标准库中运用广泛。除了 Array，Dictionary 和 Set 以外，String 的四种表示方式都是集合类型。另外还有 CountableRange 和 UnsafeBufferPointer 也是如此。更进一步，我们可以看到标准库外的一些类型也遵守了 Collection 协议。有两个我们熟知的类型通过这种方法获得了很多新的能力，它们是 Data 和 IndexSet，它们都来自 Foundation 框架。</p>
-<p>自定义一个队列的集合类型：</p>
-<p>1、为队列设计协议：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 一个能够将元素入队和出队的类型</span></span><br><span class="line"><span class="keyword">protocol</span> <span class="title class_">Queue</span> &#123;</span><br><span class="line">    <span class="comment">/// 在 `self` 中所持有的元素的类型</span></span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Element</span></span><br><span class="line">    <span class="comment">/// 将 `newElement` 入队到 `self`</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">enqueue</span>(<span class="keyword">_</span> <span class="params">newElement</span>: <span class="type">Element</span>)</span><br><span class="line">    <span class="comment">/// 从 `self` 出队一个元素</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">dequeue</span>() -&gt; <span class="type">Element</span>?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>2、队列的实现</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 一个高效的 FIFO 队列，其中元素类型为 `Element`</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">FIFOQueue</span>&lt;<span class="type">Element</span>&gt;: <span class="title class_ inherited__">Queue</span> &#123;</span><br><span class="line">    <span class="keyword">fileprivate</span> <span class="keyword">var</span> left: [<span class="type">Element</span>] <span class="operator">=</span> []</span><br><span class="line">    <span class="keyword">fileprivate</span> <span class="keyword">var</span> right: [<span class="type">Element</span>] <span class="operator">=</span> []</span><br><span class="line">    <span class="comment">/// 将元素添加到队列最后</span></span><br><span class="line">    <span class="comment">/// - 复杂度: O(1)</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">enqueue</span>(<span class="keyword">_</span> <span class="params">newElement</span>: <span class="type">Element</span>) &#123;</span><br><span class="line">        right.append(newElement)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/// 从队列前端移除一个元素</span></span><br><span class="line">    <span class="comment">/// 当队列为空时，返回 nil</span></span><br><span class="line">    <span class="comment">/// - 复杂度: 平摊 O(1)</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">dequeue</span>() -&gt; <span class="type">Element</span>? &#123;</span><br><span class="line">        <span class="keyword">if</span> left.isEmpty &#123;</span><br><span class="line">            left <span class="operator">=</span> right.reversed()</span><br><span class="line">            right.removeAll()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left.popLast()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>你可能会对 dequeue 操作被声明为 O(1) 感到有一点奇怪。确实，它包含了一个复杂度为 O(n) 的 reverse 操作。对于单个的操作来说可能耗时会长一些，不过对于非常多的 push 和 pop 操作来说，取出一个元素的平摊耗时是一个常数。</p>
-<p>理解这个复杂度的关键在于理解反向操作发生的频率以及发生在多少个元素上。我们可以使用“银行家理论”来分析平摊复杂度。想象一下，你每次将一个元素放入队列，就相当于你在银行存了一块钱。接下来，你把右侧的栈的内容转移到左侧去，因为对应每个已经入队的元素，你在银行里都相当于有一块钱。你可以用这些钱来支付反转。你的账户永远不会负债，你也从来不会花费比你付出的更多的东西。</p>
-<p>这个理论可以用来解释一个操作的消耗在时间上进行平摊的情况，即便其中的某次调用可能不是常数，但平摊下来以后这个耗时依然是常数。Swift 中向数组后面添加一个元素的操作是常数时间复杂度，这也可以用同样的理论进行解释。当数组存储空间耗尽时，它需要申请更大的空间，并且把所有已经存在于数组中的元素复制过去。但是因为每次申请空间都会使存储空间翻倍，“添加元素，支付一块钱，数组尺寸翻倍，最多耗费所有钱来进行复制”这个理论已然是有效的。</p>
-<h5 id="遵守-ExpressibleByArrayLiteral-协议"><a href="#遵守-ExpressibleByArrayLiteral-协议" class="headerlink" title="遵守 ExpressibleByArrayLiteral 协议"></a>遵守 ExpressibleByArrayLiteral 协议</h5><hr>
-<p>遵守 ExpressibleByArrayLiteral 协议的好处是，可以像用字面量去创建一个Array的方式去创建队列（[value1, value2, etc]）。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">FIFOQueue</span>: <span class="title class_ inherited__">ExpressibleByArrayLiteral</span> &#123;</span><br><span class="line">    <span class="keyword">typealias</span> <span class="type">ArrayLiteralElement</span> <span class="operator">=</span> <span class="type">Element</span></span><br><span class="line">    <span class="keyword">init</span>(<span class="params">arrayLiteral</span> <span class="params">elements</span>: <span class="type">Element</span>...) &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="keyword">init</span>(left: elements.reversed(), right: [])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> queue: <span class="type">FIFOQueue</span>&lt;<span class="type">Int</span>&gt; <span class="operator">=</span> [<span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
-
-<p><strong>字面量和类型的区别</strong></p>
-<p>在这里需要特别注意 Swift 中字面量和类型的区别。<strong>这里的 [1, 2, 3] 并不是一个数组，它只是一个“数组字面量”，是一种写法，我们可以用它来创建任意的遵守 ExpressibleByArrayLiteral 的类型。</strong>在这个字面量里面还包括了其他的字面量类型，比如能够创建任意遵守 ExpressibleByIntegerLiteral 的整数型字面量。<br>这些字面量有“默认”的类型，<strong>如果你不指明类型，那些 Swift 将假设你想要的就是默认的类型。</strong>正如你所料，数组字面量的默认类型是 Array，整数字面量的默认类型是 Int，浮点数字面量默认为 Double，而字符串字面量则对应 String。<strong>但是这只发生在你没有指定类型的情况下。</strong></p>
-<h5 id="关联类型"><a href="#关联类型" class="headerlink" title="关联类型"></a>关联类型</h5><hr>
-<p>building…</p>
 ]]></content>
       <categories>
         <category>编程语言</category>
@@ -1258,6 +1202,62 @@
 <h4 id="2018年3月11日-上午3-35-更新"><a href="#2018年3月11日-上午3-35-更新" class="headerlink" title="2018年3月11日 上午3:35 更新"></a>2018年3月11日 上午3:35 更新</h4><hr>
 <p>关于去除数组中重复项的更函数式的写法</p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// SwifterSwift: Remove all duplicate elements from Array.</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///        [1, 2, 2, 3, 4, 5].removeDuplicates() -&gt; [1, 2, 3, 4, 5]</span></span><br><span class="line"><span class="comment">///        [&quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]. removeDuplicates() -&gt; [&quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;o&quot;]</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">removeDuplicates</span>() &#123;</span><br><span class="line">    <span class="comment">// Thanks to https://github.com/sairamkotha for improving the method</span></span><br><span class="line">    <span class="keyword">self</span> <span class="operator">=</span> reduce([])&#123; <span class="variable">$0</span>.contains(<span class="variable">$1</span>) <span class="operator">?</span> <span class="variable">$0</span> : <span class="variable">$0</span> <span class="operator">+</span> [<span class="variable">$1</span>] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// SwifterSwift: Return array with all duplicate elements removed.</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///        [1, 2, 2, 3, 4, 5, 5].duplicatesRemoved() -&gt; [ 2, 5]</span></span><br><span class="line"><span class="comment">///        [&quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]. duplicatesRemoved() -&gt; [&quot;l&quot;]</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// - Returns: an array of unique elements.</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">duplicatesRemoved</span>() -&gt; [<span class="type">Element</span>] &#123;</span><br><span class="line">    <span class="comment">// Thanks to https://github.com/sairamkotha for improving the property</span></span><br><span class="line">    <span class="keyword">return</span> reduce([])&#123; (<span class="variable">$0</span> <span class="keyword">as</span> [<span class="type">Element</span>]).contains(<span class="variable">$1</span>) <span class="operator">?</span> <span class="variable">$0</span> : <span class="variable">$0</span> <span class="operator">+</span> [<span class="variable">$1</span>] &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Swift 进阶【二】集合类型协议</title>
+    <url>/2018/02/28/20180228-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E4%BA%8C%E3%80%91%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<h3 id="序列（Sequence）"><a href="#序列（Sequence）" class="headerlink" title="序列（Sequence）"></a>序列（Sequence）</h3><hr>
+<p>Sequence定义：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">Sequence</span> &#123;</span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Iterator</span>: <span class="type">IteratorProtocol</span></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">makeIterator</span>() -&gt; <span class="type">Iterator</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要实现一个Sequence，首先需要提供一个返回<strong>迭代器（iterator）</strong>的<code>makeIterator()</code> 方法。<br>对于迭代器，它是一个满足 <code>IteratorProtocol</code> 协议的类型。</p>
+<p>IteratorProtocol协议的定义：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">IteratorProtocol</span> &#123;</span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Element</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">next</span>() -&gt; <span class="type">Element</span>?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p><strong>IteratorProtocol 协议中唯一的一个方法是 next()，这个方法需要在每次被调用时返回序列中的下一个值。当序列被耗尽时，next() 应该返回 nil</strong></p>
+<p>关联类型 <code>Element</code> 指定了迭代器产生的值的类型。</p>
+<p>举几个例子进行体会：</p>
+<p>1、斐波那契数列</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 菲波那切数列</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">FibsIterator</span>: <span class="title class_ inherited__">IteratorProtocol</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> state <span class="operator">=</span> (<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">next</span>() -&gt; <span class="type">Int</span>? &#123;</span><br><span class="line">        <span class="keyword">let</span> upcomingNumber <span class="operator">=</span> state.<span class="number">0</span></span><br><span class="line">        state <span class="operator">=</span> (state.<span class="number">1</span>, state.<span class="number">0</span> <span class="operator">+</span> state.<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> upcomingNumber <span class="operator">&gt;</span> <span class="number">1000</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> upcomingNumber</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> iterator <span class="operator">=</span> <span class="type">FibsIterator</span>()</span><br><span class="line"><span class="keyword">while</span> <span class="keyword">let</span> number <span class="operator">=</span> iterator.next() &#123;</span><br><span class="line">    <span class="built_in">print</span>(number)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987</span></span><br></pre></td></tr></table></figure>
+
+<p>2、返回字符串切片</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 依次返回字符串的切片</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">PrefixIterator</span>: <span class="title class_ inherited__">IteratorProtocol</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> string: <span class="type">String</span></span><br><span class="line">    <span class="keyword">var</span> offset: <span class="type">String</span>.<span class="type">Index</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">init</span>(<span class="params">str</span>: <span class="type">String</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.string <span class="operator">=</span> str</span><br><span class="line">        <span class="keyword">self</span>.offset <span class="operator">=</span> str.startIndex</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">next</span>() -&gt; <span class="type">String</span>? &#123;</span><br><span class="line">        <span class="keyword">guard</span> offset <span class="operator">&lt;</span> string.endIndex <span class="keyword">else</span> &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">        offset <span class="operator">=</span> string.index(after: offset)</span><br><span class="line">        <span class="keyword">return</span> <span class="type">String</span>(string[string.startIndex<span class="operator">..&lt;</span>offset])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> strIterator <span class="operator">=</span> <span class="type">PrefixIterator</span>(str: <span class="string">&quot;ABCDEFG&quot;</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="keyword">let</span> str <span class="operator">=</span> strIterator.next() &#123;</span><br><span class="line">    <span class="built_in">print</span>(str)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// A</span></span><br><span class="line"><span class="comment">// AB</span></span><br><span class="line"><span class="comment">// ABC</span></span><br><span class="line"><span class="comment">// ABCD</span></span><br><span class="line"><span class="comment">// ABCDE</span></span><br><span class="line"><span class="comment">// ABCDEF</span></span><br><span class="line"><span class="comment">// ABCDEFG</span></span><br></pre></td></tr></table></figure>
+
+<p>再定义一个PrefixSequence类型：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 实现PrefixIterator的sequence协议，之后可以用for来进行循环</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">PrefixSequence</span>: <span class="title class_ inherited__">Sequence</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> str: <span class="type">String</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">makeIterator</span>() -&gt; <span class="type">PrefixIterator</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">PrefixIterator</span>(str: str)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> str <span class="keyword">in</span> <span class="type">PrefixSequence</span>(str: <span class="string">&quot;ABCDEFGHIJKLMN&quot;</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(str)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现了sequence协议，就可以使用sequence协议中提供的所有方法</span></span><br><span class="line"><span class="keyword">let</span> lower <span class="operator">=</span> <span class="type">PrefixSequence</span>(str: <span class="string">&quot;ABCDEFGHIJKLMN&quot;</span>).map &#123; <span class="keyword">return</span> <span class="variable">$0</span>.lowercased() &#125;</span><br><span class="line"><span class="built_in">print</span>(lower.prefix(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="集合类型"><a href="#集合类型" class="headerlink" title="集合类型"></a>集合类型</h3><hr>
+<p>集合类型 (Collection) 指的是那些稳定的序列，它们能够被多次遍历且保持一致。和序列不同，集合类型不能是无限的。</p>
+<p>Collection 协议是建立在 Sequence 协议上的。除了从 Sequence 继承了全部方法以外，得益于可以获取指定位置的元素以及稳定迭代的保证，集合还获取了一些新的能力。比如 count 属性，如果序列是不稳定的，那么对序列计数将会消耗序列中的元素，这显然不是我们的目的。但是对于稳定的集合类型，我们就可以对其进行计数。</p>
+<p>集合类型在标准库中运用广泛。除了 Array，Dictionary 和 Set 以外，String 的四种表示方式都是集合类型。另外还有 CountableRange 和 UnsafeBufferPointer 也是如此。更进一步，我们可以看到标准库外的一些类型也遵守了 Collection 协议。有两个我们熟知的类型通过这种方法获得了很多新的能力，它们是 Data 和 IndexSet，它们都来自 Foundation 框架。</p>
+<p>自定义一个队列的集合类型：</p>
+<p>1、为队列设计协议：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 一个能够将元素入队和出队的类型</span></span><br><span class="line"><span class="keyword">protocol</span> <span class="title class_">Queue</span> &#123;</span><br><span class="line">    <span class="comment">/// 在 `self` 中所持有的元素的类型</span></span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Element</span></span><br><span class="line">    <span class="comment">/// 将 `newElement` 入队到 `self`</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">enqueue</span>(<span class="keyword">_</span> <span class="params">newElement</span>: <span class="type">Element</span>)</span><br><span class="line">    <span class="comment">/// 从 `self` 出队一个元素</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">dequeue</span>() -&gt; <span class="type">Element</span>?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、队列的实现</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 一个高效的 FIFO 队列，其中元素类型为 `Element`</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">FIFOQueue</span>&lt;<span class="type">Element</span>&gt;: <span class="title class_ inherited__">Queue</span> &#123;</span><br><span class="line">    <span class="keyword">fileprivate</span> <span class="keyword">var</span> left: [<span class="type">Element</span>] <span class="operator">=</span> []</span><br><span class="line">    <span class="keyword">fileprivate</span> <span class="keyword">var</span> right: [<span class="type">Element</span>] <span class="operator">=</span> []</span><br><span class="line">    <span class="comment">/// 将元素添加到队列最后</span></span><br><span class="line">    <span class="comment">/// - 复杂度: O(1)</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">enqueue</span>(<span class="keyword">_</span> <span class="params">newElement</span>: <span class="type">Element</span>) &#123;</span><br><span class="line">        right.append(newElement)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/// 从队列前端移除一个元素</span></span><br><span class="line">    <span class="comment">/// 当队列为空时，返回 nil</span></span><br><span class="line">    <span class="comment">/// - 复杂度: 平摊 O(1)</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">dequeue</span>() -&gt; <span class="type">Element</span>? &#123;</span><br><span class="line">        <span class="keyword">if</span> left.isEmpty &#123;</span><br><span class="line">            left <span class="operator">=</span> right.reversed()</span><br><span class="line">            right.removeAll()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left.popLast()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可能会对 dequeue 操作被声明为 O(1) 感到有一点奇怪。确实，它包含了一个复杂度为 O(n) 的 reverse 操作。对于单个的操作来说可能耗时会长一些，不过对于非常多的 push 和 pop 操作来说，取出一个元素的平摊耗时是一个常数。</p>
+<p>理解这个复杂度的关键在于理解反向操作发生的频率以及发生在多少个元素上。我们可以使用“银行家理论”来分析平摊复杂度。想象一下，你每次将一个元素放入队列，就相当于你在银行存了一块钱。接下来，你把右侧的栈的内容转移到左侧去，因为对应每个已经入队的元素，你在银行里都相当于有一块钱。你可以用这些钱来支付反转。你的账户永远不会负债，你也从来不会花费比你付出的更多的东西。</p>
+<p>这个理论可以用来解释一个操作的消耗在时间上进行平摊的情况，即便其中的某次调用可能不是常数，但平摊下来以后这个耗时依然是常数。Swift 中向数组后面添加一个元素的操作是常数时间复杂度，这也可以用同样的理论进行解释。当数组存储空间耗尽时，它需要申请更大的空间，并且把所有已经存在于数组中的元素复制过去。但是因为每次申请空间都会使存储空间翻倍，“添加元素，支付一块钱，数组尺寸翻倍，最多耗费所有钱来进行复制”这个理论已然是有效的。</p>
+<h5 id="遵守-ExpressibleByArrayLiteral-协议"><a href="#遵守-ExpressibleByArrayLiteral-协议" class="headerlink" title="遵守 ExpressibleByArrayLiteral 协议"></a>遵守 ExpressibleByArrayLiteral 协议</h5><hr>
+<p>遵守 ExpressibleByArrayLiteral 协议的好处是，可以像用字面量去创建一个Array的方式去创建队列（[value1, value2, etc]）。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">FIFOQueue</span>: <span class="title class_ inherited__">ExpressibleByArrayLiteral</span> &#123;</span><br><span class="line">    <span class="keyword">typealias</span> <span class="type">ArrayLiteralElement</span> <span class="operator">=</span> <span class="type">Element</span></span><br><span class="line">    <span class="keyword">init</span>(<span class="params">arrayLiteral</span> <span class="params">elements</span>: <span class="type">Element</span>...) &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="keyword">init</span>(left: elements.reversed(), right: [])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> queue: <span class="type">FIFOQueue</span>&lt;<span class="type">Int</span>&gt; <span class="operator">=</span> [<span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<p><strong>字面量和类型的区别</strong></p>
+<p>在这里需要特别注意 Swift 中字面量和类型的区别。<strong>这里的 [1, 2, 3] 并不是一个数组，它只是一个“数组字面量”，是一种写法，我们可以用它来创建任意的遵守 ExpressibleByArrayLiteral 的类型。</strong>在这个字面量里面还包括了其他的字面量类型，比如能够创建任意遵守 ExpressibleByIntegerLiteral 的整数型字面量。<br>这些字面量有“默认”的类型，<strong>如果你不指明类型，那些 Swift 将假设你想要的就是默认的类型。</strong>正如你所料，数组字面量的默认类型是 Array，整数字面量的默认类型是 Int，浮点数字面量默认为 Double，而字符串字面量则对应 String。<strong>但是这只发生在你没有指定类型的情况下。</strong></p>
+<h5 id="关联类型"><a href="#关联类型" class="headerlink" title="关联类型"></a>关联类型</h5><hr>
+<p>building…</p>
+]]></content>
       <categories>
         <category>编程语言</category>
       </categories>
@@ -1919,6 +1919,75 @@
       </tags>
   </entry>
   <entry>
+    <title>Swift 进阶【七】字符串</title>
+    <url>/2018/04/01/20180401-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E4%B8%83%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h3 id="字符串索引"><a href="#字符串索引" class="headerlink" title="字符串索引"></a>字符串索引</h3><hr>
+<p>大部分编程语言使用整数值对字符串进行下标操作，比如 <code>str[5]</code> 将会返回 <code>str</code> 中的第六个“字符” (这里的“字符”的概念由所操作的编程语言进行定义)。Swift 不允许这么做。为什么？答案可能现在你已经很耳熟了：因为整数的下标访问无法在常数时间内完成 (对于 <code>Collection</code> 协议来说这也是个直观要求)，而且查找第 n 个 <code>Character</code> 的操作也必须要对它之前的所有字节进行检查。</p>
+<p><code>String.Index</code> 是 <code>String</code> 和它的视图所使用的索引类型，它本质上是一个存储了从字符串开头的字节偏移量的不透明值。如果你想计算第 n 个字符所对应的索引，你依然从字符串的开头或结尾开始，并花费 O(n) 的时间。但是一旦你拥有了有效的索引，就可以通过索引下标以 O(1) 的时间对字符串进行访问了。至关重要的是，通过一个已有索引来寻找下一个索引也是很快的，因为你可以从这个已有索引的字节偏移量开始进行查找，而不需要从头开始。正是由于这个原因，按顺序 (前向或者后向) 对字符串中的字符进行迭代是一个高效操作。</p>
+<span id="more"></span>
+
+<p>对字符串索引的操作的 API 与你在遇到其他任何集合时使用的索引操作是一样的。我们之所以经常容易忽略索引操作的等效性，是因为到现在为止我们最经常使用的数组的索引是整数类型，于是我们往往通过简单的算数，而非正式的索引操作 API，来对数组索引进行操作。<code>index(after:)</code> 方法将返回下一个字符的索引：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s <span class="operator">=</span> <span class="string">&quot;abcdef&quot;</span></span><br><span class="line"><span class="keyword">let</span> second <span class="operator">=</span> s.index(after: s.startIndex)</span><br><span class="line">s[second] <span class="comment">// b</span></span><br></pre></td></tr></table></figure>
+
+<p>如果需要一次性地自动对多个字符进行迭代：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 步进 4 个字符</span></span><br><span class="line"><span class="keyword">let</span> sixth <span class="operator">=</span> s.index(second, offsetBy: <span class="number">4</span>)</span><br><span class="line">s[sixth] <span class="comment">// f</span></span><br></pre></td></tr></table></figure>
+
+<p>如果存在超过字符串末尾的风险，你可以加上 <code>limitedBy:</code> 参数。如果这个方法在达到目标索引之前就先触发了限制条件的话，它将返回 <code>nil</code>：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> safeIdx <span class="operator">=</span> s.index(s.startIndex, offsetBy: <span class="number">400</span>, limitedBy: s.endIndex)</span><br><span class="line">safeIdx <span class="comment">// nil</span></span><br></pre></td></tr></table></figure>
+
+<p>毫无疑问，这比简单的整数索引需要更多的代码，但是再一次，Swift 就是这样设计的。如果 Swift 允许使用整数下标索引来访问字符串，会大大增加意外地写出性能相当糟糕的代码的可能性（比如，在一个循环中使用了整数下标）。</p>
+<h3 id="子字符串"><a href="#子字符串" class="headerlink" title="子字符串"></a>子字符串</h3><hr>
+<p>和所有集合类型一样，<code>String</code> 有一个特定的 <code>SubSequence</code> 类型，它就是 <code>Substring</code> 。<code>Substring</code> 和 <code>ArraySlice</code> 很相似：它是一个以不同起始和结束索引的对原字符串的切片。子字符串和原字符串共享文本存储，这带来的巨大的好处，它让对字符串切片成为了非常高效的操作。在下面的例子中，创建 <code>firstWord</code> 并不会导致昂贵的复制操作或者内存申请：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> sentence <span class="operator">=</span> <span class="string">&quot;The quick brown fox jumped over the lazy dog.&quot;</span></span><br><span class="line"><span class="keyword">let</span> firstSpace <span class="operator">=</span> sentence.index(of: <span class="string">&quot; &quot;</span>) <span class="operator">??</span> sentence.endIndex</span><br><span class="line"><span class="keyword">let</span> firstWord <span class="operator">=</span> sentence[<span class="operator">..&lt;</span>firstSpace] <span class="comment">// The</span></span><br><span class="line"><span class="built_in">type</span>(of: firstWord) <span class="comment">// Substring</span></span><br></pre></td></tr></table></figure>
+
+<p>在你对一个（可能会很长的）字符串进行迭代并提取它的各个部分的循环中，切片的高效特性就非常重要了。这类任务可能包括在文本中寻找某个单词出现的所有位置，或者解析一个 CSV 文件等。在这里，字符串分割是一个很有用的操作。<code>Colleciton</code> 定义了一个 <code>split</code> 方法，它会返回一个子序列的数组（也就是 <code>[Substring]</code> ）。最常用的一种形式是：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Collection</span> <span class="keyword">where</span> <span class="type">Element</span>: <span class="type">Equatable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">split</span>(<span class="params">separator</span>: <span class="type">Element</span>, <span class="params">maxSplits</span>: <span class="type">Int</span> <span class="operator">=</span> <span class="type">Int</span>.max,</span><br><span class="line">                      <span class="params">omittingEmptySubsequences</span>: <span class="type">Bool</span> <span class="operator">=</span> <span class="literal">true</span>) -&gt; [<span class="type">SubSequence</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以这样来使用：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> poem <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Over the wintry</span></span><br><span class="line"><span class="string">forest, winds howl in rage</span></span><br><span class="line"><span class="string">with no leaves to blow.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">let</span> lines <span class="operator">=</span> poem.split(separator: <span class="string">&quot;<span class="subst">\n</span>&quot;</span>)</span><br><span class="line"><span class="comment">// [&quot;Over the wintry&quot;, &quot;forest, winds howl in rage&quot;, &quot;with no leaves to blow.&quot;]</span></span><br><span class="line"><span class="built_in">type</span>(of: lines) <span class="comment">// Array&lt;Substring&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="StringProtocol"><a href="#StringProtocol" class="headerlink" title="StringProtocol"></a>StringProtocol</h3><hr>
+<p><code>Substring</code> 和 <code>String</code> 的接口几乎完全一样。这是通过一个叫做 <code>StringProtocol</code> 的通用协议来达到的，<code>String</code> 和 <code>Substring</code> 都遵守这个协议。因为几乎所有的字符串 API 都被定义在 <code>StringProtocol</code> 上，对于 <code>Substring</code>，你完全可以假装将它看作就是一个 <code>String</code>，并完成各项操作。不过，在某些时候，你还是需要将子字符串转回 <code>String</code> 实例；和所有的切片一样，子字符串也只能用于短期的存储，这可以避免在操作过程中发生昂贵的复制。当这个操作结束，你想将结果保存起来，或是传递给下一个子系统，这时你应该通过初始化方法从 <code>Substring</code> 创建一个新的 <code>String</code>，如下例所示：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">lastWord</span>(<span class="params">in</span> <span class="params">input</span>: <span class="type">String</span>) -&gt; <span class="type">String</span>? &#123;</span><br><span class="line">    <span class="comment">// 处理输入，操作子字符串</span></span><br><span class="line">    <span class="keyword">let</span> words <span class="operator">=</span> input.split(separators: [<span class="string">&quot;,&quot;</span>, <span class="string">&quot; &quot;</span>])</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> lastWord <span class="operator">=</span> words.last <span class="keyword">else</span> &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">    <span class="comment">// 转换为字符串并返回</span></span><br><span class="line">    <span class="keyword">return</span> <span class="type">String</span>(lastWord)</span><br><span class="line">&#125;</span><br><span class="line">lastWord(in: <span class="string">&quot;one, two, three, four, five&quot;</span>) <span class="comment">// Optional(&quot;five&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>不鼓励长期存储子字符串的根本原因在于，子字符串会一直持有整个原始字符串。如果有一个巨大的字符串，它的一个只表示单个字符的子字符串将会在内存中持有整个字符串。即使当原字符串的生命周期本应该结束时，只要子字符串还存在，这部分内存就无法释放。长期存储子字符串实际上会造成内存泄漏，由于原字符串还必须被持有在内存中，但是它们却不能再被访问。</strong></p>
+<p>如果你想要扩展 <code>String</code> 为其添加新的功能，将这个扩展放在 <code>StringProtocol</code> 会是一个好主意，这可以保持 <code>String</code> 和 <code>Substring API</code> 的统一性。<code>StringProtocol</code> 设计之初就是为了在你想要对 String 扩展时来使用的。如果你想要将已有的扩展从 <code>String</code> 移动到 <code>StringProtocol</code> 的话，唯一需要做的改动是将传入其他 API 的 <code>self</code> 通过 <code>String(self)</code> 换为具体的 <code>String</code> 类型实例。</p>
+<p>不过需要记住，在 Swift 4 中，<code>StringProtocol</code> 还并不是一个你想要构建自己的字符串类型时所应该实现的目标协议。文档中明确警告了这一点：</p>
+<blockquote>
+<p>不要声明任意新的遵守 <code>StringProtocol</code> 协议的类型。只有标准库中的 <code>String</code> 和 <code>Substring</code> 类型是有效的适配类型。  </p>
+</blockquote>
+<p>最终的目标是允许开发者创建他们自己的字符串类型 (比如带有特定的存储或者性能优化)，但是协议的设计还没有结束，所以现在就遵守这个协议的话，可能会让你的代码在 Swift 5 中无法通过编译。</p>
+<h3 id="CustomStringConvertible"><a href="#CustomStringConvertible" class="headerlink" title="CustomStringConvertible"></a>CustomStringConvertible</h3><hr>
+<p>符合 <code>CustomStringConvertible</code> 协议的类型可以在将实例转换为字符串时提供自己的表示形式。<code>String(describing:)</code> 初始值设定项是将任何类型的实例转换为字符串的首选方法。如果传递的实例符合<code>CustomStringConvertible</code> ，则 <code>String(describing:</code> 初始值设定项和 <code>print(_:)</code> 函数将使用实例的自定义描述属性。</p>
+<p>不鼓励直接访问类型的 <code>description</code> 属性或使用 <code>CustomStringConvertible </code> 作为通用约束。</p>
+<h4 id="遵守-CustomStringConvertible-协议"><a href="#遵守-CustomStringConvertible-协议" class="headerlink" title="遵守 CustomStringConvertible 协议"></a>遵守 <code>CustomStringConvertible</code> 协议</h4><p>通过定义 <code>description</code> 属性将 <code>CustomStringConvertible</code> 协议添加到自定义类型中。</p>
+<p>例如，这个自定义的 <code>Point</code> 结构体使用标准库提供的默认表示形式：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> x: <span class="type">Int</span>, y: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p <span class="operator">=</span> <span class="type">Point</span>(x: <span class="number">21</span>, y: <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="comment">// Prints &quot;Point(x: 21, y: 30)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在实现 <code>description</code> 属性并遵守 <code>CustomStringConvertible</code> 协议之后，<code>Point</code> 类型提供了它自己的自定义表示。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Point</span>: <span class="title class_ inherited__">CustomStringConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> description: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;(<span class="subst">\(x)</span>, <span class="subst">\(y)</span>)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="comment">// Prints &quot;(21, 30)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="CustomDebugStringConvertible"><a href="#CustomDebugStringConvertible" class="headerlink" title="CustomDebugStringConvertible"></a>CustomDebugStringConvertible</h3><hr>
+<p>Swift 为任意类型（any type）提供了默认的调试文本表示。 <code>String(reflecting:)</code> 的初始化和 <code>debugPrint(_:)</code> 函数使用该默认表示形式。要自定义该表示，请使您的类型符合 <code>CustomDebugStringConvertible </code> 协议。</p>
+<p>由于 <code>String(reflecting:)</code> 的初始化适用于任何类型的实例，如果传递的值符合 <code>CustomDebugStringConvertible</code> ，则返回实例的 <code>debugDescription</code> ，不鼓励直接访问类型的 <code>debugDescription</code> 属性，或者使用 <code>CustomDebugStringConvertible</code> 作为通用约束。</p>
+<blockquote>
+<p>Note  </p>
+<p>调用 <code>dump(_:_:_:_:)</code> 函数并在调试器中打印时使用 <code>String(reflecting:)</code> 和 <code>Mirror(reflecting:)</code> 来收集有关实例的信息，如果你为你自定义的类型实现了 <code>CustomDebugStringConvertible</code> 协议，则可能需要考虑通过实现 <code>CustomReflectable</code> 协议来提供自定义镜像。  </p>
+</blockquote>
+<h4 id="遵守-CustomDebugStringConvertible-协议"><a href="#遵守-CustomDebugStringConvertible-协议" class="headerlink" title="遵守 CustomDebugStringConvertible  协议"></a>遵守 <code>CustomDebugStringConvertible </code> 协议</h4><p>通过定义 <code>debugDescription </code> 属性将 <code>CustomDebugStringConvertible </code> 协议添加到自定义类型中。</p>
+<p>例如，这个自定义的 <code>Point</code> 结构体使用标准库提供的默认表示形式：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> x: <span class="type">Int</span>, y: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p <span class="operator">=</span> <span class="type">Point</span>(x: <span class="number">21</span>, y: <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="type">String</span>(reflecting: p))</span><br><span class="line"><span class="comment">// Prints &quot;p: Point = &#123;</span></span><br><span class="line"><span class="comment">//           x = 21</span></span><br><span class="line"><span class="comment">//           y = 30</span></span><br><span class="line"><span class="comment">//         &#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在实现 <code>debugDescription </code> 属性并遵守 <code>CustomDebugStringConvertible </code> 协议之后，<code>Point</code> 类型提供了它自己的自定义表示。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Point</span>: <span class="title class_ inherited__">CustomDebugStringConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> debugDescription: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Point(x: <span class="subst">\(x)</span>, y: <span class="subst">\(y)</span>)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="type">String</span>(reflecting: p))</span><br><span class="line"><span class="comment">// Prints &quot;Point(x: 21, y: 30)&quot;</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Swift ABI Stability Manifesto</title>
     <url>/2018/03/29/20180329-Swift%20ABI%20Stability%20Manifesto/</url>
     <content><![CDATA[<ul>
@@ -2141,75 +2210,6 @@
 ]]></content>
       <categories>
         <category>底层原理</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Swift 进阶【七】字符串</title>
-    <url>/2018/04/01/20180401-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E4%B8%83%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h3 id="字符串索引"><a href="#字符串索引" class="headerlink" title="字符串索引"></a>字符串索引</h3><hr>
-<p>大部分编程语言使用整数值对字符串进行下标操作，比如 <code>str[5]</code> 将会返回 <code>str</code> 中的第六个“字符” (这里的“字符”的概念由所操作的编程语言进行定义)。Swift 不允许这么做。为什么？答案可能现在你已经很耳熟了：因为整数的下标访问无法在常数时间内完成 (对于 <code>Collection</code> 协议来说这也是个直观要求)，而且查找第 n 个 <code>Character</code> 的操作也必须要对它之前的所有字节进行检查。</p>
-<p><code>String.Index</code> 是 <code>String</code> 和它的视图所使用的索引类型，它本质上是一个存储了从字符串开头的字节偏移量的不透明值。如果你想计算第 n 个字符所对应的索引，你依然从字符串的开头或结尾开始，并花费 O(n) 的时间。但是一旦你拥有了有效的索引，就可以通过索引下标以 O(1) 的时间对字符串进行访问了。至关重要的是，通过一个已有索引来寻找下一个索引也是很快的，因为你可以从这个已有索引的字节偏移量开始进行查找，而不需要从头开始。正是由于这个原因，按顺序 (前向或者后向) 对字符串中的字符进行迭代是一个高效操作。</p>
-<span id="more"></span>
-
-<p>对字符串索引的操作的 API 与你在遇到其他任何集合时使用的索引操作是一样的。我们之所以经常容易忽略索引操作的等效性，是因为到现在为止我们最经常使用的数组的索引是整数类型，于是我们往往通过简单的算数，而非正式的索引操作 API，来对数组索引进行操作。<code>index(after:)</code> 方法将返回下一个字符的索引：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s <span class="operator">=</span> <span class="string">&quot;abcdef&quot;</span></span><br><span class="line"><span class="keyword">let</span> second <span class="operator">=</span> s.index(after: s.startIndex)</span><br><span class="line">s[second] <span class="comment">// b</span></span><br></pre></td></tr></table></figure>
-
-<p>如果需要一次性地自动对多个字符进行迭代：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 步进 4 个字符</span></span><br><span class="line"><span class="keyword">let</span> sixth <span class="operator">=</span> s.index(second, offsetBy: <span class="number">4</span>)</span><br><span class="line">s[sixth] <span class="comment">// f</span></span><br></pre></td></tr></table></figure>
-
-<p>如果存在超过字符串末尾的风险，你可以加上 <code>limitedBy:</code> 参数。如果这个方法在达到目标索引之前就先触发了限制条件的话，它将返回 <code>nil</code>：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> safeIdx <span class="operator">=</span> s.index(s.startIndex, offsetBy: <span class="number">400</span>, limitedBy: s.endIndex)</span><br><span class="line">safeIdx <span class="comment">// nil</span></span><br></pre></td></tr></table></figure>
-
-<p>毫无疑问，这比简单的整数索引需要更多的代码，但是再一次，Swift 就是这样设计的。如果 Swift 允许使用整数下标索引来访问字符串，会大大增加意外地写出性能相当糟糕的代码的可能性（比如，在一个循环中使用了整数下标）。</p>
-<h3 id="子字符串"><a href="#子字符串" class="headerlink" title="子字符串"></a>子字符串</h3><hr>
-<p>和所有集合类型一样，<code>String</code> 有一个特定的 <code>SubSequence</code> 类型，它就是 <code>Substring</code> 。<code>Substring</code> 和 <code>ArraySlice</code> 很相似：它是一个以不同起始和结束索引的对原字符串的切片。子字符串和原字符串共享文本存储，这带来的巨大的好处，它让对字符串切片成为了非常高效的操作。在下面的例子中，创建 <code>firstWord</code> 并不会导致昂贵的复制操作或者内存申请：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> sentence <span class="operator">=</span> <span class="string">&quot;The quick brown fox jumped over the lazy dog.&quot;</span></span><br><span class="line"><span class="keyword">let</span> firstSpace <span class="operator">=</span> sentence.index(of: <span class="string">&quot; &quot;</span>) <span class="operator">??</span> sentence.endIndex</span><br><span class="line"><span class="keyword">let</span> firstWord <span class="operator">=</span> sentence[<span class="operator">..&lt;</span>firstSpace] <span class="comment">// The</span></span><br><span class="line"><span class="built_in">type</span>(of: firstWord) <span class="comment">// Substring</span></span><br></pre></td></tr></table></figure>
-
-<p>在你对一个（可能会很长的）字符串进行迭代并提取它的各个部分的循环中，切片的高效特性就非常重要了。这类任务可能包括在文本中寻找某个单词出现的所有位置，或者解析一个 CSV 文件等。在这里，字符串分割是一个很有用的操作。<code>Colleciton</code> 定义了一个 <code>split</code> 方法，它会返回一个子序列的数组（也就是 <code>[Substring]</code> ）。最常用的一种形式是：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Collection</span> <span class="keyword">where</span> <span class="type">Element</span>: <span class="type">Equatable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">split</span>(<span class="params">separator</span>: <span class="type">Element</span>, <span class="params">maxSplits</span>: <span class="type">Int</span> <span class="operator">=</span> <span class="type">Int</span>.max,</span><br><span class="line">                      <span class="params">omittingEmptySubsequences</span>: <span class="type">Bool</span> <span class="operator">=</span> <span class="literal">true</span>) -&gt; [<span class="type">SubSequence</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>你可以这样来使用：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> poem <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Over the wintry</span></span><br><span class="line"><span class="string">forest, winds howl in rage</span></span><br><span class="line"><span class="string">with no leaves to blow.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">let</span> lines <span class="operator">=</span> poem.split(separator: <span class="string">&quot;<span class="subst">\n</span>&quot;</span>)</span><br><span class="line"><span class="comment">// [&quot;Over the wintry&quot;, &quot;forest, winds howl in rage&quot;, &quot;with no leaves to blow.&quot;]</span></span><br><span class="line"><span class="built_in">type</span>(of: lines) <span class="comment">// Array&lt;Substring&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="StringProtocol"><a href="#StringProtocol" class="headerlink" title="StringProtocol"></a>StringProtocol</h3><hr>
-<p><code>Substring</code> 和 <code>String</code> 的接口几乎完全一样。这是通过一个叫做 <code>StringProtocol</code> 的通用协议来达到的，<code>String</code> 和 <code>Substring</code> 都遵守这个协议。因为几乎所有的字符串 API 都被定义在 <code>StringProtocol</code> 上，对于 <code>Substring</code>，你完全可以假装将它看作就是一个 <code>String</code>，并完成各项操作。不过，在某些时候，你还是需要将子字符串转回 <code>String</code> 实例；和所有的切片一样，子字符串也只能用于短期的存储，这可以避免在操作过程中发生昂贵的复制。当这个操作结束，你想将结果保存起来，或是传递给下一个子系统，这时你应该通过初始化方法从 <code>Substring</code> 创建一个新的 <code>String</code>，如下例所示：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">lastWord</span>(<span class="params">in</span> <span class="params">input</span>: <span class="type">String</span>) -&gt; <span class="type">String</span>? &#123;</span><br><span class="line">    <span class="comment">// 处理输入，操作子字符串</span></span><br><span class="line">    <span class="keyword">let</span> words <span class="operator">=</span> input.split(separators: [<span class="string">&quot;,&quot;</span>, <span class="string">&quot; &quot;</span>])</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> lastWord <span class="operator">=</span> words.last <span class="keyword">else</span> &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">    <span class="comment">// 转换为字符串并返回</span></span><br><span class="line">    <span class="keyword">return</span> <span class="type">String</span>(lastWord)</span><br><span class="line">&#125;</span><br><span class="line">lastWord(in: <span class="string">&quot;one, two, three, four, five&quot;</span>) <span class="comment">// Optional(&quot;five&quot;)</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>不鼓励长期存储子字符串的根本原因在于，子字符串会一直持有整个原始字符串。如果有一个巨大的字符串，它的一个只表示单个字符的子字符串将会在内存中持有整个字符串。即使当原字符串的生命周期本应该结束时，只要子字符串还存在，这部分内存就无法释放。长期存储子字符串实际上会造成内存泄漏，由于原字符串还必须被持有在内存中，但是它们却不能再被访问。</strong></p>
-<p>如果你想要扩展 <code>String</code> 为其添加新的功能，将这个扩展放在 <code>StringProtocol</code> 会是一个好主意，这可以保持 <code>String</code> 和 <code>Substring API</code> 的统一性。<code>StringProtocol</code> 设计之初就是为了在你想要对 String 扩展时来使用的。如果你想要将已有的扩展从 <code>String</code> 移动到 <code>StringProtocol</code> 的话，唯一需要做的改动是将传入其他 API 的 <code>self</code> 通过 <code>String(self)</code> 换为具体的 <code>String</code> 类型实例。</p>
-<p>不过需要记住，在 Swift 4 中，<code>StringProtocol</code> 还并不是一个你想要构建自己的字符串类型时所应该实现的目标协议。文档中明确警告了这一点：</p>
-<blockquote>
-<p>不要声明任意新的遵守 <code>StringProtocol</code> 协议的类型。只有标准库中的 <code>String</code> 和 <code>Substring</code> 类型是有效的适配类型。  </p>
-</blockquote>
-<p>最终的目标是允许开发者创建他们自己的字符串类型 (比如带有特定的存储或者性能优化)，但是协议的设计还没有结束，所以现在就遵守这个协议的话，可能会让你的代码在 Swift 5 中无法通过编译。</p>
-<h3 id="CustomStringConvertible"><a href="#CustomStringConvertible" class="headerlink" title="CustomStringConvertible"></a>CustomStringConvertible</h3><hr>
-<p>符合 <code>CustomStringConvertible</code> 协议的类型可以在将实例转换为字符串时提供自己的表示形式。<code>String(describing:)</code> 初始值设定项是将任何类型的实例转换为字符串的首选方法。如果传递的实例符合<code>CustomStringConvertible</code> ，则 <code>String(describing:</code> 初始值设定项和 <code>print(_:)</code> 函数将使用实例的自定义描述属性。</p>
-<p>不鼓励直接访问类型的 <code>description</code> 属性或使用 <code>CustomStringConvertible </code> 作为通用约束。</p>
-<h4 id="遵守-CustomStringConvertible-协议"><a href="#遵守-CustomStringConvertible-协议" class="headerlink" title="遵守 CustomStringConvertible 协议"></a>遵守 <code>CustomStringConvertible</code> 协议</h4><p>通过定义 <code>description</code> 属性将 <code>CustomStringConvertible</code> 协议添加到自定义类型中。</p>
-<p>例如，这个自定义的 <code>Point</code> 结构体使用标准库提供的默认表示形式：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> x: <span class="type">Int</span>, y: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p <span class="operator">=</span> <span class="type">Point</span>(x: <span class="number">21</span>, y: <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="comment">// Prints &quot;Point(x: 21, y: 30)&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在实现 <code>description</code> 属性并遵守 <code>CustomStringConvertible</code> 协议之后，<code>Point</code> 类型提供了它自己的自定义表示。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Point</span>: <span class="title class_ inherited__">CustomStringConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> description: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;(<span class="subst">\(x)</span>, <span class="subst">\(y)</span>)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="comment">// Prints &quot;(21, 30)&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="CustomDebugStringConvertible"><a href="#CustomDebugStringConvertible" class="headerlink" title="CustomDebugStringConvertible"></a>CustomDebugStringConvertible</h3><hr>
-<p>Swift 为任意类型（any type）提供了默认的调试文本表示。 <code>String(reflecting:)</code> 的初始化和 <code>debugPrint(_:)</code> 函数使用该默认表示形式。要自定义该表示，请使您的类型符合 <code>CustomDebugStringConvertible </code> 协议。</p>
-<p>由于 <code>String(reflecting:)</code> 的初始化适用于任何类型的实例，如果传递的值符合 <code>CustomDebugStringConvertible</code> ，则返回实例的 <code>debugDescription</code> ，不鼓励直接访问类型的 <code>debugDescription</code> 属性，或者使用 <code>CustomDebugStringConvertible</code> 作为通用约束。</p>
-<blockquote>
-<p>Note  </p>
-<p>调用 <code>dump(_:_:_:_:)</code> 函数并在调试器中打印时使用 <code>String(reflecting:)</code> 和 <code>Mirror(reflecting:)</code> 来收集有关实例的信息，如果你为你自定义的类型实现了 <code>CustomDebugStringConvertible</code> 协议，则可能需要考虑通过实现 <code>CustomReflectable</code> 协议来提供自定义镜像。  </p>
-</blockquote>
-<h4 id="遵守-CustomDebugStringConvertible-协议"><a href="#遵守-CustomDebugStringConvertible-协议" class="headerlink" title="遵守 CustomDebugStringConvertible  协议"></a>遵守 <code>CustomDebugStringConvertible </code> 协议</h4><p>通过定义 <code>debugDescription </code> 属性将 <code>CustomDebugStringConvertible </code> 协议添加到自定义类型中。</p>
-<p>例如，这个自定义的 <code>Point</code> 结构体使用标准库提供的默认表示形式：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> x: <span class="type">Int</span>, y: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p <span class="operator">=</span> <span class="type">Point</span>(x: <span class="number">21</span>, y: <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="type">String</span>(reflecting: p))</span><br><span class="line"><span class="comment">// Prints &quot;p: Point = &#123;</span></span><br><span class="line"><span class="comment">//           x = 21</span></span><br><span class="line"><span class="comment">//           y = 30</span></span><br><span class="line"><span class="comment">//         &#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在实现 <code>debugDescription </code> 属性并遵守 <code>CustomDebugStringConvertible </code> 协议之后，<code>Point</code> 类型提供了它自己的自定义表示。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Point</span>: <span class="title class_ inherited__">CustomDebugStringConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> debugDescription: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Point(x: <span class="subst">\(x)</span>, y: <span class="subst">\(y)</span>)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="type">String</span>(reflecting: p))</span><br><span class="line"><span class="comment">// Prints &quot;Point(x: 21, y: 30)&quot;</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>编程语言</category>
       </categories>
       <tags>
         <tag>Swift</tag>
@@ -2629,6 +2629,35 @@
       </tags>
   </entry>
   <entry>
+    <title>RxSwift 文档：Schedulers</title>
+    <url>/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/</url>
+    <content><![CDATA[<h2 id="Schedulers-调度器"><a href="#Schedulers-调度器" class="headerlink" title="Schedulers - 调度器"></a>Schedulers - 调度器</h2><hr>
+<p><code>Schedulers</code> 是 Rx 实现多线程的核心模块，它主要用于控制任务在哪个线程或队列运行。</p>
+<p>如果你曾经使用过 <code>GCD</code>， 那你对以下代码应该不会陌生：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 后台取得数据，主线程处理结果</span></span><br><span class="line"><span class="type">DispatchQueue</span>.global(qos: .userInitiated).async &#123;</span><br><span class="line">    <span class="keyword">let</span> data <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">Data</span>(contentsOf: url)</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="keyword">self</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>如果用 <code>RxSwift</code> 来实现，大致是这样的：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> rxData: <span class="type">Observable</span>&lt;<span class="type">Data</span>&gt; <span class="operator">=</span> <span class="operator">...</span></span><br><span class="line">    </span><br><span class="line">rxData</span><br><span class="line">    .subscribeOn(<span class="type">ConcurrentDispatchQueueScheduler</span>(qos: .userInitiated))</span><br><span class="line">    .observeOn(<span class="type">MainScheduler</span>.instance)</span><br><span class="line">    .subscribe(onNext: &#123; [<span class="keyword">weak</span> <span class="keyword">self</span>] data <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">self</span><span class="operator">?</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-subscribeOn"><a href="#使用-subscribeOn" class="headerlink" title="使用 subscribeOn"></a>使用 <code>subscribeOn</code></h4><p>我们用 <code>subscribeOn</code> 来决定数据序列的构建函数在哪个 <code>Scheduler</code> 上运行。以上例子中，由于获取 <code>Data</code> 需要花很长的时间，所以用 <code>subscribeOn</code> 切换到后台 <code>Scheduler</code> 来获取 <code>Data</code>。这样可以避免主线程被阻塞。</p>
+<h4 id="使用-observeOn"><a href="#使用-observeOn" class="headerlink" title="使用 observeOn"></a>使用 <code>observeOn</code></h4><p>我们用 <code>observeOn</code> 来决定在哪个 <code>Scheduler</code> 监听这个数据序列。以上例子中，通过使用 <code>observeOn</code> 方法切换到主线程来监听并且处理结果。</p>
+<p>一个比较典型的例子就是，在后台发起网络请求，然后解析数据，最后在主线程刷新页面。你就可以先用 <code>subscribeOn</code> 切到后台去发送请求并解析数据，最后用 <code>observeOn</code> 切换到主线程更新页面。</p>
+<h4 id="MainScheduler"><a href="#MainScheduler" class="headerlink" title="MainScheduler"></a>MainScheduler</h4><p><code>MainScheduler</code> 代表主线程。如果你需要执行一些和 UI 相关的任务，就需要切换到该 <code>Scheduler</code> 运行。</p>
+<h4 id="SerialDispatchQueueScheduler"><a href="#SerialDispatchQueueScheduler" class="headerlink" title="SerialDispatchQueueScheduler"></a>SerialDispatchQueueScheduler</h4><p><code>SerialDispatchQueueScheduler</code> 抽象了窜行 <code>DispatchQueue</code>。如果你需要执行一些窜行任务，可以切换到这个 <code>Scheduler</code> 运行。</p>
+<h4 id="ConcurrentDispatchQueueScheduler"><a href="#ConcurrentDispatchQueueScheduler" class="headerlink" title="ConcurrentDispatchQueueScheduler"></a>ConcurrentDispatchQueueScheduler</h4><p><code>ConcurrentDispatchQueueScheduler</code> 抽象了并行 <code>DispatchQueue</code>。如果你需要执行一些并发任务，可以切换到这个 <code>Scheduler</code> 运行。</p>
+<h4 id="OperationQueueScheduler"><a href="#OperationQueueScheduler" class="headerlink" title="OperationQueueScheduler"></a>OperationQueueScheduler</h4><p><code>OperationQueueScheduler</code> 抽象了 <code>NSOperationQueue</code>。</p>
+<p>它具备 <code>NSOperationQueue</code> 的一些特点，例如，你可以通过设置 <code>maxConcurrentOperationCount</code>，来控制同时执行并发任务的最大数量。</p>
+]]></content>
+      <categories>
+        <category>响应式框架</category>
+      </categories>
+      <tags>
+        <tag>RxSwift</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RxSwift 文档：Observable</title>
     <url>/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9AObservable/</url>
     <content><![CDATA[<h2 id="Observable-可被监听的序列"><a href="#Observable-可被监听的序列" class="headerlink" title="Observable - 可被监听的序列"></a>Observable - 可被监听的序列</h2><hr>
@@ -2721,35 +2750,6 @@
 <li>一定在 <code>MainScheduler</code> 监听（主线程监听）</li>
 <li>共享状态变化</li>
 </ul>
-]]></content>
-      <categories>
-        <category>响应式框架</category>
-      </categories>
-      <tags>
-        <tag>RxSwift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RxSwift 文档：Schedulers</title>
-    <url>/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/</url>
-    <content><![CDATA[<h2 id="Schedulers-调度器"><a href="#Schedulers-调度器" class="headerlink" title="Schedulers - 调度器"></a>Schedulers - 调度器</h2><hr>
-<p><code>Schedulers</code> 是 Rx 实现多线程的核心模块，它主要用于控制任务在哪个线程或队列运行。</p>
-<p>如果你曾经使用过 <code>GCD</code>， 那你对以下代码应该不会陌生：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 后台取得数据，主线程处理结果</span></span><br><span class="line"><span class="type">DispatchQueue</span>.global(qos: .userInitiated).async &#123;</span><br><span class="line">    <span class="keyword">let</span> data <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">Data</span>(contentsOf: url)</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="keyword">self</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>如果用 <code>RxSwift</code> 来实现，大致是这样的：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> rxData: <span class="type">Observable</span>&lt;<span class="type">Data</span>&gt; <span class="operator">=</span> <span class="operator">...</span></span><br><span class="line">    </span><br><span class="line">rxData</span><br><span class="line">    .subscribeOn(<span class="type">ConcurrentDispatchQueueScheduler</span>(qos: .userInitiated))</span><br><span class="line">    .observeOn(<span class="type">MainScheduler</span>.instance)</span><br><span class="line">    .subscribe(onNext: &#123; [<span class="keyword">weak</span> <span class="keyword">self</span>] data <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">self</span><span class="operator">?</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
-
-<h4 id="使用-subscribeOn"><a href="#使用-subscribeOn" class="headerlink" title="使用 subscribeOn"></a>使用 <code>subscribeOn</code></h4><p>我们用 <code>subscribeOn</code> 来决定数据序列的构建函数在哪个 <code>Scheduler</code> 上运行。以上例子中，由于获取 <code>Data</code> 需要花很长的时间，所以用 <code>subscribeOn</code> 切换到后台 <code>Scheduler</code> 来获取 <code>Data</code>。这样可以避免主线程被阻塞。</p>
-<h4 id="使用-observeOn"><a href="#使用-observeOn" class="headerlink" title="使用 observeOn"></a>使用 <code>observeOn</code></h4><p>我们用 <code>observeOn</code> 来决定在哪个 <code>Scheduler</code> 监听这个数据序列。以上例子中，通过使用 <code>observeOn</code> 方法切换到主线程来监听并且处理结果。</p>
-<p>一个比较典型的例子就是，在后台发起网络请求，然后解析数据，最后在主线程刷新页面。你就可以先用 <code>subscribeOn</code> 切到后台去发送请求并解析数据，最后用 <code>observeOn</code> 切换到主线程更新页面。</p>
-<h4 id="MainScheduler"><a href="#MainScheduler" class="headerlink" title="MainScheduler"></a>MainScheduler</h4><p><code>MainScheduler</code> 代表主线程。如果你需要执行一些和 UI 相关的任务，就需要切换到该 <code>Scheduler</code> 运行。</p>
-<h4 id="SerialDispatchQueueScheduler"><a href="#SerialDispatchQueueScheduler" class="headerlink" title="SerialDispatchQueueScheduler"></a>SerialDispatchQueueScheduler</h4><p><code>SerialDispatchQueueScheduler</code> 抽象了窜行 <code>DispatchQueue</code>。如果你需要执行一些窜行任务，可以切换到这个 <code>Scheduler</code> 运行。</p>
-<h4 id="ConcurrentDispatchQueueScheduler"><a href="#ConcurrentDispatchQueueScheduler" class="headerlink" title="ConcurrentDispatchQueueScheduler"></a>ConcurrentDispatchQueueScheduler</h4><p><code>ConcurrentDispatchQueueScheduler</code> 抽象了并行 <code>DispatchQueue</code>。如果你需要执行一些并发任务，可以切换到这个 <code>Scheduler</code> 运行。</p>
-<h4 id="OperationQueueScheduler"><a href="#OperationQueueScheduler" class="headerlink" title="OperationQueueScheduler"></a>OperationQueueScheduler</h4><p><code>OperationQueueScheduler</code> 抽象了 <code>NSOperationQueue</code>。</p>
-<p>它具备 <code>NSOperationQueue</code> 的一些特点，例如，你可以通过设置 <code>maxConcurrentOperationCount</code>，来控制同时执行并发任务的最大数量。</p>
 ]]></content>
       <categories>
         <category>响应式框架</category>
@@ -3074,6 +3074,60 @@
       </tags>
   </entry>
   <entry>
+    <title>Swift Runtime</title>
+    <url>/2018/04/18/20180418-Swift%20Runtime/</url>
+    <content><![CDATA[<p>我们都知道 Objective-C 是一门动态的语言，有的时候我们会使用 <code>Runtime</code> 处理一些在 Objective-C 上面无法实现或者很难实现的功能。例如：在扩展中添加属性；动态的获取属性的名称，方法名等。那么究竟什么是 <code>Runtime</code>？</p>
+<p><strong>什么是 <code>Runtime</code> ？</strong></p>
+<p><code>Runtime</code> 简称运行时。Objective-C 就是运行时机制，也就是在程序运行时候的一些机制，其中最主要的是消息机制。对于我们熟悉的C语言，函数的调用在编译的时候会决定调用哪个函数。但对于 Objective-C 的函数，属于动态调用过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。</p>
+<p>也就有了下面这两点结论：</p>
+<ol>
+<li>在编译阶段，Objective-C 可以调用任何函数，即使这个函数并未实现，只要声明过就不会报错。</li>
+<li>在编译阶段，C语言调用未实现的函数就会报错。</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="Swift-中的-Runtime"><a href="#Swift-中的-Runtime" class="headerlink" title="Swift 中的 Runtime"></a>Swift 中的 Runtime</h3><hr>
+<p>好了上面说了这么多都是在说 Objective-C 的 <code>Runtime</code>，那么 Swift 的 <code>Runtime</code> 是什么样的呢？我们来写几行代码看一下。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">var</span> address: <span class="type">String</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">myPrint</span>() &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Demo&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> count: <span class="type">UInt32</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> demo <span class="operator">=</span> <span class="type">Demo</span>()</span><br><span class="line"><span class="keyword">let</span> list <span class="operator">=</span> class_copyPropertyList(object_getClass(demo), <span class="operator">&amp;</span>count)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> idx <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="built_in">numericCast</span>(count) &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> item <span class="operator">=</span> list<span class="operator">?</span>[idx],</span><br><span class="line">        <span class="keyword">let</span> name <span class="operator">=</span> <span class="type">String</span>(utf8String: property_getName(item)) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Property: <span class="subst">\(name)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>猜一下，会输出什么？当然，<strong>这里什么都不输出</strong>！为什么？因为我们创建的类 <code>Demo</code> 是一个纯 Swift 的类，因为 Swift 是一门静态语言，所以我们对其运用 <code>Runtime</code> 机制当然是不可能获取到 <code>Demo</code> 类的属性的。如果我非要在 Swift 代码中运用 <code>Runtime</code> 技术呢？当然是有办法的。我们可以在你要获取的属性（函数同理）前用 <code>@objc</code> 修饰即可（当然加上 <code>dynamic</code> 也是可以的，不过编译器会提示错误，必须要在 <code>dynamic</code> 前添加 <code>@objc</code>），就像如下这样：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">dynamic</span> <span class="keyword">var</span> address: <span class="type">String</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">func</span> <span class="title function_">myPrint</span>() &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Demo&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在添加如下的代码来打印出方法名：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fCount: <span class="type">UInt32</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> funcList <span class="operator">=</span> class_copyMethodList(object_getClass(demo), <span class="operator">&amp;</span>fCount)</span><br><span class="line"><span class="keyword">for</span> idx <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="built_in">numericCast</span>(fCount) &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> item <span class="operator">=</span> funcList<span class="operator">?</span>[idx] &#123;</span><br><span class="line">        <span class="keyword">let</span> name <span class="operator">=</span> <span class="type">NSStringFromSelector</span>(method_getName(item))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Method: <span class="subst">\(name)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出如下：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Property</span>: name</span><br><span class="line"><span class="type">Property</span>: address</span><br><span class="line"><span class="type">Method</span>: address</span><br><span class="line"><span class="type">Method</span>: name</span><br><span class="line"><span class="type">Method</span>: setName:</span><br><span class="line"><span class="type">Method</span>: setAddress:</span><br><span class="line"><span class="type">Method</span>: myPrint</span><br></pre></td></tr></table></figure>
+
+<p>为什么加上 <code>@objc</code> 就有 <code>Runtime</code> 机制了呢？Swift 不是静态语言吗？</p>
+<p>我们来看一下官方文档里对 <code>@objc</code> 是怎么说的。</p>
+<blockquote>
+<p>把这个特性用到任何可以在 Objective-C 中表示的声明上——例如，非内嵌类，协议，非泛型枚举（原始值类型只能是整数），类和协议的属性、方法（包括 <code>setter</code> 和 <code>getter</code> ），初始化&gt; &gt; 器，反初始化器，下标。 <code>objc</code> 特性告诉编译器，这个声明在 Objective-C 代码中是可用的。</p>
+<p>给扩展应用这个特性与为这个扩展中所有不显式标记为 nonobjc 特性的成员应用是一样的效果。</p>
+<p>用 <code>objc</code> 特性标记的类必须继承自一个 Objective-C 中定义的类。如果你把 <code>objc</code> 用到类或协议中，它会隐式地应用于该类或协议中 Objective-C 兼容的成员上。如果一个类继承自另一个&gt; 带 <code>objc</code> 特性标记或 Objective-C 中定义的类，编译器也会隐式地给这个类添加 <code>objc</code> 特性。标记为 <code>objc</code> 特性的协议不能继承自非 <code>objc</code> 特性的协议。</p>
+<p><code>objc</code> 特性同样会在下面的情况中隐式地添加：</p>
+<ul>
+<li>声明是子类的重写，并且父类的声明有 <code>objc</code> 特性；</li>
+<li>声明满足的需求来自一个拥有 <code>objc</code> 特性的协议；</li>
+<li>声明有 <code>IBAction</code> , <code>IBOutlet</code> , <code>IBDesignable</code> , <code>IBInspectable</code> , <code>NSManaged</code>, 或者 <code>GKInspectable</code> 特性。</li>
+</ul>
+<p>如果你在一个枚举中使用 <code>objc</code> 特性，枚举名和每个成员名串联起来，作为枚举成员暴露给 Objective-C 代码。成员名首字母大写。例如，一个 Swift  <code>Planet</code> 枚举成员叫做 <code>venus</code> ，&gt; 它作为一个叫 <code>PlanetVenus</code> 的成员暴露到 Objective-C 代码中。</p>
+<p><code>objc</code> 特性可以接受一个特性实参，由一个标识符组成。当你想在 Objective-C 中为 <code>objc</code> 特性标记的实体暴露一个不同的名字时，用这个特性。你可以把这个实参用在命名类，枚举，枚举成&gt; 员，协议，方法，getter，setter，初始化器。下面的例子把 ExampleClass 中 enabled 属性的getter作为 isEnabled 暴露给 Objective-C 代码，而不仅仅是属性本身的名字。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@objc</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ExampleClass</span>: <span class="title class_ inherited__">NSObject</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> enabled: <span class="type">Bool</span> &#123;</span><br><span class="line">        <span class="keyword">@objc(isEnabled)</span> <span class="keyword">get</span> &#123;</span><br><span class="line">            <span class="comment">// Return the appropriate value</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>首先有 <code>@objc</code> 这个关键字，它是用来将 Swift 的 API 暴漏给 Objective-C 和 <code>Runtime</code> 使用的，文档里也很清楚的说明了，如果你类继承自 Objective-C 的类，这个标识符就会被自动加进去，加了这标识符的属性、方法无法保证都会被运行时调用，因为 Swift 会做静态优化，想要完全被声明成动态调用，必须使用 <code>dynamic</code> 标识符修饰，当然添加了 <code>dynamic</code> 的时候，它会自己在加上 <code>@objc</code> 这个标识符。</p>
+<p>举个例子：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span>: <span class="title class_ inherited__">NSObject</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> dBool <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">    <span class="keyword">var</span> dInt <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">demoTest</span>() &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;NSObject Class&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然这时我们没有在 <code>dBool</code> 和 <code>dInt</code> 两个属性添加 <code>@objc</code> 修饰，但是 <code>Runtime</code> 时依然能够获取到，因为类继承了 Objective-C 中的 <code>NSObject</code>，他会隐式的在属相前面添加 <code>@objc</code>，同理，继承自 <code>UIViewController</code> 等的类，都有这个特性。</p>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>iOS 并发，锁，线程同步【一】GCD</title>
     <url>/2018/04/16/20180416-iOS%20%E5%B9%B6%E5%8F%91%EF%BC%8C%E9%94%81%EF%BC%8C%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E3%80%90%E4%B8%80%E3%80%91GCD/</url>
     <content><![CDATA[<p>无并发，不编程。并发在开发中是非常重要的一个技术，运用并发技术，可以写出高性能的程序，并发能够有效地利用多核心 CPU 的优势来提高数据处理的速度。作为一个码农，学好并发是十分有必要的。iOS有四种多线程编程的技术，分别是：NSThread，Cocoa NSOperation，GCD（全称：Grand Central Dispatch）, pthread。今天我们就重点讲一讲 GCD 中的并发，锁和线程同步。</p>
@@ -3139,60 +3193,6 @@
 <figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">group.notify(queue: .main) &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Swift Runtime</title>
-    <url>/2018/04/18/20180418-Swift%20Runtime/</url>
-    <content><![CDATA[<p>我们都知道 Objective-C 是一门动态的语言，有的时候我们会使用 <code>Runtime</code> 处理一些在 Objective-C 上面无法实现或者很难实现的功能。例如：在扩展中添加属性；动态的获取属性的名称，方法名等。那么究竟什么是 <code>Runtime</code>？</p>
-<p><strong>什么是 <code>Runtime</code> ？</strong></p>
-<p><code>Runtime</code> 简称运行时。Objective-C 就是运行时机制，也就是在程序运行时候的一些机制，其中最主要的是消息机制。对于我们熟悉的C语言，函数的调用在编译的时候会决定调用哪个函数。但对于 Objective-C 的函数，属于动态调用过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。</p>
-<p>也就有了下面这两点结论：</p>
-<ol>
-<li>在编译阶段，Objective-C 可以调用任何函数，即使这个函数并未实现，只要声明过就不会报错。</li>
-<li>在编译阶段，C语言调用未实现的函数就会报错。</li>
-</ol>
-<span id="more"></span>
-
-<h3 id="Swift-中的-Runtime"><a href="#Swift-中的-Runtime" class="headerlink" title="Swift 中的 Runtime"></a>Swift 中的 Runtime</h3><hr>
-<p>好了上面说了这么多都是在说 Objective-C 的 <code>Runtime</code>，那么 Swift 的 <code>Runtime</code> 是什么样的呢？我们来写几行代码看一下。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">var</span> address: <span class="type">String</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">myPrint</span>() &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Demo&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> count: <span class="type">UInt32</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> demo <span class="operator">=</span> <span class="type">Demo</span>()</span><br><span class="line"><span class="keyword">let</span> list <span class="operator">=</span> class_copyPropertyList(object_getClass(demo), <span class="operator">&amp;</span>count)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> idx <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="built_in">numericCast</span>(count) &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> item <span class="operator">=</span> list<span class="operator">?</span>[idx],</span><br><span class="line">        <span class="keyword">let</span> name <span class="operator">=</span> <span class="type">String</span>(utf8String: property_getName(item)) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Property: <span class="subst">\(name)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>猜一下，会输出什么？当然，<strong>这里什么都不输出</strong>！为什么？因为我们创建的类 <code>Demo</code> 是一个纯 Swift 的类，因为 Swift 是一门静态语言，所以我们对其运用 <code>Runtime</code> 机制当然是不可能获取到 <code>Demo</code> 类的属性的。如果我非要在 Swift 代码中运用 <code>Runtime</code> 技术呢？当然是有办法的。我们可以在你要获取的属性（函数同理）前用 <code>@objc</code> 修饰即可（当然加上 <code>dynamic</code> 也是可以的，不过编译器会提示错误，必须要在 <code>dynamic</code> 前添加 <code>@objc</code>），就像如下这样：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">dynamic</span> <span class="keyword">var</span> address: <span class="type">String</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">func</span> <span class="title function_">myPrint</span>() &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Demo&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们在添加如下的代码来打印出方法名：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fCount: <span class="type">UInt32</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> funcList <span class="operator">=</span> class_copyMethodList(object_getClass(demo), <span class="operator">&amp;</span>fCount)</span><br><span class="line"><span class="keyword">for</span> idx <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="built_in">numericCast</span>(fCount) &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> item <span class="operator">=</span> funcList<span class="operator">?</span>[idx] &#123;</span><br><span class="line">        <span class="keyword">let</span> name <span class="operator">=</span> <span class="type">NSStringFromSelector</span>(method_getName(item))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Method: <span class="subst">\(name)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>输出如下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Property</span>: name</span><br><span class="line"><span class="type">Property</span>: address</span><br><span class="line"><span class="type">Method</span>: address</span><br><span class="line"><span class="type">Method</span>: name</span><br><span class="line"><span class="type">Method</span>: setName:</span><br><span class="line"><span class="type">Method</span>: setAddress:</span><br><span class="line"><span class="type">Method</span>: myPrint</span><br></pre></td></tr></table></figure>
-
-<p>为什么加上 <code>@objc</code> 就有 <code>Runtime</code> 机制了呢？Swift 不是静态语言吗？</p>
-<p>我们来看一下官方文档里对 <code>@objc</code> 是怎么说的。</p>
-<blockquote>
-<p>把这个特性用到任何可以在 Objective-C 中表示的声明上——例如，非内嵌类，协议，非泛型枚举（原始值类型只能是整数），类和协议的属性、方法（包括 <code>setter</code> 和 <code>getter</code> ），初始化&gt; &gt; 器，反初始化器，下标。 <code>objc</code> 特性告诉编译器，这个声明在 Objective-C 代码中是可用的。</p>
-<p>给扩展应用这个特性与为这个扩展中所有不显式标记为 nonobjc 特性的成员应用是一样的效果。</p>
-<p>用 <code>objc</code> 特性标记的类必须继承自一个 Objective-C 中定义的类。如果你把 <code>objc</code> 用到类或协议中，它会隐式地应用于该类或协议中 Objective-C 兼容的成员上。如果一个类继承自另一个&gt; 带 <code>objc</code> 特性标记或 Objective-C 中定义的类，编译器也会隐式地给这个类添加 <code>objc</code> 特性。标记为 <code>objc</code> 特性的协议不能继承自非 <code>objc</code> 特性的协议。</p>
-<p><code>objc</code> 特性同样会在下面的情况中隐式地添加：</p>
-<ul>
-<li>声明是子类的重写，并且父类的声明有 <code>objc</code> 特性；</li>
-<li>声明满足的需求来自一个拥有 <code>objc</code> 特性的协议；</li>
-<li>声明有 <code>IBAction</code> , <code>IBOutlet</code> , <code>IBDesignable</code> , <code>IBInspectable</code> , <code>NSManaged</code>, 或者 <code>GKInspectable</code> 特性。</li>
-</ul>
-<p>如果你在一个枚举中使用 <code>objc</code> 特性，枚举名和每个成员名串联起来，作为枚举成员暴露给 Objective-C 代码。成员名首字母大写。例如，一个 Swift  <code>Planet</code> 枚举成员叫做 <code>venus</code> ，&gt; 它作为一个叫 <code>PlanetVenus</code> 的成员暴露到 Objective-C 代码中。</p>
-<p><code>objc</code> 特性可以接受一个特性实参，由一个标识符组成。当你想在 Objective-C 中为 <code>objc</code> 特性标记的实体暴露一个不同的名字时，用这个特性。你可以把这个实参用在命名类，枚举，枚举成&gt; 员，协议，方法，getter，setter，初始化器。下面的例子把 ExampleClass 中 enabled 属性的getter作为 isEnabled 暴露给 Objective-C 代码，而不仅仅是属性本身的名字。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@objc</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ExampleClass</span>: <span class="title class_ inherited__">NSObject</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> enabled: <span class="type">Bool</span> &#123;</span><br><span class="line">        <span class="keyword">@objc(isEnabled)</span> <span class="keyword">get</span> &#123;</span><br><span class="line">            <span class="comment">// Return the appropriate value</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p>首先有 <code>@objc</code> 这个关键字，它是用来将 Swift 的 API 暴漏给 Objective-C 和 <code>Runtime</code> 使用的，文档里也很清楚的说明了，如果你类继承自 Objective-C 的类，这个标识符就会被自动加进去，加了这标识符的属性、方法无法保证都会被运行时调用，因为 Swift 会做静态优化，想要完全被声明成动态调用，必须使用 <code>dynamic</code> 标识符修饰，当然添加了 <code>dynamic</code> 的时候，它会自己在加上 <code>@objc</code> 这个标识符。</p>
-<p>举个例子：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span>: <span class="title class_ inherited__">NSObject</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> dBool <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">    <span class="keyword">var</span> dInt <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">demoTest</span>() &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;NSObject Class&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>虽然这时我们没有在 <code>dBool</code> 和 <code>dInt</code> 两个属性添加 <code>@objc</code> 修饰，但是 <code>Runtime</code> 时依然能够获取到，因为类继承了 Objective-C 中的 <code>NSObject</code>，他会隐式的在属相前面添加 <code>@objc</code>，同理，继承自 <code>UIViewController</code> 等的类，都有这个特性。</p>
-]]></content>
-      <categories>
-        <category>编程语言</category>
       </categories>
       <tags>
         <tag>Swift</tag>
@@ -3278,63 +3278,6 @@
       </categories>
       <tags>
         <tag>Objective-C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>iOS 并发，锁，线程同步【二】Operation</title>
-    <url>/2018/04/30/20180430-iOS%20%E5%B9%B6%E5%8F%91%EF%BC%8C%E9%94%81%EF%BC%8C%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E3%80%90%E4%BA%8C%E3%80%91Operation/</url>
-    <content><![CDATA[<p>在之前的一篇文章中【<a href="/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/2018/04/16/iOS-%E5%B9%B6%E5%8F%91-%E9%94%81-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E4%B8%80-GCD/">iOS 并发，锁，线程同步【一】GCD</a>】，我们讨论了一下 <code>GCD</code> 的并发，锁和线程同步的问题，今天，我们来讨论一下 <code>Operation</code> 的并发与线程同步。</p>
-<p>在 <code>Operation</code> 中，我们一般是将所有的 <code>Operation</code> 添加到 <code>OperationQueue</code> 中进行执行，这里需要注意一点，**<code>Operation</code> 添加到队列当中，默认就是执行的并发操作。<strong>我们可以设置队列的最大并发数 <code>maxConcurrentOperationCount</code>。如果我们在 <code>OperationQueue</code> 中想要执行串行任务的话，很简单，将 <code>maxConcurrentOperationCount</code> 设置成为1即可。 <code>maxConcurrentOperationCount</code> 的默认值为-1，那么默认情况下的并发数是多少呢？</strong>这个是由系统内存和 CPU 决定的，可能内存多久开多一点，内存少就开少一点。**最大并发数建议 2~3，如果并发数太多会导致 UI 卡顿。</p>
-<p>不添加到队列当中的 <code>Operation</code>，我们可以调用 <code>start()</code> 方法开始一个操作，也可以调用 <code>cancel()</code> 取消等待中的操作，注意：<strong>已经开始执行的操作是没法取消的。</strong>代码示例如下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> opt <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Operation&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">opt.start() <span class="comment">// 开始执行任务</span></span><br><span class="line">opt.cancel() <span class="comment">// 取消等待中的任务</span></span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>如果我们需要进行线程同步该怎么做？GCD 中我们可以用 <code>DispatchGroup</code>，在 <code>Operation</code> 中我们可以用一个 <code>addDependency()</code> 的方法。这个方法意味着，某个任务的执行，依赖着其他任务执行完成后才回去执行。代码我们可以这么写：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    sleep(<span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;b&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;c&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.addDependency(a)</span><br><span class="line">c.addDependency(b)</span><br><span class="line"></span><br><span class="line">queue.addOperation(c)</span><br><span class="line">queue.addOperation(a)</span><br><span class="line">queue.addOperation(b)</span><br></pre></td></tr></table></figure>
-
-<p>这里的 <code>c</code> 操作，需要等到 <code>a</code>, <code>b</code> 完成之后才会执行。运行结果如下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">b</span><br><span class="line">a</span><br><span class="line">c</span><br></pre></td></tr></table></figure>
-
-<p>OK，接下来我们来一点在并发中进行数据写入的操作，代码作如下修改：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">var</span> ary: [<span class="type">Int</span>] <span class="operator">=</span> []</span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="number">5</span> &#123;</span><br><span class="line">        ary.append(item)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> <span class="number">5</span><span class="operator">..&lt;</span><span class="number">10</span> &#123;</span><br><span class="line">        ary.append(item)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.addDependency(a)</span><br><span class="line">c.addDependency(b)</span><br><span class="line"></span><br><span class="line">queue.addOperation(c)</span><br><span class="line">queue.addOperation(a)</span><br><span class="line">queue.addOperation(b)</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
-
-<p>很明显，运行结果是错的。并发当中对同一个数据源进行写的操作时，一定要注意加锁。具体可以看我的上一遍文章：<a href="/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/2018/04/16/iOS-%E5%B9%B6%E5%8F%91-%E9%94%81-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E4%B8%80-GCD/">iOS 并发，锁，线程同步【一】GCD</a>，这里我就不在啰嗦。</p>
-<p>接下来，我们做一点代码优化，如果我想要实现 n 个任务，每个任务都是向数组中添加数字，每个任务的循环范围按照 0<del>5，5</del>10，10~15 这样的规律，最后我们输出 <code>ary</code> 中的值。</p>
-<p>很明显，向上面的写法太过笨拙。那么我们进行一个函数的抽象，我们先来写一个产生 task 的函数。</p>
-<p>首先我们先来定义一个 task：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typealias</span> task <span class="operator">=</span> () -&gt; ()</span><br></pre></td></tr></table></figure>
-
-<p>接下来，我们需要将产生的 task 添加到数组中，这里需要充分利用函数式编程的优点，方法看起来是这样：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">makeTask</span>(<span class="params">taskCount</span>: <span class="type">Int</span>, <span class="params">opt</span>: <span class="keyword">@escaping</span> (<span class="keyword">_</span> currentIdx: <span class="type">Int</span>) -&gt; task) -&gt; [task] &#123;</span><br><span class="line">    <span class="comment">// 如果任务数为0，就返回空数组</span></span><br><span class="line">    <span class="keyword">guard</span> taskCount <span class="operator">&gt;</span> <span class="number">0</span> <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> tasks: [task] <span class="operator">=</span> []</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>taskCount &#123;</span><br><span class="line">        tasks.append(opt(idx))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tasks</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第一个参数 taskCount 是最大任务数，第二个参数 opt 是执行的任务，是一个闭包，<strong>因为任务会存到一个数组中，供后面的方法使用，所以这个闭包是可逃逸的。</strong>我们在执行闭包的时候，需要传入一个参数，这个参数表示了当前生成的是第几个 task，返回值也是个闭包，也就是我们最终要执行的 task。OK，经过函数化，我们就可以产生<strong>任意数量、任意操作</strong>的 task 了。</p>
-<p>接下来我们来处理一下并发的方法，它看起来是这样的：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">concurrent</span>(<span class="params">tasks</span>: [task], <span class="params">complationHandle</span>: <span class="keyword">@escaping</span> () -&gt; ()) &#123;</span><br><span class="line">    <span class="keyword">let</span> sema <span class="operator">=</span> <span class="type">DispatchSemaphore</span>(value: <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">    queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line">    <span class="keyword">let</span> result <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">        complationHandle()</span><br><span class="line">    &#125;</span><br><span class="line">    tasks.forEach &#123; t <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">let</span> o <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">            sema.wait()</span><br><span class="line">            t()</span><br><span class="line">            sema.signal()</span><br><span class="line">        &#125;</span><br><span class="line">        result.addDependency(o)</span><br><span class="line">        queue.addOperation(o)</span><br><span class="line">    &#125;</span><br><span class="line">    queue.addOperation(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>原理也很简单，我们在一个 <code>forEach</code> 当中设置好 <code>Operation</code> 的 task 与依赖关系。这里用了信号量锁，来保证数据的正确性。最后我们在 <code>complationHandle</code> 这个闭包中处理同步后的数据。</p>
-<p>我们来使用一下，感受一下函数式的灵活、强大之处：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ary: [<span class="type">Int</span>] <span class="operator">=</span> []</span><br><span class="line">        </span><br><span class="line"><span class="keyword">let</span> tasks <span class="operator">=</span> makeTask(taskCount: <span class="number">20</span>) &#123; idx <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;task idx: <span class="subst">\(idx)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (idx <span class="operator">*</span> <span class="number">5</span>)<span class="operator">..&lt;</span>(idx <span class="operator">*</span> <span class="number">5</span> <span class="operator">+</span> <span class="number">5</span>) &#123;</span><br><span class="line">            ary.append(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">concurrent(tasks: tasks) &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>输出结果如下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">task idx: <span class="number">0</span></span><br><span class="line">task idx: <span class="number">1</span></span><br><span class="line">task idx: <span class="number">2</span></span><br><span class="line">task idx: <span class="number">3</span></span><br><span class="line">task idx: <span class="number">5</span></span><br><span class="line">task idx: <span class="number">6</span></span><br><span class="line">task idx: <span class="number">4</span></span><br><span class="line">task idx: <span class="number">7</span></span><br><span class="line">task idx: <span class="number">9</span></span><br><span class="line">task idx: <span class="number">10</span></span><br><span class="line">task idx: <span class="number">11</span></span><br><span class="line">task idx: <span class="number">8</span></span><br><span class="line">task idx: <span class="number">13</span></span><br><span class="line">task idx: <span class="number">12</span></span><br><span class="line">task idx: <span class="number">14</span></span><br><span class="line">task idx: <span class="number">15</span></span><br><span class="line">task idx: <span class="number">18</span></span><br><span class="line">task idx: <span class="number">16</span></span><br><span class="line">task idx: <span class="number">17</span></span><br><span class="line">task idx: <span class="number">19</span></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>, <span class="number">36</span>, <span class="number">37</span>, <span class="number">38</span>, <span class="number">39</span>, <span class="number">40</span>, <span class="number">41</span>, <span class="number">42</span>, <span class="number">43</span>, <span class="number">44</span>, <span class="number">45</span>, <span class="number">46</span>, <span class="number">47</span>, <span class="number">48</span>, <span class="number">49</span>, <span class="number">50</span>, <span class="number">51</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">54</span>, <span class="number">55</span>, <span class="number">56</span>, <span class="number">57</span>, <span class="number">58</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">61</span>, <span class="number">62</span>, <span class="number">63</span>, <span class="number">64</span>, <span class="number">65</span>, <span class="number">66</span>, <span class="number">67</span>, <span class="number">68</span>, <span class="number">69</span>, <span class="number">70</span>, <span class="number">71</span>, <span class="number">72</span>, <span class="number">73</span>, <span class="number">74</span>, <span class="number">75</span>, <span class="number">76</span>, <span class="number">77</span>, <span class="number">78</span>, <span class="number">79</span>, <span class="number">80</span>, <span class="number">81</span>, <span class="number">82</span>, <span class="number">83</span>, <span class="number">84</span>, <span class="number">85</span>, <span class="number">86</span>, <span class="number">87</span>, <span class="number">88</span>, <span class="number">89</span>, <span class="number">90</span>, <span class="number">91</span>, <span class="number">92</span>, <span class="number">93</span>, <span class="number">94</span>, <span class="number">95</span>, <span class="number">96</span>, <span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>]</span><br></pre></td></tr></table></figure>
-
-<p>调用还是有点麻烦？没关系我们可以将两个方法合成一个，我们把 <code>makeTask</code> 与 <code>concurrent</code> 方法设置成为私有（private），接下来写一个开放接口方法：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">tasksToConcurrent</span>(<span class="params">taskCount</span>: <span class="type">Int</span>, <span class="params">opt</span>: <span class="keyword">@escaping</span> (<span class="keyword">_</span> currentIdx: <span class="type">Int</span>) -&gt; task, <span class="params">complationHandle</span>: <span class="keyword">@escaping</span> () -&gt; ()) &#123;</span><br><span class="line">    <span class="keyword">let</span> tasks <span class="operator">=</span> makeTask(taskCount: <span class="number">20</span>) &#123; idx <span class="keyword">in</span> <span class="keyword">return</span> opt(idx) &#125;</span><br><span class="line">    concurrent(tasks: tasks, complationHandle: complationHandle)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们就可以这样来调用：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">tasksToConcurrent(taskCount: <span class="number">20</span>, opt: &#123; idx <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;task idx: <span class="subst">\(idx)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (idx <span class="operator">*</span> <span class="number">5</span>)<span class="operator">..&lt;</span>(idx <span class="operator">*</span> <span class="number">5</span> <span class="operator">+</span> <span class="number">5</span>) &#123;</span><br><span class="line">            ary.append(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>感觉比刚开始的写法简洁了不少！！！</p>
-]]></content>
-      <categories>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
       </tags>
   </entry>
   <entry>
@@ -3610,6 +3553,87 @@
       </tags>
   </entry>
   <entry>
+    <title>iOS 并发，锁，线程同步【二】Operation</title>
+    <url>/2018/04/30/20180430-iOS%20%E5%B9%B6%E5%8F%91%EF%BC%8C%E9%94%81%EF%BC%8C%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E3%80%90%E4%BA%8C%E3%80%91Operation/</url>
+    <content><![CDATA[<p>在之前的一篇文章中【<a href="/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/2018/04/16/iOS-%E5%B9%B6%E5%8F%91-%E9%94%81-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E4%B8%80-GCD/">iOS 并发，锁，线程同步【一】GCD</a>】，我们讨论了一下 <code>GCD</code> 的并发，锁和线程同步的问题，今天，我们来讨论一下 <code>Operation</code> 的并发与线程同步。</p>
+<p>在 <code>Operation</code> 中，我们一般是将所有的 <code>Operation</code> 添加到 <code>OperationQueue</code> 中进行执行，这里需要注意一点，**<code>Operation</code> 添加到队列当中，默认就是执行的并发操作。<strong>我们可以设置队列的最大并发数 <code>maxConcurrentOperationCount</code>。如果我们在 <code>OperationQueue</code> 中想要执行串行任务的话，很简单，将 <code>maxConcurrentOperationCount</code> 设置成为1即可。 <code>maxConcurrentOperationCount</code> 的默认值为-1，那么默认情况下的并发数是多少呢？</strong>这个是由系统内存和 CPU 决定的，可能内存多久开多一点，内存少就开少一点。**最大并发数建议 2~3，如果并发数太多会导致 UI 卡顿。</p>
+<p>不添加到队列当中的 <code>Operation</code>，我们可以调用 <code>start()</code> 方法开始一个操作，也可以调用 <code>cancel()</code> 取消等待中的操作，注意：<strong>已经开始执行的操作是没法取消的。</strong>代码示例如下：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> opt <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Operation&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">opt.start() <span class="comment">// 开始执行任务</span></span><br><span class="line">opt.cancel() <span class="comment">// 取消等待中的任务</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>如果我们需要进行线程同步该怎么做？GCD 中我们可以用 <code>DispatchGroup</code>，在 <code>Operation</code> 中我们可以用一个 <code>addDependency()</code> 的方法。这个方法意味着，某个任务的执行，依赖着其他任务执行完成后才回去执行。代码我们可以这么写：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    sleep(<span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;b&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;c&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.addDependency(a)</span><br><span class="line">c.addDependency(b)</span><br><span class="line"></span><br><span class="line">queue.addOperation(c)</span><br><span class="line">queue.addOperation(a)</span><br><span class="line">queue.addOperation(b)</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>c</code> 操作，需要等到 <code>a</code>, <code>b</code> 完成之后才会执行。运行结果如下：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">b</span><br><span class="line">a</span><br><span class="line">c</span><br></pre></td></tr></table></figure>
+
+<p>OK，接下来我们来一点在并发中进行数据写入的操作，代码作如下修改：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">var</span> ary: [<span class="type">Int</span>] <span class="operator">=</span> []</span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="number">5</span> &#123;</span><br><span class="line">        ary.append(item)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> <span class="number">5</span><span class="operator">..&lt;</span><span class="number">10</span> &#123;</span><br><span class="line">        ary.append(item)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.addDependency(a)</span><br><span class="line">c.addDependency(b)</span><br><span class="line"></span><br><span class="line">queue.addOperation(c)</span><br><span class="line">queue.addOperation(a)</span><br><span class="line">queue.addOperation(b)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+
+<p>很明显，运行结果是错的。并发当中对同一个数据源进行写的操作时，一定要注意加锁。具体可以看我的上一遍文章：<a href="/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/2018/04/16/iOS-%E5%B9%B6%E5%8F%91-%E9%94%81-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E4%B8%80-GCD/">iOS 并发，锁，线程同步【一】GCD</a>，这里我就不在啰嗦。</p>
+<p>接下来，我们做一点代码优化，如果我想要实现 n 个任务，每个任务都是向数组中添加数字，每个任务的循环范围按照 0<del>5，5</del>10，10~15 这样的规律，最后我们输出 <code>ary</code> 中的值。</p>
+<p>很明显，向上面的写法太过笨拙。那么我们进行一个函数的抽象，我们先来写一个产生 task 的函数。</p>
+<p>首先我们先来定义一个 task：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typealias</span> task <span class="operator">=</span> () -&gt; ()</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们需要将产生的 task 添加到数组中，这里需要充分利用函数式编程的优点，方法看起来是这样：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">makeTask</span>(<span class="params">taskCount</span>: <span class="type">Int</span>, <span class="params">opt</span>: <span class="keyword">@escaping</span> (<span class="keyword">_</span> currentIdx: <span class="type">Int</span>) -&gt; task) -&gt; [task] &#123;</span><br><span class="line">    <span class="comment">// 如果任务数为0，就返回空数组</span></span><br><span class="line">    <span class="keyword">guard</span> taskCount <span class="operator">&gt;</span> <span class="number">0</span> <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> tasks: [task] <span class="operator">=</span> []</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>taskCount &#123;</span><br><span class="line">        tasks.append(opt(idx))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tasks</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数 taskCount 是最大任务数，第二个参数 opt 是执行的任务，是一个闭包，<strong>因为任务会存到一个数组中，供后面的方法使用，所以这个闭包是可逃逸的。</strong>我们在执行闭包的时候，需要传入一个参数，这个参数表示了当前生成的是第几个 task，返回值也是个闭包，也就是我们最终要执行的 task。OK，经过函数化，我们就可以产生<strong>任意数量、任意操作</strong>的 task 了。</p>
+<p>接下来我们来处理一下并发的方法，它看起来是这样的：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">concurrent</span>(<span class="params">tasks</span>: [task], <span class="params">complationHandle</span>: <span class="keyword">@escaping</span> () -&gt; ()) &#123;</span><br><span class="line">    <span class="keyword">let</span> sema <span class="operator">=</span> <span class="type">DispatchSemaphore</span>(value: <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">    queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line">    <span class="keyword">let</span> result <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">        complationHandle()</span><br><span class="line">    &#125;</span><br><span class="line">    tasks.forEach &#123; t <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">let</span> o <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">            sema.wait()</span><br><span class="line">            t()</span><br><span class="line">            sema.signal()</span><br><span class="line">        &#125;</span><br><span class="line">        result.addDependency(o)</span><br><span class="line">        queue.addOperation(o)</span><br><span class="line">    &#125;</span><br><span class="line">    queue.addOperation(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原理也很简单，我们在一个 <code>forEach</code> 当中设置好 <code>Operation</code> 的 task 与依赖关系。这里用了信号量锁，来保证数据的正确性。最后我们在 <code>complationHandle</code> 这个闭包中处理同步后的数据。</p>
+<p>我们来使用一下，感受一下函数式的灵活、强大之处：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ary: [<span class="type">Int</span>] <span class="operator">=</span> []</span><br><span class="line">        </span><br><span class="line"><span class="keyword">let</span> tasks <span class="operator">=</span> makeTask(taskCount: <span class="number">20</span>) &#123; idx <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;task idx: <span class="subst">\(idx)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (idx <span class="operator">*</span> <span class="number">5</span>)<span class="operator">..&lt;</span>(idx <span class="operator">*</span> <span class="number">5</span> <span class="operator">+</span> <span class="number">5</span>) &#123;</span><br><span class="line">            ary.append(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">concurrent(tasks: tasks) &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">task idx: <span class="number">0</span></span><br><span class="line">task idx: <span class="number">1</span></span><br><span class="line">task idx: <span class="number">2</span></span><br><span class="line">task idx: <span class="number">3</span></span><br><span class="line">task idx: <span class="number">5</span></span><br><span class="line">task idx: <span class="number">6</span></span><br><span class="line">task idx: <span class="number">4</span></span><br><span class="line">task idx: <span class="number">7</span></span><br><span class="line">task idx: <span class="number">9</span></span><br><span class="line">task idx: <span class="number">10</span></span><br><span class="line">task idx: <span class="number">11</span></span><br><span class="line">task idx: <span class="number">8</span></span><br><span class="line">task idx: <span class="number">13</span></span><br><span class="line">task idx: <span class="number">12</span></span><br><span class="line">task idx: <span class="number">14</span></span><br><span class="line">task idx: <span class="number">15</span></span><br><span class="line">task idx: <span class="number">18</span></span><br><span class="line">task idx: <span class="number">16</span></span><br><span class="line">task idx: <span class="number">17</span></span><br><span class="line">task idx: <span class="number">19</span></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>, <span class="number">36</span>, <span class="number">37</span>, <span class="number">38</span>, <span class="number">39</span>, <span class="number">40</span>, <span class="number">41</span>, <span class="number">42</span>, <span class="number">43</span>, <span class="number">44</span>, <span class="number">45</span>, <span class="number">46</span>, <span class="number">47</span>, <span class="number">48</span>, <span class="number">49</span>, <span class="number">50</span>, <span class="number">51</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">54</span>, <span class="number">55</span>, <span class="number">56</span>, <span class="number">57</span>, <span class="number">58</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">61</span>, <span class="number">62</span>, <span class="number">63</span>, <span class="number">64</span>, <span class="number">65</span>, <span class="number">66</span>, <span class="number">67</span>, <span class="number">68</span>, <span class="number">69</span>, <span class="number">70</span>, <span class="number">71</span>, <span class="number">72</span>, <span class="number">73</span>, <span class="number">74</span>, <span class="number">75</span>, <span class="number">76</span>, <span class="number">77</span>, <span class="number">78</span>, <span class="number">79</span>, <span class="number">80</span>, <span class="number">81</span>, <span class="number">82</span>, <span class="number">83</span>, <span class="number">84</span>, <span class="number">85</span>, <span class="number">86</span>, <span class="number">87</span>, <span class="number">88</span>, <span class="number">89</span>, <span class="number">90</span>, <span class="number">91</span>, <span class="number">92</span>, <span class="number">93</span>, <span class="number">94</span>, <span class="number">95</span>, <span class="number">96</span>, <span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>]</span><br></pre></td></tr></table></figure>
+
+<p>调用还是有点麻烦？没关系我们可以将两个方法合成一个，我们把 <code>makeTask</code> 与 <code>concurrent</code> 方法设置成为私有（private），接下来写一个开放接口方法：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">tasksToConcurrent</span>(<span class="params">taskCount</span>: <span class="type">Int</span>, <span class="params">opt</span>: <span class="keyword">@escaping</span> (<span class="keyword">_</span> currentIdx: <span class="type">Int</span>) -&gt; task, <span class="params">complationHandle</span>: <span class="keyword">@escaping</span> () -&gt; ()) &#123;</span><br><span class="line">    <span class="keyword">let</span> tasks <span class="operator">=</span> makeTask(taskCount: <span class="number">20</span>) &#123; idx <span class="keyword">in</span> <span class="keyword">return</span> opt(idx) &#125;</span><br><span class="line">    concurrent(tasks: tasks, complationHandle: complationHandle)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们就可以这样来调用：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">tasksToConcurrent(taskCount: <span class="number">20</span>, opt: &#123; idx <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;task idx: <span class="subst">\(idx)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (idx <span class="operator">*</span> <span class="number">5</span>)<span class="operator">..&lt;</span>(idx <span class="operator">*</span> <span class="number">5</span> <span class="operator">+</span> <span class="number">5</span>) &#123;</span><br><span class="line">            ary.append(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>感觉比刚开始的写法简洁了不少！！！</p>
+]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在 macOS 中用命令格式化 APFS 格式 U 盘</title>
+    <url>/2018/05/21/20180521-%E5%9C%A8%20macOS%20%E4%B8%AD%E7%94%A8%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F%E5%8C%96%20APFS%20%E6%A0%BC%E5%BC%8F%20U%20%E7%9B%98/</url>
+    <content><![CDATA[<p>今天需要去打印店打印东西，但是 U 盘被我格式化成了 <code>APFS</code> 格式，用磁盘管理工具无法格式化成其他的格式，选项中只有 <code>APFS</code> 的选项。我用如下的命令格式化 U 盘：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo diskutil eraseDisk JHFS+ san /dev/disk3</span><br></pre></td></tr></table></figure>
+
+<p>但是执行命令会报错，错误信息大致是，无法格式化 <code>APFS</code> 容器。</p>
+<p><code>/dev/disk3</code> 是我 U 盘的目录，在执行之前请先确认自己的目录，用如下的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">diskutil list </span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p><code>APFS</code> 格式是无法直接进行格式化的，我们需要首先删除 <code>APFS</code> 容器。执行如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo diskutil apfs deleteContainer /dev/disk3</span><br></pre></td></tr></table></figure>
+
+<p>然后你就会发现，你的 U 盘格式自动变成了 Mac OS 扩展(日志式)，之后就可以格式化成 exFAT 格式了。但是打印店识别不了，最后还是要在 windows 下格式化成 FAT32。</p>
+]]></content>
+      <categories>
+        <category>日志</category>
+      </categories>
+      <tags>
+        <tag>macOS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Objective-C 回顾【三】之 内存管理</title>
     <url>/2018/05/11/20180511-Objective-C%20%E5%9B%9E%E9%A1%BE%E3%80%90%E4%B8%89%E3%80%91%E4%B9%8B%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[<h2 id="理解引用计数"><a href="#理解引用计数" class="headerlink" title="理解引用计数"></a>理解引用计数</h2><hr>
@@ -3677,30 +3701,6 @@
       </categories>
       <tags>
         <tag>Objective-C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在 macOS 中用命令格式化 APFS 格式 U 盘</title>
-    <url>/2018/05/21/20180521-%E5%9C%A8%20macOS%20%E4%B8%AD%E7%94%A8%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F%E5%8C%96%20APFS%20%E6%A0%BC%E5%BC%8F%20U%20%E7%9B%98/</url>
-    <content><![CDATA[<p>今天需要去打印店打印东西，但是 U 盘被我格式化成了 <code>APFS</code> 格式，用磁盘管理工具无法格式化成其他的格式，选项中只有 <code>APFS</code> 的选项。我用如下的命令格式化 U 盘：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo diskutil eraseDisk JHFS+ san /dev/disk3</span><br></pre></td></tr></table></figure>
-
-<p>但是执行命令会报错，错误信息大致是，无法格式化 <code>APFS</code> 容器。</p>
-<p><code>/dev/disk3</code> 是我 U 盘的目录，在执行之前请先确认自己的目录，用如下的命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">diskutil list </span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p><code>APFS</code> 格式是无法直接进行格式化的，我们需要首先删除 <code>APFS</code> 容器。执行如下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo diskutil apfs deleteContainer /dev/disk3</span><br></pre></td></tr></table></figure>
-
-<p>然后你就会发现，你的 U 盘格式自动变成了 Mac OS 扩展(日志式)，之后就可以格式化成 exFAT 格式了。但是打印店识别不了，最后还是要在 windows 下格式化成 FAT32。</p>
-]]></content>
-      <categories>
-        <category>日志</category>
-      </categories>
-      <tags>
-        <tag>macOS</tag>
       </tags>
   </entry>
   <entry>
@@ -4089,44 +4089,6 @@
       </tags>
   </entry>
   <entry>
-    <title>iOS 配置测试用推送通知证书</title>
-    <url>/2018/06/29/20180629-iOS%20%E9%85%8D%E7%BD%AE%E6%B5%8B%E8%AF%95%E7%94%A8%E6%8E%A8%E9%80%81%E9%80%9A%E7%9F%A5%E8%AF%81%E4%B9%A6/</url>
-    <content><![CDATA[<p>最近做通知的时候需要对通知进行测试，之前没有做证书的经验，这次尝试了一下，写这篇文章备忘。</p>
-<p>测试用的工具叫做 Pusher，下载地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25vb2RsZXdlcmsvTldQdXNoZXI=">NWPusher<i class="fa fa-external-link-alt"></i></span>。非常的好用。</p>
-<h3 id="创建测试用-Push-证书"><a href="#创建测试用-Push-证书" class="headerlink" title="创建测试用 Push 证书"></a>创建测试用 Push 证书</h3><hr>
-<p>1、打开苹果开发者页面：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYXBwbGUuY29tLw==">Developer<i class="fa fa-external-link-alt"></i></span>，登录账户。</p>
-<p>2、在账户的 <code>Certificates, Identifiers &amp; Profiles</code> 页面找到 <code>Identifiters</code>，选择 <code>App IDs</code>。</p>
-<p>3、找到自己 App，点击打开，能看到如下所示。</p>
-<p><img src="/my_pictures/20180629/1.png"></p>
-<p>如果你没有配置 <code>Push Notifications</code>，那么它的 <code>Development</code> 和 <code>Distribution</code> 都是 <code>Configurable</code> 状态。点击 <code>Edit</code> 按钮。</p>
-<p>我们要创建测试用的证书就点击 <code>Development SSL Certificate</code> 下面的 <code>Create Certificate</code>。</p>
-<span id="more"></span>
-
-<p><img src="/my_pictures/20180629/2.png"></p>
-<p>直接 <code>Continue</code>，接下来的页面需要我们上传 <code>.certSigningRequest</code> 的文件，这个文件需要在我们自己的电脑上制作。</p>
-<h3 id="制作-certSigningRequest-文件"><a href="#制作-certSigningRequest-文件" class="headerlink" title="制作 certSigningRequest 文件"></a>制作 certSigningRequest 文件</h3><hr>
-<p>1、打开电脑上的钥匙串应用。</p>
-<p>2、点击钥匙串访问 -&gt; 证书助理 -&gt; 从证书颁发机构请求证书…</p>
-<p><img src="/my_pictures/20180629/3.png"></p>
-<p>3、填写相关信息，生成 <code>.certSigningRequest</code> 文件。</p>
-<p><img src="/my_pictures/20180629/4.png"></p>
-<h3 id="完成证书制作"><a href="#完成证书制作" class="headerlink" title="完成证书制作"></a>完成证书制作</h3><hr>
-<p>1、刚才制作证书那里，上传我们生成的 <code>.certSigningRequest</code> 文件。</p>
-<p>2、证书制作完成，下载证书，双击安装到我们的钥匙串中。</p>
-<p><img src="/my_pictures/20180629/5.png"></p>
-<p>3、因为我们需要的是一个 <code>.p12</code> 的文件，所以我们右键钥匙串刚安装的 <code>Apple Development IOS Push Services</code> 证书，选择导出。</p>
-<p><img src="/my_pictures/20180629/6.png"></p>
-<p>这样，我们的 Push 证书就做好了。</p>
-]]></content>
-      <categories>
-        <category>工作日志</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-        <tag>iOS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>闭包实现addTarget方法-面向协议编程</title>
     <url>/2018/06/25/20180625-%E9%97%AD%E5%8C%85%E5%AE%9E%E7%8E%B0addTarget%E6%96%B9%E6%B3%95-%E9%9D%A2%E5%90%91%E5%8D%8F%E8%AE%AE%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<p>Swift 是一门面向协议的编程语言，为什么这么说，请看 WWDC 视频 <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYXBwbGUuY29tL3ZpZGVvcy9wbGF5L3d3ZGMyMDE1LzQwOC8=">Protocol-Oriented Programming in Swift<i class="fa fa-external-link-alt"></i></span>。</p>
@@ -4162,6 +4124,44 @@
 <li><span class="exturl" data-url="aHR0cHM6Ly9naXN0LmdpdGh1Yi5jb20vUEVaL2U0YTc5MDg3MDg1NWEwYmIzYTQ1ZGEyZGE4ZjcxYWEz">UIControl+ListenBlock.swift<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9naXN0LmdpdGh1Yi5jb20vTW94aW1pbGxpYW4vNWY2ZDYwZTJjZDEyMjJlNTU3NTQ3YTQyNTU4NjY5YWU=">ClosureProtocolExtensions.swift<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
+]]></content>
+      <categories>
+        <category>工作日志</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iOS 配置测试用推送通知证书</title>
+    <url>/2018/06/29/20180629-iOS%20%E9%85%8D%E7%BD%AE%E6%B5%8B%E8%AF%95%E7%94%A8%E6%8E%A8%E9%80%81%E9%80%9A%E7%9F%A5%E8%AF%81%E4%B9%A6/</url>
+    <content><![CDATA[<p>最近做通知的时候需要对通知进行测试，之前没有做证书的经验，这次尝试了一下，写这篇文章备忘。</p>
+<p>测试用的工具叫做 Pusher，下载地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25vb2RsZXdlcmsvTldQdXNoZXI=">NWPusher<i class="fa fa-external-link-alt"></i></span>。非常的好用。</p>
+<h3 id="创建测试用-Push-证书"><a href="#创建测试用-Push-证书" class="headerlink" title="创建测试用 Push 证书"></a>创建测试用 Push 证书</h3><hr>
+<p>1、打开苹果开发者页面：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYXBwbGUuY29tLw==">Developer<i class="fa fa-external-link-alt"></i></span>，登录账户。</p>
+<p>2、在账户的 <code>Certificates, Identifiers &amp; Profiles</code> 页面找到 <code>Identifiters</code>，选择 <code>App IDs</code>。</p>
+<p>3、找到自己 App，点击打开，能看到如下所示。</p>
+<p><img src="/my_pictures/20180629/1.png"></p>
+<p>如果你没有配置 <code>Push Notifications</code>，那么它的 <code>Development</code> 和 <code>Distribution</code> 都是 <code>Configurable</code> 状态。点击 <code>Edit</code> 按钮。</p>
+<p>我们要创建测试用的证书就点击 <code>Development SSL Certificate</code> 下面的 <code>Create Certificate</code>。</p>
+<span id="more"></span>
+
+<p><img src="/my_pictures/20180629/2.png"></p>
+<p>直接 <code>Continue</code>，接下来的页面需要我们上传 <code>.certSigningRequest</code> 的文件，这个文件需要在我们自己的电脑上制作。</p>
+<h3 id="制作-certSigningRequest-文件"><a href="#制作-certSigningRequest-文件" class="headerlink" title="制作 certSigningRequest 文件"></a>制作 certSigningRequest 文件</h3><hr>
+<p>1、打开电脑上的钥匙串应用。</p>
+<p>2、点击钥匙串访问 -&gt; 证书助理 -&gt; 从证书颁发机构请求证书…</p>
+<p><img src="/my_pictures/20180629/3.png"></p>
+<p>3、填写相关信息，生成 <code>.certSigningRequest</code> 文件。</p>
+<p><img src="/my_pictures/20180629/4.png"></p>
+<h3 id="完成证书制作"><a href="#完成证书制作" class="headerlink" title="完成证书制作"></a>完成证书制作</h3><hr>
+<p>1、刚才制作证书那里，上传我们生成的 <code>.certSigningRequest</code> 文件。</p>
+<p>2、证书制作完成，下载证书，双击安装到我们的钥匙串中。</p>
+<p><img src="/my_pictures/20180629/5.png"></p>
+<p>3、因为我们需要的是一个 <code>.p12</code> 的文件，所以我们右键钥匙串刚安装的 <code>Apple Development IOS Push Services</code> 证书，选择导出。</p>
+<p><img src="/my_pictures/20180629/6.png"></p>
+<p>这样，我们的 Push 证书就做好了。</p>
 ]]></content>
       <categories>
         <category>工作日志</category>
@@ -4234,33 +4234,6 @@
       </tags>
   </entry>
   <entry>
-    <title>iOS 11 中 UIRefreshControll 消失【译】</title>
-    <url>/2018/07/07/20180707-iOS11%E4%B8%ADUIRefreshControll%E6%B6%88%E5%A4%B1%E3%80%90%E8%AF%91%E3%80%91/</url>
-    <content><![CDATA[<h3 id="问"><a href="#问" class="headerlink" title="问"></a>问</h3><hr>
-<p>我有一个带有 <code>largeTitle</code> 和 <code>searchcontroller</code> 的 <code>navigationBar</code> ，我的 <code>tableView</code> 有一个 <code>refreshcontrol</code> 。 </p>
-<p>当我拉动刷新时，<code>refreshcontrol</code> 的 <code>activityIndicator</code> 消失了，但是刷新过程仍然在继续，即使进程完成并且我调用 <code>UIRefreshControll</code> 的 <code>endRefreshing()</code> 方法，导航栏也不会恢复到正常大小。</p>
-<p><img src="/my_pictures/20180707/1.gif"></p>
-<p>有人遇到过同样的问题吗？</p>
-<span id="more"></span>
-
-<h3 id="答"><a href="#答" class="headerlink" title="答"></a>答</h3><hr>
-<p>我已经找了几个星期，今天我终于找到了解决方案，终于成功了。解决的方式非常简单，我不敢相信我竟然没有早点找到。</p>
-<p>我正在使用带有 <code>UITableView</code> 的普通 <code>UIViewController</code>。我将约束设置成上与下都是 0，如图所示：</p>
-<p><img src="/my_pictures/20180707/2.png"></p>
-<p>一次，我改变了约束，将 <code>UITableView</code> 约束相对于 <code>Superview</code> 的所有边缘，值均为0，然后它竟然开始工作了：</p>
-<p><img src="/my_pictures/20180707/3.png"></p>
-<p>我甚至没有设置任何其他东西。我非常希望这能为你解决这个问题，因为它太烦人了……</p>
-<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDY3OTM3MTYvaW9zLTExLXVpcmVmcmVzaGNvbnRyb2wtd2l0aC1uYXZpZ2F0aW9uYmFyLWxhcmdldGl0bGUtYW5kLXNlYXJjaGNvbnRyb2xsZXItZGlzYXA=">iOS 11 UIRefreshControl with NavigationBar LargeTitle and SearchController disappearing
-<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>文章翻译</category>
-      </categories>
-      <tags>
-        <tag>iOS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>处理 initialize() 的弃用【译】</title>
     <url>/2018/07/08/20180708-%E5%A4%84%E7%90%86%20initialize()%20%E7%9A%84%E5%BC%83%E7%94%A8%E3%80%90%E8%AF%91%E3%80%91/</url>
     <content><![CDATA[<p>在将项目迁移到 Swift 3.1 后，我受到了几个警告的欢迎。它们似乎都没有特别难以修复，只是除了这个之外：</p>
@@ -4325,6 +4298,33 @@
       </categories>
       <tags>
         <tag>Swift</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iOS 11 中 UIRefreshControll 消失【译】</title>
+    <url>/2018/07/07/20180707-iOS11%E4%B8%ADUIRefreshControll%E6%B6%88%E5%A4%B1%E3%80%90%E8%AF%91%E3%80%91/</url>
+    <content><![CDATA[<h3 id="问"><a href="#问" class="headerlink" title="问"></a>问</h3><hr>
+<p>我有一个带有 <code>largeTitle</code> 和 <code>searchcontroller</code> 的 <code>navigationBar</code> ，我的 <code>tableView</code> 有一个 <code>refreshcontrol</code> 。 </p>
+<p>当我拉动刷新时，<code>refreshcontrol</code> 的 <code>activityIndicator</code> 消失了，但是刷新过程仍然在继续，即使进程完成并且我调用 <code>UIRefreshControll</code> 的 <code>endRefreshing()</code> 方法，导航栏也不会恢复到正常大小。</p>
+<p><img src="/my_pictures/20180707/1.gif"></p>
+<p>有人遇到过同样的问题吗？</p>
+<span id="more"></span>
+
+<h3 id="答"><a href="#答" class="headerlink" title="答"></a>答</h3><hr>
+<p>我已经找了几个星期，今天我终于找到了解决方案，终于成功了。解决的方式非常简单，我不敢相信我竟然没有早点找到。</p>
+<p>我正在使用带有 <code>UITableView</code> 的普通 <code>UIViewController</code>。我将约束设置成上与下都是 0，如图所示：</p>
+<p><img src="/my_pictures/20180707/2.png"></p>
+<p>一次，我改变了约束，将 <code>UITableView</code> 约束相对于 <code>Superview</code> 的所有边缘，值均为0，然后它竟然开始工作了：</p>
+<p><img src="/my_pictures/20180707/3.png"></p>
+<p>我甚至没有设置任何其他东西。我非常希望这能为你解决这个问题，因为它太烦人了……</p>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDY3OTM3MTYvaW9zLTExLXVpcmVmcmVzaGNvbnRyb2wtd2l0aC1uYXZpZ2F0aW9uYmFyLWxhcmdldGl0bGUtYW5kLXNlYXJjaGNvbnRyb2xsZXItZGlzYXA=">iOS 11 UIRefreshControl with NavigationBar LargeTitle and SearchController disappearing
+<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>文章翻译</category>
+      </categories>
+      <tags>
         <tag>iOS</tag>
       </tags>
   </entry>
@@ -5941,33 +5941,6 @@
       </tags>
   </entry>
   <entry>
-    <title>C 语言重拾【三】新的 _Bool 类型</title>
-    <url>/2023/03/07/20230307-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E4%B8%89%E3%80%91/</url>
-    <content><![CDATA[<p>在 C 语言中，一直用 <code>int</code> 类型的变量表示 <code>真/假</code> 值。C99 专门针对这种类型的变量新增了 <code>_Bool</code> 类型。该类型是以英国数学家 George Boole 的名字命名的，他开发了用代数表示逻辑和解决逻辑问题。在编程中，表示真或假的变量被称为布尔变量（Boolean variable），所以日 <code>_Bool</code> 是 C 语言中布尔变量的类型名。<code>_Bool</code> 类型的变量只能储存 <code>1（真）</code>或 <code>0（假）</code>。如果把其他非零数值赋给 <code>_Bool</code> 类型的变量，该变量会被设置为 <code>1</code>。这反映了 C 把所有的<strong>非零值都视为真</strong>。</p>
-<span id="more"></span>
-
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// boolean.c 一一 使用 _Bool 类型的变量 variable</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="type">long</span> num;</span><br><span class="line">  <span class="type">long</span> sum = <span class="number">0L</span>;</span><br><span class="line">  <span class="type">_Bool</span> input_is_good;</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">printf</span> (<span class="string">&quot;Please enter an integer to be summed &quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span> (<span class="string">&quot; (q to quit): &quot;</span>);</span><br><span class="line">  input_is_good = (<span class="built_in">scanf</span>(<span class="string">&quot;%ld&quot;</span>, &amp;num) == <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">while</span> (input_is_good) &#123;</span><br><span class="line">    sum = sum + num;</span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;Please enter next integer (q to quit): &quot;</span>);</span><br><span class="line">    input_is_good = (<span class="built_in">scanf</span> (<span class="string">&quot;%ld&quot;</span>, &amp;num) == <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span> (<span class="string">&quot;Those integers sum to %ld. \n&quot;</span>, sum);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注意程序中把比较的结果赋值给 <code>_Bool</code> 类型的变量 <code>input_is_good</code>:</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">input_is_good = (<span class="built_in">scanf</span> (<span class="string">&quot;%ld&quot;</span>, &amp;num) == <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
-
-<p>这样做没问题，因为 <code>==</code> 运算符返回的值不是 1 就是 0。顺带一提，从优先级方面考虑的话，并不需要用圆括号把 <code>scanf(&quot;%ld&quot;, &amp;num) == 1</code> 括起来。但是，这样做可以提高代码可读性。还要注意，如何为变量命名才能让 <code>while</code> 循环的测试简单易懂：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (input_is_good)</span><br></pre></td></tr></table></figure>
-
-<p>C99 提供了 <code>stdbool.h</code> 头文件，该头文件让 <code>bool</code> 成为 <code>_Bool</code> 的别名，而且还把 <code>true</code> 和 <code>false</code> 分别定义为 1 和 0 的符号常量。包含该头文件后，写出的代码可以与 C++ 兼容，因为 C++ 把 <code>bool</code>、<code>true</code> 和 <code>false</code> 定义为关键字。</p>
-<p>如果系统不支持 <code>_Bool</code> 类型，导致无法运行该程序，可以把 <code>_Bool</code> 替换成 <code>int</code> 即可。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
-<li>C Primer Plus</li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C 语言重拾【四】ctype.h 系列的字符函数</title>
     <url>/2023/03/08/20230308-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E5%9B%9B%E3%80%91/</url>
     <content><![CDATA[<p>C 有一系列专门处理字符的函数，<code>ctype.h</code> 头文件包含了这些函数的原型。这些函数接受一个字符作为参数，如果该字符属于某特殊的类别，就返回一个非零值（真）；否则，返回口（假）。例如，如果 <code>isalpha()</code> 函数的参数是一个字母，则返回一个非零值。</p>
@@ -6058,6 +6031,33 @@
 <td>如果参数是小写字符，该函数返回大写字符；否则，返回原始参数</td>
 </tr>
 </tbody></table>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>C Primer Plus</li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C 语言重拾【三】新的 _Bool 类型</title>
+    <url>/2023/03/07/20230307-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E4%B8%89%E3%80%91/</url>
+    <content><![CDATA[<p>在 C 语言中，一直用 <code>int</code> 类型的变量表示 <code>真/假</code> 值。C99 专门针对这种类型的变量新增了 <code>_Bool</code> 类型。该类型是以英国数学家 George Boole 的名字命名的，他开发了用代数表示逻辑和解决逻辑问题。在编程中，表示真或假的变量被称为布尔变量（Boolean variable），所以日 <code>_Bool</code> 是 C 语言中布尔变量的类型名。<code>_Bool</code> 类型的变量只能储存 <code>1（真）</code>或 <code>0（假）</code>。如果把其他非零数值赋给 <code>_Bool</code> 类型的变量，该变量会被设置为 <code>1</code>。这反映了 C 把所有的<strong>非零值都视为真</strong>。</p>
+<span id="more"></span>
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// boolean.c 一一 使用 _Bool 类型的变量 variable</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="type">long</span> num;</span><br><span class="line">  <span class="type">long</span> sum = <span class="number">0L</span>;</span><br><span class="line">  <span class="type">_Bool</span> input_is_good;</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">printf</span> (<span class="string">&quot;Please enter an integer to be summed &quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span> (<span class="string">&quot; (q to quit): &quot;</span>);</span><br><span class="line">  input_is_good = (<span class="built_in">scanf</span>(<span class="string">&quot;%ld&quot;</span>, &amp;num) == <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">while</span> (input_is_good) &#123;</span><br><span class="line">    sum = sum + num;</span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;Please enter next integer (q to quit): &quot;</span>);</span><br><span class="line">    input_is_good = (<span class="built_in">scanf</span> (<span class="string">&quot;%ld&quot;</span>, &amp;num) == <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span> (<span class="string">&quot;Those integers sum to %ld. \n&quot;</span>, sum);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意程序中把比较的结果赋值给 <code>_Bool</code> 类型的变量 <code>input_is_good</code>:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">input_is_good = (<span class="built_in">scanf</span> (<span class="string">&quot;%ld&quot;</span>, &amp;num) == <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这样做没问题，因为 <code>==</code> 运算符返回的值不是 1 就是 0。顺带一提，从优先级方面考虑的话，并不需要用圆括号把 <code>scanf(&quot;%ld&quot;, &amp;num) == 1</code> 括起来。但是，这样做可以提高代码可读性。还要注意，如何为变量命名才能让 <code>while</code> 循环的测试简单易懂：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (input_is_good)</span><br></pre></td></tr></table></figure>
+
+<p>C99 提供了 <code>stdbool.h</code> 头文件，该头文件让 <code>bool</code> 成为 <code>_Bool</code> 的别名，而且还把 <code>true</code> 和 <code>false</code> 分别定义为 1 和 0 的符号常量。包含该头文件后，写出的代码可以与 C++ 兼容，因为 C++ 把 <code>bool</code>、<code>true</code> 和 <code>false</code> 定义为关键字。</p>
+<p>如果系统不支持 <code>_Bool</code> 类型，导致无法运行该程序，可以把 <code>_Bool</code> 替换成 <code>int</code> 即可。</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
 <li>C Primer Plus</li>
 </ul>
@@ -7777,6 +7777,49 @@
       </tags>
   </entry>
   <entry>
+    <title>macOS 安装 manpages-zh</title>
+    <url>/2023/05/18/20230518-%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87man%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>在 macOS 上，<code>man</code> 命令用于查看系统中安装的程序的帮助文档。然而，默认情况下，这些帮助文档都是英文的，对于不熟悉英文的用户来说可能会有些困难。幸运的是，我们可以安装 <code>manpages-zh</code> 来获取中文帮助文档。</p>
+<span id="more"></span>
+
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><p>在安装之前，我们需要先安装一些依赖项，依赖项有三个：cmake，python3，opencc，在 macOS 上我们使用 <code>brew</code> 安装这些依赖。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install cmake</span><br><span class="line">$ brew install python</span><br><span class="line">$ brew install opencc</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><ol>
+<li><p><code>clone</code> 项目</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:man-pages-zh/manpages-zh.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看最新的 tag</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git describe --tags --abbrev=0</span><br><span class="line"><span class="comment"># 或者执行 git tag -l 查看 tag 列表</span></span><br><span class="line"><span class="comment"># 写这篇博客时，最近的 tag 是 v1.6.4.0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>切换到最新的 tag</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git checkout tags/v1.6.4.0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> manpages-zh</span><br><span class="line">$ <span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build/</span><br><span class="line">$ cmake ..</span><br><span class="line">$ make</span><br><span class="line">$ <span class="built_in">sudo</span> make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装完成后，我们会在 /usr/local/share/man 目录下看到两个目录 zh_CN zh_TW</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加 <code>zh_CN</code> 到配置文件，本人环境为 <code>zsh</code>，我是将环境添加到 <code>.zshrc</code> 中。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">MANPATH=/usr/local/share/man/zh_CN:$MANPATH; export MANPATH</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启终端尝试 <code>man</code> 命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ man <span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<img src="/my_pictures/20230518/1.png" style="zoom:45%;" /></li>
+</ol>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>安装 <code>manpages-zh</code> 后，我们可以方便地查看中文帮助文档，这对于不熟悉英文的用户来说是非常有用的。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hbi1wYWdlcy16aC9tYW5wYWdlcy16aA==">manpages-zh<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL2Z5a2VjLmdpdGh1Yi5pby8yMDE1LzEwLzI2L21hbnBhZ2VzLXpoLU1hYy1PUy1JbnN0YWxsYXRpb24uaHRtbA==">Manpages Zh Mac Os Installation<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+]]></content>
+      <categories>
+        <category>macOS</category>
+      </categories>
+      <tags>
+        <tag>终端命令</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C 语言重拾【八】结构和其他数据形式</title>
     <url>/2023/06/20/20230620-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E5%85%AB%E3%80%91/</url>
     <content><![CDATA[<p>在 C 语言中，结构体是一种非常重要的数据类型。它可以将不同的数据类型组合成一个整体，方便程序员进行操作。比如，我们可以定义一个结构体来表示一个人的信息，包括姓名、年龄、性别等等。使用结构体可以使得程序更加清晰易懂，提高代码的可读性和可维护性。</p>
@@ -7853,49 +7896,6 @@
       <tags>
         <tag>Docker</tag>
         <tag>Gitlab</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>macOS 安装 manpages-zh</title>
-    <url>/2023/05/18/20230518-%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87man%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<p>在 macOS 上，<code>man</code> 命令用于查看系统中安装的程序的帮助文档。然而，默认情况下，这些帮助文档都是英文的，对于不熟悉英文的用户来说可能会有些困难。幸运的是，我们可以安装 <code>manpages-zh</code> 来获取中文帮助文档。</p>
-<span id="more"></span>
-
-<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><p>在安装之前，我们需要先安装一些依赖项，依赖项有三个：cmake，python3，opencc，在 macOS 上我们使用 <code>brew</code> 安装这些依赖。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install cmake</span><br><span class="line">$ brew install python</span><br><span class="line">$ brew install opencc</span><br></pre></td></tr></table></figure>
-
-<h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><ol>
-<li><p><code>clone</code> 项目</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:man-pages-zh/manpages-zh.git</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看最新的 tag</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git describe --tags --abbrev=0</span><br><span class="line"><span class="comment"># 或者执行 git tag -l 查看 tag 列表</span></span><br><span class="line"><span class="comment"># 写这篇博客时，最近的 tag 是 v1.6.4.0</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>切换到最新的 tag</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git checkout tags/v1.6.4.0</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编译安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> manpages-zh</span><br><span class="line">$ <span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build/</span><br><span class="line">$ cmake ..</span><br><span class="line">$ make</span><br><span class="line">$ <span class="built_in">sudo</span> make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装完成后，我们会在 /usr/local/share/man 目录下看到两个目录 zh_CN zh_TW</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加 <code>zh_CN</code> 到配置文件，本人环境为 <code>zsh</code>，我是将环境添加到 <code>.zshrc</code> 中。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">MANPATH=/usr/local/share/man/zh_CN:$MANPATH; export MANPATH</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重启终端尝试 <code>man</code> 命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ man <span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
-
-<img src="/my_pictures/20230518/1.png" style="zoom:45%;" /></li>
-</ol>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>安装 <code>manpages-zh</code> 后，我们可以方便地查看中文帮助文档，这对于不熟悉英文的用户来说是非常有用的。</p>
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hbi1wYWdlcy16aC9tYW5wYWdlcy16aA==">manpages-zh<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cDovL2Z5a2VjLmdpdGh1Yi5pby8yMDE1LzEwLzI2L21hbnBhZ2VzLXpoLU1hYy1PUy1JbnN0YWxsYXRpb24uaHRtbA==">Manpages Zh Mac Os Installation<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-]]></content>
-      <categories>
-        <category>macOS</category>
-      </categories>
-      <tags>
-        <tag>终端命令</tag>
       </tags>
   </entry>
   <entry>
@@ -8871,6 +8871,96 @@
       </categories>
       <tags>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法：两数之和</title>
+    <url>/2025/02/16/20250216-%E7%AE%97%E6%B3%95%EF%BC%9A%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个整数数组 <code>nums</code> 和一个整数目标值 <code>target</code>，请你在该数组中找出 <strong>和为目标值</strong> <em><code>target</code></em> 的那 <strong>两个</strong> 整数，并返回它们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。</p>
+<p>你可以按任意顺序返回答案。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [2,7,11,15], target = 9</span><br><span class="line">输出：[0,1]</span><br><span class="line">解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [3,2,4], target = 6</span><br><span class="line">输出：[1,2]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [3,3], target = 6</span><br><span class="line">输出：[0,1]</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>2 &lt;= nums.length &lt;= 104</code></li>
+<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>
+<li><code>-109 &lt;= target &lt;= 109</code></li>
+<li><strong>只会存在一个有效答案</strong></li>
+</ul>
+<span id="more"></span>
+
+<p><strong>进阶：</strong>你可以想出一个时间复杂度小于 <code>O(n2)</code> 的算法吗？</p>
+<h2 id="方法一：暴力遍历"><a href="#方法一：暴力遍历" class="headerlink" title="方法一：暴力遍历"></a>方法一：暴力遍历</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">twoSum</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">target</span>: <span class="type">Int</span>) -&gt; [<span class="type">Int</span>] &#123;</span><br><span class="line">  <span class="keyword">for</span> (i, num) <span class="keyword">in</span> nums.enumerated() &#123;</span><br><span class="line">    <span class="keyword">let</span> complement <span class="operator">=</span> target <span class="operator">-</span> num</span><br><span class="line">    <span class="keyword">for</span> (j, otherNum) <span class="keyword">in</span> nums.enumerated() <span class="keyword">where</span> i <span class="operator">!=</span> j &#123;</span><br><span class="line">      <span class="keyword">if</span> otherNum <span class="operator">==</span> complement &#123;</span><br><span class="line">        <span class="keyword">return</span> [i, j]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面逐行解释这段代码的思路：</p>
+<ol>
+<li><p><strong>外层循环（枚举所有数字及其索引）</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (i, num) <span class="keyword">in</span> nums.enumerated() &#123;</span><br></pre></td></tr></table></figure>
+<p>这一层循环遍历数组 <code>nums</code> 中的每个元素，并记录下当前元素 <code>num</code> 以及对应的索引 <code>i</code>。</p>
+</li>
+<li><p><strong>计算补数</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> complement <span class="operator">=</span> target <span class="operator">-</span> num</span><br></pre></td></tr></table></figure>
+<p>对于当前元素 <code>num</code>，通过 <code>target - num</code> 计算得到另一个数（称为补数，即 complement），其作用是希望能与 <code>num</code> 组合起来使其和为 <code>target</code>。</p>
+</li>
+<li><p><strong>内层循环（再次遍历数组查找补数）</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (j, otherNum) <span class="keyword">in</span> nums.enumerated() <span class="keyword">where</span> i <span class="operator">!=</span> j &#123;</span><br></pre></td></tr></table></figure>
+<p>这一层循环再次遍历整个数组，寻找满足条件的另一个数字 <code>otherNum</code>。注意，这里使用了 <code>where i != j</code> 条件，确保不会使用同一个元素两次。</p>
+</li>
+<li><p><strong>检查是否找到匹配的补数</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> otherNum <span class="operator">==</span> complement &#123;</span><br><span class="line">    <span class="keyword">return</span> [i, j]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果在内层循环中发现 <code>otherNum</code> 等于之前计算的 <code>complement</code>，则说明找到了两个数，它们的和等于 <code>target</code>。此时，函数会立即返回一个包含这两个索引 <code>[i, j]</code> 的数组。</p>
+</li>
+<li><p><strong>没有找到匹配时返回空数组</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> []</span><br></pre></td></tr></table></figure>
+<p>如果完成所有循环后都没有找到符合条件的一对数字，则返回一个空数组，表示不存在满足条件的两个数。</p>
+</li>
+</ol>
+<h3 id="算法思路总结"><a href="#算法思路总结" class="headerlink" title="算法思路总结"></a>算法思路总结</h3><ul>
+<li><strong>暴力解法</strong>：代码使用了暴力法，两层枚举，每次将数组中任意两个不同的元素配对，判断其和是否等于目标值 <code>target</code>。</li>
+<li><strong>时间复杂度</strong>：由于使用了嵌套循环，最坏情况下需要检查所有可能的两个数字组合，时间复杂度为 O(n²)。（其中 n 为数组长度）</li>
+<li><strong>空间复杂度</strong>：只使用了常数级别的额外空间，因此空间复杂度为 O(1)。</li>
+</ul>
+<h2 id="方法二：借助字典高效遍历"><a href="#方法二：借助字典高效遍历" class="headerlink" title="方法二：借助字典高效遍历"></a>方法二：借助字典高效遍历</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">twoSum</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">target</span>: <span class="type">Int</span>) -&gt; [<span class="type">Int</span>] &#123;</span><br><span class="line">  <span class="keyword">var</span> dict <span class="operator">=</span> [<span class="type">Int</span>: <span class="type">Int</span>]()</span><br><span class="line">  <span class="keyword">for</span> (index, value) <span class="keyword">in</span> nums.enumerated() &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> otherIndex <span class="operator">=</span> dict[target <span class="operator">-</span> value] &#123;</span><br><span class="line">      <span class="keyword">return</span> [otherIndex, index]</span><br><span class="line">    &#125;</span><br><span class="line">    dict[value] <span class="operator">=</span> index</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个算法是一种解决“两数之和”问题的高效方法，主要利用了哈希表（字典）的查找特性来实现，在一次遍历数组的过程中就能找到答案。</p>
+<p>下面详细解释各个步骤：</p>
+<ol>
+<li><p><strong>初始化哈希表</strong><br>定义一个字典 <code>dict</code>，键是数组中的数值，值是相应的索引：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dict <span class="operator">=</span> [<span class="type">Int</span>: <span class="type">Int</span>]()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>遍历数组并查找匹配</strong><br>使用 <code>enumerated()</code> 方法遍历数组，使得在每一步可以同时获得元素的索引和值：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (index, value) <span class="keyword">in</span> nums.enumerated() &#123;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于当前值 <code>value</code>，计算其所需的匹配数，即 <code>target - value</code>。</li>
+<li>在字典中查找这个匹配数：<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> otherIndex <span class="operator">=</span> dict[target <span class="operator">-</span> value] &#123;</span><br><span class="line">    <span class="keyword">return</span> [otherIndex, index]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+如果找到了匹配的索引 <code>otherIndex</code>，说明已经遍历过的某个数 <code>nums[otherIndex]</code> 和当前数 <code>value</code> 之和正好等于目标值 <code>target</code>，于是返回这两个索引。</li>
+</ul>
+</li>
+<li><p><strong>更新字典</strong><br>如果没有找到匹配值，则将当前值以及对应的索引添加到字典中：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">dict[value] <span class="operator">=</span> index</span><br></pre></td></tr></table></figure>
+<p>这样，当后续的数字需要一个与之配对的数字时，就可以在字典中快速查找。</p>
+</li>
+<li><p><strong>返回结果</strong><br>如果遍历完整个数组都没有找到满足条件的两个数，则返回空数组：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> []</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="算法思路总结-1"><a href="#算法思路总结-1" class="headerlink" title="算法思路总结"></a>算法思路总结</h3><ul>
+<li>利用哈希表（字典）实现：在一次遍历数组的过程中，利用字典来记录已经遍历过的数字及其索引。</li>
+<li>查找补数：对于当前数字，计算补数（即 target 减去当前数字），然后检查字典中是否存在这个补数。若存在，则说明找到了满足条件的两个数字。</li>
+<li>时间复杂度：只需一次遍历，每次查找与插入操作均为 O(1)，整体时间复杂度为 O(n)。（其中 n 为数组长度）</li>
+<li>空间复杂度：需要额外使用一个字典存储数字及其索引，因此空间复杂度为 O(n)。（最坏情况字典大小与数组长度相同）</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
 </search>
