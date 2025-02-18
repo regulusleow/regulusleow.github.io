@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -300,7 +300,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
 
 <h5 id="搜索路径"><a href="#搜索路径" class="headerlink" title="搜索路径"></a>搜索路径</h5><hr>
-<p>当你导入一个模块，Python 解析器对模块位置的搜索顺序是：<br>    * 1、当前目录<br>    * 2、如果不在当前目录，Python 则搜索在 shell 变量 PYTHONPATH 下的每个目录。<br>    * 3、如果都找不到，Python会察看默认路径。UNIX下，默认路径一般为&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python&#x2F;。<br>模块搜索路径存储在 system 模块的 sys.path 变量中。变量里包含当前目录，PYTHONPATH和由安装过程决定的默认目录。</p>
+<p>当你导入一个模块，Python 解析器对模块位置的搜索顺序是：<br>	* 1、当前目录<br>	* 2、如果不在当前目录，Python 则搜索在 shell 变量 PYTHONPATH 下的每个目录。<br>	* 3、如果都找不到，Python会察看默认路径。UNIX下，默认路径一般为&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python&#x2F;。<br>模块搜索路径存储在 system 模块的 sys.path 变量中。变量里包含当前目录，PYTHONPATH和由安装过程决定的默认目录。</p>
 <h5 id="PYTHONPATH-变量"><a href="#PYTHONPATH-变量" class="headerlink" title="PYTHONPATH 变量"></a>PYTHONPATH 变量</h5><p>作为环境变量，PYTHONPATH 由装在一个列表里的许多目录组成。PYTHONPATH 的语法和 shell 变量 PATH 的一样。<br>在 Windows 系统，典型的 PYTHONPATH 如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> PYTHONPATH=c:\python27\lib;</span><br></pre></td></tr></table></figure>
 
@@ -336,7 +336,7 @@
 <p><strong>因此，如果你想重新执行模块里顶层部分的代码，可以用 reload() 函数。该函数会重新导入之前导入过的模块。语法如下：</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reload(module_name)</span><br></pre></td></tr></table></figure>
 
-<p><strong>在这里，module_name要直接放模块的名字，而不是一个字符串形式。</strong>比如想重载 hello 模块，如下：</p>
+<p>**在这里，module_name要直接放模块的名字，而不是一个字符串形式。**比如想重载 hello 模块，如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reload(hello)</span><br></pre></td></tr></table></figure>
     </div>
 
