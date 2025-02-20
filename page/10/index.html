@@ -200,7 +200,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/03/17/20180317-iOS%2011%E6%9D%83%E9%99%90%E6%9B%B4%E6%96%B0/">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/03/17/20180317-layoutIfNeeded()%20%E5%87%BD%E6%95%B0%E5%AF%B9%20UIScrollView%20%E7%9A%84%E5%BD%B1%E5%93%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/avatar_images/avatar.webp">
@@ -218,7 +218,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/03/17/20180317-iOS%2011%E6%9D%83%E9%99%90%E6%9B%B4%E6%96%B0/" class="post-title-link" itemprop="url">iOS 11权限更新</a>
+          <a href="/2018/03/17/20180317-layoutIfNeeded()%20%E5%87%BD%E6%95%B0%E5%AF%B9%20UIScrollView%20%E7%9A%84%E5%BD%B1%E5%93%8D/" class="post-title-link" itemprop="url">layoutIfNeeded() 函数对 UIScrollView 的影响</a>
         </h2>
 
         <div class="post-meta-container">
@@ -250,8 +250,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/03/17/20180317-iOS%2011%E6%9D%83%E9%99%90%E6%9B%B4%E6%96%B0/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/17/20180317-iOS 11权限更新/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2018/03/17/20180317-layoutIfNeeded()%20%E5%87%BD%E6%95%B0%E5%AF%B9%20UIScrollView%20%E7%9A%84%E5%BD%B1%E5%93%8D/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/17/20180317-layoutIfNeeded() 函数对 UIScrollView 的影响/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -265,18 +265,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>最近项目中遇到了一个崩溃，当点击图片选择保存的时候，并没有出现请求相册权限的对话框，而是直接就崩溃，并且没有任何错误信息。开始以为是权限没有添加，但是 <code>NSPhotoLibraryUsageDescription</code> 是添加了的，搞不懂了。去翻了翻官方的文档，果然找到了解决方式。</p>
-<p>从 iOS 11 开始，相册的权限参数发生了变化，适配 iOS 11 还需要添加一个 <code>NSPhotoLibraryAddUsageDescription</code> 的参数。官方的描述如下：</p>
-<blockquote>
-<p><strong>NSPhotoLibraryAddUsageDescription</strong></p>
-<p><code>NSPhotoLibraryAddUsageDescription</code> ( <code>String</code> - iOS) This key lets you describe the reason your app seeks write-only access to the user’s photo library. When the system prompts the user to allow access, this string is displayed as part of the alert.</p>
-<p>Important: To protect user privacy, an iOS app linked on or after iOS 10.0, and that accesses the user’s photo library, must statically declare the intent to do so. Include the NSPhotoLibraryAddUsageDescription key (in apps that link on or after iOS 11) or NSPhotoLibraryUsageDescription key in your app’s <code>Info.plist</code> file and provide a purpose string for the key. If your app attempts to access the user’s photo library without a corresponding purpose string, your app exits.  </p>
-<p>This key is supported in iOS 11.0 and later.</p>
-</blockquote>
-<p>从 important 的最后一句话可以看出，当应用试图访问用户相册但是 <code>Info.plist</code>  中并没有对应权限的参数的话，应用就会退出。</p>
+          <p>在做 iOS 相关的约束动画时，我们一定会用到 <code>layoutIfNeeded()</code> 函数，但是在大多数情况下使用并没有什么问题。当与 <code>UIScrollView</code> 相关的控件结合使用的时候要注意了。</p>
+<p>在开发一个 App 时（类似于浏览器的 App），需求是，滑动的时候，需要隐藏掉顶部的 <code>navigation bar</code> （这里我是用 <code>UIView</code> 自定义的一个 <code>navigation bar</code>）。向上滑动，让 <code>navigation bar</code> 移动到可视区域外消失，当然，移动的时候是有动画的，这里我用的是 <code>constraint</code> 相关的动画，所以我需要在最后调用一次 <code>layoutIfNeeded()</code> 函数。代码类似如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.35</span>) &#123;</span><br><span class="line">    <span class="comment">// 进行更改约束的操作</span></span><br><span class="line">    <span class="keyword">self</span>.view.layoutIfNeeded()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/03/17/20180317-iOS%2011%E6%9D%83%E9%99%90%E6%9B%B4%E6%96%B0/#more" rel="contents">
+              <a class="btn" href="/2018/03/17/20180317-layoutIfNeeded()%20%E5%87%BD%E6%95%B0%E5%AF%B9%20UIScrollView%20%E7%9A%84%E5%BD%B1%E5%93%8D/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -602,8 +596,8 @@
 </li>
 </ul>
 <h3 id="值类型"><a href="#值类型" class="headerlink" title="值类型"></a>值类型</h3><hr>
-<p><strong>值语义 (value semantics)</strong><br>	* 结构体只有一个持有者。比如，当我们将结构体变量传递给一个函数时，函数将接收到结构体的复制，它也只能改变它自己的这份复制。这叫做值语义 (value semantics)，有时候也被叫做复制语义。</p>
-<p><strong>引用语义 (reference semantics)</strong><br>	* 对于对象来说，它们是通过传递引用来工作的，因此类对象会拥有很多持有者，这被叫做引用语义 (reference semantics)。</p>
+<p><strong>值语义 (value semantics)</strong><br>    * 结构体只有一个持有者。比如，当我们将结构体变量传递给一个函数时，函数将接收到结构体的复制，它也只能改变它自己的这份复制。这叫做值语义 (value semantics)，有时候也被叫做复制语义。</p>
+<p><strong>引用语义 (reference semantics)</strong><br>    * 对于对象来说，它们是通过传递引用来工作的，因此类对象会拥有很多持有者，这被叫做引用语义 (reference semantics)。</p>
 <p>因为结构体只有一个持有者，所以它不可能造成引用循环。而对于类和函数这样的引用类型，我们需要特别小心，避免造成引用循环的问题。</p>
 <p>编译器所做的对于值类型的复制优化和值语义类型的写时复制行为并不是一回事儿。写时复制必须由开发者来实现，想要实现写时复制，你需要检测所包含的类是否有共享的引用。和自动移除不必要的值类型复制不同，写时复制是需要自己实现的。不过编译器会移除那些不必要的“无效”浅复制，以及像是数组这样的类型中的代码会执行“智能的”写时复制，两者互为补充，都是对值类型的优化。</p>
           <!--noindex-->
@@ -814,7 +808,7 @@
 <p>Sequence定义：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">Sequence</span> &#123;</span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Iterator</span>: <span class="type">IteratorProtocol</span></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">makeIterator</span>() -&gt; <span class="type">Iterator</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>要实现一个Sequence，首先需要提供一个返回**迭代器（iterator）**的<code>makeIterator()</code> 方法。<br>对于迭代器，它是一个满足 <code>IteratorProtocol</code> 协议的类型。</p>
+<p>要实现一个Sequence，首先需要提供一个返回<strong>迭代器（iterator）</strong>的<code>makeIterator()</code> 方法。<br>对于迭代器，它是一个满足 <code>IteratorProtocol</code> 协议的类型。</p>
 <p>IteratorProtocol协议的定义：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">IteratorProtocol</span> &#123;</span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Element</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">next</span>() -&gt; <span class="type">Element</span>?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->

@@ -301,7 +301,7 @@
 <h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>还有一个更加简便快捷的命令，如下（下述命令执行前请先根据<em><strong>方法一</strong></em>设置好 <code>upstream</code>）：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch upstream &amp;&amp; git reset --hard upstream/master &amp;&amp; git push -f</span><br></pre></td></tr></table></figure>
 
-<p>这种方法只适用于不用保存自己版本的情况。***当执行上述命令时，你一定要知道你在做什么。***接下来，我们来解释一下这段命令的含义。</p>
+<p>这种方法只适用于不用保存自己版本的情况。<em><strong>当执行上述命令时，你一定要知道你在做什么。</strong></em>接下来，我们来解释一下这段命令的含义。</p>
 <p>这行命令做了以下三个操作：</p>
 <ol>
 <li><p><code>git fetch upstream</code>: 这个命令从远程仓库 <code>upstream</code> 中拉取最新的代码到本地的 <code>upstream/master</code> 分支中。这样可以让你的本地仓库知道有哪些新的提交。</p>
