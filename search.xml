@@ -153,30 +153,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Swift 使用 warning</title>
-    <url>/2018/01/29/20180129-Swift%20%E4%BD%BF%E7%94%A8%20warning/</url>
-    <content><![CDATA[<p>在 Swift 中无法使用 <code>#warning</code> ，Swift 中有如下的标记：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">//<span class="doctag">FIXME:</span> - 待修复</span></span><br><span class="line"><span class="comment">//<span class="doctag">TODO:</span> - 接下来要做的事情</span></span><br><span class="line"><span class="comment">//MARK: - 标记</span></span><br><span class="line">注: 添加<span class="string">&quot;-&quot;</span> 可以显示分割线<span class="operator">-----</span><span class="type">Swift3下有效</span></span><br></pre></td></tr></table></figure>
-
-<p>接下来给 <code>TODO:</code> 和 <code>FIXME:</code> 加上警告，实现类似的效果：</p>
-<p>Build Phases —&gt;  add a new Build Phases —&gt; New run script phase</p>
-<span id="more"></span>
-
-<p>添加如下的代码:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable constant_">TAGS</span>=<span class="string">&quot;TODO:|FIXME:&quot;</span></span><br><span class="line">echo <span class="string">&quot;searching $&#123;SRCROOT&#125; for $&#123;TAGS&#125;&quot;</span></span><br><span class="line">find <span class="string">&quot;$&#123;SRCROOT&#125;&quot;</span> \( -name <span class="string">&quot;*.swift&quot;</span> \) -print0 | xargs -<span class="number">0</span> egrep --<span class="keyword">with</span>-filename --line-number --only-matching <span class="string">&quot;($TAGS).*\$&quot;</span> | perl -p -e <span class="string">&quot;s/($TAGS)/ warning: \$1/&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如图：</p>
-<p><img src="/my_pictures/20180129/1.png"></p>
-<p><img src="/my_pictures/20180129/2.png"></p>
-]]></content>
-      <categories>
-        <category>工作日志</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>你应该定期更新 Homebrew</title>
     <url>/2018/01/29/20180129-%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AE%9A%E6%9C%9F%E6%9B%B4%E6%96%B0%20Homebrew/</url>
     <content><![CDATA[<h3 id="为什么要定期更新"><a href="#为什么要定期更新" class="headerlink" title="为什么要定期更新"></a>为什么要定期更新</h3><hr>
@@ -230,6 +206,30 @@
       </categories>
       <tags>
         <tag>homebrew</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Swift 使用 warning</title>
+    <url>/2018/01/29/20180129-Swift%20%E4%BD%BF%E7%94%A8%20warning/</url>
+    <content><![CDATA[<p>在 Swift 中无法使用 <code>#warning</code> ，Swift 中有如下的标记：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">//<span class="doctag">FIXME:</span> - 待修复</span></span><br><span class="line"><span class="comment">//<span class="doctag">TODO:</span> - 接下来要做的事情</span></span><br><span class="line"><span class="comment">//MARK: - 标记</span></span><br><span class="line">注: 添加<span class="string">&quot;-&quot;</span> 可以显示分割线<span class="operator">-----</span><span class="type">Swift3下有效</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来给 <code>TODO:</code> 和 <code>FIXME:</code> 加上警告，实现类似的效果：</p>
+<p>Build Phases —&gt;  add a new Build Phases —&gt; New run script phase</p>
+<span id="more"></span>
+
+<p>添加如下的代码:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable constant_">TAGS</span>=<span class="string">&quot;TODO:|FIXME:&quot;</span></span><br><span class="line">echo <span class="string">&quot;searching $&#123;SRCROOT&#125; for $&#123;TAGS&#125;&quot;</span></span><br><span class="line">find <span class="string">&quot;$&#123;SRCROOT&#125;&quot;</span> \( -name <span class="string">&quot;*.swift&quot;</span> \) -print0 | xargs -<span class="number">0</span> egrep --<span class="keyword">with</span>-filename --line-number --only-matching <span class="string">&quot;($TAGS).*\$&quot;</span> | perl -p -e <span class="string">&quot;s/($TAGS)/ warning: \$1/&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如图：</p>
+<p><img src="/my_pictures/20180129/1.png"></p>
+<p><img src="/my_pictures/20180129/2.png"></p>
+]]></content>
+      <categories>
+        <category>工作日志</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
       </tags>
   </entry>
   <entry>
@@ -500,6 +500,56 @@
       </tags>
   </entry>
   <entry>
+    <title>Python 学习笔记（四）【日期和时间】</title>
+    <url>/2018/02/06/20180206-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E3%80%90%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E3%80%91/</url>
+    <content><![CDATA[<h3 id="获取格式化的时间"><a href="#获取格式化的时间" class="headerlink" title="获取格式化的时间"></a>获取格式化的时间</h3><hr>
+<p>你可以根据需求选取各种格式，但是最简单的获取可读的时间模式的函数是asctime():</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">localtime = time.asctime( time.localtime(time.time()) )</span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;本地时间为 :&quot;</span>, localtime</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line"><span class="comment"># 本地时间为 : Thu Apr  7 10:05:21 2016</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+
+<h3 id="格式化日期"><a href="#格式化日期" class="headerlink" title="格式化日期"></a>格式化日期</h3><hr>
+<p>我们可以使用 time 模块的 strftime 方法来格式化日期：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化成2016-03-20 11:45:39形式</span></span><br><span class="line"><span class="built_in">print</span> time.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, time.localtime()) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化成Sat Mar 28 22:24:24 2016形式</span></span><br><span class="line"><span class="built_in">print</span> time.strftime(<span class="string">&quot;%a %b %d %H:%M:%S %Y&quot;</span>, time.localtime()) </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 将格式字符串转换为时间戳</span></span><br><span class="line">a = <span class="string">&quot;Sat Mar 28 22:24:24 2016&quot;</span></span><br><span class="line"><span class="built_in">print</span> time.mktime(time.strptime(a,<span class="string">&quot;%a %b %d %H:%M:%S %Y&quot;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line"><span class="comment"># 2016-04-07 10:25:09</span></span><br><span class="line"><span class="comment"># Thu Apr 07 10:25:09 2016</span></span><br><span class="line"><span class="comment"># 1459175064.0</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Python中时间日期格式化符号"><a href="#Python中时间日期格式化符号" class="headerlink" title="Python中时间日期格式化符号"></a>Python中时间日期格式化符号</h3><hr>
+<ul>
+<li>%y 两位数的年份表示（00-99）</li>
+<li>%Y 四位数的年份表示（000-9999）</li>
+<li>%m 月份（01-12）</li>
+<li>%d 月内中的一天（0-31）</li>
+<li>%H 24小时制小时数（0-23）</li>
+<li>%I 12小时制小时数（01-12）</li>
+<li>%M 分钟数（00&#x3D;59）</li>
+<li>%S 秒（00-59）</li>
+<li>%a 本地简化星期名称</li>
+<li>%A 本地完整星期名称</li>
+<li>%b 本地简化的月份名称</li>
+<li>%B 本地完整的月份名称</li>
+<li>%c 本地相应的日期表示和时间表示</li>
+<li>%j 年内的一天（001-366）</li>
+<li>%p 本地A.M.或P.M.的等价符</li>
+<li>%U 一年中的星期数（00-53）星期天为星期的开始</li>
+<li>%w 星期（0-6），星期天为星期的开始</li>
+<li>%W 一年中的星期数（00-53）星期一为星期的开始</li>
+<li>%x 本地相应的日期表示</li>
+<li>%X 本地相应的时间表示</li>
+<li>%Z 当前时区的名称</li>
+<li>%% %号本身</li>
+</ul>
+<h3 id="获取某月日历"><a href="#获取某月日历" class="headerlink" title="获取某月日历"></a>获取某月日历</h3><hr>
+<p>Calendar模块有很广泛的方法用来处理年历和月历，例如打印某月的月历：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> calendar</span><br><span class="line"></span><br><span class="line">cal = calendar.month(<span class="number">2016</span>, <span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;以下输出2016年1月份的日历:&quot;</span></span><br><span class="line"><span class="built_in">print</span> cal;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line"><span class="comment"># 以下输出2016年1月份的日历:</span></span><br><span class="line"><span class="comment">#     January 2016</span></span><br><span class="line"><span class="comment"># Mo Tu We Th Fr Sa Su</span></span><br><span class="line"><span class="comment">#              1  2  3</span></span><br><span class="line"><span class="comment">#  4  5  6  7  8  9 10</span></span><br><span class="line"><span class="comment"># 11 12 13 14 15 16 17</span></span><br><span class="line"><span class="comment"># 18 19 20 21 22 23 24</span></span><br><span class="line"><span class="comment"># 25 26 27 28 29 30 31</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Pod Search 出现 JSON ParserError 错误</title>
     <url>/2018/02/07/20180207-Pod%20Search%20%E5%87%BA%E7%8E%B0%20JSON%20ParserError%20%E9%94%99%E8%AF%AF/</url>
     <content><![CDATA[<p>今天执行 <code>pod search</code> 命令的时候出现了 <code>JSON ParserError</code> 的错误，类似于如下：</p>
@@ -670,56 +720,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 学习笔记（四）【日期和时间】</title>
-    <url>/2018/02/06/20180206-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E3%80%90%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E3%80%91/</url>
-    <content><![CDATA[<h3 id="获取格式化的时间"><a href="#获取格式化的时间" class="headerlink" title="获取格式化的时间"></a>获取格式化的时间</h3><hr>
-<p>你可以根据需求选取各种格式，但是最简单的获取可读的时间模式的函数是asctime():</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">localtime = time.asctime( time.localtime(time.time()) )</span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;本地时间为 :&quot;</span>, localtime</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line"><span class="comment"># 本地时间为 : Thu Apr  7 10:05:21 2016</span></span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-
-<h3 id="格式化日期"><a href="#格式化日期" class="headerlink" title="格式化日期"></a>格式化日期</h3><hr>
-<p>我们可以使用 time 模块的 strftime 方法来格式化日期：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化成2016-03-20 11:45:39形式</span></span><br><span class="line"><span class="built_in">print</span> time.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, time.localtime()) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化成Sat Mar 28 22:24:24 2016形式</span></span><br><span class="line"><span class="built_in">print</span> time.strftime(<span class="string">&quot;%a %b %d %H:%M:%S %Y&quot;</span>, time.localtime()) </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 将格式字符串转换为时间戳</span></span><br><span class="line">a = <span class="string">&quot;Sat Mar 28 22:24:24 2016&quot;</span></span><br><span class="line"><span class="built_in">print</span> time.mktime(time.strptime(a,<span class="string">&quot;%a %b %d %H:%M:%S %Y&quot;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line"><span class="comment"># 2016-04-07 10:25:09</span></span><br><span class="line"><span class="comment"># Thu Apr 07 10:25:09 2016</span></span><br><span class="line"><span class="comment"># 1459175064.0</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="Python中时间日期格式化符号"><a href="#Python中时间日期格式化符号" class="headerlink" title="Python中时间日期格式化符号"></a>Python中时间日期格式化符号</h3><hr>
-<ul>
-<li>%y 两位数的年份表示（00-99）</li>
-<li>%Y 四位数的年份表示（000-9999）</li>
-<li>%m 月份（01-12）</li>
-<li>%d 月内中的一天（0-31）</li>
-<li>%H 24小时制小时数（0-23）</li>
-<li>%I 12小时制小时数（01-12）</li>
-<li>%M 分钟数（00&#x3D;59）</li>
-<li>%S 秒（00-59）</li>
-<li>%a 本地简化星期名称</li>
-<li>%A 本地完整星期名称</li>
-<li>%b 本地简化的月份名称</li>
-<li>%B 本地完整的月份名称</li>
-<li>%c 本地相应的日期表示和时间表示</li>
-<li>%j 年内的一天（001-366）</li>
-<li>%p 本地A.M.或P.M.的等价符</li>
-<li>%U 一年中的星期数（00-53）星期天为星期的开始</li>
-<li>%w 星期（0-6），星期天为星期的开始</li>
-<li>%W 一年中的星期数（00-53）星期一为星期的开始</li>
-<li>%x 本地相应的日期表示</li>
-<li>%X 本地相应的时间表示</li>
-<li>%Z 当前时区的名称</li>
-<li>%% %号本身</li>
-</ul>
-<h3 id="获取某月日历"><a href="#获取某月日历" class="headerlink" title="获取某月日历"></a>获取某月日历</h3><hr>
-<p>Calendar模块有很广泛的方法用来处理年历和月历，例如打印某月的月历：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> calendar</span><br><span class="line"></span><br><span class="line">cal = calendar.month(<span class="number">2016</span>, <span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;以下输出2016年1月份的日历:&quot;</span></span><br><span class="line"><span class="built_in">print</span> cal;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line"><span class="comment"># 以下输出2016年1月份的日历:</span></span><br><span class="line"><span class="comment">#     January 2016</span></span><br><span class="line"><span class="comment"># Mo Tu We Th Fr Sa Su</span></span><br><span class="line"><span class="comment">#              1  2  3</span></span><br><span class="line"><span class="comment">#  4  5  6  7  8  9 10</span></span><br><span class="line"><span class="comment"># 11 12 13 14 15 16 17</span></span><br><span class="line"><span class="comment"># 18 19 20 21 22 23 24</span></span><br><span class="line"><span class="comment"># 25 26 27 28 29 30 31</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>编程语言</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>iOS 原生实现扫描二维码和条形码功能，限制扫描区域</title>
     <url>/2018/02/08/20180208-iOS%20%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E6%9D%A1%E5%BD%A2%E7%A0%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%99%90%E5%88%B6%E6%89%AB%E6%8F%8F%E5%8C%BA%E5%9F%9F/</url>
     <content><![CDATA[<blockquote>
@@ -878,6 +878,48 @@
       </tags>
   </entry>
   <entry>
+    <title>SSH 免密登陆 VPS</title>
+    <url>/2018/02/09/20180209-SSH%20%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%20VPS/</url>
+    <content><![CDATA[<p>我们在进行 SSH 登陆的时候，每次都需要输入密码，就感到十分的不方便，这里可以利用 SSH Key（ssh公钥） 来验证登录，从而实现免密登陆。</p>
+<h3 id="通过命令生成-SSH-Key"><a href="#通过命令生成-SSH-Key" class="headerlink" title="通过命令生成 SSH Key"></a>通过命令生成 SSH Key</h3><p>生成 SSH Key 我们需要 <code>ssh-keygen</code> 命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;xxxxx@xxxxx.com&quot;</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment"># Generating public/private rsa key pair...</span></span><br><span class="line"><span class="comment"># 三次回车即可生成 ssh key</span></span><br></pre></td></tr></table></figure>
+
+<p>查看生成的 SSH Key</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub</span><br><span class="line"><span class="comment"># ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6eNtGpNGwstc....</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>在 <code>.ssh</code> 文件夹中，可能有三个文件</p>
+<ul>
+<li>id_rsa : 生成的私钥文件</li>
+<li>id_rsa.pub ： 生成的公钥文件</li>
+<li>know_hosts :  已知的主机公钥清单</li>
+</ul>
+<p>我们需要用的就在 <code>id_rsa.pub</code> 文件中。</p>
+<p>如果希望ssh公钥生效需满足至少下面两个条件：<br>	* <code>.ssh</code> 目录的权限必须是700<br>	* <code>.ssh/authorized_keys</code> 文件权限必须是600</p>
+<h3 id="将-SSH-Key-上传到服务器"><a href="#将-SSH-Key-上传到服务器" class="headerlink" title="将 SSH Key 上传到服务器"></a>将 SSH Key 上传到服务器</h3><h4 id="方法一：手动复制"><a href="#方法一：手动复制" class="headerlink" title="方法一：手动复制"></a>方法一：手动复制</h4><p>先登录服务器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@服务器IP地址 -p 端口</span><br></pre></td></tr></table></figure>
+
+<p>在 VPS 的默认目录（&#x2F;root）下面新建文件夹 <code>.ssh</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> ~/.ssh</span><br></pre></td></tr></table></figure>
+
+<p>进入 <code>.ssh</code> 目录，执行 <code>vi</code> 命令新建 <code>authorized_keys</code> 文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line">vi authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>id_rsa.pub</code> 文件中的内容粘贴到 <code>authorized_keys</code> 文件中，保存退出，之后就可以实现免密登陆。</p>
+<h4 id="方法二：执行-scp-命令快速建立-authorized-keys-文件"><a href="#方法二：执行-scp-命令快速建立-authorized-keys-文件" class="headerlink" title="方法二：执行 scp 命令快速建立 authorized_keys 文件"></a>方法二：执行 <code>scp</code> 命令快速建立 <code>authorized_keys</code> 文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">scp -P 端口 ~/.ssh/id_rsa.pub root@服务器IP地址:/root/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>注意：这里 <code>-P</code> 的 P 是大写。</p>
+<p>输入密码后，<code>authorized_keys</code> 文件就新建成功，之后就可以免密登陆了。</p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>科学上网</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python 学习笔记（六）【模块】</title>
     <url>/2018/02/10/20180210-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E3%80%90%E6%A8%A1%E5%9D%97%E3%80%91/</url>
     <content><![CDATA[<blockquote>
@@ -987,48 +1029,6 @@
       </categories>
       <tags>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SSH 免密登陆 VPS</title>
-    <url>/2018/02/09/20180209-SSH%20%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%20VPS/</url>
-    <content><![CDATA[<p>我们在进行 SSH 登陆的时候，每次都需要输入密码，就感到十分的不方便，这里可以利用 SSH Key（ssh公钥） 来验证登录，从而实现免密登陆。</p>
-<h3 id="通过命令生成-SSH-Key"><a href="#通过命令生成-SSH-Key" class="headerlink" title="通过命令生成 SSH Key"></a>通过命令生成 SSH Key</h3><p>生成 SSH Key 我们需要 <code>ssh-keygen</code> 命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;xxxxx@xxxxx.com&quot;</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment"># Generating public/private rsa key pair...</span></span><br><span class="line"><span class="comment"># 三次回车即可生成 ssh key</span></span><br></pre></td></tr></table></figure>
-
-<p>查看生成的 SSH Key</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub</span><br><span class="line"><span class="comment"># ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6eNtGpNGwstc....</span></span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>在 <code>.ssh</code> 文件夹中，可能有三个文件</p>
-<ul>
-<li>id_rsa : 生成的私钥文件</li>
-<li>id_rsa.pub ： 生成的公钥文件</li>
-<li>know_hosts :  已知的主机公钥清单</li>
-</ul>
-<p>我们需要用的就在 <code>id_rsa.pub</code> 文件中。</p>
-<p>如果希望ssh公钥生效需满足至少下面两个条件：<br>	* <code>.ssh</code> 目录的权限必须是700<br>	* <code>.ssh/authorized_keys</code> 文件权限必须是600</p>
-<h3 id="将-SSH-Key-上传到服务器"><a href="#将-SSH-Key-上传到服务器" class="headerlink" title="将 SSH Key 上传到服务器"></a>将 SSH Key 上传到服务器</h3><h4 id="方法一：手动复制"><a href="#方法一：手动复制" class="headerlink" title="方法一：手动复制"></a>方法一：手动复制</h4><p>先登录服务器</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@服务器IP地址 -p 端口</span><br></pre></td></tr></table></figure>
-
-<p>在 VPS 的默认目录（&#x2F;root）下面新建文件夹 <code>.ssh</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> ~/.ssh</span><br></pre></td></tr></table></figure>
-
-<p>进入 <code>.ssh</code> 目录，执行 <code>vi</code> 命令新建 <code>authorized_keys</code> 文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line">vi authorized_keys</span><br></pre></td></tr></table></figure>
-
-<p>将 <code>id_rsa.pub</code> 文件中的内容粘贴到 <code>authorized_keys</code> 文件中，保存退出，之后就可以实现免密登陆。</p>
-<h4 id="方法二：执行-scp-命令快速建立-authorized-keys-文件"><a href="#方法二：执行-scp-命令快速建立-authorized-keys-文件" class="headerlink" title="方法二：执行 scp 命令快速建立 authorized_keys 文件"></a>方法二：执行 <code>scp</code> 命令快速建立 <code>authorized_keys</code> 文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">scp -P 端口 ~/.ssh/id_rsa.pub root@服务器IP地址:/root/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-
-<p>注意：这里 <code>-P</code> 的 P 是大写。</p>
-<p>输入密码后，<code>authorized_keys</code> 文件就新建成功，之后就可以免密登陆了。</p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>科学上网</tag>
       </tags>
   </entry>
   <entry>
@@ -1295,87 +1295,6 @@
       </tags>
   </entry>
   <entry>
-    <title>内存：栈和堆（C / Swift）</title>
-    <url>/2018/03/14/20180314-%E5%86%85%E5%AD%98%EF%BC%9A%E6%A0%88%E5%92%8C%E5%A0%86%EF%BC%88C%20:%20Swift%EF%BC%89/</url>
-    <content><![CDATA[<h3 id="栈（C-语言描述）"><a href="#栈（C-语言描述）" class="headerlink" title="栈（C 语言描述）"></a>栈（C 语言描述）</h3><hr>
-<p>什么是栈（Stack）？这是计算机内存中的一个特殊区域，它存储由每个函数创建的临时变量（包括 <code>main()</code> 函数）。栈是一个“LIFO”（后进先出）的数据结构。它是被 CPU 管理和优化的。每次函数声明一个新变量时，它都被“压入”栈中。然后每次函数退出时，所有由该函数压入栈的变量都被释放（也就是说，它们被删除）。一旦释放栈变量，该区域的内存就可用于其他栈变量。</p>
-<p>使用栈来存储变量的优点是内存是自动为你管理的。你无需手动分配内存，或者在你不再需要时释放内存。更重要的是，由于 CPU 如此高效地组织栈内存，读取和写入栈变量的速度非常快。</p>
-<p>理解栈的关键是这样一个概念：当一个函数退出时，它的所有变量都从栈中弹出（因此永远丢失）。因此栈变量本质上是本地的。这与我们之前看到的一个概念（称为变量范围）或局部变量或全局变量有关。 C 编程中的一个常见错误是尝试访问某个函数内栈上创建的变量，该函数在该函数之外的某个地方（即该函数退出后）从该程序中创建。</p>
-<p>要记住栈的另一个特性是，可以存储在栈上的变量的大小有一个限制（随OS变化）。对于在堆中分配的变量，情况并非如此。</p>
-<p><strong>栈的总结：</strong> </p>
-<ul>
-<li>随着函数压入和弹出局部变量，栈增长和缩小 </li>
-<li>没有必要自己管理内存，变量内存被自动的分配和释放 </li>
-<li>栈具有大小限制 </li>
-<li>栈变量仅在创建它们的函数正在运行时才存在</li>
-</ul>
-<h3 id="堆（C-语言描述）"><a href="#堆（C-语言描述）" class="headerlink" title="堆（C 语言描述）"></a>堆（C 语言描述）</h3><hr>
-<p>堆是计算机内存中的一个区域，不会自动为你进行内存管理，并且不受 CPU 的严格管理。它是一个更自由的内存区域（并且更大）。要在堆上分配内存，必须使用 <code>malloc()</code> 或 <code>calloc()</code> ，它们是内置的 C 函数。一旦你在堆上分配了内存，当你不再需要它的时候，你就有责任使用 <code>free()</code> 来释放内存。如果你没有做到这一点，你的程序将会有所谓的内存泄漏。也就是说，堆上的内存仍然会被留出（并且不会被其他进程使用）。</p>
-<span id="more"></span>
-
-<p>与栈不同，堆没有栈那样大小的限制（除了计算机明显的物理限制外）。<br>由于必须使用指针访问堆上的内存，因此堆内存的读取和写入速度稍慢。<br>与栈不同，在堆中创建的变量可以通过程序中任何位置的任何函数访问。<br>堆变量实质上是全局的。</p>
-<h3 id="栈与堆的优点和缺点"><a href="#栈与堆的优点和缺点" class="headerlink" title="栈与堆的优点和缺点"></a>栈与堆的优点和缺点</h3><hr>
-<p>栈 </p>
-<ul>
-<li>访问速度非常快 </li>
-<li>不必显式的释放分配的内存 </li>
-<li>空间由 CPU 高效管理，内存不会变得碎片化 </li>
-<li>只有局部变量 </li>
-<li>栈的大小有限制（取决于操作系统） </li>
-<li>变量不能调整内存大小</li>
-</ul>
-<p>堆 </p>
-<ul>
-<li>变量可以全局访问 </li>
-<li>内存大小没有限制 </li>
-<li>（相对）较慢的访问 </li>
-<li>没有保证有效利用空间，随着内存块被分配，内存随着时间的推移可能变得碎片化，然后释放 </li>
-<li>你必须手动管理内存（分配和释放） </li>
-<li>可以使用 <code>realloc()</code> 来调整变量的内存大小</li>
-</ul>
-<h3 id="例子🌰"><a href="#例子🌰" class="headerlink" title="例子🌰"></a>例子🌰</h3><hr>
-<p>下面是一个简短的程序，它在<strong>栈</strong>上创建它的变量。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">double</span> <span class="title function_">multiplyByTwo</span> <span class="params">(<span class="type">double</span> input)</span> &#123;</span><br><span class="line">    <span class="type">double</span> twice = input * <span class="number">2.0</span>;</span><br><span class="line">    <span class="keyword">return</span> twice;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> age = <span class="number">30</span>;</span><br><span class="line">    <span class="type">double</span> salary = <span class="number">12345.67</span>;</span><br><span class="line">    <span class="type">double</span> myList[<span class="number">3</span>] = &#123;<span class="number">1.2</span>, <span class="number">2.3</span>, <span class="number">3.4</span>&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;double your salary is %.3f\n&quot;</span>, multiplyByTwo(salary));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// double your salary is 24691.340</span></span><br></pre></td></tr></table></figure>
-
-<p>在第 10, 11 和 12 行，我们声明了变量：一个 <code>int </code> ，一个 <code>double</code> 和一个由三个双精度组成的数组。只要 <code>main()</code> 函数执行，这三个变量就会被压入栈。当 <code>main()</code> 函数退出（并且程序停止）时，这些变量将从栈中弹出。类似地，在函数 <code>multiplyByTwo()</code> 中，一旦 <code>multiplyByTwo()</code> 函数执行， <code>double</code> 变量，即 <code>double</code> 将被压入栈。一旦 <code>multiplyByTwo()</code> 函数退出，两个变量就从栈中弹出，并且永远消失。</p>
-<p>另一点说明，有一种方法可以告诉 C 保存栈变量，即使在其创建者函数退出，就是在声明变量时使用 <code>static</code> 关键字。用 <code>static</code> 关键字声明的变量因此变成类似于全局变量的变量，但是仅在创建它的函数内部可见。这是一种奇怪的结构，除非在特定的情况下，否则你可能不需要这种结构。</p>
-<p>下面是该程序的另一个版本，它将它的所有变量分配给<strong>堆</strong>而不是<strong>栈</strong>：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">double</span> *<span class="title function_">multiplyByTwo</span> <span class="params">(<span class="type">double</span> *input)</span> &#123;</span><br><span class="line">    <span class="type">double</span> *twice = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">double</span>));</span><br><span class="line">    *twice = *input * <span class="number">2.0</span>;</span><br><span class="line">    <span class="keyword">return</span> twice;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> *age = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    *age = <span class="number">30</span>;</span><br><span class="line">    <span class="type">double</span> *salary = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">double</span>));</span><br><span class="line">    *salary = <span class="number">12345.67</span>;</span><br><span class="line">    <span class="type">double</span> *myList = <span class="built_in">malloc</span>(<span class="number">3</span> * <span class="keyword">sizeof</span>(<span class="type">double</span>));</span><br><span class="line">    myList[<span class="number">0</span>] = <span class="number">1.2</span>;</span><br><span class="line">    myList[<span class="number">1</span>] = <span class="number">2.3</span>;</span><br><span class="line">    myList[<span class="number">2</span>] = <span class="number">3.4</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">double</span> *twiceSalary = multiplyByTwo(salary);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;double your salary is %.3f\n&quot;</span>, *twiceSalary);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">free</span>(age);</span><br><span class="line">    <span class="built_in">free</span>(salary);</span><br><span class="line">    <span class="built_in">free</span>(myList);</span><br><span class="line">    <span class="built_in">free</span>(twiceSalary);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>正如你所看到的，使用 <code>malloc()</code> 在堆上分配内存，然后使用 <code>free()</code> 来释放它，没有什么大不了的，但有点麻烦。另外要注意的是，现在到处都有一堆星号（*）。那些是什么？答案是，他们是指针。 <code>malloc()</code>（<code>calloc()</code> 和 <code>free()</code> ）函数处理的是指针而不是实际值。指针是 C 中的一种特殊数据类型，它将地址存储在内存中，而不是存储实际值。因此，在上面的第 5 行中，两次变量不是 <code>double</code>，而是一个指向 <code>double</code> 的指针。在内存地址中，这是一个 <code>double</code> 类型的数据。</p>
-<h3 id="何时使用堆？何时使用栈？"><a href="#何时使用堆？何时使用栈？" class="headerlink" title="何时使用堆？何时使用栈？"></a>何时使用堆？何时使用栈？</h3><hr>
-<p>什么时候应该使用堆，什么时候应该使用栈？</p>
-<ul>
-<li>如果你需要分配一大块内存（例如一个大的数组，或者一个大的结构体），并且你需要在很长的时间内保存这个变量（比如全局变量），那么你应该把它分配到堆上。</li>
-<li>如果你正在处理的是只有在使用它们的函数仍然存在时才需要保持的小变量，那么你应该使用栈，因为它使用起来更容易也更快。</li>
-<li>如果你需要动态改变大小的数组和结构体等变量（例如可根据需要增长或缩小的数组），那么你可能需要在堆上分配它们，并使用动态内存分配函数，如<code>malloc()</code> ，<code>calloc()</code> ，<code>realloc()</code> 和 <code>free()</code> 来“手动”管理该内存。</li>
-</ul>
-<h3 id="数据在内存中的存储（C-语言描述-）"><a href="#数据在内存中的存储（C-语言描述-）" class="headerlink" title="数据在内存中的存储（C 语言描述 ）"></a>数据在内存中的存储（C 语言描述 ）</h3><hr>
-<p>这里有一条黄金法则：</p>
-<ul>
-<li>引用类型总是被分配到“堆”上。</li>
-<li>值类型总是分配到它声明的地方：<ul>
-<li>作为引用类型的成员变量分配到“堆”上</li>
-<li>作为方法的局部变量时分配到“栈”上</li>
-</ul>
-</li>
-</ul>
-<h3 id="结构体在内存中的存储（Swift-语言描述）"><a href="#结构体在内存中的存储（Swift-语言描述）" class="headerlink" title="结构体在内存中的存储（Swift 语言描述）"></a>结构体在内存中的存储（Swift 语言描述）</h3><hr>
-<p>与 C 语言不同，苹果对 Swift 中的结构体有着优化，使其能够存储在栈上，进而加快访问速度与增加操作的安全性。</p>
-<p>如果你的结构体只由其他结构体组成，那编译器可以确保不可变性。同样地，当使用结构体时，编译器也可以生成非常快的代码。举个例子，对一个只含有结构体的数组进行操作的效率，通常要比对一个含有对象的数组进行操作的效率高得多。这是因为结构体通常要更直接：值是直接存储在数组的内存中的。而对象的数组中包含的只是对象的引用。最后，在很多情况下，编译器可以将结构体放到栈上，而不用放在堆里。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">uniqueIntegerProvider</span>() -&gt; <span class="type">AnyIterator</span>&lt;<span class="type">Int</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> i <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="type">AnyIterator</span> &#123;</span><br><span class="line">        i <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> i</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Swift 的结构体一般被存储在栈上，而非堆上。不过这其实是一种优化：默认情况下结构体是存储在堆上的，但是在绝大多数时候，这个优化会生效，并将结构体存储到栈上。<strong>当结构体变量被一个函数闭合的时候，优化将不再生效，此时这个结构体将存储在堆上</strong>。因为变量 i 被函数闭合了，所以结构体将存在于堆上。这样一来，就算 uniqueIntegerProvider 退出了作用域，i 也将继续存在。与此相似，<strong>如果结构体太大，它也会被存储在堆上</strong>。</p>
-]]></content>
-      <categories>
-        <category>底层原理</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Swift 进阶【四】结构体和类</title>
     <url>/2018/03/02/20180302-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E5%9B%9B%E3%80%91%E7%BB%93%E6%9E%84%E4%BD%93%E5%92%8C%E7%B1%BB/</url>
     <content><![CDATA[<h3 id="结构体和类的主要不同点："><a href="#结构体和类的主要不同点：" class="headerlink" title="结构体和类的主要不同点："></a>结构体和类的主要不同点：</h3><ul>
@@ -1505,6 +1424,87 @@
       </tags>
   </entry>
   <entry>
+    <title>内存：栈和堆（C / Swift）</title>
+    <url>/2018/03/14/20180314-%E5%86%85%E5%AD%98%EF%BC%9A%E6%A0%88%E5%92%8C%E5%A0%86%EF%BC%88C%20:%20Swift%EF%BC%89/</url>
+    <content><![CDATA[<h3 id="栈（C-语言描述）"><a href="#栈（C-语言描述）" class="headerlink" title="栈（C 语言描述）"></a>栈（C 语言描述）</h3><hr>
+<p>什么是栈（Stack）？这是计算机内存中的一个特殊区域，它存储由每个函数创建的临时变量（包括 <code>main()</code> 函数）。栈是一个“LIFO”（后进先出）的数据结构。它是被 CPU 管理和优化的。每次函数声明一个新变量时，它都被“压入”栈中。然后每次函数退出时，所有由该函数压入栈的变量都被释放（也就是说，它们被删除）。一旦释放栈变量，该区域的内存就可用于其他栈变量。</p>
+<p>使用栈来存储变量的优点是内存是自动为你管理的。你无需手动分配内存，或者在你不再需要时释放内存。更重要的是，由于 CPU 如此高效地组织栈内存，读取和写入栈变量的速度非常快。</p>
+<p>理解栈的关键是这样一个概念：当一个函数退出时，它的所有变量都从栈中弹出（因此永远丢失）。因此栈变量本质上是本地的。这与我们之前看到的一个概念（称为变量范围）或局部变量或全局变量有关。 C 编程中的一个常见错误是尝试访问某个函数内栈上创建的变量，该函数在该函数之外的某个地方（即该函数退出后）从该程序中创建。</p>
+<p>要记住栈的另一个特性是，可以存储在栈上的变量的大小有一个限制（随OS变化）。对于在堆中分配的变量，情况并非如此。</p>
+<p><strong>栈的总结：</strong> </p>
+<ul>
+<li>随着函数压入和弹出局部变量，栈增长和缩小 </li>
+<li>没有必要自己管理内存，变量内存被自动的分配和释放 </li>
+<li>栈具有大小限制 </li>
+<li>栈变量仅在创建它们的函数正在运行时才存在</li>
+</ul>
+<h3 id="堆（C-语言描述）"><a href="#堆（C-语言描述）" class="headerlink" title="堆（C 语言描述）"></a>堆（C 语言描述）</h3><hr>
+<p>堆是计算机内存中的一个区域，不会自动为你进行内存管理，并且不受 CPU 的严格管理。它是一个更自由的内存区域（并且更大）。要在堆上分配内存，必须使用 <code>malloc()</code> 或 <code>calloc()</code> ，它们是内置的 C 函数。一旦你在堆上分配了内存，当你不再需要它的时候，你就有责任使用 <code>free()</code> 来释放内存。如果你没有做到这一点，你的程序将会有所谓的内存泄漏。也就是说，堆上的内存仍然会被留出（并且不会被其他进程使用）。</p>
+<span id="more"></span>
+
+<p>与栈不同，堆没有栈那样大小的限制（除了计算机明显的物理限制外）。<br>由于必须使用指针访问堆上的内存，因此堆内存的读取和写入速度稍慢。<br>与栈不同，在堆中创建的变量可以通过程序中任何位置的任何函数访问。<br>堆变量实质上是全局的。</p>
+<h3 id="栈与堆的优点和缺点"><a href="#栈与堆的优点和缺点" class="headerlink" title="栈与堆的优点和缺点"></a>栈与堆的优点和缺点</h3><hr>
+<p>栈 </p>
+<ul>
+<li>访问速度非常快 </li>
+<li>不必显式的释放分配的内存 </li>
+<li>空间由 CPU 高效管理，内存不会变得碎片化 </li>
+<li>只有局部变量 </li>
+<li>栈的大小有限制（取决于操作系统） </li>
+<li>变量不能调整内存大小</li>
+</ul>
+<p>堆 </p>
+<ul>
+<li>变量可以全局访问 </li>
+<li>内存大小没有限制 </li>
+<li>（相对）较慢的访问 </li>
+<li>没有保证有效利用空间，随着内存块被分配，内存随着时间的推移可能变得碎片化，然后释放 </li>
+<li>你必须手动管理内存（分配和释放） </li>
+<li>可以使用 <code>realloc()</code> 来调整变量的内存大小</li>
+</ul>
+<h3 id="例子🌰"><a href="#例子🌰" class="headerlink" title="例子🌰"></a>例子🌰</h3><hr>
+<p>下面是一个简短的程序，它在<strong>栈</strong>上创建它的变量。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">double</span> <span class="title function_">multiplyByTwo</span> <span class="params">(<span class="type">double</span> input)</span> &#123;</span><br><span class="line">    <span class="type">double</span> twice = input * <span class="number">2.0</span>;</span><br><span class="line">    <span class="keyword">return</span> twice;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> age = <span class="number">30</span>;</span><br><span class="line">    <span class="type">double</span> salary = <span class="number">12345.67</span>;</span><br><span class="line">    <span class="type">double</span> myList[<span class="number">3</span>] = &#123;<span class="number">1.2</span>, <span class="number">2.3</span>, <span class="number">3.4</span>&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;double your salary is %.3f\n&quot;</span>, multiplyByTwo(salary));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// double your salary is 24691.340</span></span><br></pre></td></tr></table></figure>
+
+<p>在第 10, 11 和 12 行，我们声明了变量：一个 <code>int </code> ，一个 <code>double</code> 和一个由三个双精度组成的数组。只要 <code>main()</code> 函数执行，这三个变量就会被压入栈。当 <code>main()</code> 函数退出（并且程序停止）时，这些变量将从栈中弹出。类似地，在函数 <code>multiplyByTwo()</code> 中，一旦 <code>multiplyByTwo()</code> 函数执行， <code>double</code> 变量，即 <code>double</code> 将被压入栈。一旦 <code>multiplyByTwo()</code> 函数退出，两个变量就从栈中弹出，并且永远消失。</p>
+<p>另一点说明，有一种方法可以告诉 C 保存栈变量，即使在其创建者函数退出，就是在声明变量时使用 <code>static</code> 关键字。用 <code>static</code> 关键字声明的变量因此变成类似于全局变量的变量，但是仅在创建它的函数内部可见。这是一种奇怪的结构，除非在特定的情况下，否则你可能不需要这种结构。</p>
+<p>下面是该程序的另一个版本，它将它的所有变量分配给<strong>堆</strong>而不是<strong>栈</strong>：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">double</span> *<span class="title function_">multiplyByTwo</span> <span class="params">(<span class="type">double</span> *input)</span> &#123;</span><br><span class="line">    <span class="type">double</span> *twice = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">double</span>));</span><br><span class="line">    *twice = *input * <span class="number">2.0</span>;</span><br><span class="line">    <span class="keyword">return</span> twice;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> *age = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    *age = <span class="number">30</span>;</span><br><span class="line">    <span class="type">double</span> *salary = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">double</span>));</span><br><span class="line">    *salary = <span class="number">12345.67</span>;</span><br><span class="line">    <span class="type">double</span> *myList = <span class="built_in">malloc</span>(<span class="number">3</span> * <span class="keyword">sizeof</span>(<span class="type">double</span>));</span><br><span class="line">    myList[<span class="number">0</span>] = <span class="number">1.2</span>;</span><br><span class="line">    myList[<span class="number">1</span>] = <span class="number">2.3</span>;</span><br><span class="line">    myList[<span class="number">2</span>] = <span class="number">3.4</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">double</span> *twiceSalary = multiplyByTwo(salary);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;double your salary is %.3f\n&quot;</span>, *twiceSalary);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">free</span>(age);</span><br><span class="line">    <span class="built_in">free</span>(salary);</span><br><span class="line">    <span class="built_in">free</span>(myList);</span><br><span class="line">    <span class="built_in">free</span>(twiceSalary);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>正如你所看到的，使用 <code>malloc()</code> 在堆上分配内存，然后使用 <code>free()</code> 来释放它，没有什么大不了的，但有点麻烦。另外要注意的是，现在到处都有一堆星号（*）。那些是什么？答案是，他们是指针。 <code>malloc()</code>（<code>calloc()</code> 和 <code>free()</code> ）函数处理的是指针而不是实际值。指针是 C 中的一种特殊数据类型，它将地址存储在内存中，而不是存储实际值。因此，在上面的第 5 行中，两次变量不是 <code>double</code>，而是一个指向 <code>double</code> 的指针。在内存地址中，这是一个 <code>double</code> 类型的数据。</p>
+<h3 id="何时使用堆？何时使用栈？"><a href="#何时使用堆？何时使用栈？" class="headerlink" title="何时使用堆？何时使用栈？"></a>何时使用堆？何时使用栈？</h3><hr>
+<p>什么时候应该使用堆，什么时候应该使用栈？</p>
+<ul>
+<li>如果你需要分配一大块内存（例如一个大的数组，或者一个大的结构体），并且你需要在很长的时间内保存这个变量（比如全局变量），那么你应该把它分配到堆上。</li>
+<li>如果你正在处理的是只有在使用它们的函数仍然存在时才需要保持的小变量，那么你应该使用栈，因为它使用起来更容易也更快。</li>
+<li>如果你需要动态改变大小的数组和结构体等变量（例如可根据需要增长或缩小的数组），那么你可能需要在堆上分配它们，并使用动态内存分配函数，如<code>malloc()</code> ，<code>calloc()</code> ，<code>realloc()</code> 和 <code>free()</code> 来“手动”管理该内存。</li>
+</ul>
+<h3 id="数据在内存中的存储（C-语言描述-）"><a href="#数据在内存中的存储（C-语言描述-）" class="headerlink" title="数据在内存中的存储（C 语言描述 ）"></a>数据在内存中的存储（C 语言描述 ）</h3><hr>
+<p>这里有一条黄金法则：</p>
+<ul>
+<li>引用类型总是被分配到“堆”上。</li>
+<li>值类型总是分配到它声明的地方：<ul>
+<li>作为引用类型的成员变量分配到“堆”上</li>
+<li>作为方法的局部变量时分配到“栈”上</li>
+</ul>
+</li>
+</ul>
+<h3 id="结构体在内存中的存储（Swift-语言描述）"><a href="#结构体在内存中的存储（Swift-语言描述）" class="headerlink" title="结构体在内存中的存储（Swift 语言描述）"></a>结构体在内存中的存储（Swift 语言描述）</h3><hr>
+<p>与 C 语言不同，苹果对 Swift 中的结构体有着优化，使其能够存储在栈上，进而加快访问速度与增加操作的安全性。</p>
+<p>如果你的结构体只由其他结构体组成，那编译器可以确保不可变性。同样地，当使用结构体时，编译器也可以生成非常快的代码。举个例子，对一个只含有结构体的数组进行操作的效率，通常要比对一个含有对象的数组进行操作的效率高得多。这是因为结构体通常要更直接：值是直接存储在数组的内存中的。而对象的数组中包含的只是对象的引用。最后，在很多情况下，编译器可以将结构体放到栈上，而不用放在堆里。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">uniqueIntegerProvider</span>() -&gt; <span class="type">AnyIterator</span>&lt;<span class="type">Int</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> i <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="type">AnyIterator</span> &#123;</span><br><span class="line">        i <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> i</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Swift 的结构体一般被存储在栈上，而非堆上。不过这其实是一种优化：默认情况下结构体是存储在堆上的，但是在绝大多数时候，这个优化会生效，并将结构体存储到栈上。<strong>当结构体变量被一个函数闭合的时候，优化将不再生效，此时这个结构体将存储在堆上</strong>。因为变量 i 被函数闭合了，所以结构体将存在于堆上。这样一来，就算 uniqueIntegerProvider 退出了作用域，i 也将继续存在。与此相似，<strong>如果结构体太大，它也会被存储在堆上</strong>。</p>
+]]></content>
+      <categories>
+        <category>底层原理</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Swift 进阶【五】函数</title>
     <url>/2018/03/16/20180316-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E4%BA%94%E3%80%91%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h3 id="在-Swift-中函数是一等公民。"><a href="#在-Swift-中函数是一等公民。" class="headerlink" title="在 Swift 中函数是一等公民。"></a>在 Swift 中函数是一等公民。</h3><hr>
@@ -1618,6 +1618,26 @@
       </tags>
   </entry>
   <entry>
+    <title>layoutIfNeeded() 函数对 UIScrollView 的影响</title>
+    <url>/2018/03/17/20180317-layoutIfNeeded()%20%E5%87%BD%E6%95%B0%E5%AF%B9%20UIScrollView%20%E7%9A%84%E5%BD%B1%E5%93%8D/</url>
+    <content><![CDATA[<p>在做 iOS 相关的约束动画时，我们一定会用到 <code>layoutIfNeeded()</code> 函数，但是在大多数情况下使用并没有什么问题。当与 <code>UIScrollView</code> 相关的控件结合使用的时候要注意了。</p>
+<p>在开发一个 App 时（类似于浏览器的 App），需求是，滑动的时候，需要隐藏掉顶部的 <code>navigation bar</code> （这里我是用 <code>UIView</code> 自定义的一个 <code>navigation bar</code>）。向上滑动，让 <code>navigation bar</code> 移动到可视区域外消失，当然，移动的时候是有动画的，这里我用的是 <code>constraint</code> 相关的动画，所以我需要在最后调用一次 <code>layoutIfNeeded()</code> 函数。代码类似如下：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.35</span>) &#123;</span><br><span class="line">    <span class="comment">// 进行更改约束的操作</span></span><br><span class="line">    <span class="keyword">self</span>.view.layoutIfNeeded()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>这时就出现问题了，滑动的时候，你想让滑动停止，当然是手指放在屏幕上，滑动就会立刻停止，不过在进行布局动画的时候，滑动将会继续，只有当动画完了的时候，视图才会响应你的点击事件。</p>
+<p>为了避免上述的问题，建议使用 <code>Core Graphics</code> 来完成上述的动画效果，即：<code>CGAffineTransform</code></p>
+<p>使用 <code>Core Graphics</code> 完成动画，也能避免 <code>layoutIfNeeded()</code> 必须在父视图中调用这一要求的一些恶心的问题。</p>
+]]></content>
+      <categories>
+        <category>工作日志</category>
+      </categories>
+      <tags>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>iOS 11权限更新</title>
     <url>/2018/03/17/20180317-iOS%2011%E6%9D%83%E9%99%90%E6%9B%B4%E6%96%B0/</url>
     <content><![CDATA[<p>最近项目中遇到了一个崩溃，当点击图片选择保存的时候，并没有出现请求相册权限的对话框，而是直接就崩溃，并且没有任何错误信息。开始以为是权限没有添加，但是 <code>NSPhotoLibraryUsageDescription</code> 是添加了的，搞不懂了。去翻了翻官方的文档，果然找到了解决方式。</p>
@@ -1635,26 +1655,6 @@
 <p>关于 <code>Info.plist</code> 中的 <code>key</code> ，可以参考官方的文档：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYXBwbGUuY29tL2xpYnJhcnkvY29udGVudC9kb2N1bWVudGF0aW9uL0dlbmVyYWwvUmVmZXJlbmNlL0luZm9QbGlzdEtleVJlZmVyZW5jZS9BcnRpY2xlcy9Db2NvYUtleXMuaHRtbA==">Cocoa Keys<i class="fa fa-external-link-alt"></i></span></p>
 <p>相关权限申请：</p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">PermissionsManager</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 相册权限</span></span><br><span class="line">    <span class="comment">///</span></span><br><span class="line">    <span class="comment">/// - Parameters:</span></span><br><span class="line">    <span class="comment">///   - authorizedClosure: 已授权回调</span></span><br><span class="line">    <span class="comment">///   - deniedClosure: 未授权回调</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">albumPermissions</span>(<span class="params">authorizedClosure</span>: (() -&gt; ())<span class="operator">?</span>, <span class="params">deniedClosure</span>: (() -&gt; ())<span class="operator">?</span>) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> status <span class="operator">=</span> <span class="type">PHPhotoLibrary</span>.authorizationStatus()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">switch</span> status &#123;</span><br><span class="line">        <span class="keyword">case</span> .notDetermined:</span><br><span class="line">            <span class="type">PHPhotoLibrary</span>.requestAuthorization &#123; <span class="keyword">_</span> <span class="keyword">in</span></span><br><span class="line">                <span class="keyword">self</span>.albumPermissions(authorizedClosure: authorizedClosure, deniedClosure: deniedClosure)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">case</span> .authorized:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> authorized <span class="operator">=</span> authorizedClosure &#123;</span><br><span class="line">                authorized()</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> denied <span class="operator">=</span> deniedClosure &#123;</span><br><span class="line">                denied()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 相机权限</span></span><br><span class="line">    <span class="comment">///</span></span><br><span class="line">    <span class="comment">/// - Parameters:</span></span><br><span class="line">    <span class="comment">///   - authorizedClosure: 已授权回调</span></span><br><span class="line">    <span class="comment">///   - deniedClosure: 未授权回调</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">cameraPermissions</span>(<span class="params">authorizedClosure</span>: (() -&gt; ())<span class="operator">?</span>, <span class="params">deniedClosure</span>: (() -&gt; ())<span class="operator">?</span>) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> status <span class="operator">=</span> <span class="type">AVCaptureDevice</span>.authorizationStatus(for: .video)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">switch</span> status &#123;</span><br><span class="line">        <span class="keyword">case</span> .notDetermined:</span><br><span class="line">            <span class="type">AVCaptureDevice</span>.requestAccess(for: .video) &#123; <span class="keyword">_</span> <span class="keyword">in</span></span><br><span class="line">                <span class="keyword">self</span>.cameraPermissions(authorizedClosure: authorizedClosure, deniedClosure: deniedClosure)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">case</span> .authorized:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> authorized <span class="operator">=</span> authorizedClosure &#123;</span><br><span class="line">                authorized()</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> denied <span class="operator">=</span> deniedClosure &#123;</span><br><span class="line">                denied()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>工作日志</category>
-      </categories>
-      <tags>
-        <tag>iOS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>layoutIfNeeded() 函数对 UIScrollView 的影响</title>
-    <url>/2018/03/17/20180317-layoutIfNeeded()%20%E5%87%BD%E6%95%B0%E5%AF%B9%20UIScrollView%20%E7%9A%84%E5%BD%B1%E5%93%8D/</url>
-    <content><![CDATA[<p>在做 iOS 相关的约束动画时，我们一定会用到 <code>layoutIfNeeded()</code> 函数，但是在大多数情况下使用并没有什么问题。当与 <code>UIScrollView</code> 相关的控件结合使用的时候要注意了。</p>
-<p>在开发一个 App 时（类似于浏览器的 App），需求是，滑动的时候，需要隐藏掉顶部的 <code>navigation bar</code> （这里我是用 <code>UIView</code> 自定义的一个 <code>navigation bar</code>）。向上滑动，让 <code>navigation bar</code> 移动到可视区域外消失，当然，移动的时候是有动画的，这里我用的是 <code>constraint</code> 相关的动画，所以我需要在最后调用一次 <code>layoutIfNeeded()</code> 函数。代码类似如下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.35</span>) &#123;</span><br><span class="line">    <span class="comment">// 进行更改约束的操作</span></span><br><span class="line">    <span class="keyword">self</span>.view.layoutIfNeeded()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>这时就出现问题了，滑动的时候，你想让滑动停止，当然是手指放在屏幕上，滑动就会立刻停止，不过在进行布局动画的时候，滑动将会继续，只有当动画完了的时候，视图才会响应你的点击事件。</p>
-<p>为了避免上述的问题，建议使用 <code>Core Graphics</code> 来完成上述的动画效果，即：<code>CGAffineTransform</code></p>
-<p>使用 <code>Core Graphics</code> 完成动画，也能避免 <code>layoutIfNeeded()</code> 必须在父视图中调用这一要求的一些恶心的问题。</p>
-]]></content>
       <categories>
         <category>工作日志</category>
       </categories>
@@ -1919,6 +1919,122 @@
       </tags>
   </entry>
   <entry>
+    <title>Swift 进阶【七】字符串</title>
+    <url>/2018/04/01/20180401-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E4%B8%83%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h3 id="字符串索引"><a href="#字符串索引" class="headerlink" title="字符串索引"></a>字符串索引</h3><hr>
+<p>大部分编程语言使用整数值对字符串进行下标操作，比如 <code>str[5]</code> 将会返回 <code>str</code> 中的第六个“字符” (这里的“字符”的概念由所操作的编程语言进行定义)。Swift 不允许这么做。为什么？答案可能现在你已经很耳熟了：因为整数的下标访问无法在常数时间内完成 (对于 <code>Collection</code> 协议来说这也是个直观要求)，而且查找第 n 个 <code>Character</code> 的操作也必须要对它之前的所有字节进行检查。</p>
+<p><code>String.Index</code> 是 <code>String</code> 和它的视图所使用的索引类型，它本质上是一个存储了从字符串开头的字节偏移量的不透明值。如果你想计算第 n 个字符所对应的索引，你依然从字符串的开头或结尾开始，并花费 O(n) 的时间。但是一旦你拥有了有效的索引，就可以通过索引下标以 O(1) 的时间对字符串进行访问了。至关重要的是，通过一个已有索引来寻找下一个索引也是很快的，因为你可以从这个已有索引的字节偏移量开始进行查找，而不需要从头开始。正是由于这个原因，按顺序 (前向或者后向) 对字符串中的字符进行迭代是一个高效操作。</p>
+<span id="more"></span>
+
+<p>对字符串索引的操作的 API 与你在遇到其他任何集合时使用的索引操作是一样的。我们之所以经常容易忽略索引操作的等效性，是因为到现在为止我们最经常使用的数组的索引是整数类型，于是我们往往通过简单的算数，而非正式的索引操作 API，来对数组索引进行操作。<code>index(after:)</code> 方法将返回下一个字符的索引：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s <span class="operator">=</span> <span class="string">&quot;abcdef&quot;</span></span><br><span class="line"><span class="keyword">let</span> second <span class="operator">=</span> s.index(after: s.startIndex)</span><br><span class="line">s[second] <span class="comment">// b</span></span><br></pre></td></tr></table></figure>
+
+<p>如果需要一次性地自动对多个字符进行迭代：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 步进 4 个字符</span></span><br><span class="line"><span class="keyword">let</span> sixth <span class="operator">=</span> s.index(second, offsetBy: <span class="number">4</span>)</span><br><span class="line">s[sixth] <span class="comment">// f</span></span><br></pre></td></tr></table></figure>
+
+<p>如果存在超过字符串末尾的风险，你可以加上 <code>limitedBy:</code> 参数。如果这个方法在达到目标索引之前就先触发了限制条件的话，它将返回 <code>nil</code>：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> safeIdx <span class="operator">=</span> s.index(s.startIndex, offsetBy: <span class="number">400</span>, limitedBy: s.endIndex)</span><br><span class="line">safeIdx <span class="comment">// nil</span></span><br></pre></td></tr></table></figure>
+
+<p>毫无疑问，这比简单的整数索引需要更多的代码，但是再一次，Swift 就是这样设计的。如果 Swift 允许使用整数下标索引来访问字符串，会大大增加意外地写出性能相当糟糕的代码的可能性（比如，在一个循环中使用了整数下标）。</p>
+<h3 id="子字符串"><a href="#子字符串" class="headerlink" title="子字符串"></a>子字符串</h3><hr>
+<p>和所有集合类型一样，<code>String</code> 有一个特定的 <code>SubSequence</code> 类型，它就是 <code>Substring</code> 。<code>Substring</code> 和 <code>ArraySlice</code> 很相似：它是一个以不同起始和结束索引的对原字符串的切片。子字符串和原字符串共享文本存储，这带来的巨大的好处，它让对字符串切片成为了非常高效的操作。在下面的例子中，创建 <code>firstWord</code> 并不会导致昂贵的复制操作或者内存申请：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> sentence <span class="operator">=</span> <span class="string">&quot;The quick brown fox jumped over the lazy dog.&quot;</span></span><br><span class="line"><span class="keyword">let</span> firstSpace <span class="operator">=</span> sentence.index(of: <span class="string">&quot; &quot;</span>) <span class="operator">??</span> sentence.endIndex</span><br><span class="line"><span class="keyword">let</span> firstWord <span class="operator">=</span> sentence[<span class="operator">..&lt;</span>firstSpace] <span class="comment">// The</span></span><br><span class="line"><span class="built_in">type</span>(of: firstWord) <span class="comment">// Substring</span></span><br></pre></td></tr></table></figure>
+
+<p>在你对一个（可能会很长的）字符串进行迭代并提取它的各个部分的循环中，切片的高效特性就非常重要了。这类任务可能包括在文本中寻找某个单词出现的所有位置，或者解析一个 CSV 文件等。在这里，字符串分割是一个很有用的操作。<code>Colleciton</code> 定义了一个 <code>split</code> 方法，它会返回一个子序列的数组（也就是 <code>[Substring]</code> ）。最常用的一种形式是：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Collection</span> <span class="keyword">where</span> <span class="type">Element</span>: <span class="type">Equatable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">split</span>(<span class="params">separator</span>: <span class="type">Element</span>, <span class="params">maxSplits</span>: <span class="type">Int</span> <span class="operator">=</span> <span class="type">Int</span>.max,</span><br><span class="line">                      <span class="params">omittingEmptySubsequences</span>: <span class="type">Bool</span> <span class="operator">=</span> <span class="literal">true</span>) -&gt; [<span class="type">SubSequence</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以这样来使用：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> poem <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Over the wintry</span></span><br><span class="line"><span class="string">forest, winds howl in rage</span></span><br><span class="line"><span class="string">with no leaves to blow.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">let</span> lines <span class="operator">=</span> poem.split(separator: <span class="string">&quot;<span class="subst">\n</span>&quot;</span>)</span><br><span class="line"><span class="comment">// [&quot;Over the wintry&quot;, &quot;forest, winds howl in rage&quot;, &quot;with no leaves to blow.&quot;]</span></span><br><span class="line"><span class="built_in">type</span>(of: lines) <span class="comment">// Array&lt;Substring&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="StringProtocol"><a href="#StringProtocol" class="headerlink" title="StringProtocol"></a>StringProtocol</h3><hr>
+<p><code>Substring</code> 和 <code>String</code> 的接口几乎完全一样。这是通过一个叫做 <code>StringProtocol</code> 的通用协议来达到的，<code>String</code> 和 <code>Substring</code> 都遵守这个协议。因为几乎所有的字符串 API 都被定义在 <code>StringProtocol</code> 上，对于 <code>Substring</code>，你完全可以假装将它看作就是一个 <code>String</code>，并完成各项操作。不过，在某些时候，你还是需要将子字符串转回 <code>String</code> 实例；和所有的切片一样，子字符串也只能用于短期的存储，这可以避免在操作过程中发生昂贵的复制。当这个操作结束，你想将结果保存起来，或是传递给下一个子系统，这时你应该通过初始化方法从 <code>Substring</code> 创建一个新的 <code>String</code>，如下例所示：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">lastWord</span>(<span class="params">in</span> <span class="params">input</span>: <span class="type">String</span>) -&gt; <span class="type">String</span>? &#123;</span><br><span class="line">    <span class="comment">// 处理输入，操作子字符串</span></span><br><span class="line">    <span class="keyword">let</span> words <span class="operator">=</span> input.split(separators: [<span class="string">&quot;,&quot;</span>, <span class="string">&quot; &quot;</span>])</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> lastWord <span class="operator">=</span> words.last <span class="keyword">else</span> &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">    <span class="comment">// 转换为字符串并返回</span></span><br><span class="line">    <span class="keyword">return</span> <span class="type">String</span>(lastWord)</span><br><span class="line">&#125;</span><br><span class="line">lastWord(in: <span class="string">&quot;one, two, three, four, five&quot;</span>) <span class="comment">// Optional(&quot;five&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>不鼓励长期存储子字符串的根本原因在于，子字符串会一直持有整个原始字符串。如果有一个巨大的字符串，它的一个只表示单个字符的子字符串将会在内存中持有整个字符串。即使当原字符串的生命周期本应该结束时，只要子字符串还存在，这部分内存就无法释放。长期存储子字符串实际上会造成内存泄漏，由于原字符串还必须被持有在内存中，但是它们却不能再被访问。</strong></p>
+<p>如果你想要扩展 <code>String</code> 为其添加新的功能，将这个扩展放在 <code>StringProtocol</code> 会是一个好主意，这可以保持 <code>String</code> 和 <code>Substring API</code> 的统一性。<code>StringProtocol</code> 设计之初就是为了在你想要对 String 扩展时来使用的。如果你想要将已有的扩展从 <code>String</code> 移动到 <code>StringProtocol</code> 的话，唯一需要做的改动是将传入其他 API 的 <code>self</code> 通过 <code>String(self)</code> 换为具体的 <code>String</code> 类型实例。</p>
+<p>不过需要记住，在 Swift 4 中，<code>StringProtocol</code> 还并不是一个你想要构建自己的字符串类型时所应该实现的目标协议。文档中明确警告了这一点：</p>
+<blockquote>
+<p>不要声明任意新的遵守 <code>StringProtocol</code> 协议的类型。只有标准库中的 <code>String</code> 和 <code>Substring</code> 类型是有效的适配类型。  </p>
+</blockquote>
+<p>最终的目标是允许开发者创建他们自己的字符串类型 (比如带有特定的存储或者性能优化)，但是协议的设计还没有结束，所以现在就遵守这个协议的话，可能会让你的代码在 Swift 5 中无法通过编译。</p>
+<h3 id="CustomStringConvertible"><a href="#CustomStringConvertible" class="headerlink" title="CustomStringConvertible"></a>CustomStringConvertible</h3><hr>
+<p>符合 <code>CustomStringConvertible</code> 协议的类型可以在将实例转换为字符串时提供自己的表示形式。<code>String(describing:)</code> 初始值设定项是将任何类型的实例转换为字符串的首选方法。如果传递的实例符合<code>CustomStringConvertible</code> ，则 <code>String(describing:</code> 初始值设定项和 <code>print(_:)</code> 函数将使用实例的自定义描述属性。</p>
+<p>不鼓励直接访问类型的 <code>description</code> 属性或使用 <code>CustomStringConvertible </code> 作为通用约束。</p>
+<h4 id="遵守-CustomStringConvertible-协议"><a href="#遵守-CustomStringConvertible-协议" class="headerlink" title="遵守 CustomStringConvertible 协议"></a>遵守 <code>CustomStringConvertible</code> 协议</h4><p>通过定义 <code>description</code> 属性将 <code>CustomStringConvertible</code> 协议添加到自定义类型中。</p>
+<p>例如，这个自定义的 <code>Point</code> 结构体使用标准库提供的默认表示形式：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> x: <span class="type">Int</span>, y: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p <span class="operator">=</span> <span class="type">Point</span>(x: <span class="number">21</span>, y: <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="comment">// Prints &quot;Point(x: 21, y: 30)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在实现 <code>description</code> 属性并遵守 <code>CustomStringConvertible</code> 协议之后，<code>Point</code> 类型提供了它自己的自定义表示。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Point</span>: <span class="title class_ inherited__">CustomStringConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> description: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;(<span class="subst">\(x)</span>, <span class="subst">\(y)</span>)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="comment">// Prints &quot;(21, 30)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="CustomDebugStringConvertible"><a href="#CustomDebugStringConvertible" class="headerlink" title="CustomDebugStringConvertible"></a>CustomDebugStringConvertible</h3><hr>
+<p>Swift 为任意类型（any type）提供了默认的调试文本表示。 <code>String(reflecting:)</code> 的初始化和 <code>debugPrint(_:)</code> 函数使用该默认表示形式。要自定义该表示，请使您的类型符合 <code>CustomDebugStringConvertible </code> 协议。</p>
+<p>由于 <code>String(reflecting:)</code> 的初始化适用于任何类型的实例，如果传递的值符合 <code>CustomDebugStringConvertible</code> ，则返回实例的 <code>debugDescription</code> ，不鼓励直接访问类型的 <code>debugDescription</code> 属性，或者使用 <code>CustomDebugStringConvertible</code> 作为通用约束。</p>
+<blockquote>
+<p>Note  </p>
+<p>调用 <code>dump(_:_:_:_:)</code> 函数并在调试器中打印时使用 <code>String(reflecting:)</code> 和 <code>Mirror(reflecting:)</code> 来收集有关实例的信息，如果你为你自定义的类型实现了 <code>CustomDebugStringConvertible</code> 协议，则可能需要考虑通过实现 <code>CustomReflectable</code> 协议来提供自定义镜像。  </p>
+</blockquote>
+<h4 id="遵守-CustomDebugStringConvertible-协议"><a href="#遵守-CustomDebugStringConvertible-协议" class="headerlink" title="遵守 CustomDebugStringConvertible  协议"></a>遵守 <code>CustomDebugStringConvertible </code> 协议</h4><p>通过定义 <code>debugDescription </code> 属性将 <code>CustomDebugStringConvertible </code> 协议添加到自定义类型中。</p>
+<p>例如，这个自定义的 <code>Point</code> 结构体使用标准库提供的默认表示形式：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> x: <span class="type">Int</span>, y: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p <span class="operator">=</span> <span class="type">Point</span>(x: <span class="number">21</span>, y: <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="type">String</span>(reflecting: p))</span><br><span class="line"><span class="comment">// Prints &quot;p: Point = &#123;</span></span><br><span class="line"><span class="comment">//           x = 21</span></span><br><span class="line"><span class="comment">//           y = 30</span></span><br><span class="line"><span class="comment">//         &#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在实现 <code>debugDescription </code> 属性并遵守 <code>CustomDebugStringConvertible </code> 协议之后，<code>Point</code> 类型提供了它自己的自定义表示。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Point</span>: <span class="title class_ inherited__">CustomDebugStringConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> debugDescription: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Point(x: <span class="subst">\(x)</span>, y: <span class="subst">\(y)</span>)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="type">String</span>(reflecting: p))</span><br><span class="line"><span class="comment">// Prints &quot;Point(x: 21, y: 30)&quot;</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Swift 操作符</title>
+    <url>/2018/04/02/20180402-Swift%20%E6%93%8D%E4%BD%9C%E7%AC%A6/</url>
+    <content><![CDATA[<blockquote>
+<p>Swift 支持重载操作符的特性，让我们可以自定义一些简单的计算。<br>最经典的例子就是两个二维向量之间的计算了。  </p>
+</blockquote>
+<p>首先我们定义一个二维向量，并创建两个向量</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Vector2D</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> x <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">var</span> y <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> v1 <span class="operator">=</span> <span class="type">Vector2D</span>(x: <span class="number">2.0</span>, y: <span class="number">3.0</span>)</span><br><span class="line"><span class="keyword">let</span> v2 <span class="operator">=</span> <span class="type">Vector2D</span>(x: <span class="number">1.0</span>, y: <span class="number">4.0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>相加两个向量：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> v3 <span class="operator">=</span> <span class="type">Vector2D</span>(x: v1.x <span class="operator">+</span> v2.x, y: v1.y <span class="operator">+</span> v2.y)</span><br></pre></td></tr></table></figure>
+
+<p>这样一次的话，感觉还好。但是遇到复杂的运算的话，这样写感觉就太啰嗦了，这时候重载操作符是最好的选择。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">+</span>(<span class="params">left</span>: <span class="type">Vector2D</span>, <span class="params">right</span>: <span class="type">Vector2D</span>) -&gt; <span class="type">Vector2D</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">Vector2D</span>(x: left.x <span class="operator">+</span> right.x, y: left.y <span class="operator">+</span> right.y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>这样，我们相加两个向量就简单的多了</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> v3 <span class="operator">=</span> v1 <span class="operator">+</span> v2</span><br><span class="line"><span class="built_in">print</span>(v3) <span class="comment">// 输出 Vector2D(x: 3.0, y: 7.0)</span></span><br></pre></td></tr></table></figure>
+
+<p>向量的内积运算符API中是没有定义的，所以我们自定义一个内积运算符。<br>这里是Swift 3的实现方式（感觉看起来比之前的版本可读性好多了）。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 自定义操作符 别名类型</span></span><br><span class="line"><span class="keyword">infix</span> <span class="keyword">operator</span> <span class="title">+*</span>: <span class="type">InnerProductPrecedence</span></span><br><span class="line"><span class="comment">// 自定义操作符的运算优先级</span></span><br><span class="line"><span class="keyword">precedencegroup</span> <span class="title">InnerProductPrecedence</span> &#123;</span><br><span class="line">//    结合律：内积的结果是一个 <span class="type">Double，不再会和其他内积结合使用，所以这里写成</span> <span class="keyword">none</span></span><br><span class="line">    <span class="keyword">associativity</span>: <span class="keyword">none</span></span><br><span class="line">//    优先级设置：高于普通运算。</span><br><span class="line">//    <span class="type">MultiplicationPrecedence（代表乘法和除法）</span></span><br><span class="line">//    <span class="type">AdditionPrecedence（代表加法和减法）</span></span><br><span class="line">    <span class="keyword">higherThan</span>: <span class="type">MultiplicationPrecedence</span>, <span class="type">AdditionPrecedence</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们就可以写具体的运算实现了</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">+*</span>(<span class="params">left</span>: <span class="type">Vector2D</span>, <span class="params">right</span>: <span class="type">Vector2D</span>) -&gt; <span class="type">Double</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> left.x <span class="operator">*</span> right.x <span class="operator">+</span> left.y <span class="operator">*</span> right.y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result <span class="operator">=</span> v1 <span class="operator">+*</span> v2 <span class="comment">// 14</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="precedencegroup"><a href="#precedencegroup" class="headerlink" title="precedencegroup"></a>precedencegroup</h3><blockquote>
+<p>定义了一个操作符优先级别。操作符优先级的定义和类型声明有些相似，一个操作符比需要属于某个特定的优先级。Swift 标准库中已经定义了一些常用的运算优先级组，比如加法优先级 (AdditionPrecedence) 和乘法优先级 (MultiplicationPrecedence) 等，你可以在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0LWV2b2x1dGlvbi9ibG9iL21hc3Rlci9wcm9wb3NhbHMvMDA3Ny1vcGVyYXRvci1wcmVjZWRlbmNlLm1k">这里<i class="fa fa-external-link-alt"></i></span>找到完整的列表。如果没有适合你的运算符的优先级组，你就需要像我们在例子中做得这样，自己指定结合律方式和优先级顺序了。  </p>
+</blockquote>
+<h3 id="infix"><a href="#infix" class="headerlink" title="infix"></a>infix</h3><blockquote>
+<p>表示要定义的是一个中位操作符，即前后都是输入；其他的修饰还包括 prefix 和 postfix，不再赘述  </p>
+</blockquote>
+<h3 id="associativity"><a href="#associativity" class="headerlink" title="associativity"></a>associativity</h3><blockquote>
+<p>定义了结合律，即如果多个同类的操作符顺序出现的计算顺序。比如常见的加法和减法都是 left，就是说多个加法同时出现时按照从左往右的顺序计算 (因为加法满足交换律，所以这个顺序无所谓，但是减法的话计算顺序就很重要了)。点乘的结果是一个 Double，不再会和其他点乘结合使用，所以这里写成 none  </p>
+</blockquote>
+<h3 id="higherThan"><a href="#higherThan" class="headerlink" title="higherThan"></a>higherThan</h3><blockquote>
+<p>运算的优先级，点积运算是优先于乘法运算的。除了 higherThan，也支持使用 lowerThan 来指定优先级低于某个其他组。  </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>工作日志</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Swift ABI Stability Manifesto</title>
     <url>/2018/03/29/20180329-Swift%20ABI%20Stability%20Manifesto/</url>
     <content><![CDATA[<ul>
@@ -2141,122 +2257,6 @@
 ]]></content>
       <categories>
         <category>底层原理</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Swift 进阶【七】字符串</title>
-    <url>/2018/04/01/20180401-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E4%B8%83%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h3 id="字符串索引"><a href="#字符串索引" class="headerlink" title="字符串索引"></a>字符串索引</h3><hr>
-<p>大部分编程语言使用整数值对字符串进行下标操作，比如 <code>str[5]</code> 将会返回 <code>str</code> 中的第六个“字符” (这里的“字符”的概念由所操作的编程语言进行定义)。Swift 不允许这么做。为什么？答案可能现在你已经很耳熟了：因为整数的下标访问无法在常数时间内完成 (对于 <code>Collection</code> 协议来说这也是个直观要求)，而且查找第 n 个 <code>Character</code> 的操作也必须要对它之前的所有字节进行检查。</p>
-<p><code>String.Index</code> 是 <code>String</code> 和它的视图所使用的索引类型，它本质上是一个存储了从字符串开头的字节偏移量的不透明值。如果你想计算第 n 个字符所对应的索引，你依然从字符串的开头或结尾开始，并花费 O(n) 的时间。但是一旦你拥有了有效的索引，就可以通过索引下标以 O(1) 的时间对字符串进行访问了。至关重要的是，通过一个已有索引来寻找下一个索引也是很快的，因为你可以从这个已有索引的字节偏移量开始进行查找，而不需要从头开始。正是由于这个原因，按顺序 (前向或者后向) 对字符串中的字符进行迭代是一个高效操作。</p>
-<span id="more"></span>
-
-<p>对字符串索引的操作的 API 与你在遇到其他任何集合时使用的索引操作是一样的。我们之所以经常容易忽略索引操作的等效性，是因为到现在为止我们最经常使用的数组的索引是整数类型，于是我们往往通过简单的算数，而非正式的索引操作 API，来对数组索引进行操作。<code>index(after:)</code> 方法将返回下一个字符的索引：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s <span class="operator">=</span> <span class="string">&quot;abcdef&quot;</span></span><br><span class="line"><span class="keyword">let</span> second <span class="operator">=</span> s.index(after: s.startIndex)</span><br><span class="line">s[second] <span class="comment">// b</span></span><br></pre></td></tr></table></figure>
-
-<p>如果需要一次性地自动对多个字符进行迭代：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 步进 4 个字符</span></span><br><span class="line"><span class="keyword">let</span> sixth <span class="operator">=</span> s.index(second, offsetBy: <span class="number">4</span>)</span><br><span class="line">s[sixth] <span class="comment">// f</span></span><br></pre></td></tr></table></figure>
-
-<p>如果存在超过字符串末尾的风险，你可以加上 <code>limitedBy:</code> 参数。如果这个方法在达到目标索引之前就先触发了限制条件的话，它将返回 <code>nil</code>：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> safeIdx <span class="operator">=</span> s.index(s.startIndex, offsetBy: <span class="number">400</span>, limitedBy: s.endIndex)</span><br><span class="line">safeIdx <span class="comment">// nil</span></span><br></pre></td></tr></table></figure>
-
-<p>毫无疑问，这比简单的整数索引需要更多的代码，但是再一次，Swift 就是这样设计的。如果 Swift 允许使用整数下标索引来访问字符串，会大大增加意外地写出性能相当糟糕的代码的可能性（比如，在一个循环中使用了整数下标）。</p>
-<h3 id="子字符串"><a href="#子字符串" class="headerlink" title="子字符串"></a>子字符串</h3><hr>
-<p>和所有集合类型一样，<code>String</code> 有一个特定的 <code>SubSequence</code> 类型，它就是 <code>Substring</code> 。<code>Substring</code> 和 <code>ArraySlice</code> 很相似：它是一个以不同起始和结束索引的对原字符串的切片。子字符串和原字符串共享文本存储，这带来的巨大的好处，它让对字符串切片成为了非常高效的操作。在下面的例子中，创建 <code>firstWord</code> 并不会导致昂贵的复制操作或者内存申请：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> sentence <span class="operator">=</span> <span class="string">&quot;The quick brown fox jumped over the lazy dog.&quot;</span></span><br><span class="line"><span class="keyword">let</span> firstSpace <span class="operator">=</span> sentence.index(of: <span class="string">&quot; &quot;</span>) <span class="operator">??</span> sentence.endIndex</span><br><span class="line"><span class="keyword">let</span> firstWord <span class="operator">=</span> sentence[<span class="operator">..&lt;</span>firstSpace] <span class="comment">// The</span></span><br><span class="line"><span class="built_in">type</span>(of: firstWord) <span class="comment">// Substring</span></span><br></pre></td></tr></table></figure>
-
-<p>在你对一个（可能会很长的）字符串进行迭代并提取它的各个部分的循环中，切片的高效特性就非常重要了。这类任务可能包括在文本中寻找某个单词出现的所有位置，或者解析一个 CSV 文件等。在这里，字符串分割是一个很有用的操作。<code>Colleciton</code> 定义了一个 <code>split</code> 方法，它会返回一个子序列的数组（也就是 <code>[Substring]</code> ）。最常用的一种形式是：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Collection</span> <span class="keyword">where</span> <span class="type">Element</span>: <span class="type">Equatable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">split</span>(<span class="params">separator</span>: <span class="type">Element</span>, <span class="params">maxSplits</span>: <span class="type">Int</span> <span class="operator">=</span> <span class="type">Int</span>.max,</span><br><span class="line">                      <span class="params">omittingEmptySubsequences</span>: <span class="type">Bool</span> <span class="operator">=</span> <span class="literal">true</span>) -&gt; [<span class="type">SubSequence</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>你可以这样来使用：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> poem <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Over the wintry</span></span><br><span class="line"><span class="string">forest, winds howl in rage</span></span><br><span class="line"><span class="string">with no leaves to blow.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">let</span> lines <span class="operator">=</span> poem.split(separator: <span class="string">&quot;<span class="subst">\n</span>&quot;</span>)</span><br><span class="line"><span class="comment">// [&quot;Over the wintry&quot;, &quot;forest, winds howl in rage&quot;, &quot;with no leaves to blow.&quot;]</span></span><br><span class="line"><span class="built_in">type</span>(of: lines) <span class="comment">// Array&lt;Substring&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="StringProtocol"><a href="#StringProtocol" class="headerlink" title="StringProtocol"></a>StringProtocol</h3><hr>
-<p><code>Substring</code> 和 <code>String</code> 的接口几乎完全一样。这是通过一个叫做 <code>StringProtocol</code> 的通用协议来达到的，<code>String</code> 和 <code>Substring</code> 都遵守这个协议。因为几乎所有的字符串 API 都被定义在 <code>StringProtocol</code> 上，对于 <code>Substring</code>，你完全可以假装将它看作就是一个 <code>String</code>，并完成各项操作。不过，在某些时候，你还是需要将子字符串转回 <code>String</code> 实例；和所有的切片一样，子字符串也只能用于短期的存储，这可以避免在操作过程中发生昂贵的复制。当这个操作结束，你想将结果保存起来，或是传递给下一个子系统，这时你应该通过初始化方法从 <code>Substring</code> 创建一个新的 <code>String</code>，如下例所示：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">lastWord</span>(<span class="params">in</span> <span class="params">input</span>: <span class="type">String</span>) -&gt; <span class="type">String</span>? &#123;</span><br><span class="line">    <span class="comment">// 处理输入，操作子字符串</span></span><br><span class="line">    <span class="keyword">let</span> words <span class="operator">=</span> input.split(separators: [<span class="string">&quot;,&quot;</span>, <span class="string">&quot; &quot;</span>])</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> lastWord <span class="operator">=</span> words.last <span class="keyword">else</span> &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">    <span class="comment">// 转换为字符串并返回</span></span><br><span class="line">    <span class="keyword">return</span> <span class="type">String</span>(lastWord)</span><br><span class="line">&#125;</span><br><span class="line">lastWord(in: <span class="string">&quot;one, two, three, four, five&quot;</span>) <span class="comment">// Optional(&quot;five&quot;)</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>不鼓励长期存储子字符串的根本原因在于，子字符串会一直持有整个原始字符串。如果有一个巨大的字符串，它的一个只表示单个字符的子字符串将会在内存中持有整个字符串。即使当原字符串的生命周期本应该结束时，只要子字符串还存在，这部分内存就无法释放。长期存储子字符串实际上会造成内存泄漏，由于原字符串还必须被持有在内存中，但是它们却不能再被访问。</strong></p>
-<p>如果你想要扩展 <code>String</code> 为其添加新的功能，将这个扩展放在 <code>StringProtocol</code> 会是一个好主意，这可以保持 <code>String</code> 和 <code>Substring API</code> 的统一性。<code>StringProtocol</code> 设计之初就是为了在你想要对 String 扩展时来使用的。如果你想要将已有的扩展从 <code>String</code> 移动到 <code>StringProtocol</code> 的话，唯一需要做的改动是将传入其他 API 的 <code>self</code> 通过 <code>String(self)</code> 换为具体的 <code>String</code> 类型实例。</p>
-<p>不过需要记住，在 Swift 4 中，<code>StringProtocol</code> 还并不是一个你想要构建自己的字符串类型时所应该实现的目标协议。文档中明确警告了这一点：</p>
-<blockquote>
-<p>不要声明任意新的遵守 <code>StringProtocol</code> 协议的类型。只有标准库中的 <code>String</code> 和 <code>Substring</code> 类型是有效的适配类型。  </p>
-</blockquote>
-<p>最终的目标是允许开发者创建他们自己的字符串类型 (比如带有特定的存储或者性能优化)，但是协议的设计还没有结束，所以现在就遵守这个协议的话，可能会让你的代码在 Swift 5 中无法通过编译。</p>
-<h3 id="CustomStringConvertible"><a href="#CustomStringConvertible" class="headerlink" title="CustomStringConvertible"></a>CustomStringConvertible</h3><hr>
-<p>符合 <code>CustomStringConvertible</code> 协议的类型可以在将实例转换为字符串时提供自己的表示形式。<code>String(describing:)</code> 初始值设定项是将任何类型的实例转换为字符串的首选方法。如果传递的实例符合<code>CustomStringConvertible</code> ，则 <code>String(describing:</code> 初始值设定项和 <code>print(_:)</code> 函数将使用实例的自定义描述属性。</p>
-<p>不鼓励直接访问类型的 <code>description</code> 属性或使用 <code>CustomStringConvertible </code> 作为通用约束。</p>
-<h4 id="遵守-CustomStringConvertible-协议"><a href="#遵守-CustomStringConvertible-协议" class="headerlink" title="遵守 CustomStringConvertible 协议"></a>遵守 <code>CustomStringConvertible</code> 协议</h4><p>通过定义 <code>description</code> 属性将 <code>CustomStringConvertible</code> 协议添加到自定义类型中。</p>
-<p>例如，这个自定义的 <code>Point</code> 结构体使用标准库提供的默认表示形式：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> x: <span class="type">Int</span>, y: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p <span class="operator">=</span> <span class="type">Point</span>(x: <span class="number">21</span>, y: <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="comment">// Prints &quot;Point(x: 21, y: 30)&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在实现 <code>description</code> 属性并遵守 <code>CustomStringConvertible</code> 协议之后，<code>Point</code> 类型提供了它自己的自定义表示。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Point</span>: <span class="title class_ inherited__">CustomStringConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> description: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;(<span class="subst">\(x)</span>, <span class="subst">\(y)</span>)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="comment">// Prints &quot;(21, 30)&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="CustomDebugStringConvertible"><a href="#CustomDebugStringConvertible" class="headerlink" title="CustomDebugStringConvertible"></a>CustomDebugStringConvertible</h3><hr>
-<p>Swift 为任意类型（any type）提供了默认的调试文本表示。 <code>String(reflecting:)</code> 的初始化和 <code>debugPrint(_:)</code> 函数使用该默认表示形式。要自定义该表示，请使您的类型符合 <code>CustomDebugStringConvertible </code> 协议。</p>
-<p>由于 <code>String(reflecting:)</code> 的初始化适用于任何类型的实例，如果传递的值符合 <code>CustomDebugStringConvertible</code> ，则返回实例的 <code>debugDescription</code> ，不鼓励直接访问类型的 <code>debugDescription</code> 属性，或者使用 <code>CustomDebugStringConvertible</code> 作为通用约束。</p>
-<blockquote>
-<p>Note  </p>
-<p>调用 <code>dump(_:_:_:_:)</code> 函数并在调试器中打印时使用 <code>String(reflecting:)</code> 和 <code>Mirror(reflecting:)</code> 来收集有关实例的信息，如果你为你自定义的类型实现了 <code>CustomDebugStringConvertible</code> 协议，则可能需要考虑通过实现 <code>CustomReflectable</code> 协议来提供自定义镜像。  </p>
-</blockquote>
-<h4 id="遵守-CustomDebugStringConvertible-协议"><a href="#遵守-CustomDebugStringConvertible-协议" class="headerlink" title="遵守 CustomDebugStringConvertible  协议"></a>遵守 <code>CustomDebugStringConvertible </code> 协议</h4><p>通过定义 <code>debugDescription </code> 属性将 <code>CustomDebugStringConvertible </code> 协议添加到自定义类型中。</p>
-<p>例如，这个自定义的 <code>Point</code> 结构体使用标准库提供的默认表示形式：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> x: <span class="type">Int</span>, y: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p <span class="operator">=</span> <span class="type">Point</span>(x: <span class="number">21</span>, y: <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="type">String</span>(reflecting: p))</span><br><span class="line"><span class="comment">// Prints &quot;p: Point = &#123;</span></span><br><span class="line"><span class="comment">//           x = 21</span></span><br><span class="line"><span class="comment">//           y = 30</span></span><br><span class="line"><span class="comment">//         &#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在实现 <code>debugDescription </code> 属性并遵守 <code>CustomDebugStringConvertible </code> 协议之后，<code>Point</code> 类型提供了它自己的自定义表示。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Point</span>: <span class="title class_ inherited__">CustomDebugStringConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> debugDescription: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Point(x: <span class="subst">\(x)</span>, y: <span class="subst">\(y)</span>)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="type">String</span>(reflecting: p))</span><br><span class="line"><span class="comment">// Prints &quot;Point(x: 21, y: 30)&quot;</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>编程语言</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Swift 操作符</title>
-    <url>/2018/04/02/20180402-Swift%20%E6%93%8D%E4%BD%9C%E7%AC%A6/</url>
-    <content><![CDATA[<blockquote>
-<p>Swift 支持重载操作符的特性，让我们可以自定义一些简单的计算。<br>最经典的例子就是两个二维向量之间的计算了。  </p>
-</blockquote>
-<p>首先我们定义一个二维向量，并创建两个向量</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Vector2D</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> x <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">var</span> y <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> v1 <span class="operator">=</span> <span class="type">Vector2D</span>(x: <span class="number">2.0</span>, y: <span class="number">3.0</span>)</span><br><span class="line"><span class="keyword">let</span> v2 <span class="operator">=</span> <span class="type">Vector2D</span>(x: <span class="number">1.0</span>, y: <span class="number">4.0</span>)</span><br></pre></td></tr></table></figure>
-
-<p>相加两个向量：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> v3 <span class="operator">=</span> <span class="type">Vector2D</span>(x: v1.x <span class="operator">+</span> v2.x, y: v1.y <span class="operator">+</span> v2.y)</span><br></pre></td></tr></table></figure>
-
-<p>这样一次的话，感觉还好。但是遇到复杂的运算的话，这样写感觉就太啰嗦了，这时候重载操作符是最好的选择。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">+</span>(<span class="params">left</span>: <span class="type">Vector2D</span>, <span class="params">right</span>: <span class="type">Vector2D</span>) -&gt; <span class="type">Vector2D</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">Vector2D</span>(x: left.x <span class="operator">+</span> right.x, y: left.y <span class="operator">+</span> right.y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>这样，我们相加两个向量就简单的多了</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> v3 <span class="operator">=</span> v1 <span class="operator">+</span> v2</span><br><span class="line"><span class="built_in">print</span>(v3) <span class="comment">// 输出 Vector2D(x: 3.0, y: 7.0)</span></span><br></pre></td></tr></table></figure>
-
-<p>向量的内积运算符API中是没有定义的，所以我们自定义一个内积运算符。<br>这里是Swift 3的实现方式（感觉看起来比之前的版本可读性好多了）。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 自定义操作符 别名类型</span></span><br><span class="line"><span class="keyword">infix</span> <span class="keyword">operator</span> <span class="title">+*</span>: <span class="type">InnerProductPrecedence</span></span><br><span class="line"><span class="comment">// 自定义操作符的运算优先级</span></span><br><span class="line"><span class="keyword">precedencegroup</span> <span class="title">InnerProductPrecedence</span> &#123;</span><br><span class="line">//    结合律：内积的结果是一个 <span class="type">Double，不再会和其他内积结合使用，所以这里写成</span> <span class="keyword">none</span></span><br><span class="line">    <span class="keyword">associativity</span>: <span class="keyword">none</span></span><br><span class="line">//    优先级设置：高于普通运算。</span><br><span class="line">//    <span class="type">MultiplicationPrecedence（代表乘法和除法）</span></span><br><span class="line">//    <span class="type">AdditionPrecedence（代表加法和减法）</span></span><br><span class="line">    <span class="keyword">higherThan</span>: <span class="type">MultiplicationPrecedence</span>, <span class="type">AdditionPrecedence</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>接下来我们就可以写具体的运算实现了</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">+*</span>(<span class="params">left</span>: <span class="type">Vector2D</span>, <span class="params">right</span>: <span class="type">Vector2D</span>) -&gt; <span class="type">Double</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> left.x <span class="operator">*</span> right.x <span class="operator">+</span> left.y <span class="operator">*</span> right.y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result <span class="operator">=</span> v1 <span class="operator">+*</span> v2 <span class="comment">// 14</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="precedencegroup"><a href="#precedencegroup" class="headerlink" title="precedencegroup"></a>precedencegroup</h3><blockquote>
-<p>定义了一个操作符优先级别。操作符优先级的定义和类型声明有些相似，一个操作符比需要属于某个特定的优先级。Swift 标准库中已经定义了一些常用的运算优先级组，比如加法优先级 (AdditionPrecedence) 和乘法优先级 (MultiplicationPrecedence) 等，你可以在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0LWV2b2x1dGlvbi9ibG9iL21hc3Rlci9wcm9wb3NhbHMvMDA3Ny1vcGVyYXRvci1wcmVjZWRlbmNlLm1k">这里<i class="fa fa-external-link-alt"></i></span>找到完整的列表。如果没有适合你的运算符的优先级组，你就需要像我们在例子中做得这样，自己指定结合律方式和优先级顺序了。  </p>
-</blockquote>
-<h3 id="infix"><a href="#infix" class="headerlink" title="infix"></a>infix</h3><blockquote>
-<p>表示要定义的是一个中位操作符，即前后都是输入；其他的修饰还包括 prefix 和 postfix，不再赘述  </p>
-</blockquote>
-<h3 id="associativity"><a href="#associativity" class="headerlink" title="associativity"></a>associativity</h3><blockquote>
-<p>定义了结合律，即如果多个同类的操作符顺序出现的计算顺序。比如常见的加法和减法都是 left，就是说多个加法同时出现时按照从左往右的顺序计算 (因为加法满足交换律，所以这个顺序无所谓，但是减法的话计算顺序就很重要了)。点乘的结果是一个 Double，不再会和其他点乘结合使用，所以这里写成 none  </p>
-</blockquote>
-<h3 id="higherThan"><a href="#higherThan" class="headerlink" title="higherThan"></a>higherThan</h3><blockquote>
-<p>运算的优先级，点积运算是优先于乘法运算的。除了 higherThan，也支持使用 lowerThan 来指定优先级低于某个其他组。  </p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>工作日志</category>
       </categories>
       <tags>
         <tag>Swift</tag>
@@ -3280,63 +3280,6 @@
       </tags>
   </entry>
   <entry>
-    <title>iOS 并发，锁，线程同步【二】Operation</title>
-    <url>/2018/04/30/20180430-iOS%20%E5%B9%B6%E5%8F%91%EF%BC%8C%E9%94%81%EF%BC%8C%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E3%80%90%E4%BA%8C%E3%80%91Operation/</url>
-    <content><![CDATA[<p>在之前的一篇文章中【<a href="/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/2018/04/16/iOS-%E5%B9%B6%E5%8F%91-%E9%94%81-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E4%B8%80-GCD/">iOS 并发，锁，线程同步【一】GCD</a>】，我们讨论了一下 <code>GCD</code> 的并发，锁和线程同步的问题，今天，我们来讨论一下 <code>Operation</code> 的并发与线程同步。</p>
-<p>在 <code>Operation</code> 中，我们一般是将所有的 <code>Operation</code> 添加到 <code>OperationQueue</code> 中进行执行，这里需要注意一点，**<code>Operation</code> 添加到队列当中，默认就是执行的并发操作。**我们可以设置队列的最大并发数 <code>maxConcurrentOperationCount</code>。如果我们在 <code>OperationQueue</code> 中想要执行串行任务的话，很简单，将 <code>maxConcurrentOperationCount</code> 设置成为1即可。 <code>maxConcurrentOperationCount</code> 的默认值为-1，那么默认情况下的并发数是多少呢？**这个是由系统内存和 CPU 决定的，可能内存多久开多一点，内存少就开少一点。**最大并发数建议 2~3，如果并发数太多会导致 UI 卡顿。</p>
-<p>不添加到队列当中的 <code>Operation</code>，我们可以调用 <code>start()</code> 方法开始一个操作，也可以调用 <code>cancel()</code> 取消等待中的操作，注意：**已经开始执行的操作是没法取消的。**代码示例如下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> opt <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Operation&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">opt.start() <span class="comment">// 开始执行任务</span></span><br><span class="line">opt.cancel() <span class="comment">// 取消等待中的任务</span></span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>如果我们需要进行线程同步该怎么做？GCD 中我们可以用 <code>DispatchGroup</code>，在 <code>Operation</code> 中我们可以用一个 <code>addDependency()</code> 的方法。这个方法意味着，某个任务的执行，依赖着其他任务执行完成后才回去执行。代码我们可以这么写：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    sleep(<span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;b&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;c&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.addDependency(a)</span><br><span class="line">c.addDependency(b)</span><br><span class="line"></span><br><span class="line">queue.addOperation(c)</span><br><span class="line">queue.addOperation(a)</span><br><span class="line">queue.addOperation(b)</span><br></pre></td></tr></table></figure>
-
-<p>这里的 <code>c</code> 操作，需要等到 <code>a</code>, <code>b</code> 完成之后才会执行。运行结果如下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">b</span><br><span class="line">a</span><br><span class="line">c</span><br></pre></td></tr></table></figure>
-
-<p>OK，接下来我们来一点在并发中进行数据写入的操作，代码作如下修改：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">var</span> ary: [<span class="type">Int</span>] <span class="operator">=</span> []</span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="number">5</span> &#123;</span><br><span class="line">        ary.append(item)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> <span class="number">5</span><span class="operator">..&lt;</span><span class="number">10</span> &#123;</span><br><span class="line">        ary.append(item)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.addDependency(a)</span><br><span class="line">c.addDependency(b)</span><br><span class="line"></span><br><span class="line">queue.addOperation(c)</span><br><span class="line">queue.addOperation(a)</span><br><span class="line">queue.addOperation(b)</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
-
-<p>很明显，运行结果是错的。并发当中对同一个数据源进行写的操作时，一定要注意加锁。具体可以看我的上一遍文章：<a href="/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/2018/04/16/iOS-%E5%B9%B6%E5%8F%91-%E9%94%81-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E4%B8%80-GCD/">iOS 并发，锁，线程同步【一】GCD</a>，这里我就不在啰嗦。</p>
-<p>接下来，我们做一点代码优化，如果我想要实现 n 个任务，每个任务都是向数组中添加数字，每个任务的循环范围按照 0<del>5，5</del>10，10~15 这样的规律，最后我们输出 <code>ary</code> 中的值。</p>
-<p>很明显，向上面的写法太过笨拙。那么我们进行一个函数的抽象，我们先来写一个产生 task 的函数。</p>
-<p>首先我们先来定义一个 task：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typealias</span> task <span class="operator">=</span> () -&gt; ()</span><br></pre></td></tr></table></figure>
-
-<p>接下来，我们需要将产生的 task 添加到数组中，这里需要充分利用函数式编程的优点，方法看起来是这样：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">makeTask</span>(<span class="params">taskCount</span>: <span class="type">Int</span>, <span class="params">opt</span>: <span class="keyword">@escaping</span> (<span class="keyword">_</span> currentIdx: <span class="type">Int</span>) -&gt; task) -&gt; [task] &#123;</span><br><span class="line">    <span class="comment">// 如果任务数为0，就返回空数组</span></span><br><span class="line">    <span class="keyword">guard</span> taskCount <span class="operator">&gt;</span> <span class="number">0</span> <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> tasks: [task] <span class="operator">=</span> []</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>taskCount &#123;</span><br><span class="line">        tasks.append(opt(idx))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tasks</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第一个参数 taskCount 是最大任务数，第二个参数 opt 是执行的任务，是一个闭包，<strong>因为任务会存到一个数组中，供后面的方法使用，所以这个闭包是可逃逸的。<strong>我们在执行闭包的时候，需要传入一个参数，这个参数表示了当前生成的是第几个 task，返回值也是个闭包，也就是我们最终要执行的 task。OK，经过函数化，我们就可以产生</strong>任意数量、任意操作</strong>的 task 了。</p>
-<p>接下来我们来处理一下并发的方法，它看起来是这样的：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">concurrent</span>(<span class="params">tasks</span>: [task], <span class="params">complationHandle</span>: <span class="keyword">@escaping</span> () -&gt; ()) &#123;</span><br><span class="line">    <span class="keyword">let</span> sema <span class="operator">=</span> <span class="type">DispatchSemaphore</span>(value: <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">    queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line">    <span class="keyword">let</span> result <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">        complationHandle()</span><br><span class="line">    &#125;</span><br><span class="line">    tasks.forEach &#123; t <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">let</span> o <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">            sema.wait()</span><br><span class="line">            t()</span><br><span class="line">            sema.signal()</span><br><span class="line">        &#125;</span><br><span class="line">        result.addDependency(o)</span><br><span class="line">        queue.addOperation(o)</span><br><span class="line">    &#125;</span><br><span class="line">    queue.addOperation(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>原理也很简单，我们在一个 <code>forEach</code> 当中设置好 <code>Operation</code> 的 task 与依赖关系。这里用了信号量锁，来保证数据的正确性。最后我们在 <code>complationHandle</code> 这个闭包中处理同步后的数据。</p>
-<p>我们来使用一下，感受一下函数式的灵活、强大之处：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ary: [<span class="type">Int</span>] <span class="operator">=</span> []</span><br><span class="line">        </span><br><span class="line"><span class="keyword">let</span> tasks <span class="operator">=</span> makeTask(taskCount: <span class="number">20</span>) &#123; idx <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;task idx: <span class="subst">\(idx)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (idx <span class="operator">*</span> <span class="number">5</span>)<span class="operator">..&lt;</span>(idx <span class="operator">*</span> <span class="number">5</span> <span class="operator">+</span> <span class="number">5</span>) &#123;</span><br><span class="line">            ary.append(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">concurrent(tasks: tasks) &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>输出结果如下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">task idx: <span class="number">0</span></span><br><span class="line">task idx: <span class="number">1</span></span><br><span class="line">task idx: <span class="number">2</span></span><br><span class="line">task idx: <span class="number">3</span></span><br><span class="line">task idx: <span class="number">5</span></span><br><span class="line">task idx: <span class="number">6</span></span><br><span class="line">task idx: <span class="number">4</span></span><br><span class="line">task idx: <span class="number">7</span></span><br><span class="line">task idx: <span class="number">9</span></span><br><span class="line">task idx: <span class="number">10</span></span><br><span class="line">task idx: <span class="number">11</span></span><br><span class="line">task idx: <span class="number">8</span></span><br><span class="line">task idx: <span class="number">13</span></span><br><span class="line">task idx: <span class="number">12</span></span><br><span class="line">task idx: <span class="number">14</span></span><br><span class="line">task idx: <span class="number">15</span></span><br><span class="line">task idx: <span class="number">18</span></span><br><span class="line">task idx: <span class="number">16</span></span><br><span class="line">task idx: <span class="number">17</span></span><br><span class="line">task idx: <span class="number">19</span></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>, <span class="number">36</span>, <span class="number">37</span>, <span class="number">38</span>, <span class="number">39</span>, <span class="number">40</span>, <span class="number">41</span>, <span class="number">42</span>, <span class="number">43</span>, <span class="number">44</span>, <span class="number">45</span>, <span class="number">46</span>, <span class="number">47</span>, <span class="number">48</span>, <span class="number">49</span>, <span class="number">50</span>, <span class="number">51</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">54</span>, <span class="number">55</span>, <span class="number">56</span>, <span class="number">57</span>, <span class="number">58</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">61</span>, <span class="number">62</span>, <span class="number">63</span>, <span class="number">64</span>, <span class="number">65</span>, <span class="number">66</span>, <span class="number">67</span>, <span class="number">68</span>, <span class="number">69</span>, <span class="number">70</span>, <span class="number">71</span>, <span class="number">72</span>, <span class="number">73</span>, <span class="number">74</span>, <span class="number">75</span>, <span class="number">76</span>, <span class="number">77</span>, <span class="number">78</span>, <span class="number">79</span>, <span class="number">80</span>, <span class="number">81</span>, <span class="number">82</span>, <span class="number">83</span>, <span class="number">84</span>, <span class="number">85</span>, <span class="number">86</span>, <span class="number">87</span>, <span class="number">88</span>, <span class="number">89</span>, <span class="number">90</span>, <span class="number">91</span>, <span class="number">92</span>, <span class="number">93</span>, <span class="number">94</span>, <span class="number">95</span>, <span class="number">96</span>, <span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>]</span><br></pre></td></tr></table></figure>
-
-<p>调用还是有点麻烦？没关系我们可以将两个方法合成一个，我们把 <code>makeTask</code> 与 <code>concurrent</code> 方法设置成为私有（private），接下来写一个开放接口方法：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">tasksToConcurrent</span>(<span class="params">taskCount</span>: <span class="type">Int</span>, <span class="params">opt</span>: <span class="keyword">@escaping</span> (<span class="keyword">_</span> currentIdx: <span class="type">Int</span>) -&gt; task, <span class="params">complationHandle</span>: <span class="keyword">@escaping</span> () -&gt; ()) &#123;</span><br><span class="line">    <span class="keyword">let</span> tasks <span class="operator">=</span> makeTask(taskCount: <span class="number">20</span>) &#123; idx <span class="keyword">in</span> <span class="keyword">return</span> opt(idx) &#125;</span><br><span class="line">    concurrent(tasks: tasks, complationHandle: complationHandle)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们就可以这样来调用：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">tasksToConcurrent(taskCount: <span class="number">20</span>, opt: &#123; idx <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;task idx: <span class="subst">\(idx)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (idx <span class="operator">*</span> <span class="number">5</span>)<span class="operator">..&lt;</span>(idx <span class="operator">*</span> <span class="number">5</span> <span class="operator">+</span> <span class="number">5</span>) &#123;</span><br><span class="line">            ary.append(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>感觉比刚开始的写法简洁了不少！！！</p>
-]]></content>
-      <categories>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Objective-C 回顾【二】之 对象、消息、运行期</title>
     <url>/2018/04/23/20180423-Objective-C%20%E5%9B%9E%E9%A1%BE%E3%80%90%E4%BA%8C%E3%80%91%E4%B9%8B%20%E5%AF%B9%E8%B1%A1%E3%80%81%E6%B6%88%E6%81%AF%E3%80%81%E8%BF%90%E8%A1%8C%E6%9C%9F/</url>
     <content><![CDATA[<p>用 Objective-C 等面向对象语言编程时，“对象”（object）就是“基本构造单元”（building block），开发者可以通过对象来存储并传递数据。在对象之间传递数据并执行任务的过程就叫做“消息传递”（Messaging）。若想编写出高效且易维护的代码，就一定要熟悉这两个特性的工作原理。</p>
@@ -3609,6 +3552,63 @@
       </tags>
   </entry>
   <entry>
+    <title>iOS 并发，锁，线程同步【二】Operation</title>
+    <url>/2018/04/30/20180430-iOS%20%E5%B9%B6%E5%8F%91%EF%BC%8C%E9%94%81%EF%BC%8C%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E3%80%90%E4%BA%8C%E3%80%91Operation/</url>
+    <content><![CDATA[<p>在之前的一篇文章中【<a href="/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/2018/04/16/iOS-%E5%B9%B6%E5%8F%91-%E9%94%81-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E4%B8%80-GCD/">iOS 并发，锁，线程同步【一】GCD</a>】，我们讨论了一下 <code>GCD</code> 的并发，锁和线程同步的问题，今天，我们来讨论一下 <code>Operation</code> 的并发与线程同步。</p>
+<p>在 <code>Operation</code> 中，我们一般是将所有的 <code>Operation</code> 添加到 <code>OperationQueue</code> 中进行执行，这里需要注意一点，**<code>Operation</code> 添加到队列当中，默认就是执行的并发操作。**我们可以设置队列的最大并发数 <code>maxConcurrentOperationCount</code>。如果我们在 <code>OperationQueue</code> 中想要执行串行任务的话，很简单，将 <code>maxConcurrentOperationCount</code> 设置成为1即可。 <code>maxConcurrentOperationCount</code> 的默认值为-1，那么默认情况下的并发数是多少呢？**这个是由系统内存和 CPU 决定的，可能内存多久开多一点，内存少就开少一点。**最大并发数建议 2~3，如果并发数太多会导致 UI 卡顿。</p>
+<p>不添加到队列当中的 <code>Operation</code>，我们可以调用 <code>start()</code> 方法开始一个操作，也可以调用 <code>cancel()</code> 取消等待中的操作，注意：**已经开始执行的操作是没法取消的。**代码示例如下：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> opt <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Operation&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">opt.start() <span class="comment">// 开始执行任务</span></span><br><span class="line">opt.cancel() <span class="comment">// 取消等待中的任务</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>如果我们需要进行线程同步该怎么做？GCD 中我们可以用 <code>DispatchGroup</code>，在 <code>Operation</code> 中我们可以用一个 <code>addDependency()</code> 的方法。这个方法意味着，某个任务的执行，依赖着其他任务执行完成后才回去执行。代码我们可以这么写：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    sleep(<span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;b&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;c&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.addDependency(a)</span><br><span class="line">c.addDependency(b)</span><br><span class="line"></span><br><span class="line">queue.addOperation(c)</span><br><span class="line">queue.addOperation(a)</span><br><span class="line">queue.addOperation(b)</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>c</code> 操作，需要等到 <code>a</code>, <code>b</code> 完成之后才会执行。运行结果如下：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">b</span><br><span class="line">a</span><br><span class="line">c</span><br></pre></td></tr></table></figure>
+
+<p>OK，接下来我们来一点在并发中进行数据写入的操作，代码作如下修改：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">var</span> ary: [<span class="type">Int</span>] <span class="operator">=</span> []</span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="number">5</span> &#123;</span><br><span class="line">        ary.append(item)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> <span class="number">5</span><span class="operator">..&lt;</span><span class="number">10</span> &#123;</span><br><span class="line">        ary.append(item)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.addDependency(a)</span><br><span class="line">c.addDependency(b)</span><br><span class="line"></span><br><span class="line">queue.addOperation(c)</span><br><span class="line">queue.addOperation(a)</span><br><span class="line">queue.addOperation(b)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+
+<p>很明显，运行结果是错的。并发当中对同一个数据源进行写的操作时，一定要注意加锁。具体可以看我的上一遍文章：<a href="/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/2018/04/16/iOS-%E5%B9%B6%E5%8F%91-%E9%94%81-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5-%E4%B8%80-GCD/">iOS 并发，锁，线程同步【一】GCD</a>，这里我就不在啰嗦。</p>
+<p>接下来，我们做一点代码优化，如果我想要实现 n 个任务，每个任务都是向数组中添加数字，每个任务的循环范围按照 0<del>5，5</del>10，10~15 这样的规律，最后我们输出 <code>ary</code> 中的值。</p>
+<p>很明显，向上面的写法太过笨拙。那么我们进行一个函数的抽象，我们先来写一个产生 task 的函数。</p>
+<p>首先我们先来定义一个 task：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typealias</span> task <span class="operator">=</span> () -&gt; ()</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们需要将产生的 task 添加到数组中，这里需要充分利用函数式编程的优点，方法看起来是这样：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">makeTask</span>(<span class="params">taskCount</span>: <span class="type">Int</span>, <span class="params">opt</span>: <span class="keyword">@escaping</span> (<span class="keyword">_</span> currentIdx: <span class="type">Int</span>) -&gt; task) -&gt; [task] &#123;</span><br><span class="line">    <span class="comment">// 如果任务数为0，就返回空数组</span></span><br><span class="line">    <span class="keyword">guard</span> taskCount <span class="operator">&gt;</span> <span class="number">0</span> <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> tasks: [task] <span class="operator">=</span> []</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>taskCount &#123;</span><br><span class="line">        tasks.append(opt(idx))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tasks</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数 taskCount 是最大任务数，第二个参数 opt 是执行的任务，是一个闭包，<strong>因为任务会存到一个数组中，供后面的方法使用，所以这个闭包是可逃逸的。<strong>我们在执行闭包的时候，需要传入一个参数，这个参数表示了当前生成的是第几个 task，返回值也是个闭包，也就是我们最终要执行的 task。OK，经过函数化，我们就可以产生</strong>任意数量、任意操作</strong>的 task 了。</p>
+<p>接下来我们来处理一下并发的方法，它看起来是这样的：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">concurrent</span>(<span class="params">tasks</span>: [task], <span class="params">complationHandle</span>: <span class="keyword">@escaping</span> () -&gt; ()) &#123;</span><br><span class="line">    <span class="keyword">let</span> sema <span class="operator">=</span> <span class="type">DispatchSemaphore</span>(value: <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">OperationQueue</span>()</span><br><span class="line">    queue.maxConcurrentOperationCount <span class="operator">=</span> <span class="number">3</span></span><br><span class="line">    <span class="keyword">let</span> result <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">        complationHandle()</span><br><span class="line">    &#125;</span><br><span class="line">    tasks.forEach &#123; t <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">let</span> o <span class="operator">=</span> <span class="type">BlockOperation</span> &#123;</span><br><span class="line">            sema.wait()</span><br><span class="line">            t()</span><br><span class="line">            sema.signal()</span><br><span class="line">        &#125;</span><br><span class="line">        result.addDependency(o)</span><br><span class="line">        queue.addOperation(o)</span><br><span class="line">    &#125;</span><br><span class="line">    queue.addOperation(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原理也很简单，我们在一个 <code>forEach</code> 当中设置好 <code>Operation</code> 的 task 与依赖关系。这里用了信号量锁，来保证数据的正确性。最后我们在 <code>complationHandle</code> 这个闭包中处理同步后的数据。</p>
+<p>我们来使用一下，感受一下函数式的灵活、强大之处：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ary: [<span class="type">Int</span>] <span class="operator">=</span> []</span><br><span class="line">        </span><br><span class="line"><span class="keyword">let</span> tasks <span class="operator">=</span> makeTask(taskCount: <span class="number">20</span>) &#123; idx <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;task idx: <span class="subst">\(idx)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (idx <span class="operator">*</span> <span class="number">5</span>)<span class="operator">..&lt;</span>(idx <span class="operator">*</span> <span class="number">5</span> <span class="operator">+</span> <span class="number">5</span>) &#123;</span><br><span class="line">            ary.append(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">concurrent(tasks: tasks) &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">task idx: <span class="number">0</span></span><br><span class="line">task idx: <span class="number">1</span></span><br><span class="line">task idx: <span class="number">2</span></span><br><span class="line">task idx: <span class="number">3</span></span><br><span class="line">task idx: <span class="number">5</span></span><br><span class="line">task idx: <span class="number">6</span></span><br><span class="line">task idx: <span class="number">4</span></span><br><span class="line">task idx: <span class="number">7</span></span><br><span class="line">task idx: <span class="number">9</span></span><br><span class="line">task idx: <span class="number">10</span></span><br><span class="line">task idx: <span class="number">11</span></span><br><span class="line">task idx: <span class="number">8</span></span><br><span class="line">task idx: <span class="number">13</span></span><br><span class="line">task idx: <span class="number">12</span></span><br><span class="line">task idx: <span class="number">14</span></span><br><span class="line">task idx: <span class="number">15</span></span><br><span class="line">task idx: <span class="number">18</span></span><br><span class="line">task idx: <span class="number">16</span></span><br><span class="line">task idx: <span class="number">17</span></span><br><span class="line">task idx: <span class="number">19</span></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>, <span class="number">36</span>, <span class="number">37</span>, <span class="number">38</span>, <span class="number">39</span>, <span class="number">40</span>, <span class="number">41</span>, <span class="number">42</span>, <span class="number">43</span>, <span class="number">44</span>, <span class="number">45</span>, <span class="number">46</span>, <span class="number">47</span>, <span class="number">48</span>, <span class="number">49</span>, <span class="number">50</span>, <span class="number">51</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">54</span>, <span class="number">55</span>, <span class="number">56</span>, <span class="number">57</span>, <span class="number">58</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">61</span>, <span class="number">62</span>, <span class="number">63</span>, <span class="number">64</span>, <span class="number">65</span>, <span class="number">66</span>, <span class="number">67</span>, <span class="number">68</span>, <span class="number">69</span>, <span class="number">70</span>, <span class="number">71</span>, <span class="number">72</span>, <span class="number">73</span>, <span class="number">74</span>, <span class="number">75</span>, <span class="number">76</span>, <span class="number">77</span>, <span class="number">78</span>, <span class="number">79</span>, <span class="number">80</span>, <span class="number">81</span>, <span class="number">82</span>, <span class="number">83</span>, <span class="number">84</span>, <span class="number">85</span>, <span class="number">86</span>, <span class="number">87</span>, <span class="number">88</span>, <span class="number">89</span>, <span class="number">90</span>, <span class="number">91</span>, <span class="number">92</span>, <span class="number">93</span>, <span class="number">94</span>, <span class="number">95</span>, <span class="number">96</span>, <span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>]</span><br></pre></td></tr></table></figure>
+
+<p>调用还是有点麻烦？没关系我们可以将两个方法合成一个，我们把 <code>makeTask</code> 与 <code>concurrent</code> 方法设置成为私有（private），接下来写一个开放接口方法：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">tasksToConcurrent</span>(<span class="params">taskCount</span>: <span class="type">Int</span>, <span class="params">opt</span>: <span class="keyword">@escaping</span> (<span class="keyword">_</span> currentIdx: <span class="type">Int</span>) -&gt; task, <span class="params">complationHandle</span>: <span class="keyword">@escaping</span> () -&gt; ()) &#123;</span><br><span class="line">    <span class="keyword">let</span> tasks <span class="operator">=</span> makeTask(taskCount: <span class="number">20</span>) &#123; idx <span class="keyword">in</span> <span class="keyword">return</span> opt(idx) &#125;</span><br><span class="line">    concurrent(tasks: tasks, complationHandle: complationHandle)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们就可以这样来调用：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">tasksToConcurrent(taskCount: <span class="number">20</span>, opt: &#123; idx <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;task idx: <span class="subst">\(idx)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (idx <span class="operator">*</span> <span class="number">5</span>)<span class="operator">..&lt;</span>(idx <span class="operator">*</span> <span class="number">5</span> <span class="operator">+</span> <span class="number">5</span>) &#123;</span><br><span class="line">            ary.append(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(ary.sorted())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>感觉比刚开始的写法简洁了不少！！！</p>
+]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Objective-C 回顾【三】之 内存管理</title>
     <url>/2018/05/11/20180511-Objective-C%20%E5%9B%9E%E9%A1%BE%E3%80%90%E4%B8%89%E3%80%91%E4%B9%8B%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[<h2 id="理解引用计数"><a href="#理解引用计数" class="headerlink" title="理解引用计数"></a>理解引用计数</h2><hr>
@@ -3700,6 +3700,61 @@
       </categories>
       <tags>
         <tag>macOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在正确的线程上使用Observable【译】</title>
+    <url>/2018/06/17/20180617-%E5%9C%A8%E6%AD%A3%E7%A1%AE%E7%9A%84%E7%BA%BF%E7%A8%8B%E4%B8%8A%E4%BD%BF%E7%94%A8Observable%E3%80%90%E8%AF%91%E3%80%91/</url>
+    <content><![CDATA[<p>尽管很多人了解 RxJava 的基本逻辑，但是在 Observable 链和操作符究竟运行在哪个线程，仍然会有许多困惑。</p>
+<p>首先，让我们梳理清晰，在 RxJava 中 <code>.subsribeOn()</code> 和 <code>.observeOn()</code> 区别：</p>
+<ol>
+<li><code>.subsribeOn()</code> 操作符可以改变 Observable 应该在哪个调度器上执行任务。</li>
+<li><code>.observeOn()</code> 操作符可以改变 Observable 将在哪个调度器上发送通知。</li>
+<li>另外，你需要知道，默认情况下，链上的操作符将会在调用 <code>.subsribeOn()</code> 的那个线程上执行任务。</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h3><hr>
+<h4 id="主线程或者-subscribe-所在线程"><a href="#主线程或者-subscribe-所在线程" class="headerlink" title="主线程或者 .subscribe() 所在线程"></a>主线程或者 .subscribe() 所在线程</h4><p>如果在 Android 的 <code>Activity下onCreate()</code> 方法中，也就是主线程中使用如下代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribe( );</span><br></pre></td></tr></table></figure>
+
+<p>表现会像这样：</p>
+<p><img src="/my_pictures/20180617/1.png"></p>
+<h4 id="调用-subscribeOn"><a href="#调用-subscribeOn" class="headerlink" title="调用 .subscribeOn()"></a>调用 .subscribeOn()</h4><p>尽管代码片段在主线程中，但是整个代码块将运行在 <code>.subscribeOn()</code> 定义的线程上：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
+
+<p>表现会像这样：</p>
+<p><img src="/my_pictures/20180617/2.png"></p>
+<h4 id="调用-observeOn"><a href="#调用-observeOn" class="headerlink" title="调用 .observeOn()"></a>调用 .observeOn()</h4><p>如果你的代码片段在主线程中，默认情况下Observable的创建是在 <code>.subscribeOn()</code> 定义的线程上，但是，调用 <code>.observeOn()</code> 之后，余下的代码将会执行在 <code>.observeOn()</code> 所定义的线程上：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .observeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
+
+<p><img src="/my_pictures/20180617/3.png"></p>
+<h4 id="合并逻辑"><a href="#合并逻辑" class="headerlink" title="合并逻辑"></a>合并逻辑</h4><p>照理合并操作符，放在一起就像这样：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .observeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
+
+<p><img src="/my_pictures/20180617/4.png"></p>
+<h3 id="一些技巧"><a href="#一些技巧" class="headerlink" title="一些技巧"></a>一些技巧</h3><hr>
+<h4 id="UI-线程运行异常"><a href="#UI-线程运行异常" class="headerlink" title="UI 线程运行异常"></a>UI 线程运行异常</h4><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .subscribe(<span class="comment">/** 与UI线程相关的逻辑 **/</span><span class="operator">/</span>);</span><br></pre></td></tr></table></figure>
+
+<p>很明显，这是错的。</p>
+<h4 id="保证逻辑运行在工作线程中"><a href="#保证逻辑运行在工作线程中" class="headerlink" title="保证逻辑运行在工作线程中"></a>保证逻辑运行在工作线程中</h4><p>如果存在以下代码片段：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .observeOn(<span class="type">AndroidSchedulers</span>.mainThread())</span><br><span class="line"> </span><br><span class="line">    .flatMap(<span class="comment">/** 与UI线程无关的逻辑**/</span><span class="operator">/</span>)</span><br><span class="line"> </span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
+
+<p>请用以下代码替代：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line"> </span><br><span class="line">    .flatMap(<span class="comment">/** 与UI线程无关的逻辑**/</span><span class="operator">/</span>)</span><br><span class="line"> </span><br><span class="line">    .observeOn(<span class="type">AndroidSchedulers</span>.mainThread())</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
+
+<p>通过用第二段代码代替第一段，<code>.flatMap()</code> 操作符（或者在这一点的其他逻辑操作符）将运行在后台线程。这样做就不会阻塞 UI 线程，同时可以防患 ANR 或其他类似问题的发生。看起来有点像 <code>AsyncTask</code> 模式，尽可能的把逻辑放在的 <code>.doInBackground()</code> 中，而不是 <code>.onPostExecute()</code> 。</p>
+<h4 id="取决于更早的-subscribeOn"><a href="#取决于更早的-subscribeOn" class="headerlink" title="取决于更早的 .subscribeOn()"></a>取决于更早的 .subscribeOn()</h4><p>以下代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(thread1)</span><br><span class="line">    .subscribeOn(thread2)</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
+
+<p>因为 <code>thread1</code> 的逻辑将会覆盖 <code>thread2</code>，所以 <code>Observable</code> 的创建和 <code>.subscribe()</code> 的逻辑处理都将运行在 <code>thread1</code> 中。因此，根本没有必要写多个 <code>.subscribeOn()</code> 操作符。</p>
+<h4 id="原文链接："><a href="#原文链接：" class="headerlink" title="原文链接："></a>原文链接：</h4><p><span class="exturl" data-url="aHR0cHM6Ly9sb3JlbnR6b3MuY29tL29ic2VydmUtaW4tdGhlLWNvcnJlY3QtdGhyZWFkLTE5MzliYjliYjlkMg==">Observe on the correct thread<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>文章翻译</category>
+      </categories>
+      <tags>
+        <tag>RxSwift</tag>
       </tags>
   </entry>
   <entry>
@@ -3968,61 +4023,6 @@
       </tags>
   </entry>
   <entry>
-    <title>在正确的线程上使用Observable【译】</title>
-    <url>/2018/06/17/20180617-%E5%9C%A8%E6%AD%A3%E7%A1%AE%E7%9A%84%E7%BA%BF%E7%A8%8B%E4%B8%8A%E4%BD%BF%E7%94%A8Observable%E3%80%90%E8%AF%91%E3%80%91/</url>
-    <content><![CDATA[<p>尽管很多人了解 RxJava 的基本逻辑，但是在 Observable 链和操作符究竟运行在哪个线程，仍然会有许多困惑。</p>
-<p>首先，让我们梳理清晰，在 RxJava 中 <code>.subsribeOn()</code> 和 <code>.observeOn()</code> 区别：</p>
-<ol>
-<li><code>.subsribeOn()</code> 操作符可以改变 Observable 应该在哪个调度器上执行任务。</li>
-<li><code>.observeOn()</code> 操作符可以改变 Observable 将在哪个调度器上发送通知。</li>
-<li>另外，你需要知道，默认情况下，链上的操作符将会在调用 <code>.subsribeOn()</code> 的那个线程上执行任务。</li>
-</ol>
-<span id="more"></span>
-
-<h3 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h3><hr>
-<h4 id="主线程或者-subscribe-所在线程"><a href="#主线程或者-subscribe-所在线程" class="headerlink" title="主线程或者 .subscribe() 所在线程"></a>主线程或者 .subscribe() 所在线程</h4><p>如果在 Android 的 <code>Activity下onCreate()</code> 方法中，也就是主线程中使用如下代码：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribe( );</span><br></pre></td></tr></table></figure>
-
-<p>表现会像这样：</p>
-<p><img src="/my_pictures/20180617/1.png"></p>
-<h4 id="调用-subscribeOn"><a href="#调用-subscribeOn" class="headerlink" title="调用 .subscribeOn()"></a>调用 .subscribeOn()</h4><p>尽管代码片段在主线程中，但是整个代码块将运行在 <code>.subscribeOn()</code> 定义的线程上：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
-
-<p>表现会像这样：</p>
-<p><img src="/my_pictures/20180617/2.png"></p>
-<h4 id="调用-observeOn"><a href="#调用-observeOn" class="headerlink" title="调用 .observeOn()"></a>调用 .observeOn()</h4><p>如果你的代码片段在主线程中，默认情况下Observable的创建是在 <code>.subscribeOn()</code> 定义的线程上，但是，调用 <code>.observeOn()</code> 之后，余下的代码将会执行在 <code>.observeOn()</code> 所定义的线程上：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .observeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
-
-<p><img src="/my_pictures/20180617/3.png"></p>
-<h4 id="合并逻辑"><a href="#合并逻辑" class="headerlink" title="合并逻辑"></a>合并逻辑</h4><p>照理合并操作符，放在一起就像这样：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .observeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
-
-<p><img src="/my_pictures/20180617/4.png"></p>
-<h3 id="一些技巧"><a href="#一些技巧" class="headerlink" title="一些技巧"></a>一些技巧</h3><hr>
-<h4 id="UI-线程运行异常"><a href="#UI-线程运行异常" class="headerlink" title="UI 线程运行异常"></a>UI 线程运行异常</h4><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .subscribe(<span class="comment">/** 与UI线程相关的逻辑 **/</span><span class="operator">/</span>);</span><br></pre></td></tr></table></figure>
-
-<p>很明显，这是错的。</p>
-<h4 id="保证逻辑运行在工作线程中"><a href="#保证逻辑运行在工作线程中" class="headerlink" title="保证逻辑运行在工作线程中"></a>保证逻辑运行在工作线程中</h4><p>如果存在以下代码片段：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line">    .observeOn(<span class="type">AndroidSchedulers</span>.mainThread())</span><br><span class="line"> </span><br><span class="line">    .flatMap(<span class="comment">/** 与UI线程无关的逻辑**/</span><span class="operator">/</span>)</span><br><span class="line"> </span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
-
-<p>请用以下代码替代：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(<span class="type">Schedulers</span>.newThread())</span><br><span class="line"> </span><br><span class="line">    .flatMap(<span class="comment">/** 与UI线程无关的逻辑**/</span><span class="operator">/</span>)</span><br><span class="line"> </span><br><span class="line">    .observeOn(<span class="type">AndroidSchedulers</span>.mainThread())</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
-
-<p>通过用第二段代码代替第一段，<code>.flatMap()</code> 操作符（或者在这一点的其他逻辑操作符）将运行在后台线程。这样做就不会阻塞 UI 线程，同时可以防患 ANR 或其他类似问题的发生。看起来有点像 <code>AsyncTask</code> 模式，尽可能的把逻辑放在的 <code>.doInBackground()</code> 中，而不是 <code>.onPostExecute()</code> 。</p>
-<h4 id="取决于更早的-subscribeOn"><a href="#取决于更早的-subscribeOn" class="headerlink" title="取决于更早的 .subscribeOn()"></a>取决于更早的 .subscribeOn()</h4><p>以下代码：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">Observable</span>.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">    .subscribeOn(thread1)</span><br><span class="line">    .subscribeOn(thread2)</span><br><span class="line">    .subscribe();</span><br></pre></td></tr></table></figure>
-
-<p>因为 <code>thread1</code> 的逻辑将会覆盖 <code>thread2</code>，所以 <code>Observable</code> 的创建和 <code>.subscribe()</code> 的逻辑处理都将运行在 <code>thread1</code> 中。因此，根本没有必要写多个 <code>.subscribeOn()</code> 操作符。</p>
-<h4 id="原文链接："><a href="#原文链接：" class="headerlink" title="原文链接："></a>原文链接：</h4><p><span class="exturl" data-url="aHR0cHM6Ly9sb3JlbnR6b3MuY29tL29ic2VydmUtaW4tdGhlLWNvcnJlY3QtdGhyZWFkLTE5MzliYjliYjlkMg==">Observe on the correct thread<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>文章翻译</category>
-      </categories>
-      <tags>
-        <tag>RxSwift</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Charles 如何对 HTTPS 进行抓包？</title>
     <url>/2018/06/21/20180621-Charles%20%E5%A6%82%E4%BD%95%E5%AF%B9%20HTTPS%E8%BF%9B%E8%A1%8C%E6%8A%93%E5%8C%85/</url>
     <content><![CDATA[<p>对 http 的抓包非常的简单，但是对 https 的抓包就有点麻烦了，主要麻烦在证书的安装与设置上。昨天由于有需要去抓https 的包，但是装好证书后，手机一直连不上，特此记录一下。</p>
@@ -4260,6 +4260,37 @@
       </tags>
   </entry>
   <entry>
+    <title>WKWebView 中注入 cookie</title>
+    <url>/2018/07/14/20180714-WKWebView%E4%B8%AD%E6%B3%A8%E5%85%A5cookie/</url>
+    <content><![CDATA[<p>在项目中，往往有这样的要求，用 API 进行登录之后在某个 <code>WKWebView</code> 的页面需要用 <code>cookie</code> 去验证身份（虽然我更喜欢用 <code>accesstoken</code> 去验证🙃）。<code>WKWebView</code> 是苹果官方建议的控件来替代老旧的 <code>UIWebView</code>。但是 <code>WKWebView</code> 的 <code>cookie</code> 无法共享 <code>NSHTTPCookieStorage</code>，所以这时候就需要我们自己去管理 <code>cookie</code>。（iOS 11 上新增了 <code>WKHTTPCookieStore</code> 来管理）</p>
+<p>首先我们先解析获取到的 <code>cookie</code></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 解析 cookie</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">analysisCookie</span>(<span class="params">response</span>: <span class="type">HTTPURLResponse</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> fields <span class="operator">=</span> response.allHeaderFields <span class="keyword">as?</span> [<span class="type">String</span>: <span class="type">String</span>],</span><br><span class="line">        <span class="keyword">let</span> url <span class="operator">=</span> response.url</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> cookies <span class="operator">=</span> <span class="type">HTTPCookie</span>.cookies(withResponseHeaderFields: fields,</span><br><span class="line">                                         for: url)</span><br><span class="line">        <span class="keyword">let</span> storage <span class="operator">=</span> <span class="type">HTTPCookieStorage</span>.shared</span><br><span class="line">        <span class="keyword">for</span> cookie <span class="keyword">in</span> cookies &#123;</span><br><span class="line">            <span class="comment">/// 将 cookie 存入本地</span></span><br><span class="line">            storage.setCookie(cookie)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>在 <code>WKWebView</code> 中注入 <code>cookie</code> 有两种方式，第一种，通过请求带过去</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> url <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> reqURL <span class="operator">=</span> <span class="type">URLRequest</span>(url: url)</span><br><span class="line">    <span class="keyword">let</span> cookie <span class="operator">=</span> (<span class="type">HTTPCookieStorage</span>.shared.cookies <span class="operator">??</span> []).strCookie</span><br><span class="line">    reqURL.addValue(cookie, forHTTPHeaderField: <span class="string">&quot;cookie&quot;</span>)</span><br><span class="line">    webView.load(reqURL)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二种方式，<code>js</code> 注入</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">createWeb</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> config <span class="operator">=</span> <span class="type">WKWebViewConfiguration</span>()</span><br><span class="line">    <span class="keyword">let</span> cookie <span class="operator">=</span> (<span class="type">HTTPCookieStorage</span>.shared.cookies <span class="operator">??</span> []).userScript</span><br><span class="line">    <span class="keyword">let</span> user <span class="operator">=</span> <span class="type">WKUserContentController</span>()</span><br><span class="line">    <span class="keyword">let</span> cookieScript <span class="operator">=</span> <span class="type">WKUserScript</span>(source: cookie,</span><br><span class="line">                                    injectionTime: .atDocumentStart,</span><br><span class="line">                                    forMainFrameOnly: <span class="literal">false</span>)</span><br><span class="line">    user.addUserScript(cookieScript)</span><br><span class="line">    config.userContentController <span class="operator">=</span> user</span><br><span class="line">    webView <span class="operator">=</span> <span class="type">WKWebView</span>(frame: <span class="keyword">self</span>.view.bounds, configuration: config)</span><br><span class="line">    <span class="keyword">self</span>.view.addSubview(webView)</span><br><span class="line">    webView.load(requestURL)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>moya 的用法</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> headers: [<span class="type">String</span> : <span class="type">String</span>]<span class="operator">?</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> .login, .checkUpdate, .idCodeImg:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="type">HTTPCookieStorage</span>.shared.cookies <span class="operator">??</span> []).moya</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们需要将 <code>HTTPCookie</code> 类型转换一下，我们给 <code>Array</code> 添加几个扩展</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Array</span> <span class="keyword">where</span> <span class="type">Element</span>: <span class="type">HTTPCookie</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回 moya 使用格式 cookie</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> moya: [<span class="type">String</span>: <span class="type">String</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> cookie: [<span class="type">String</span>: <span class="type">String</span>] <span class="operator">=</span> [:]</span><br><span class="line">        cookie[<span class="string">&quot;Cookie&quot;</span>] <span class="operator">=</span> <span class="keyword">self</span>.map &#123; <span class="string">&quot;<span class="subst">\(<span class="variable">$0</span>.name)</span>=<span class="subst">\(<span class="variable">$0</span>.value)</span>&quot;</span> &#125;.joined(separator: <span class="string">&quot;;&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> cookie</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回 js 注入的字符串格式 cookie</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> userScript: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.map &#123; <span class="string">&quot;document.cookie=&#x27;<span class="subst">\(<span class="variable">$0</span>.name)</span>=<span class="subst">\(<span class="variable">$0</span>.value)</span>&#x27;&quot;</span> &#125;.joined(separator: <span class="string">&quot;;&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回字符串类型 cookie</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> strCookie: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.map &#123; <span class="string">&quot;<span class="subst">\(<span class="variable">$0</span>.name)</span>=<span class="subst">\(<span class="variable">$0</span>.value)</span>&quot;</span> &#125;.joined(separator: <span class="string">&quot;;&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在我的项目中通过第二种方式实现了验证成功。</p>
+]]></content>
+      <categories>
+        <category>工作日志</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>处理 initialize() 的弃用【译】</title>
     <url>/2018/07/08/20180708-%E5%A4%84%E7%90%86%20initialize()%20%E7%9A%84%E5%BC%83%E7%94%A8%E3%80%90%E8%AF%91%E3%80%91/</url>
     <content><![CDATA[<p>在将项目迁移到 Swift 3.1 后，我受到了几个警告的欢迎。它们似乎都没有特别难以修复，只是除了这个之外：</p>
@@ -4294,37 +4325,6 @@
       </categories>
       <tags>
         <tag>Swift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>WKWebView 中注入 cookie</title>
-    <url>/2018/07/14/20180714-WKWebView%E4%B8%AD%E6%B3%A8%E5%85%A5cookie/</url>
-    <content><![CDATA[<p>在项目中，往往有这样的要求，用 API 进行登录之后在某个 <code>WKWebView</code> 的页面需要用 <code>cookie</code> 去验证身份（虽然我更喜欢用 <code>accesstoken</code> 去验证🙃）。<code>WKWebView</code> 是苹果官方建议的控件来替代老旧的 <code>UIWebView</code>。但是 <code>WKWebView</code> 的 <code>cookie</code> 无法共享 <code>NSHTTPCookieStorage</code>，所以这时候就需要我们自己去管理 <code>cookie</code>。（iOS 11 上新增了 <code>WKHTTPCookieStore</code> 来管理）</p>
-<p>首先我们先解析获取到的 <code>cookie</code></p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 解析 cookie</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">analysisCookie</span>(<span class="params">response</span>: <span class="type">HTTPURLResponse</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> fields <span class="operator">=</span> response.allHeaderFields <span class="keyword">as?</span> [<span class="type">String</span>: <span class="type">String</span>],</span><br><span class="line">        <span class="keyword">let</span> url <span class="operator">=</span> response.url</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> cookies <span class="operator">=</span> <span class="type">HTTPCookie</span>.cookies(withResponseHeaderFields: fields,</span><br><span class="line">                                         for: url)</span><br><span class="line">        <span class="keyword">let</span> storage <span class="operator">=</span> <span class="type">HTTPCookieStorage</span>.shared</span><br><span class="line">        <span class="keyword">for</span> cookie <span class="keyword">in</span> cookies &#123;</span><br><span class="line">            <span class="comment">/// 将 cookie 存入本地</span></span><br><span class="line">            storage.setCookie(cookie)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>在 <code>WKWebView</code> 中注入 <code>cookie</code> 有两种方式，第一种，通过请求带过去</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> url <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> reqURL <span class="operator">=</span> <span class="type">URLRequest</span>(url: url)</span><br><span class="line">    <span class="keyword">let</span> cookie <span class="operator">=</span> (<span class="type">HTTPCookieStorage</span>.shared.cookies <span class="operator">??</span> []).strCookie</span><br><span class="line">    reqURL.addValue(cookie, forHTTPHeaderField: <span class="string">&quot;cookie&quot;</span>)</span><br><span class="line">    webView.load(reqURL)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第二种方式，<code>js</code> 注入</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">createWeb</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> config <span class="operator">=</span> <span class="type">WKWebViewConfiguration</span>()</span><br><span class="line">    <span class="keyword">let</span> cookie <span class="operator">=</span> (<span class="type">HTTPCookieStorage</span>.shared.cookies <span class="operator">??</span> []).userScript</span><br><span class="line">    <span class="keyword">let</span> user <span class="operator">=</span> <span class="type">WKUserContentController</span>()</span><br><span class="line">    <span class="keyword">let</span> cookieScript <span class="operator">=</span> <span class="type">WKUserScript</span>(source: cookie,</span><br><span class="line">                                    injectionTime: .atDocumentStart,</span><br><span class="line">                                    forMainFrameOnly: <span class="literal">false</span>)</span><br><span class="line">    user.addUserScript(cookieScript)</span><br><span class="line">    config.userContentController <span class="operator">=</span> user</span><br><span class="line">    webView <span class="operator">=</span> <span class="type">WKWebView</span>(frame: <span class="keyword">self</span>.view.bounds, configuration: config)</span><br><span class="line">    <span class="keyword">self</span>.view.addSubview(webView)</span><br><span class="line">    webView.load(requestURL)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>moya 的用法</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> headers: [<span class="type">String</span> : <span class="type">String</span>]<span class="operator">?</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> .login, .checkUpdate, .idCodeImg:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="type">HTTPCookieStorage</span>.shared.cookies <span class="operator">??</span> []).moya</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里我们需要将 <code>HTTPCookie</code> 类型转换一下，我们给 <code>Array</code> 添加几个扩展</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Array</span> <span class="keyword">where</span> <span class="type">Element</span>: <span class="type">HTTPCookie</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回 moya 使用格式 cookie</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> moya: [<span class="type">String</span>: <span class="type">String</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> cookie: [<span class="type">String</span>: <span class="type">String</span>] <span class="operator">=</span> [:]</span><br><span class="line">        cookie[<span class="string">&quot;Cookie&quot;</span>] <span class="operator">=</span> <span class="keyword">self</span>.map &#123; <span class="string">&quot;<span class="subst">\(<span class="variable">$0</span>.name)</span>=<span class="subst">\(<span class="variable">$0</span>.value)</span>&quot;</span> &#125;.joined(separator: <span class="string">&quot;;&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> cookie</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回 js 注入的字符串格式 cookie</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> userScript: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.map &#123; <span class="string">&quot;document.cookie=&#x27;<span class="subst">\(<span class="variable">$0</span>.name)</span>=<span class="subst">\(<span class="variable">$0</span>.value)</span>&#x27;&quot;</span> &#125;.joined(separator: <span class="string">&quot;;&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回字符串类型 cookie</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> strCookie: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.map &#123; <span class="string">&quot;<span class="subst">\(<span class="variable">$0</span>.name)</span>=<span class="subst">\(<span class="variable">$0</span>.value)</span>&quot;</span> &#125;.joined(separator: <span class="string">&quot;;&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在我的项目中通过第二种方式实现了验证成功。</p>
-]]></content>
-      <categories>
-        <category>工作日志</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-        <tag>iOS</tag>
       </tags>
   </entry>
   <entry>
@@ -6453,6 +6453,28 @@
       </tags>
   </entry>
   <entry>
+    <title>代理 Xcode SPM</title>
+    <url>/2023/03/17/20230317-%E4%BB%A3%E7%90%86%20Xcode%20SPM/</url>
+    <content><![CDATA[<p>由于网络问题，我们在使用 Xcode SPM 管理项目依赖库的时候，<code>clone</code>依赖库那速度真的是拉的一泻千里💩。所以我们需要将 SPM 下载依赖库的过程交给我们的代理去处理。首先你需要一个科学上网工具，无论是客户端还是路由器刷机，此文章的例子都是基于本人网络环境 <code>Surge</code>，其他的代理方式需自行研究。</p>
+<span id="more"></span>
+
+<h2 id="设置终端代理"><a href="#设置终端代理" class="headerlink" title="设置终端代理"></a>设置终端代理</h2><p><code>Surge</code>中按快捷键 <code>⌘ + c</code>复制终端代理命令，并终端中执行命令（<code>ClashX</code>客户端类似）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> https_proxy=http://127.0.0.1:6152;<span class="built_in">export</span> http_proxy=http://127.0.0.1:6152;<span class="built_in">export</span> all_proxy=socks5://127.0.0.1:6153</span><br></pre></td></tr></table></figure>
+
+<h2 id="执行命令拉取依赖"><a href="#执行命令拉取依赖" class="headerlink" title="执行命令拉取依赖"></a>执行命令拉取依赖</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xcodebuild -resolvePackageDependencies -scmProvider system</span><br><span class="line"><span class="comment"># 或者输入 project</span></span><br><span class="line">xcodebuild -resolvePackageDependencies -scmProvider system -project YOURPROJECT.xcodeproj</span><br><span class="line"><span class="comment"># 如果是 workspace 输入 -list</span></span><br><span class="line">xcodebuild -resolvePackageDependencies -scmProvider system -list -workspace YOURPROJECT.xcworkspace</span><br></pre></td></tr></table></figure>
+
+<p>等命令执行完毕之后我们打开工程，此时可以看到依赖库已经拉取完毕，直接执行 <code>build</code>或<code>run</code>。</p>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>科学上网</tag>
+        <tag>Xcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 Homebrew 管理 Ruby</title>
     <url>/2023/03/27/20230327-%E4%BD%BF%E7%94%A8%20Homebrew%20%E7%AE%A1%E7%90%86%20Ruby/</url>
     <content><![CDATA[<p>macOS 上的 Ruby 环境管理我相信是大多数软件开发都会遇到的一个问题，如果我们需要同时管理多个 Ruby 版本的话，有 <code>rbenv</code> 和 <code>rvm</code> 的方式，具体的操作网上已有大量的文章供我们学习，本文不再做赘述。今天我们来看一下如何使用 <code>Homebrew</code> 来管理我们的 Ruby。</p>
@@ -6514,28 +6536,6 @@
       </categories>
       <tags>
         <tag>环境配置</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>代理 Xcode SPM</title>
-    <url>/2023/03/17/20230317-%E4%BB%A3%E7%90%86%20Xcode%20SPM/</url>
-    <content><![CDATA[<p>由于网络问题，我们在使用 Xcode SPM 管理项目依赖库的时候，<code>clone</code>依赖库那速度真的是拉的一泻千里💩。所以我们需要将 SPM 下载依赖库的过程交给我们的代理去处理。首先你需要一个科学上网工具，无论是客户端还是路由器刷机，此文章的例子都是基于本人网络环境 <code>Surge</code>，其他的代理方式需自行研究。</p>
-<span id="more"></span>
-
-<h2 id="设置终端代理"><a href="#设置终端代理" class="headerlink" title="设置终端代理"></a>设置终端代理</h2><p><code>Surge</code>中按快捷键 <code>⌘ + c</code>复制终端代理命令，并终端中执行命令（<code>ClashX</code>客户端类似）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> https_proxy=http://127.0.0.1:6152;<span class="built_in">export</span> http_proxy=http://127.0.0.1:6152;<span class="built_in">export</span> all_proxy=socks5://127.0.0.1:6153</span><br></pre></td></tr></table></figure>
-
-<h2 id="执行命令拉取依赖"><a href="#执行命令拉取依赖" class="headerlink" title="执行命令拉取依赖"></a>执行命令拉取依赖</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xcodebuild -resolvePackageDependencies -scmProvider system</span><br><span class="line"><span class="comment"># 或者输入 project</span></span><br><span class="line">xcodebuild -resolvePackageDependencies -scmProvider system -project YOURPROJECT.xcodeproj</span><br><span class="line"><span class="comment"># 如果是 workspace 输入 -list</span></span><br><span class="line">xcodebuild -resolvePackageDependencies -scmProvider system -list -workspace YOURPROJECT.xcworkspace</span><br></pre></td></tr></table></figure>
-
-<p>等命令执行完毕之后我们打开工程，此时可以看到依赖库已经拉取完毕，直接执行 <code>build</code>或<code>run</code>。</p>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-        <tag>科学上网</tag>
-        <tag>Xcode</tag>
       </tags>
   </entry>
   <entry>
@@ -8341,118 +8341,6 @@
       </tags>
   </entry>
   <entry>
-    <title>常用 Android Debug Bridge (ADB) 命令指南</title>
-    <url>/2024/05/24/20240524-%E5%B8%B8%E7%94%A8%20Android%20Debug%20Bridge%20(ADB)%20%E5%91%BD%E4%BB%A4%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<p>Android Debug Bridge (adb) 是一个功能强大的工具，广泛应用于安卓开发、调试和设备管理。本文将为大家介绍一些常用且实用的 adb 命令，帮助你更好地利用这个工具来提高工作效率。</p>
-<span id="more"></span>
-
-<h2 id="设备和连接管理"><a href="#设备和连接管理" class="headerlink" title="设备和连接管理"></a>设备和连接管理</h2><h3 id="列出连接的设备"><a href="#列出连接的设备" class="headerlink" title="列出连接的设备"></a>列出连接的设备</h3><p>要查看当前连接的设备，可以使用以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb devices</span><br></pre></td></tr></table></figure>
-
-<p>这将列出所有当前连接的设备和模拟器实例。</p>
-<h3 id="指定设备"><a href="#指定设备" class="headerlink" title="指定设备"></a>指定设备</h3><p>在多设备环境中，可以通过序列号指定目标设备来执行命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb -s &lt;device_serial&gt; &lt;<span class="built_in">command</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>例如，安装应用到特定设备：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb -s emulator-5554 install app.apk</span><br></pre></td></tr></table></figure>
-
-<h3 id="重启设备"><a href="#重启设备" class="headerlink" title="重启设备"></a>重启设备</h3><p>重启设备是常见的操作，使用以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb reboot</span><br></pre></td></tr></table></figure>
-
-<h3 id="重启到引导加载程序"><a href="#重启到引导加载程序" class="headerlink" title="重启到引导加载程序"></a>重启到引导加载程序</h3><p>如果需要进入引导加载程序，可以使用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb reboot bootloader</span><br></pre></td></tr></table></figure>
-
-<h3 id="重启到恢复模式"><a href="#重启到恢复模式" class="headerlink" title="重启到恢复模式"></a>重启到恢复模式</h3><p>进入恢复模式的命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb reboot recovery</span><br></pre></td></tr></table></figure>
-
-<h2 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h2><h3 id="安装应用"><a href="#安装应用" class="headerlink" title="安装应用"></a>安装应用</h3><p>安装 APK 文件到设备：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb install &lt;path_to_apk&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="卸载应用"><a href="#卸载应用" class="headerlink" title="卸载应用"></a>卸载应用</h3><p>从设备中卸载指定应用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb uninstall &lt;package_name&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="列出已安装的应用"><a href="#列出已安装的应用" class="headerlink" title="列出已安装的应用"></a>列出已安装的应用</h3><p>查看设备上所有已安装的应用包：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell pm list packages</span><br></pre></td></tr></table></figure>
-
-<h3 id="清除应用数据"><a href="#清除应用数据" class="headerlink" title="清除应用数据"></a>清除应用数据</h3><p>清除应用的所有数据：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell pm clear &lt;package_name&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="启动应用"><a href="#启动应用" class="headerlink" title="启动应用"></a>启动应用</h3><p>通过 monkey 命令启动应用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell monkey -p &lt;package_name&gt; -c android.intent.category.LAUNCHER 1</span><br></pre></td></tr></table></figure>
-
-<h2 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h2><h3 id="推送文件到设备"><a href="#推送文件到设备" class="headerlink" title="推送文件到设备"></a>推送文件到设备</h3><p>将文件从本地机器推送到设备：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb push &lt;local_path&gt; &lt;remote_path&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="从设备拉取文件"><a href="#从设备拉取文件" class="headerlink" title="从设备拉取文件"></a>从设备拉取文件</h3><p>从设备上拉取文件到本地：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb pull &lt;remote_path&gt; &lt;local_path&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="调试和日志"><a href="#调试和日志" class="headerlink" title="调试和日志"></a>调试和日志</h2><h3 id="查看设备日志"><a href="#查看设备日志" class="headerlink" title="查看设备日志"></a>查看设备日志</h3><p>查看设备运行的实时日志：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb logcat</span><br></pre></td></tr></table></figure>
-
-<h3 id="筛选日志"><a href="#筛选日志" class="headerlink" title="筛选日志"></a>筛选日志</h3><p>通过标签和优先级筛选日志输出：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb logcat -s &lt;tag&gt;:&lt;priority&gt;</span><br></pre></td></tr></table></figure>
-
-<p>例如，筛选 tag 为 MyAppTag 的 debug 日志：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb logcat -s MyAppTag:D</span><br></pre></td></tr></table></figure>
-
-<h3 id="转储系统状态"><a href="#转储系统状态" class="headerlink" title="转储系统状态"></a>转储系统状态</h3><p>获取设备的系统状态信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell dumpsys</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取设备信息"><a href="#获取设备信息" class="headerlink" title="获取设备信息"></a>获取设备信息</h3><p>查看设备属性信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell getprop</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取特定的应用域名首选项设置"><a href="#获取特定的应用域名首选项设置" class="headerlink" title="获取特定的应用域名首选项设置"></a>获取特定的应用域名首选项设置</h3><p>要查看某个设备上设置的域名首选项应用，可以使用以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell dumpsys package domain-preferred-apps</span><br></pre></td></tr></table></figure>
-
-<p>此命令列出系统中由用户或系统定义的哪些应用程序被设置为首选处理某些网络域名的请求。</p>
-<h2 id="模拟用户输入"><a href="#模拟用户输入" class="headerlink" title="模拟用户输入"></a>模拟用户输入</h2><h3 id="模拟按键事件"><a href="#模拟按键事件" class="headerlink" title="模拟按键事件"></a>模拟按键事件</h3><p>模拟按键事件（例如返回键， Home 键等）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell input keyevent &lt;keycode&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="模拟触摸事件"><a href="#模拟触摸事件" class="headerlink" title="模拟触摸事件"></a>模拟触摸事件</h3><p>模拟屏幕上的触摸动作：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell input tap &lt;x&gt; &lt;y&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="模拟文本输入"><a href="#模拟文本输入" class="headerlink" title="模拟文本输入"></a>模拟文本输入</h3><p>模拟输入文本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell input text &lt;string&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="网络和端口转发"><a href="#网络和端口转发" class="headerlink" title="网络和端口转发"></a>网络和端口转发</h2><h3 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h3><p>在设备和本地机器之间进行端口转发：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb forward &lt;<span class="built_in">local</span>&gt; &lt;remote&gt;</span><br></pre></td></tr></table></figure>
-
-<p>例如，将本地 6100 端口转发到设备的 7100 端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb forward tcp:6100 tcp:7100</span><br></pre></td></tr></table></figure>
-
-<h3 id="通过无线连接设备"><a href="#通过无线连接设备" class="headerlink" title="通过无线连接设备"></a>通过无线连接设备</h3><p>通过 Wi-Fi 连接设备，首先将设备设置为 TCP&#x2F;IP 模式：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb tcpip 5555</span><br><span class="line">$ adb connect &lt;device_ip&gt;:5555</span><br></pre></td></tr></table></figure>
-
-<h2 id="截图和屏幕录制"><a href="#截图和屏幕录制" class="headerlink" title="截图和屏幕录制"></a>截图和屏幕录制</h2><h3 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h3><p>截取设备屏幕并保存到本地：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell screencap /sdcard/screenshot.png</span><br><span class="line">$ adb pull /sdcard/screenshot.png</span><br></pre></td></tr></table></figure>
-
-<h3 id="屏幕录制"><a href="#屏幕录制" class="headerlink" title="屏幕录制"></a>屏幕录制</h3><p>录制设备屏幕并保存到本地：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell screenrecord /sdcard/screenrecord.mp4</span><br><span class="line">$ adb pull /sdcard/screenrecord.mp4</span><br></pre></td></tr></table></figure>
-
-<h2 id="特殊场景命令"><a href="#特殊场景命令" class="headerlink" title="特殊场景命令"></a>特殊场景命令</h2><h3 id="启动浏览器打开特定-URL"><a href="#启动浏览器打开特定-URL" class="headerlink" title="启动浏览器打开特定 URL"></a>启动浏览器打开特定 URL</h3><p>若希望直接在设备上启动浏览器并打开特定 URL，可以使用以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb -s &lt;devices-number&gt; shell am start -a android.intent.action.VIEW \</span><br><span class="line">    -c android.intent.category.BROWSABLE \</span><br><span class="line">    -d <span class="string">&quot;https://xxxxx&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里，<code>&lt;devices-number&gt;</code> 是设备序列号，<code>https://xxxxx</code> 是要打开的 URL。你可以依据实际情况替换这部分内容。</p>
-<h3 id="关闭模拟器"><a href="#关闭模拟器" class="headerlink" title="关闭模拟器"></a>关闭模拟器</h3><p>快速关闭指定的模拟器实例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb -s emulator-5554 emu <span class="built_in">kill</span></span><br></pre></td></tr></table></figure>
-
-<p>此命令用于关闭端口号为 emulator-5554 的安卓模拟器。</p>
-<h2 id="其他有用的命令"><a href="#其他有用的命令" class="headerlink" title="其他有用的命令"></a>其他有用的命令</h2><h3 id="显示设备信息"><a href="#显示设备信息" class="headerlink" title="显示设备信息"></a>显示设备信息</h3><p>获取设备的电池状态信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell dumpsys battery</span><br></pre></td></tr></table></figure>
-
-<h3 id="列出所有系统属性"><a href="#列出所有系统属性" class="headerlink" title="列出所有系统属性"></a>列出所有系统属性</h3><p>查看设备的所有系统属性：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell getprop</span><br></pre></td></tr></table></figure>
-
-<p>通过掌握以上这些 adb 命令，你可以更高效地进行安卓应用的开发、调试和设备管理。不论是日常操作还是复杂的调试任务，adb 都能提供极大的帮助。希望本文能为你的安卓开发之旅提供坚实的支持。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>adb</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>TypeScript学习之函数</title>
     <url>/2024/02/07/20240207-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>函数是任何应用程序的基本构建块，无论它们是本地函数、从另一个模块导入的函数，还是类中的方法。 它们也是值，就像其他值一样，TypeScript 有很多方法来描述如何调用函数。 让我们学习如何编写描述函数的类型。</p>
@@ -8602,6 +8490,118 @@
       <tags>
         <tag>JavaScript</tag>
         <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常用 Android Debug Bridge (ADB) 命令指南</title>
+    <url>/2024/05/24/20240524-%E5%B8%B8%E7%94%A8%20Android%20Debug%20Bridge%20(ADB)%20%E5%91%BD%E4%BB%A4%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<p>Android Debug Bridge (adb) 是一个功能强大的工具，广泛应用于安卓开发、调试和设备管理。本文将为大家介绍一些常用且实用的 adb 命令，帮助你更好地利用这个工具来提高工作效率。</p>
+<span id="more"></span>
+
+<h2 id="设备和连接管理"><a href="#设备和连接管理" class="headerlink" title="设备和连接管理"></a>设备和连接管理</h2><h3 id="列出连接的设备"><a href="#列出连接的设备" class="headerlink" title="列出连接的设备"></a>列出连接的设备</h3><p>要查看当前连接的设备，可以使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb devices</span><br></pre></td></tr></table></figure>
+
+<p>这将列出所有当前连接的设备和模拟器实例。</p>
+<h3 id="指定设备"><a href="#指定设备" class="headerlink" title="指定设备"></a>指定设备</h3><p>在多设备环境中，可以通过序列号指定目标设备来执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb -s &lt;device_serial&gt; &lt;<span class="built_in">command</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>例如，安装应用到特定设备：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb -s emulator-5554 install app.apk</span><br></pre></td></tr></table></figure>
+
+<h3 id="重启设备"><a href="#重启设备" class="headerlink" title="重启设备"></a>重启设备</h3><p>重启设备是常见的操作，使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb reboot</span><br></pre></td></tr></table></figure>
+
+<h3 id="重启到引导加载程序"><a href="#重启到引导加载程序" class="headerlink" title="重启到引导加载程序"></a>重启到引导加载程序</h3><p>如果需要进入引导加载程序，可以使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb reboot bootloader</span><br></pre></td></tr></table></figure>
+
+<h3 id="重启到恢复模式"><a href="#重启到恢复模式" class="headerlink" title="重启到恢复模式"></a>重启到恢复模式</h3><p>进入恢复模式的命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb reboot recovery</span><br></pre></td></tr></table></figure>
+
+<h2 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h2><h3 id="安装应用"><a href="#安装应用" class="headerlink" title="安装应用"></a>安装应用</h3><p>安装 APK 文件到设备：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb install &lt;path_to_apk&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="卸载应用"><a href="#卸载应用" class="headerlink" title="卸载应用"></a>卸载应用</h3><p>从设备中卸载指定应用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb uninstall &lt;package_name&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="列出已安装的应用"><a href="#列出已安装的应用" class="headerlink" title="列出已安装的应用"></a>列出已安装的应用</h3><p>查看设备上所有已安装的应用包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell pm list packages</span><br></pre></td></tr></table></figure>
+
+<h3 id="清除应用数据"><a href="#清除应用数据" class="headerlink" title="清除应用数据"></a>清除应用数据</h3><p>清除应用的所有数据：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell pm clear &lt;package_name&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动应用"><a href="#启动应用" class="headerlink" title="启动应用"></a>启动应用</h3><p>通过 monkey 命令启动应用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell monkey -p &lt;package_name&gt; -c android.intent.category.LAUNCHER 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h2><h3 id="推送文件到设备"><a href="#推送文件到设备" class="headerlink" title="推送文件到设备"></a>推送文件到设备</h3><p>将文件从本地机器推送到设备：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb push &lt;local_path&gt; &lt;remote_path&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="从设备拉取文件"><a href="#从设备拉取文件" class="headerlink" title="从设备拉取文件"></a>从设备拉取文件</h3><p>从设备上拉取文件到本地：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb pull &lt;remote_path&gt; &lt;local_path&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="调试和日志"><a href="#调试和日志" class="headerlink" title="调试和日志"></a>调试和日志</h2><h3 id="查看设备日志"><a href="#查看设备日志" class="headerlink" title="查看设备日志"></a>查看设备日志</h3><p>查看设备运行的实时日志：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb logcat</span><br></pre></td></tr></table></figure>
+
+<h3 id="筛选日志"><a href="#筛选日志" class="headerlink" title="筛选日志"></a>筛选日志</h3><p>通过标签和优先级筛选日志输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb logcat -s &lt;tag&gt;:&lt;priority&gt;</span><br></pre></td></tr></table></figure>
+
+<p>例如，筛选 tag 为 MyAppTag 的 debug 日志：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb logcat -s MyAppTag:D</span><br></pre></td></tr></table></figure>
+
+<h3 id="转储系统状态"><a href="#转储系统状态" class="headerlink" title="转储系统状态"></a>转储系统状态</h3><p>获取设备的系统状态信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell dumpsys</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取设备信息"><a href="#获取设备信息" class="headerlink" title="获取设备信息"></a>获取设备信息</h3><p>查看设备属性信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell getprop</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取特定的应用域名首选项设置"><a href="#获取特定的应用域名首选项设置" class="headerlink" title="获取特定的应用域名首选项设置"></a>获取特定的应用域名首选项设置</h3><p>要查看某个设备上设置的域名首选项应用，可以使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell dumpsys package domain-preferred-apps</span><br></pre></td></tr></table></figure>
+
+<p>此命令列出系统中由用户或系统定义的哪些应用程序被设置为首选处理某些网络域名的请求。</p>
+<h2 id="模拟用户输入"><a href="#模拟用户输入" class="headerlink" title="模拟用户输入"></a>模拟用户输入</h2><h3 id="模拟按键事件"><a href="#模拟按键事件" class="headerlink" title="模拟按键事件"></a>模拟按键事件</h3><p>模拟按键事件（例如返回键， Home 键等）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell input keyevent &lt;keycode&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="模拟触摸事件"><a href="#模拟触摸事件" class="headerlink" title="模拟触摸事件"></a>模拟触摸事件</h3><p>模拟屏幕上的触摸动作：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell input tap &lt;x&gt; &lt;y&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="模拟文本输入"><a href="#模拟文本输入" class="headerlink" title="模拟文本输入"></a>模拟文本输入</h3><p>模拟输入文本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell input text &lt;string&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="网络和端口转发"><a href="#网络和端口转发" class="headerlink" title="网络和端口转发"></a>网络和端口转发</h2><h3 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h3><p>在设备和本地机器之间进行端口转发：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb forward &lt;<span class="built_in">local</span>&gt; &lt;remote&gt;</span><br></pre></td></tr></table></figure>
+
+<p>例如，将本地 6100 端口转发到设备的 7100 端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb forward tcp:6100 tcp:7100</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过无线连接设备"><a href="#通过无线连接设备" class="headerlink" title="通过无线连接设备"></a>通过无线连接设备</h3><p>通过 Wi-Fi 连接设备，首先将设备设置为 TCP&#x2F;IP 模式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb tcpip 5555</span><br><span class="line">$ adb connect &lt;device_ip&gt;:5555</span><br></pre></td></tr></table></figure>
+
+<h2 id="截图和屏幕录制"><a href="#截图和屏幕录制" class="headerlink" title="截图和屏幕录制"></a>截图和屏幕录制</h2><h3 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h3><p>截取设备屏幕并保存到本地：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell screencap /sdcard/screenshot.png</span><br><span class="line">$ adb pull /sdcard/screenshot.png</span><br></pre></td></tr></table></figure>
+
+<h3 id="屏幕录制"><a href="#屏幕录制" class="headerlink" title="屏幕录制"></a>屏幕录制</h3><p>录制设备屏幕并保存到本地：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell screenrecord /sdcard/screenrecord.mp4</span><br><span class="line">$ adb pull /sdcard/screenrecord.mp4</span><br></pre></td></tr></table></figure>
+
+<h2 id="特殊场景命令"><a href="#特殊场景命令" class="headerlink" title="特殊场景命令"></a>特殊场景命令</h2><h3 id="启动浏览器打开特定-URL"><a href="#启动浏览器打开特定-URL" class="headerlink" title="启动浏览器打开特定 URL"></a>启动浏览器打开特定 URL</h3><p>若希望直接在设备上启动浏览器并打开特定 URL，可以使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb -s &lt;devices-number&gt; shell am start -a android.intent.action.VIEW \</span><br><span class="line">    -c android.intent.category.BROWSABLE \</span><br><span class="line">    -d <span class="string">&quot;https://xxxxx&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里，<code>&lt;devices-number&gt;</code> 是设备序列号，<code>https://xxxxx</code> 是要打开的 URL。你可以依据实际情况替换这部分内容。</p>
+<h3 id="关闭模拟器"><a href="#关闭模拟器" class="headerlink" title="关闭模拟器"></a>关闭模拟器</h3><p>快速关闭指定的模拟器实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb -s emulator-5554 emu <span class="built_in">kill</span></span><br></pre></td></tr></table></figure>
+
+<p>此命令用于关闭端口号为 emulator-5554 的安卓模拟器。</p>
+<h2 id="其他有用的命令"><a href="#其他有用的命令" class="headerlink" title="其他有用的命令"></a>其他有用的命令</h2><h3 id="显示设备信息"><a href="#显示设备信息" class="headerlink" title="显示设备信息"></a>显示设备信息</h3><p>获取设备的电池状态信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell dumpsys battery</span><br></pre></td></tr></table></figure>
+
+<h3 id="列出所有系统属性"><a href="#列出所有系统属性" class="headerlink" title="列出所有系统属性"></a>列出所有系统属性</h3><p>查看设备的所有系统属性：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb shell getprop</span><br></pre></td></tr></table></figure>
+
+<p>通过掌握以上这些 adb 命令，你可以更高效地进行安卓应用的开发、调试和设备管理。不论是日常操作还是复杂的调试任务，adb 都能提供极大的帮助。希望本文能为你的安卓开发之旅提供坚实的支持。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>adb</tag>
       </tags>
   </entry>
   <entry>
@@ -9052,6 +9052,63 @@
 
 <h3 id="处理最后的进位："><a href="#处理最后的进位：" class="headerlink" title="处理最后的进位："></a>处理最后的进位：</h3><p>循环结束后，可能最后一次运算后仍有进位（例如相加得到的和大于等于 10）。</p>
 <p>如果 ⁠<code>carry</code> 大于 0，则新建一个节点保存进位，并将其接入链表末尾。</p>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法：无重复字符的最长子串</title>
+    <url>/2025/02/20/20250220-%E7%AE%97%E6%B3%95%EF%BC%9A%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/</url>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长 子串</strong> 的长度。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: s = &quot;abcabcbb&quot;</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: s = &quot;bbbbb&quot;</span><br><span class="line">输出: 1</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: s = &quot;pwwkew&quot;</span><br><span class="line">输出: 3</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。</span><br><span class="line">     请注意，你的答案必须是 子串 的长度，&quot;pwke&quot; 是一个子序列，不是子串。</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>0 &lt;= s.length &lt;= 5 * 104</code></li>
+<li><code>s</code> 由英文字母、数字、符号和空格组成</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">lengthOfLongestSubstring</span>(<span class="keyword">_</span> <span class="params">s</span>: <span class="type">String</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> maxLength <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">  <span class="keyword">var</span> left <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">  <span class="keyword">var</span> dict <span class="operator">=</span> [<span class="type">Character</span>: <span class="type">Int</span>]()</span><br><span class="line">  <span class="keyword">for</span> (i, char) <span class="keyword">in</span> s.enumerated() &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> index <span class="operator">=</span> dict[char] &#123;</span><br><span class="line">      left <span class="operator">=</span> <span class="built_in">max</span>(left, index <span class="operator">+</span> <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    dict [char] <span class="operator">=</span> i</span><br><span class="line">    maxLength <span class="operator">=</span> <span class="built_in">max</span>(maxLength, i <span class="operator">-</span> left <span class="operator">+</span> <span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> maxLength</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><ol>
+<li><strong>滑动窗口的思想</strong></li>
+</ol>
+<p>我们使用滑动窗口方法维护一个当前不含重复字符的子串。通过两个指针（这里用变量 <code>left</code> 表示窗口左边界，<code>i</code> 表示当前字符的索引），不断更新窗口的范围。</p>
+<ol start="2">
+<li><strong>使用哈希字典记录字符位置</strong></li>
+</ol>
+<p>定义一个字典 <code>dict</code> 用来存储每个字符最后一次出现的位置。这样，当遇到重复字符时，就可以根据该字符上一次出现的位置，决定如何移动窗口左边界。</p>
+<ol start="3">
+<li><strong>更新窗口边界</strong></li>
+</ol>
+<p>对于每个遍历到的字符 <code>char</code>：</p>
+<ul>
+<li><p>如果该字符已经存在于字典中，则说明窗口内出现了重复字符。此时更新 <code>left</code> 为 <code>index + 1</code> 和当前 <code>left</code> 的较大值，确保窗口内不包含重复字符。</p>
+</li>
+<li><p>然后更新 <code>dict[char]</code> 为当前的索引 <code>i</code>。</p>
+</li>
+</ul>
+<ol start="4">
+<li><strong>计算最长子串长度</strong></li>
+</ol>
+<p>每次移动窗口后，通过 <code>i - left + 1</code> 计算当前窗口的长度，并与当前记录的最大长度进行比较，更新最大值。</p>
+<ol start="5">
+<li><strong>时间复杂度与空间复杂度</strong></li>
+</ol>
+<p>由于我们只需遍历一次字符串，并在遍历过程中通过哈希表进行常数时间的查找操作，因此算法的时间复杂度为 <code>O(n)</code>，空间复杂度为 <code>O(n)</code>（最坏情况下哈希表中存储所有不同的字符）。</p>
+<p>这种方法巧妙地利用滑动窗口和哈希表，能够在一次遍历中完成题目的要求，既保证了算法的效率，又使得代码逻辑清晰易懂。</p>
 ]]></content>
       <categories>
         <category>数据结构与算法</category>

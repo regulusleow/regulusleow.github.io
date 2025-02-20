@@ -152,7 +152,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">121</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -191,6 +191,111 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2019/03/09/20190309-Carthage%20%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/03/09/20190309-Carthage%20%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">Carthage 新手教程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-09 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-09T00:00:00+08:00">2019-03-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">日志</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/03/09/20190309-Carthage%20%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/09/20190309-Carthage 新手教程/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Carthage-与-Cocoapods-的不同"><a href="#Carthage-与-Cocoapods-的不同" class="headerlink" title="Carthage 与 Cocoapods 的不同"></a>Carthage 与 Cocoapods 的不同</h2><p>Cocoapods 是由来已久的 Cocoa 依赖管理工具，那么为什么 Carthage 项目被创建？</p>
+<p>首先，Cocoapods（默认情况下）会自动的为你的应用程序和所有依赖创建和更新 <code>Xcode workspace</code>。Carthage 用 <code>xcodebuild</code> 构建框架（framework）的二进制文件，但是并没有将他们整合到用户项目中。Cocoapods 的目的是让用户使用起来更简单，而 Carthage 则是更灵活，减少对项目的侵入性。</p>
+<p>Cocoapods 的目标在其<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvY29hUG9kcy9Db2NvYVBvZHMvYmxvYi8xNzAzYTM0NjQ2NzRiYWVjZjU0YmQ3ZTc2NmY0YjM3ZWQ4ZmM0M2Y3L1JFQURNRS5tZA==">README<i class="fa fa-external-link-alt"></i></span>文件中有如下描述：</p>
+<blockquote>
+<p>… to improve discoverability of, and engagement in, third party open-source libraries, by creating a more centralized ecosystem.</p>
+</blockquote>
+<p>对比之下，Carthage 被创建成一个松散（decentralized）的依赖管理者，没有中心项目清单，这减少了维护工作并避免了任何中心故障点（通俗的讲就是去中心化）。然而，项目被发现就变的更加困难 – 用户必须去使用 GitHub 的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RyZW5kaW5nP2w9c3dpZnQ=">Trending<i class="fa fa-external-link-alt"></i></span> 页面或者其他类似的页面（Cocoapods 就比较简单的可以在终端搜索需要使用的库）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/09/20190309-Carthage%20%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1115,113 +1220,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/09/27/20180927-iOS%E9%A1%B5%E9%9D%A2%E5%8D%A1%E6%AD%BB%EF%BC%8C%E4%BD%86%E5%B9%B6%E4%B8%8D%E6%98%AFCrash%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/09/27/20180927-iOS%E9%A1%B5%E9%9D%A2%E5%8D%A1%E6%AD%BB%EF%BC%8C%E4%BD%86%E5%B9%B6%E4%B8%8D%E6%98%AFCrash%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" class="post-title-link" itemprop="url">iOS 页面卡死，但并不是 Crash 的问题解决</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-09-27 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-27T00:00:00+08:00">2018-09-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">工作日志</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/09/27/20180927-iOS%E9%A1%B5%E9%9D%A2%E5%8D%A1%E6%AD%BB%EF%BC%8C%E4%BD%86%E5%B9%B6%E4%B8%8D%E6%98%AFCrash%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/09/27/20180927-iOS页面卡死，但并不是Crash问题解决/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>最近在做的一款 App 测试中出现了一个非常诡异的问题，偶尔的界面卡死，但是又并不是 Crash，没有抛出任何异常，把 App 切到后台然后在点开又恢复了，只不过转场的时候十分诡异，似乎完全没有动画，转场背景还是黑的。</p>
-<p>什么原因呢？死循环？不可能；内存泄漏？也不可能？😂；手势冲突？很有可能🧐。无意中我发现了，在 UINavigationController 根视图上进行右滑返回上级页面时，页面就会卡死。原因找到了，一定是手势冲突。</p>
-<h2 id="问题原因描述"><a href="#问题原因描述" class="headerlink" title="问题原因描述"></a>问题原因描述</h2><hr>
-<p>在我的项目中有一个基类 <code>BaseViewController</code>，由于项目中有时候需要隐藏 <code>NavigationBar</code> 所以我使用了 <code>setNavigationBarHidden()</code> 方法，使用这个方法会导致右滑返回上级页面的操作失效。所以我在 <code>BaseViewController</code> 中加入了如下的代码：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.navigationController<span class="operator">?</span>.interactivePopGestureRecognizer<span class="operator">?</span>.delegate <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">extension</span> <span class="title class_">BaseViewController</span>: <span class="title class_ inherited__">UIGestureRecognizerDelegate</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我没有实现任何 <code>UIGestureRecognizerDelegate</code> 的方法，也就是用的都是默认情况。右滑时，具体的操作是将导航栏堆栈最顶部的 <code>Controller</code> 进行 <code>pop</code> 操作，但是当栈顶没有 <code>Controller</code> 时，也就是 <code>Controller</code> 为 <code>rootViewController</code> 时，这时候去开启右滑就会出问题了。导致页面完全卡死。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/09/27/20180927-iOS%E9%A1%B5%E9%9D%A2%E5%8D%A1%E6%AD%BB%EF%BC%8C%E4%BD%86%E5%B9%B6%E4%B8%8D%E6%98%AFCrash%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

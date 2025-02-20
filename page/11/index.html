@@ -152,7 +152,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">121</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -191,6 +191,100 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/15/20180215-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AB%EF%BC%89%E3%80%90File(%E6%96%87%E4%BB%B6)%20%E6%96%B9%E6%B3%95%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/15/20180215-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AB%EF%BC%89%E3%80%90File(%E6%96%87%E4%BB%B6)%20%E6%96%B9%E6%B3%95%E3%80%91/" class="post-title-link" itemprop="url">Python 学习笔记（八）【File(文件) 方法】</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-02-15 00:00:00" itemprop="dateCreated datePublished" datetime="2018-02-15T00:00:00+08:00">2018-02-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/02/15/20180215-Python%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AB%EF%BC%89%E3%80%90File(%E6%96%87%E4%BB%B6)%20%E6%96%B9%E6%B3%95%E3%80%91/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/15/20180215-Python 学习笔记（八）【File(文件) 方法】/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>file 对象使用 open 函数来创建，下表列出了 file 对象常用的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">file.close()</span><br><span class="line"><span class="comment"># 关闭文件。关闭后文件不能再进行读写操作。</span></span><br><span class="line"></span><br><span class="line">file.flush()</span><br><span class="line"><span class="comment"># 刷新文件内部缓冲，直接把内部缓冲区的数据立刻写入文件, 而不是被动的等待输出缓冲区写入。</span></span><br><span class="line"></span><br><span class="line">file.fileno()</span><br><span class="line"><span class="comment"># 返回一个整型的文件描述符(file descriptor FD 整型), 可以用在如os模块的read方法等一些底层操作上。</span></span><br><span class="line"></span><br><span class="line">file.isatty()</span><br><span class="line"><span class="comment"># 如果文件连接到一个终端设备返回 True，否则返回 False。</span></span><br><span class="line"></span><br><span class="line">file.<span class="built_in">next</span>()</span><br><span class="line"><span class="comment"># 返回文件下一行。</span></span><br><span class="line"></span><br><span class="line">file.read([size])</span><br><span class="line"><span class="comment"># 从文件读取指定的字节数，如果未给定或为负则读取所有。</span></span><br><span class="line"></span><br><span class="line">file.readline([size])</span><br><span class="line"><span class="comment"># 读取整行，包括 &quot;\n&quot; 字符。</span></span><br><span class="line"></span><br><span class="line">file.readlines([sizehint])</span><br><span class="line"><span class="comment"># 读取所有行并返回列表，若给定sizeint&gt;0，则是设置一次读多少字节，这是为了减轻读取压力。</span></span><br><span class="line"></span><br><span class="line">file.seek(offset[, whence])</span><br><span class="line"><span class="comment"># 设置文件当前位置</span></span><br><span class="line"></span><br><span class="line">file.tell()</span><br><span class="line"><span class="comment"># 返回文件当前位置。</span></span><br><span class="line"></span><br><span class="line">file.truncate([size])</span><br><span class="line"><span class="comment"># 截取文件，截取的字节通过size指定，默认为当前文件位置。</span></span><br><span class="line"></span><br><span class="line">file.write(<span class="built_in">str</span>)</span><br><span class="line"><span class="comment"># 将字符串写入文件，没有返回值。</span></span><br><span class="line"></span><br><span class="line">file.writelines(sequence)</span><br><span class="line"><span class="comment"># 向文件写入一个序列字符串列表，如果需要换行则要自己加入每行的换行符。</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1135,108 +1229,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/" class="post-title-link" itemprop="url">ShareSDK 回调一直是 SSDKResponseStateCancel</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-02-07 00:00:00" itemprop="dateCreated datePublished" datetime="2018-02-07T00:00:00+08:00">2018-02-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">工作日志</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/07/20180207-ShareSDK 回调一直是 SSDKResponseStateCancel/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>之前解决了，点击登录无反应的 <code>ShareSDK</code> 问题，今天又碰到了点击登陆后回调的 <code>SSDKResponseState</code> 参数一直都是 <code>cancel</code> 的问题。</p>
-<p>刚开始以为是我的配置文件出现了问题，一直修改 <code>info.plist</code> 文件，但是问题依旧。问了技术支持，说让我升级到最新的版本，我又 <code>pod update</code>  一下，确实是最新的版本。之后觉得可能我的 <code>repo</code>  不是最新的，又更新了我的 <code>repo</code> ，发现还是不行。我看了一下 <code>sharesdk </code> 的版本，确实是<strong>4.0.4</strong>最新的没错啊，之后在 GitHub 上看 sharesdk 最新版本的时候，无意间看到了 sharesdk 名字改成了 <code>mob_sharesdk</code> 最新版本是<strong>4.0.9</strong>，终于知道原因了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
