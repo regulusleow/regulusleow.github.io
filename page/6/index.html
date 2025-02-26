@@ -152,7 +152,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">121</span>
+          <span class="site-state-item-count">123</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -191,6 +191,211 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/10/11/20181011-WKWebView%E5%8A%A0%E8%BD%BDTXT%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/10/11/20181011-WKWebView%E5%8A%A0%E8%BD%BDTXT%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">WKWebView 加载 TXT 文件编码问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-10-11 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-11T00:00:00+08:00">2018-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">工作日志</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/10/11/20181011-WKWebView%E5%8A%A0%E8%BD%BDTXT%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/11/20181011-WKWebView加载TXT文件编码问题/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>今天在做在线预览功能的时候碰到了一个蛋疼的问题，office 格式都可以完美的适配，但是 txt 格式出现了乱码。没办法只能进行一个转码，然后再输出内容。</p>
+<h2 id="提取-TXT-文件内容并转码-utf8"><a href="#提取-TXT-文件内容并转码-utf8" class="headerlink" title="提取 TXT 文件内容并转码 utf8"></a>提取 TXT 文件内容并转码 utf8</h2><hr>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> encoding: <span class="type">String</span>.<span class="type">Encoding</span> <span class="operator">=</span> .utf8</span><br><span class="line">	<span class="keyword">let</span> body <span class="operator">=</span> <span class="keyword">try</span> <span class="type">String</span>(contentsOf: url, usedEncoding: <span class="operator">&amp;</span>encoding)</span><br><span class="line">	<span class="keyword">return</span> body</span><br><span class="line">&#125; <span class="keyword">catch</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我们的 body 就是我们获取的内容，默认的我们用了 <code>utf8</code> 编码格式，如果转码错误，说明文件的编码格式为其他格式。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/11/20181011-WKWebView%E5%8A%A0%E8%BD%BDTXT%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/09/29/20180929-observeOnvssubscribeOn%E3%80%90%E8%AF%91%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/09/29/20180929-observeOnvssubscribeOn%E3%80%90%E8%AF%91%E3%80%91/" class="post-title-link" itemprop="url">observeOn vs. subscribeOn【译】</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-09-29 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-29T00:00:00+08:00">2018-09-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%96%87%E7%AB%A0%E7%BF%BB%E8%AF%91/" itemprop="url" rel="index"><span itemprop="name">文章翻译</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/09/29/20180929-observeOnvssubscribeOn%E3%80%90%E8%AF%91%E3%80%91/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/09/29/20180929-observeOnvssubscribeOn【译】/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>跨线程订阅的问题似乎在 <code>RxSwift Slack</code> 上一次又一次的被提到。这个解释起来也是非常的简单所以我觉得放在博客当中是一个好主意，无论你在何时需要，都可以通过连接进行访问，我也不用一次又一次的回复。</p>
+<h2 id="可观察序列的订阅（Observable-subscriptions）"><a href="#可观察序列的订阅（Observable-subscriptions）" class="headerlink" title="可观察序列的订阅（Observable subscriptions）"></a>可观察序列的订阅（Observable subscriptions）</h2><hr>
+<p><code>subscribing</code>（订阅） 和 <code>observing</code>（观察） 方面的术语还有一点混乱，所以让我们先来解决这个问题（不要跳过本章节！）。</p>
+<p>让我们看看 <code>observable subscription</code> 的工作原理。我们可以将订阅分成 3 个部分：</p>
+<img src="/my_pictures/20180929/1.png" style="zoom:50%;" />
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/09/29/20180929-observeOnvssubscribeOn%E3%80%90%E8%AF%91%E3%80%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1019,212 +1224,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/06/29/20180629-iOS%20%E9%85%8D%E7%BD%AE%E6%B5%8B%E8%AF%95%E7%94%A8%E6%8E%A8%E9%80%81%E9%80%9A%E7%9F%A5%E8%AF%81%E4%B9%A6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/06/25/20180625-%E9%97%AD%E5%8C%85%E5%AE%9E%E7%8E%B0addTarget%E6%96%B9%E6%B3%95-%E9%9D%A2%E5%90%91%E5%8D%8F%E8%AE%AE%E7%BC%96%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/25/20180625-%E9%97%AD%E5%8C%85%E5%AE%9E%E7%8E%B0addTarget%E6%96%B9%E6%B3%95-%E9%9D%A2%E5%90%91%E5%8D%8F%E8%AE%AE%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">闭包实现addTarget方法-面向协议编程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-06-25 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-25T00:00:00+08:00">2018-06-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">工作日志</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/06/25/20180625-%E9%97%AD%E5%8C%85%E5%AE%9E%E7%8E%B0addTarget%E6%96%B9%E6%B3%95-%E9%9D%A2%E5%90%91%E5%8D%8F%E8%AE%AE%E7%BC%96%E7%A8%8B/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/25/20180625-闭包实现addTarget方法-面向协议编程/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Swift 是一门面向协议的编程语言，为什么这么说，请看 WWDC 视频 <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYXBwbGUuY29tL3ZpZGVvcy9wbGF5L3d3ZGMyMDE1LzQwOC8=">Protocol-Oriented Programming in Swift<i class="fa fa-external-link-alt"></i></span>。</p>
-<p>通过闭包的方式为 <code>UIControl</code> 添加 <code>action</code> 的实现方式有很多种，例如：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">UIControl</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">listen</span>(<span class="keyword">_</span> <span class="params">action</span>: <span class="keyword">@escaping</span> () -&gt; (), <span class="params">for</span> <span class="params">controlEvents</span>: <span class="type">UIControlEvents</span>) -&gt; <span class="type">AnyObject</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> sleeve <span class="operator">=</span> <span class="type">ClosureSleeve</span>(attachTo: <span class="keyword">self</span>, closure: action, controlEvents: controlEvents)</span><br><span class="line">        addTarget(sleeve, action: <span class="keyword">#selector</span>(<span class="type">ClosureSleeve</span>.invoke), for: controlEvents)</span><br><span class="line">        <span class="keyword">return</span> sleeve</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">listenOnce</span>(<span class="keyword">_</span> <span class="params">action</span>: <span class="keyword">@escaping</span> () -&gt; (), <span class="params">for</span> <span class="params">controlEvents</span>: <span class="type">UIControlEvents</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> sleeve <span class="operator">=</span> <span class="type">ClosureSleeve</span>(attachTo: <span class="keyword">self</span>, closure: action, controlEvents: controlEvents)</span><br><span class="line">        addTarget(sleeve, action: <span class="keyword">#selector</span>(<span class="type">ClosureSleeve</span>.invokeOnce), for: controlEvents)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">unlisten</span>(<span class="params">sleeve</span>: <span class="type">AnyObject</span>) &#123;</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> sleeve <span class="operator">=</span> sleeve <span class="keyword">as?</span> <span class="type">ClosureSleeve</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="keyword">self</span>.removeTarget(sleeve, action: <span class="keyword">#selector</span>(<span class="type">ClosureSleeve</span>.invoke), for: sleeve.controlEvents)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">ClosureSleeve</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> closure: () -&gt; ()</span><br><span class="line">    <span class="keyword">let</span> controlEvents:<span class="type">UIControlEvents</span></span><br><span class="line">    <span class="keyword">let</span> attachedTo: <span class="type">AnyObject</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">init</span>(<span class="params">attachTo</span>: <span class="type">AnyObject</span>, <span class="params">closure</span>: <span class="keyword">@escaping</span> () -&gt; (), <span class="params">controlEvents</span>:<span class="type">UIControlEvents</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.attachedTo <span class="operator">=</span> attachTo</span><br><span class="line">        <span class="keyword">self</span>.closure <span class="operator">=</span> closure</span><br><span class="line">        <span class="keyword">self</span>.controlEvents <span class="operator">=</span> controlEvents</span><br><span class="line">        objc_setAssociatedObject(attachTo, <span class="string">&quot;[<span class="subst">\(arc4random())</span>]&quot;</span>, <span class="keyword">self</span>, .<span class="type">OBJC_ASSOCIATION_RETAIN</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">func</span> <span class="title function_">invoke</span>() &#123;</span><br><span class="line">        closure()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">func</span> <span class="title function_">invokeOnce</span>() &#123;</span><br><span class="line">        closure()</span><br><span class="line">        attachedTo.unlisten(sleeve: <span class="keyword">self</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/25/20180625-%E9%97%AD%E5%8C%85%E5%AE%9E%E7%8E%B0addTarget%E6%96%B9%E6%B3%95-%E9%9D%A2%E5%90%91%E5%8D%8F%E8%AE%AE%E7%BC%96%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/06/22/20180622-%E8%A7%A3%E5%86%B3%20iOS%20%E5%AF%BC%E8%88%AA%E6%A0%8F%E9%9A%90%E8%97%8F%E5%92%8C%E6%98%BE%E7%A4%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/22/20180622-%E8%A7%A3%E5%86%B3%20iOS%20%E5%AF%BC%E8%88%AA%E6%A0%8F%E9%9A%90%E8%97%8F%E5%92%8C%E6%98%BE%E7%A4%BA/" class="post-title-link" itemprop="url">解决 iOS 导航栏隐藏和显示</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-22T00:00:00+08:00">2018-06-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">工作日志</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/06/22/20180622-%E8%A7%A3%E5%86%B3%20iOS%20%E5%AF%BC%E8%88%AA%E6%A0%8F%E9%9A%90%E8%97%8F%E5%92%8C%E6%98%BE%E7%A4%BA/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/22/20180622-解决 iOS 导航栏隐藏和显示/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>今天在项目中遇到了隐藏 <code>navigationbar</code> 功能的问题，例如：从 A push到 B 页面，A 页面的 <code>navigationbar</code> 是隐藏的，但是 B 页面的 <code>navigationbar</code> 是需要显示的。</p>
-<p>一开始我在 A 页面调用 <code>setNavigationBarHidden(true, animated: true)</code> 方法，在 B 页面调用 <code>setNavigationBarHidden(false, animated: true)</code> 方法，虽然能够达到想要的效果，但是对于项目来说是灾难性的。因为如果有多个地方出现这种情况的话，你的代码将会变得十分的杂乱臃肿。</p>
-<p>一种好的解决方式是调用 <code>navigationcontroller</code> 的代理：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">navigationController(<span class="keyword">_</span>:willShow:animated:)</span><br></pre></td></tr></table></figure>
-
-<p>将这个代理放在项目控制器的基类中，在这里我是放在我的基类 <code>BaseViewController</code> 中。为什么这么做？因为这样可以很好的去掉冗余的代码，不用写的到处都是，我的所有控制器都是继承自 <code>BaseViewController</code> 的，<code>BaseViewController</code> 继承自 <code>UIViewController</code>。</p>
-<p>下面到了 Show Code 的时候了</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/22/20180622-%E8%A7%A3%E5%86%B3%20iOS%20%E5%AF%BC%E8%88%AA%E6%A0%8F%E9%9A%90%E8%97%8F%E5%92%8C%E6%98%BE%E7%A4%BA/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

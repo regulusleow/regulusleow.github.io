@@ -152,7 +152,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">121</span>
+          <span class="site-state-item-count">123</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -191,6 +191,213 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2024/01/23/20240123-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/23/20240123-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F/" class="post-title-link" itemprop="url">TypeScript学习之类型缩小</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-23 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-23T00:00:00+08:00">2024-01-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/01/23/20240123-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/01/23/20240123-TypeScript学习之类型缩小/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="类型缩小"><a href="#类型缩小" class="headerlink" title="类型缩小"></a>类型缩小</h2><p>假设我们有一个名为 <code>padLeft</code> 的函数。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">padLeft</span>(<span class="params"><span class="attr">padding</span>: <span class="built_in">number</span> | <span class="built_in">string</span>, <span class="attr">input</span>: <span class="built_in">string</span></span>): <span class="built_in">string</span> &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;Not implemented yet!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>padding</code> 是 <code>number</code>，它会将其视为我们想要添加到 <code>input</code> 的空格数。如果 <code>padding</code> 是 <code>string</code>，它应该只是将 <code>padding</code> 前置到 <code>input</code>。让我们尝试实现当 <code>padLeft</code> 为 <code>padding</code> 传递 <code>number</code> 时的逻辑。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">padLeft</span>(<span class="params"><span class="attr">padding</span>: <span class="built_in">number</span> | <span class="built_in">string</span>, <span class="attr">input</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot; &quot;</span>.<span class="title function_">repeat</span>(padding) + input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>哦，我们在 <code>padding</code> 上遇到错误。TypeScript 警告我们，将 <code>number | string</code> 添加到 <code>number</code> 可能不会给我们想要的东西，这是正确的。换句话说，我们没有先明确检查 <code>padding</code> 是否是 <code>number</code>，也没有处理它是 <code>string</code> 的情况，所以让我们这样做。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">padLeft</span>(<span class="params"><span class="attr">padding</span>: <span class="built_in">number</span> | <span class="built_in">string</span>, <span class="attr">input</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> padding === <span class="string">&quot;number&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot; &quot;</span>.<span class="title function_">repeat</span>(padding) + input;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> padding + input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果这看起来像是无趣的 JavaScript 代码，那就是重点。除了我们放置的注释之外，这个 TypeScript 代码看起来像 JavaScript。这个想法是 TypeScript 的类型系统旨在使编写典型的 JavaScript 代码尽可能容易，而无需向后兼容以获得类型安全。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/01/23/20240123-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2024/01/22/20240122-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%A5%E5%B8%B8%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/22/20240122-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%A5%E5%B8%B8%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">TypeScript学习之日常类型</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-22 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-22T00:00:00+08:00">2024-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/01/22/20240122-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%A5%E5%B8%B8%E7%B1%BB%E5%9E%8B/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/01/22/20240122-TypeScript学习之日常类型/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>函数是在 JavaScript 中传递数据的主要方式。 TypeScript 允许您指定函数的输入和输出值的类型。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/01/22/20240122-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%A5%E5%B8%B8%E7%B1%BB%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -965,244 +1172,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/04/11/20230411-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E4%B8%83%E3%80%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2023/04/10/20230410-iOS%E4%BD%BF%E7%94%A8fastlane%E6%89%93%E5%8C%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/10/20230410-iOS%E4%BD%BF%E7%94%A8fastlane%E6%89%93%E5%8C%85/" class="post-title-link" itemprop="url">iOS 使用 fastlane 打包</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-10 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-10T00:00:00+08:00">2023-04-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CI/" itemprop="url" rel="index"><span itemprop="name">CI</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/04/10/20230410-iOS%E4%BD%BF%E7%94%A8fastlane%E6%89%93%E5%8C%85/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/04/10/20230410-iOS使用fastlane打包/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在一款 App 从开发到上架都会经历 <code>编译 -&gt; 打包 -&gt; 签名 -&gt; 推送 App Store Connect -&gt; 提审 -&gt; 上架</code> 的过程。其中编译打包这种重复且繁琐的工作公司内都会有一个 CI 平台去负责，我们今天就来了解一下 CI 的编译打包流程是怎样的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/10/20230410-iOS%E4%BD%BF%E7%94%A8fastlane%E6%89%93%E5%8C%85/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2023/04/08/20230408-%E7%BC%96%E8%AF%91Swift%E6%BA%90%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/08/20230408-%E7%BC%96%E8%AF%91Swift%E6%BA%90%E7%A0%81/" class="post-title-link" itemprop="url">编译 Swift 5.8 源码</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-08 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-08T00:00:00+08:00">2023-04-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">底层原理</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/04/08/20230408-%E7%BC%96%E8%AF%91Swift%E6%BA%90%E7%A0%81/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/04/08/20230408-编译Swift源码/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="编译准备"><a href="#编译准备" class="headerlink" title="编译准备"></a>编译准备</h2><p>首先保证硬盘空间足够，本人一套流程下来文件夹有将近 60GB 大小。接下来是相关环境的安装，因为我的环境都是最新的，所以基本安装的都是最新版的包，如果你的环境不是新版的话，请找对应版本包安装。本人环境说明：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>版本</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>芯片</td>
-<td>Apple M2 Pro</td>
-</tr>
-<tr>
-<td>macOS</td>
-<td>Ventura 13.3</td>
-</tr>
-<tr>
-<td>Python</td>
-<td>3.11.2</td>
-</tr>
-<tr>
-<td>CMake</td>
-<td>3.26.3</td>
-</tr>
-<tr>
-<td>ninja</td>
-<td>1.11.1</td>
-</tr>
-<tr>
-<td>sccache</td>
-<td>0.4.1</td>
-</tr>
-<tr>
-<td>Xcode</td>
-<td>14.3</td>
-</tr>
-</tbody></table>
-<p>我们可以通过 <code>homebrew</code> 统一安装环境：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install cmake ninja sccache</span><br></pre></td></tr></table></figure>
-
-<p>此文只介绍 Xcode 调试环境，如果想用 VS Code 调试的话，需要用 Ninja 编译，Ninja 的编译请移步官方文档。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/08/20230408-%E7%BC%96%E8%AF%91Swift%E6%BA%90%E7%A0%81/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
