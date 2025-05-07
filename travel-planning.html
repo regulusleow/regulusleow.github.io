@@ -352,6 +352,11 @@
                 padding: 8px 12px;
             }
             
+            .share-options {
+                min-width: 150px;
+                font-size: 12px;
+            }
+            
             .a4-container {
                 padding: 5mm;
             }
@@ -465,6 +470,7 @@
             justify-content: flex-start;
             margin-top: 20px;
             margin-bottom: 20px;
+            position: relative;
         }
         
         .share-button {
@@ -494,6 +500,10 @@
             z-index: 1000;
             display: none;
             margin-top: 5px;
+            min-width: 180px;
+            width: max-content;
+            left: 0;
+            font-size: 14px;
         }
         
         .share-options.active {
@@ -504,9 +514,11 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 10px;
+            padding: 10px 12px;
             cursor: pointer;
             border-radius: 3px;
+            white-space: nowrap;
+            transition: background-color 0.2s;
         }
         
         .share-option:hover {
@@ -517,6 +529,11 @@
             font-size: 20px;
             width: 25px;
             text-align: center;
+        }
+        
+        .share-option span {
+            display: inline-block;
+            vertical-align: middle;
         }
         
         .wechat {
@@ -792,23 +809,21 @@
         <div class="dotted-line"></div>
         
         <div class="share-button-container">
-            <div style="position: relative;">
-                <button class="share-button" id="shareButton">
-                    <i class="fas fa-share-alt"></i> 分享行程
-                </button>
-                <div class="share-options" id="shareOptions">
-                    <div class="share-option wechat-share">
-                        <i class="fab fa-weixin wechat"></i>
-                        <span>分享到微信</span>
-                    </div>
-                    <div class="share-option weibo-share">
-                        <i class="fab fa-weibo weibo"></i>
-                        <span>分享到微博</span>
-                    </div>
-                    <div class="share-option copy-link">
-                        <i class="fas fa-link copy"></i>
-                        <span>复制链接</span>
-                    </div>
+            <button class="share-button" id="shareButton">
+                <i class="fas fa-share-alt"></i> 分享行程
+            </button>
+            <div class="share-options" id="shareOptions">
+                <div class="share-option wechat-share">
+                    <i class="fab fa-weixin wechat"></i>
+                    <span>分享到微信</span>
+                </div>
+                <div class="share-option weibo-share">
+                    <i class="fab fa-weibo weibo"></i>
+                    <span>分享到微博</span>
+                </div>
+                <div class="share-option copy-link">
+                    <i class="fas fa-link copy"></i>
+                    <span>复制链接</span>
                 </div>
             </div>
         </div>
