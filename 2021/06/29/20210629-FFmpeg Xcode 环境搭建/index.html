@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="安装 FFmpeg根据 官方文档 的描述，有三种安装 FFmpeg 的方式，这里我们选择最简单快速的一种，使用 Homebrew 命令安装。 如果还没有安装 Homebrew 的话，请先安装 Homebrew，点击跳转官方网站 我们执行如下命令即可安装好 FFmpeg： 1brew install ffmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg Xcode 环境搭建">
+<meta property="og:url" content="https://regulusleow.github.io/2021/06/29/20210629-FFmpeg%20Xcode%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="安装 FFmpeg根据 官方文档 的描述，有三种安装 FFmpeg 的方式，这里我们选择最简单快速的一种，使用 Homebrew 命令安装。 如果还没有安装 Homebrew 的话，请先安装 Homebrew，点击跳转官方网站 我们执行如下命令即可安装好 FFmpeg： 1brew install ffmpeg">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20210629/1.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20210629/2.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20210629/3.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20210629/4.png">
+<meta property="article:published_time" content="2021-06-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.331Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="FFmpeg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://regulusleow.github.io/my_pictures/20210629/1.png">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2021/06/29/20210629-FFmpeg%20Xcode%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2021/06/29/20210629-FFmpeg%20Xcode%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/","path":"2021/06/29/20210629-FFmpeg Xcode 环境搭建/","title":"FFmpeg Xcode 环境搭建"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>FFmpeg Xcode 环境搭建 | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-FFmpeg"><span class="nav-number">1.</span> <span class="nav-text">安装 FFmpeg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Xcode-%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Xcode 相关配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Build-Settings"><span class="nav-number">2.1.</span> <span class="nav-text">Build Settings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Library"><span class="nav-number">2.2.</span> <span class="nav-text">Library</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2021/06/29/20210629-FFmpeg%20Xcode%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="FFmpeg Xcode 环境搭建 | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FFmpeg Xcode 环境搭建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-29 00:00:00" itemprop="dateCreated datePublished" datetime="2021-06-29T00:00:00+08:00">2021-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%A7%86%E9%A2%91%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">视频技术</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/06/29/20210629-FFmpeg%20Xcode%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/29/20210629-FFmpeg Xcode 环境搭建/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="安装-FFmpeg"><a href="#安装-FFmpeg" class="headerlink" title="安装 FFmpeg"></a>安装 FFmpeg</h2><p>根据 <span class="exturl" data-url="aHR0cHM6Ly90cmFjLmZmbXBlZy5vcmcvd2lraS9Db21waWxhdGlvbkd1aWRlL21hY09T">官方文档<i class="fa fa-external-link-alt"></i></span> 的描述，有三种安装 FFmpeg 的方式，这里我们选择最简单快速的一种，使用 <code>Homebrew</code> 命令安装。</p>
+<p>如果还没有安装 <code>Homebrew</code> 的话，请先安装 <code>Homebrew</code>，<span class="exturl" data-url="aHR0cHM6Ly9icmV3LnNoLw==">点击跳转官方网站<i class="fa fa-external-link-alt"></i></span></p>
+<p>我们执行如下命令即可安装好 FFmpeg：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ffmpeg</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="Xcode-相关配置"><a href="#Xcode-相关配置" class="headerlink" title="Xcode 相关配置"></a>Xcode 相关配置</h2><h3 id="Build-Settings"><a href="#Build-Settings" class="headerlink" title="Build Settings"></a>Build Settings</h3><p>我们通过如下命令即可查看 FFmpeg 的相关信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew info ffmpeg</span><br></pre></td></tr></table></figure>
+
+<p>会输出类似下面一样的信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg: stable 4.4 (bottled), HEAD</span><br><span class="line">Play, record, convert, and stream audio and video</span><br><span class="line">https://ffmpeg.org/</span><br><span class="line">/usr/local/Cellar/ffmpeg/4.4_2 (276 files, 52.7MB) *</span><br><span class="line">  Poured from bottle on 2021-06-25 at 00:50:35</span><br><span class="line">From: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/ffmpeg.rb</span><br><span class="line">License: GPL-2.0-or-later</span><br><span class="line">==&gt; Dependencies</span><br><span class="line">Build: nasm ✔, pkg-config ✔</span><br><span class="line">Required: aom ✔, dav1d ✔, fontconfig ✔, freetype ✔, frei0r ✔, gnutls ✔, lame ✔, libass ✔, libbluray ✔, libsoxr ✔, libvidstab ✔, libvorbis ✔, libvpx ✔, opencore-amr ✔, openjpeg ✔, opus ✔, rav1e ✔, rubberband ✔, sdl2 ✔, snappy ✔, speex ✔, srt ✔, tesseract ✔, theora ✔, webp ✔, x264 ✔, x265 ✔, xvid ✔, xz ✔, zeromq ✔, zimg ✔</span><br><span class="line">==&gt; Options</span><br><span class="line">--HEAD</span><br><span class="line">	Install HEAD version</span><br><span class="line">==&gt; Analytics</span><br><span class="line">install: 124,147 (30 days), 436,612 (90 days), 1,751,038 (365 days)</span><br><span class="line">install-on-request: 102,817 (30 days), 366,434 (90 days), 1,443,249 (365 days)</span><br><span class="line">build-error: 0 (30 days)</span><br></pre></td></tr></table></figure>
+
+<p>我们在信息中可以找到 FFmpeg 的安装目录如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/Cellar/ffmpeg/4.4_2</span><br></pre></td></tr></table></figure>
+
+<p>目录中包括两个文件夹 <code>lib</code> 和 <code>include</code>，这两个文件夹我们需要在 <code>Xcode</code> 中配置相关搜索路径。我们打开 <code>Xcode</code> 的 <code>Build Settings</code> 界面，配置 <code>Header Search Paths</code> 和 <code>Library Search Paths</code>。我的本地环境配置如下图所示：</p>
+<img src="/my_pictures/20210629/1.png" style="zoom: 33%;" />
+
+<h3 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h3><p>我们切换到 <code>General</code> 或 <code>Build Phases</code>，将 <code>FFmpeg</code> 目录下的 <code>lib</code> 文件夹中的 <code>.a</code> 文件按需添加，如下图：</p>
+<img src="/my_pictures/20210629/2.png" style="zoom: 50%;" />
+<img src="/my_pictures/20210629/3.png" style="zoom: 33%;" />
+<img src="/my_pictures/20210629/4.png" style="zoom: 33%;" />
+
+<p>此时我们的环境就算是配置完毕。</p>
+<p>我们在类中随便加点代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Cocoa</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ViewController</span>: <span class="title class_ inherited__">NSViewController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">func</span> <span class="title function_">viewDidLoad</span>() &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        av_log_set_flags(<span class="type">AV_LOG_SKIP_REPEATED</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">#if</span> <span class="type">CONFIG_AVDEVICE</span></span><br><span class="line">            avdevice_register_all();</span><br><span class="line">        <span class="keyword">#endif</span></span><br><span class="line">        avformat_network_init()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">var</span> representedObject: <span class="keyword">Any</span><span class="operator">?</span> &#123;</span><br><span class="line">        <span class="keyword">didSet</span> &#123;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>桥接文件</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/avstring.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/eval.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/mathematics.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/pixdesc.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/imgutils.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/dict.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/fifo.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/parseutils.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/samplefmt.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/avassert.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/time.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/bprint.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavdevice/avdevice.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libswscale/swscale.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavutil/opt.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libavcodec/avfft.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;libswresample/swresample.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>此时我们 <code>Build</code> 一下，发现是可以编译通过的。</p>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p><code>Build</code> 没问题了，我们 <code>run</code> 一下。此时我们可能碰到 <code>crash</code>，提示信息如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dyld: Library not loaded: /usr/local/opt/ffmpeg/lib/libswscale.5.dylib</span><br><span class="line">  Referenced from: /Users/jiafengwu/Library/Developer/Xcode/DerivedData/ffdemo-gqmgjyhlyiyktmdpikmfktmubkzg/Build/Products/Debug/ffdemo.app/Contents/MacOS/ffdemo</span><br><span class="line">  Reason: no suitable image found.  Did find:</span><br><span class="line">	/usr/local/opt/ffmpeg/lib/libswscale.5.dylib: code signature <span class="keyword">in</span> (/usr/local/opt/ffmpeg/lib/libswscale.5.dylib) not valid <span class="keyword">for</span> use <span class="keyword">in</span> process using Library Validation: mapped file has no cdhash, completely unsigned? Code has to be at least ad-hoc signed.</span><br><span class="line">	/usr/local/lib/libswscale.5.dylib: code signature <span class="keyword">in</span> (/usr/local/lib/libswscale.5.dylib) not valid <span class="keyword">for</span> use <span class="keyword">in</span> process using Library Validation: mapped file has no cdhash, completely unsigned? Code has to be at least ad-hoc signed.</span><br><span class="line">	/usr/local/Cellar/ffmpeg/4.4_2/lib/libswscale.5.9.100.dylib: code signature <span class="keyword">in</span> (/usr/local/Cellar/ffmpeg/4.4_2/lib/libswscale.5.9.100.dylib) not valid <span class="keyword">for</span> use <span class="keyword">in</span> process using Library Validation: mapped file has no cdhash, completely unsigned? Code has to be at least ad-hoc signed.</span><br></pre></td></tr></table></figure>
+
+<p>从提示信息我们可知，是动态库没有签名。我们还需将其手动签名一下。顺便说一句，上面的报错是在 <code>FFmpeg</code> 目录中的 <code>lib</code> 目录下，我们将其签名后可能还有其他库需要签名，我的解决方式是，直接吧报错目录下的所有动态库批量签名。</p>
+<p>我们从钥匙串中找到我们证书的名字，类似于：<code>Apple Development: xxx</code>。</p>
+<p>我们打开终端，进入对应目录，执行如下签名命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -f -s <span class="string">&quot;Apple Development: xxx&quot;</span> *.dylib</span><br></pre></td></tr></table></figure>
+
+<p><strong>引号中的证书信息需要替换成自己的</strong></p>
+<p>因为 <code>Xcode</code> 运行代码使用了系统的库，所以我就批量的进行了签名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -f -s <span class="string">&quot;Mac Developer: xxx&quot;</span> /usr/local/opt/*/lib/*.dylib</span><br></pre></td></tr></table></figure>
+
+<p>当我们签名完成之后，再次进行 <code>run</code>，发现就能跑起来了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>签名的相关命令</p>
+<p>1、清除动态库的签名</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign --remove-signature xxx.dylib</span><br></pre></td></tr></table></figure>
+
+<p>2、查看签名</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -vv -d xxx.dylib</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -dvvv xxx.dylib</span><br></pre></td></tr></table></figure>
+
+<p>3、重新签名</p>
+<p><code>codesign</code> 的 <code>-f</code> 参数就是强制签名的意思，本文使用的 <code>codesign -f -s</code> 就能直接重新签名。如果不想覆盖原来的签名，可以把 <code>-f</code> 参数去掉。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FFmpeg/" rel="tag"><i class="fa fa-tag"></i> FFmpeg</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/21/20201221-XCFramework%20%E8%B8%A9%E5%9D%91%E8%AE%B0/" rel="prev" title="XCFramework 踩坑记">
+                  <i class="fa fa-angle-left"></i> XCFramework 踩坑记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/03/20211103-XPC%20%E8%AF%A6%E8%A7%A3/" rel="next" title="XPC 详解">
+                  XPC 详解 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

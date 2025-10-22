@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="C 语言能让程序员恰到好处的控制程序，这是它的优势之一。程序员通过 C 的内存管理系统指定变量的作用域和生命周期，实现对程序的控制。合理使用内存存储数据是设计程序的一个要点。 存储类别C 提供了多种不同的模型或存储类别在内存中存储数据。要理解这些存储类别，我们先来了解一些概念和术语。 程序中的大部分数据都是存储在内存中。从硬件方面来看，被存储的每个值都占用一定的物理内存，C 语言把这样的一块内存称">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 语言重拾【七】存储类别、链接和内存管理">
+<meta property="og:url" content="https://regulusleow.github.io/2023/04/11/20230411-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E4%B8%83%E3%80%91/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="C 语言能让程序员恰到好处的控制程序，这是它的优势之一。程序员通过 C 的内存管理系统指定变量的作用域和生命周期，实现对程序的控制。合理使用内存存储数据是设计程序的一个要点。 存储类别C 提供了多种不同的模型或存储类别在内存中存储数据。要理解这些存储类别，我们先来了解一些概念和术语。 程序中的大部分数据都是存储在内存中。从硬件方面来看，被存储的每个值都占用一定的物理内存，C 语言把这样的一块内存称">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.332Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2023/04/11/20230411-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E4%B8%83%E3%80%91/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2023/04/11/20230411-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E4%B8%83%E3%80%91/","path":"2023/04/11/20230411-C 语言重拾【七】/","title":"C 语言重拾【七】存储类别、链接和内存管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C 语言重拾【七】存储类别、链接和内存管理 | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">存储类别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.1.</span> <span class="nav-text">作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">1.2.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E6%9C%9F"><span class="nav-number">1.3.</span> <span class="nav-text">存储期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.</span> <span class="nav-text">寄存器变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E8%AF%B4%E6%98%8E%E7%AC%A6"><span class="nav-number">1.5.</span> <span class="nav-text">存储类别说明符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E5%86%85%E5%AD%98%EF%BC%9Amalloc-%E5%92%8C-free"><span class="nav-number">2.</span> <span class="nav-text">分配内存：malloc() 和 free()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#calloc-%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">calloc() 函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2023/04/11/20230411-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E4%B8%83%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="C 语言重拾【七】存储类别、链接和内存管理 | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 语言重拾【七】存储类别、链接和内存管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-11T00:00:00+08:00">2023-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/04/11/20230411-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E4%B8%83%E3%80%91/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/04/11/20230411-C 语言重拾【七】/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>C 语言能让程序员恰到好处的控制程序，这是它的优势之一。程序员通过 C 的内存管理系统指定变量的作用域和生命周期，实现对程序的控制。合理使用内存存储数据是设计程序的一个要点。</p>
+<h2 id="存储类别"><a href="#存储类别" class="headerlink" title="存储类别"></a>存储类别</h2><p>C 提供了多种不同的模型或存储类别在内存中存储数据。要理解这些存储类别，我们先来了解一些概念和术语。</p>
+<p>程序中的大部分数据都是存储在内存中。从硬件方面来看，被存储的每个值都占用一定的物理内存，C 语言把这样的一块内存称为 <strong>对象（objc）</strong>。这里所指的对象和我们面向对象编程所说的对象是不同的，要注意<strong>（面向对象中的对象指的是类对象）</strong>。这里所说的对象实际指的是一块可以存储数据的内存。对象可以存储一个或多个值。一个对象可能并未存储实际的值，但是它在存储适当的值时一定具有相应的大小 。</p>
+<span id="more"></span>
+
+<p>从软件方面来看，程序需要一种方法访问对象。这可以通过声明变量来完成：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> entity = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该声明创建了一个 <code>entity</code> <strong>标识符</strong>。标识符是一个名称，可以用来指定特定对象的内容。变量名不是指定对象的唯一途径。考虑下面两个声明：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pt = &amp;entity;</span><br><span class="line"><span class="type">int</span> ranks[<span class="number">10</span>];</span><br></pre></td></tr></table></figure>
+
+<p><code>pt</code> 是一个指针，并不是一个标识符。<code>ranks</code> 的声明创建了一个可容纳 10 个 <code>int</code> 类型元素的对象，该数组的每个元素也是一个对象。</p>
+<p>可以用 <strong>存储期</strong> 描述对象，所谓存储期是指对象在内存中保留了多长时间。标识符用于访问对象，可以用 <strong>作用域</strong> 和 <strong>链接</strong> 描述标识符，标识符的 <strong>作用域</strong> 和 <strong>链接</strong> 表明了程序的哪些部分可以使用它。不同的存储类别具有不同的 <strong>存储期</strong>、<strong>作用域</strong>和<strong>链接</strong>。</p>
+<p>通俗一点的描述就是，存储期可以理解为一个对象的声明周期，也即是内存的创建到销毁。链接可以理解为访问控制，是对于文件来说。作用域是对于变量来说的访问控制。</p>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>一个 C 变量的作用域可以是 <strong>块作用域</strong>、<strong>函数作用域</strong>、<strong>函数原型作用域</strong>或<strong>文件作用域</strong>。块作用域其实就是两个大括号之间的作用域。举个例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">blocky</span><span class="params">(<span class="type">double</span> cleo)</span> &#123;</span><br><span class="line">  <span class="type">double</span> patrick = <span class="number">0.0</span>;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    <span class="type">double</span> q = cleo * i; <span class="comment">// q 的作用域开始</span></span><br><span class="line">    <span class="comment">// ......</span></span><br><span class="line">    patrick *= q;</span><br><span class="line">  &#125; <span class="comment">// q 的作用域结束</span></span><br><span class="line">  <span class="comment">// ......</span></span><br><span class="line">  <span class="keyword">return</span> patrick;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数作用域仅用于 <code>goto</code> 语句的标签。</p>
+<p>函数原型作用域用于函数原型中的形参名，如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">mighty</span><span class="params">(<span class="type">int</span> mouse, <span class="type">double</span> large)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>其范围是从形参定义处到原型声明结束。这意味着，编译起在处理函数原型中的形参时只关心它的类型，而形参名（如果有的话）通常无关紧要。而且，即使有形参名，也不必与函数定义中的形参名相匹配。只有在变长数组中，形参名才有用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">use_a_VLA</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> m, ar[n][m])</span>;</span><br></pre></td></tr></table></figure>
+
+<p>方括号中必须使用在函数原型中已声明的名称。</p>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>C 语言具有 3 中链接属性：外部链接、内部链接或无链接。具有块作用域、函数作用域或函数原型作用域的变量都是无链接变量。具有文件作用域的变量可以是外部链接或内部链接。外部链接变量可以在多文件程序中使用，内部链接变量只能在一个翻译单元中使用。</p>
+<blockquote>
+<p>正式和非正式术语</p>
+<p>C 标准用“内部链接的文件作用域”描述仅限于一个翻译单元（即一个源代码文件和它所包含的头文件）的作用域，用“外部链接的文件作用域”描述可延伸至其他翻译单元的作用域。但是，对程序员而言这些术语太长了。一些程序员把“内部链接的文件作用域”简称为“文件作用域”，把“外部链接的文件作用域”简称为“全局作用域”或“程序作用域”。</p>
+</blockquote>
+<p>如何知道文件作用域变量是内部链接还是外部链接？可以查看外部定义中是否使用了存储类别说明符 <code>static</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> giants = <span class="number">5</span>;</span><br><span class="line"><span class="type">static</span> <span class="type">int</span> dodgers = <span class="number">3</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p>该文件和同一程序的其他文件都可以使用变量 <code>giants</code>。而变量 <code>dodgers</code> 属文件私有，该文件中的任意函数都可使用它。</p>
+<h3 id="存储期"><a href="#存储期" class="headerlink" title="存储期"></a>存储期</h3><p>作用域和链接描述了标识符的可见性。存储期描述了通过这些标识符访问的对象的生存期。C 对象有4种存储期：静态存储期、线程存储期、自动存储期、动态分配存储期。</p>
+<p>如果对象具有静态存储期，那么它在程序的执行期间一直存在。文件作用域变量具有静态存储期。注意，对于文件作用域变量，关键字 static表明了其链接属性，而非存储期。以 <code>static</code> 声明的文件作用域变量具有内部链接。但是无论是内部链接还是外部链接，所有的文件作用域变量都具有静态存储期。</p>
+<p>线程存储期用于并发程序设计，程序执行可被分为多个线程。具有线程存储期的对象，从被声明时到线程结束一直存在。以关键字 <code>_Thread_local</code> 声明一个对象时，每个线程都获得该变量的私有备份。</p>
+<p>块作用域的变量通常都具有自动存储期。当程序进入定义这些变量的块时，为这些变量分配内存；当退出这个块时，释放刚才为变量分配的内存。这种做法相当于把自动变量占用的内存视为一个可重复使用的工作区或暂存区。例如，一个函数调用结束后，其变量占用的内存可用于储存下一个被调用函数的变量。</p>
+<p><strong>变长数组稍有不同，它们的存储期从声明处到块的末尾，而不是从块的开始处到块的末尾。</strong></p>
+<p>块作用域变量也能具有静态存储期。为了创建这样的变量，要把变量声明在块中，且在声明前面加上关键字 <code>static</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">more</span><span class="params">(<span class="type">int</span> number)</span> &#123;</span><br><span class="line">  <span class="type">int</span> index;</span><br><span class="line">  <span class="type">static</span> <span class="type">int</span> ct = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里，变量 <code>ct</code> 储存在静态内存中，它从程序被载入到程序结束期间都存在。但是，它的作用域定义在 <code>more()</code> 函数块中。只有在执行该函数时，程序才能使用 <code>ct</code> 访问它所指定的对象（但是，该函数可以给其他函数提供该存储区的地址以便间接访问该对象，例如通过指针形参或返回值）。</p>
+<table>
+<thead>
+<tr>
+<th>存储类别</th>
+<th>存储期</th>
+<th>作用域</th>
+<th>链接</th>
+<th>声明方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>自动</td>
+<td>自动</td>
+<td>块</td>
+<td>无</td>
+<td>块内</td>
+</tr>
+<tr>
+<td>寄存器</td>
+<td>自动</td>
+<td>块</td>
+<td>无</td>
+<td>块内，使用关键字 register</td>
+</tr>
+<tr>
+<td>静态外部链接</td>
+<td>静态</td>
+<td>文件</td>
+<td>外部</td>
+<td>所有函数外</td>
+</tr>
+<tr>
+<td>静态内部链接</td>
+<td>静态</td>
+<td>文件</td>
+<td>内部</td>
+<td>所有函数外，使用关键字 static</td>
+</tr>
+<tr>
+<td>静态无链接</td>
+<td>静态</td>
+<td>块</td>
+<td>无</td>
+<td>块内，使用关键字 static</td>
+</tr>
+</tbody></table>
+<h3 id="寄存器变量"><a href="#寄存器变量" class="headerlink" title="寄存器变量"></a>寄存器变量</h3><p>变量通常储存在计算机内存中。如果幸运的话，寄存器变量储存在CPU的寄存器中，或者概括地说，储存在最快的可用内存中。与普通变量相比，访问和处理这些变量的速度更快。由于寄存器变量储存在寄存器而非内存中，所以无法获取寄存器变量的地址。绝大多数方面，寄存器变量和自动变量都一样。也就是说，它们都是块作用域、无链接和自动存储期。使用存储类别说明符 <code>register</code> 便可声明寄存器变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">register</span> <span class="type">int</span> quick;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们刚才说“如果幸运的话”，是因为声明变量为 <code>register</code> 类别与直接命令相比更像是一种请求。编译器必须根据寄存器或最快可用内存的数量衡量你的请求，或者直接忽略你的请求，所以可能不会如你所愿。在这种情况下，寄存器变量就变成普通的自动变量。即使是这样，仍然不能对该变量使用地址运算符。<br>在函数头中使用关键字 <code>register</code>，便可请求形参是寄存器变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">macho</span><span class="params">(<span class="keyword">register</span> <span class="type">int</span> n)</span></span><br></pre></td></tr></table></figure>
+
+<p>可声明为 <code>register</code> 的数据类型有限。例如，处理器中的寄存器可能没有足够大的空间来存储 <code>double</code> 类型的值。</p>
+<h3 id="存储类别说明符"><a href="#存储类别说明符" class="headerlink" title="存储类别说明符"></a>存储类别说明符</h3><p>读者可能已经注意到了，关键字 <code>static</code> 和 <code>extern</code> 的含义取决于上下文。C 语言有 6 个关键字作为存储类别说明符：<code>auto</code>、<code>register</code>、<code>static</code>、<code>extern</code>、<code>_Thread_local</code> 和 <code>typedef</code>。<code>typedef</code> 关键字与任何内存存储无关，把它归于此类有一些语法上的原因。尤其是，在绝大多数情况下，不能在声明中使用多个存储类别说明符，所以这意味着不能使用多个存储类别说明符作为 <code>typedef</code> 的一部分。唯一例外的是 <code>_Thread_local</code>，它可以和 <code>static</code> 或 <code>extern</code> 一起使用。</p>
+<p><code>auto</code> 说明符表明变量是自动存储期，只能用于块作用域的变量声明中。由于在块中声明的变量本身就具有自动存储期，所以使用 <code>auto</code> 主要是为了明确表达要使用与外部变量同名的局部变量的意图。</p>
+<p><code>register</code> 说明符也只用于块作用域的变量，它把变量归为寄存器存储类别，请求最快速度访问该变量。同时，还保护了该变量的地址不被获取。</p>
+<p>用 <code>static</code> 说明符创建的对象具有静态存储期，载入程序时创建对象，当程序结束时对象消失。如果 <code>static</code> 用于文件作用域声明，作用域受限于该文件。如果 <code>static</code> 用于块作用域声明，作用域则受限于该块。因此，只要程序在运行对象就存在并保留其值，但是只有在执行块内的代码时，才能通过标识符访问。块作用域的静态变量无链接。文件作用域的静态变量具有内部链接。</p>
+<p><code>extern</code> 说明符表明声明的变量定义在别处。如果包含 <code>extern</code> 的声明具有文件作用域，则引用的变量必须具有外部链接。如果包含 <code>extern</code> 的声明具有块作用域，则引用的变量可能具有外部链接或内部链接，这接取决于该变量的定义式声明。</p>
+<blockquote>
+<p><strong>小结：存储类别</strong></p>
+<p>自动变量具有块作用域、无链接、自动存储期。它们是局部变量，属于其定义所在块（通常指函数）私有。寄存器变量的属性和自动变量相同，但是编译器会使用更快的内存或寄存器储存它们。不能获取寄存器变量的地址。</p>
+<p>具有静态存储期的变量可以具有外部链接、内部链接或无链接。在同一个文件所有函数的外部声明的变量是外部变量，具有文件作用域、外部链接和静态存储期。如果在这种声明前面加上关键字 <code>static</code>，那么其声明的变量具有文件作用域、内部链接和静态存储期。如果在函数中用 <code>static</code> 声明一个变量，则该变量具有块作用域、无链接、静态存储期。</p>
+<p>具有自动存储期的变量，程序在进入该变量的声明所在块时才为其分配内存，在退出该块时释放之前分配的内存。如果未初始化，自动变量中是垃圾值。程序在编译时为具有静态存储期的变量分配内存，并在程序的运行过程中一直保留这块内存。如果未初始化，这样的变量会被设置为 0。</p>
+<p>具有块作用域的变量是局部的，属于包含该声明的块私有。具有文件作用域的变量对文件（或翻译单元）中位于其声明后面的所有函数可见。具有外部链接的文件作用域变量，可用于该程序的其他翻译单元。具有内部链接的文件作用域变量，只能用于其声明所在的文件内。</p>
+</blockquote>
+<h2 id="分配内存：malloc-和-free"><a href="#分配内存：malloc-和-free" class="headerlink" title="分配内存：malloc() 和 free()"></a>分配内存：<code>malloc()</code> 和 <code>free()</code></h2><p>首先，回顾一下内存分配。所有程序都必须预留足够的内存来储存程序使用的数据。这些内存中有些是自动分配的。例如，以下声明：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> x;</span><br><span class="line"><span class="type">char</span> place[] = <span class="string">&quot;Dancing Oxen Creek&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>为一个 <code>float</code> 类型的值和一个字符串预留了足够的内存，或者可以显式指定分配一定数量的内存：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> plates[<span class="number">100</span>];</span><br></pre></td></tr></table></figure>
+
+<p>该声明预留了 100 个内存位置，每个位置都用于储存int类型的值。声明还为内存提供了一个标识符。因此，可以使用 <code>x</code> 或 <code>place</code> 识别数据。回忆一下，静态数据在程序载入内存时分配，而自动数据在程序执行块时分配，并在程序离开该块时销毁。</p>
+<p>C 能做的不止这些。可以在程序运行时分配更多的内存。主要的工具是 <code>malloc()</code> 函数，该函数接受一个参数：所需的内存字节数。<code>malloc()</code> 函数会找到合适的空闲内存块，这样的内存是匿名的。也就是说， <code>malloc()</code> 分配内存，但是不会为其赋名。然而，它确实返回动态分配内存块的首字节地址。因此，可以把该地址赋给一个指针变量，并使用指针访问这块内存。因为 <code>char</code> 表示 1 字节，<code>malloc()</code> 的返回类型通常被定义为指向char的指针。然而，从 ANSI C 标准开始，C 使用一个新的类型：指向 <code>void</code> 的指针。该类型相当于一个“通用指针”。<code>malloc()</code> 函数可用于返回指向数组的指针、指向结构的指针等，所以通常该函数的返回值会被强制转换为匹配的类型。在 ANSI C 中，应该坚持使用强制类型转换，提高代码的可读性。然而，把指向 <code>void</code> 的指针赋给任意类型的指针完全不用考虑类型匹配的问题。如果 <code>malloc()</code> 分配内存失败，将返回空指针。</p>
+<p>我们试着用 <code>malloc()</code> 创建一个数组。除了用 <code>malloc()</code> 在程序运行时请求一块内存，还需要一个指针记录这块内存的位置。例如，考虑下面的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> *pt;</span><br><span class="line">ptd = (<span class="type">double</span> *)<span class="built_in">malloc</span>(<span class="number">30</span> * <span class="keyword">sizeof</span>(<span class="type">double</span>));</span><br></pre></td></tr></table></figure>
+
+<p>以上代码为 30 个 <code>double</code> 类型的值请求内存空间，并设置 <code>ptd</code> 指向该位置。注意，指针 <code>ptd</code> 被声明为指向一个 <code>double</code> 类型，而不是指向内含 30 个 <code>double</code> 类型值的块。回忆一下，数组名是该数组首元素的地址。因此，如果让 <code>ptd</code> 指向这个块的首元素，便可像使用数组名一样使用它。也就是说，可以使用表达式 <code>ptd[0]</code> 访问该块的首元素，<code>ptd[1]</code> 访问第 2 个元素，以此类推。根据前面所学的知识，可以使用数组名来表示指针，也可以用指针来表示数组。</p>
+<p>现在，我们有 3 种创建数组的方法。</p>
+<ul>
+<li>声明数组时，用常量表达式表示数组的维度，用数组名访问数组的元素。可以用静态内存或自动内存创建这种数组。</li>
+<li>声明变长数组（C99 新增的特性）时，用变量表达式表示数组的维度，用数组名访问数组的元素。具有这种特性的数组只能在自动内存中创建。</li>
+<li>声明一个指针，调用 <code>malloc()</code>，将其返回值赋给指针，使用指针访问数组的元素。该指针可以是静态的或自动的。</li>
+</ul>
+<p>使用第 2 种和第 3 种方法可以创建动态数组（dynamic array）。这种数组和普通数组不同，可以在程序运行时选择数组的大小和分配内存。</p>
+<p>通常，<code>malloc()</code> 要与 <code>free()</code> 配套使用。<code>free()</code> 函数的参数是之前 <code>malloc()</code> 返回的地址，该函数释放之前 <code>malloc()</code> 分配的内存。因此，动态分配内存的存储期从调用 <code>malloc()</code> 分配内存到调用 <code>free()</code> 释放内存为止。设想 <code>malloc()</code> 和 <code>free()</code> 管理着一个内存池。每次调用 <code>malloc()</code> 分配内存给程序使用，每次调用 <code>free()</code> 把内存归还内存池中，这样便可重复使用这些内存。<code>free()</code> 的参数应该是一个指针，指向由 <code>malloc()</code> 分配的一块内存。不能用 <code>free()</code> 释放通过其他方式（如，声明一个数组）分配的内存。<code>malloc()</code> 和 <code>free()</code> 的原型都在 <code>stdlib.h</code> 头文件中。</p>
+<h3 id="calloc-函数"><a href="#calloc-函数" class="headerlink" title="calloc() 函数"></a><code>calloc()</code> 函数</h3><p>分配内存还可以使用 <code>calloc()</code>，典型的用法如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> *newmem;</span><br><span class="line">newmem = (<span class="type">long</span> *)<span class="built_in">calloc</span>(<span class="number">100</span>, <span class="keyword">sizeof</span>(<span class="type">long</span>));</span><br></pre></td></tr></table></figure>
+
+<p>和 <code>malloc()</code> 类似，在 ANSI 之前，<code>calloc()</code> 也返回指向 <code>char</code> 的指针；在 ANSI 之后，返回指向 <code>void</code> 的指针。如果要储存不同的类型，应使用强制类型转换运算符。<code>calloc()</code> 函数接受两个无符号整数作为参数（ANSI 规定是 <code>size_t</code> 类型）。第 1 个参数是所需的存储单元数量，第 2 个参数是存储单元的大小（以字节为单位）。在该例中，<code>long</code> 为 4 字节，所以，前面的代码创建了 100 个 4 字节的存储单元，总共 400 字节。</p>
+<p>用 <code>sizeof(long)</code> 而不是 4，提高了代码的可移植性。这样，在其他 <code>long</code> 不是 4 字节的系统中也能正常工作。</p>
+<p><code>calloc()</code> 函数还有一个特性：它把块中的所有位都设置为 0（注意，在某些硬件系统中，不是把所有位都设置为 0 来表示浮点值 0）</p>
+<p><code>free()</code> 函数也可用于释放 <code>calloc()</code> 分配的内存。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>内存用于存储程序中的数据，由存储期、作用域和链接表征。存储期可以是静态的、自动的或动态分配的。如果是静态存储期，在程序开始执行时分配内存，并在程序运行时都存在。如果是自动存储期，在程序进入变量定义所在块时分配变量的内存，在程序离开块时释放内存。如果是动态分配存储期，在调用 <code>malloc()</code>（或相关函数）时分配内存，在调用 <code>free()</code> 函数时释放内存。</p>
+<p>作用域决定程序的哪些部分可以访问某数据。定义在所有函数之外的变量具有文件作用域，对位于该变量声明之后的所有函数可见。定义在块或作为函数形参内的变量具有块作用域，只对该块以及它包含的嵌套块可见。</p>
+<p>链接描述定义在程序某翻译单元中的变量可被链接的程度。具有块作用域的变量是局部变量，无链接。具有文件作用域的变量可以是内部链接或外部链接。内部链接意味着只有其定义所在的文件才能使用该变量。外部链接意味着其他文件使用也可以使用该变量。</p>
+<p>下面是 C 的 5 种存储类别（不包括线程的概念）。</p>
+<ul>
+<li><strong>自动</strong>——在块中不带存储类别说明符或带 <code>auto</code> 存储类别说明符声明的变量（或作为函数头中的形参）属于自动存储类别，具有自动存储期、块作用域、无链接。如果未初始化自动变量，它的值是未定义的。</li>
+<li><strong>寄存器</strong>——在块中带 <code>register</code> 存储类别说明符声明的变量（或作为函数头中的形参）属于寄存器存储类别，具有自动存储期、块作用域、无链接，且无法获取其地址。把一个变量声明为寄存器变量即请求编译器将其储存到访问速度最快的区域。如果未初始化寄存器变量，它的值是未定义的。</li>
+<li><strong>静态、无链接</strong>——在块中带 <code>static</code> 存储类别说明符声明的变量属于“静态、无链接”存储类别，具有静态存储期、块作用域、无链接。只在编译时被初始化一次。如果未显式初始化，它的字节都被设置为 0。</li>
+<li><strong>静态、外部链接</strong>——在所有函数外部且没有使用 <code>static</code> 存储类别说明符声明的变量属于“静态、外部链接”存储类别，具有静态存储期、文件作用域、外部链接。只能在编译器被初始化一次。如果未显式初始化，它的字节都被设置为 0。</li>
+<li><strong>静态、内部链接</strong>——在所有函数外部且使用了 <code>static</code> 存储类别说明符声明的变量属于“静态、内部链接”存储类别，具有静态存储期、文件作用域、内部链接。只能在编译器被初始化一次。如果未显式初始化，它的字节都被设置为 0。</li>
+</ul>
+<p>动态分配的内存由 <code>malloc()</code>（或相关）函数分配，该函数返回一个指向指定字节数内存块的指针。这块内存被 <code>free()</code> 函数释放后便可重复使用，<code>free()</code> 函数以该内存块的地址作为参数。</p>
+<p>类型限定符 <code>const</code>、<code>volatile</code>、<code>restrict</code> 和 <code>_Atomic</code>。<code>const</code> 限定符限定数据在程序运行时不能改变。对指针使用 <code>const</code> 时，可限定指针本身不能改变或指针指向的数据不能改变，这取决于 <code>const</code> 在指针声明中的位置。<code>volatile</code> 限定符表明，限定的数据除了被当前程序修改外还可以被其他进程修改。该限定符的目的是警告编译器不要进行假定的优化。<code>restrict</code> 限定符也是为了方便编译器设置优化方案。<code>restrict</code> 限定的指针是访问它所指向数据的唯一途径。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>C Primer Plus</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/10/20230410-iOS%E4%BD%BF%E7%94%A8fastlane%E6%89%93%E5%8C%85/" rel="prev" title="iOS 使用 fastlane 打包">
+                  <i class="fa fa-angle-left"></i> iOS 使用 fastlane 打包
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/20/20230420-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Git%20%E8%BF%9B%E8%A1%8C%E9%AB%98%E6%95%88%E7%9A%84%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" rel="next" title="如何使用 Git 进行高效的版本控制">
+                  如何使用 Git 进行高效的版本控制 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="类型缩小假设我们有一个名为 padLeft 的函数。 123function padLeft(padding: number | string, input: string): string &#123;  throw new Error(&quot;Not implemented yet!&quot;);&#125;  如果 padding 是 number，它会将其视为我们想要添加到 inpu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript学习之类型缩小">
+<meta property="og:url" content="https://regulusleow.github.io/2024/01/23/20240123-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="类型缩小假设我们有一个名为 padLeft 的函数。 123function padLeft(padding: number | string, input: string): string &#123;  throw new Error(&quot;Not implemented yet!&quot;);&#125;  如果 padding 是 number，它会将其视为我们想要添加到 inpu">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.333Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2024/01/23/20240123-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2024/01/23/20240123-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F/","path":"2024/01/23/20240123-TypeScript学习之类型缩小/","title":"TypeScript学习之类型缩小"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TypeScript学习之类型缩小 | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F"><span class="nav-number">1.</span> <span class="nav-text">类型缩小</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#typeof-%E7%B1%BB%E5%9E%8B%E4%BF%9D%E6%8A%A4"><span class="nav-number">1.1.</span> <span class="nav-text">typeof 类型保护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%9F%E5%AE%9E%E6%80%A7%E7%BC%A9%E5%B0%8F"><span class="nav-number">1.2.</span> <span class="nav-text">真实性缩小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E7%AD%89%E6%80%A7%E7%BC%A9%E5%B0%8F"><span class="nav-number">1.3.</span> <span class="nav-text">相等性缩小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#in-%E8%BF%90%E7%AE%97%E7%AC%A6%E7%BC%A9%E5%B0%8F"><span class="nav-number">1.4.</span> <span class="nav-text">in 运算符缩小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceof-%E7%BC%A9%E5%B0%8F"><span class="nav-number">1.5.</span> <span class="nav-text">instanceof 缩小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%B1%BB%E5%9E%8B%E8%B0%93%E8%AF%8D"><span class="nav-number">1.6.</span> <span class="nav-text">使用类型谓词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E5%88%AB%E8%81%94%E5%90%88"><span class="nav-number">1.7.</span> <span class="nav-text">判别联合</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2024/01/23/20240123-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TypeScript学习之类型缩小 | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TypeScript学习之类型缩小
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-23 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-23T00:00:00+08:00">2024-01-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/01/23/20240123-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%B0%8F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/01/23/20240123-TypeScript学习之类型缩小/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="类型缩小"><a href="#类型缩小" class="headerlink" title="类型缩小"></a>类型缩小</h2><p>假设我们有一个名为 <code>padLeft</code> 的函数。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">padLeft</span>(<span class="params"><span class="attr">padding</span>: <span class="built_in">number</span> | <span class="built_in">string</span>, <span class="attr">input</span>: <span class="built_in">string</span></span>): <span class="built_in">string</span> &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;Not implemented yet!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>padding</code> 是 <code>number</code>，它会将其视为我们想要添加到 <code>input</code> 的空格数。如果 <code>padding</code> 是 <code>string</code>，它应该只是将 <code>padding</code> 前置到 <code>input</code>。让我们尝试实现当 <code>padLeft</code> 为 <code>padding</code> 传递 <code>number</code> 时的逻辑。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">padLeft</span>(<span class="params"><span class="attr">padding</span>: <span class="built_in">number</span> | <span class="built_in">string</span>, <span class="attr">input</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot; &quot;</span>.<span class="title function_">repeat</span>(padding) + input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>哦，我们在 <code>padding</code> 上遇到错误。TypeScript 警告我们，将 <code>number | string</code> 添加到 <code>number</code> 可能不会给我们想要的东西，这是正确的。换句话说，我们没有先明确检查 <code>padding</code> 是否是 <code>number</code>，也没有处理它是 <code>string</code> 的情况，所以让我们这样做。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">padLeft</span>(<span class="params"><span class="attr">padding</span>: <span class="built_in">number</span> | <span class="built_in">string</span>, <span class="attr">input</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> padding === <span class="string">&quot;number&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot; &quot;</span>.<span class="title function_">repeat</span>(padding) + input;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> padding + input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果这看起来像是无趣的 JavaScript 代码，那就是重点。除了我们放置的注释之外，这个 TypeScript 代码看起来像 JavaScript。这个想法是 TypeScript 的类型系统旨在使编写典型的 JavaScript 代码尽可能容易，而无需向后兼容以获得类型安全。</p>
+<span id="more"></span>
+
+<p>虽然它可能看起来不多，但实际上这里有很多东西。就像 TypeScript 如何使用静态类型分析运行时值一样，它在 JavaScript 的运行时控制流结构（如 <code>if/else</code>、条件三元组、循环、真实性检查等）上进行类型分析，这些都会影响这些类型。</p>
+<p>在我们的 <code>if</code> 检查中，TypeScript 看到 <code>typeof padding === &quot;number&quot;</code> 并将其理解为一种称为类型保护的特殊形式的代码。TypeScript 遵循我们的程序可以采用的可能执行路径来分析给定位置的值的最具体的可能类型。它着眼于这些特殊检查（称为类型保护）和赋值，将类型精炼为比声明的更具体的类型的过程称为缩小。在许多编辑器中，我们可以观察这些类型的变化，我们甚至会在示例中这样做。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">padLeft</span>(<span class="params"><span class="attr">padding</span>: <span class="built_in">number</span> | <span class="built_in">string</span>, <span class="attr">input</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> padding === <span class="string">&quot;number&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot; &quot;</span>.<span class="title function_">repeat</span>(padding) + input;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> padding + input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>TypeScript 可以理解几种不同的结构来缩小类型。</p>
+<h3 id="typeof-类型保护"><a href="#typeof-类型保护" class="headerlink" title="typeof 类型保护"></a>typeof 类型保护</h3><p>正如我们所见，JavaScript 支持 <code>typeof</code> 运算符，它可以提供关于我们在运行时拥有的值类型的非常基本的信息。TypeScript 期望它返回一组特定的字符串：</p>
+<ul>
+<li><code>&quot;string&quot;</code></li>
+<li><code>&quot;number&quot;</code></li>
+<li><code>&quot;bigint&quot;</code></li>
+<li><code>&quot;boolean&quot;</code></li>
+<li><code>&quot;symbol&quot;</code></li>
+<li><code>&quot;undefined&quot;</code></li>
+<li><code>&quot;object&quot;</code></li>
+<li><code>&quot;function&quot;</code></li>
+</ul>
+<p>就像我们在 <code>padLeft</code> 中看到的那样，这个运算符经常出现在许多 JavaScript 库中，TypeScript 可以理解它来缩小不同分支中的类型。</p>
+<p>在 TypeScript 中，检查 <code>typeof</code> 返回的值是一种类型保护。因为 TypeScript 编码了 <code>typeof</code> 如何对不同的值进行操作，所以它知道它在 JavaScript 中的一些怪癖。例如，请注意在上面的列表中，<code>typeof</code> 不返回字符串 <code>null</code>。查看以下示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">printAll</span>(<span class="params"><span class="attr">strs</span>: <span class="built_in">string</span> | <span class="built_in">string</span>[] | <span class="literal">null</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> strs === <span class="string">&quot;object&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> s <span class="keyword">of</span> strs) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(s);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> strs === <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(strs);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// do nothing</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>printAll</code> 函数中，我们尝试检查 <code>strs</code> 是否为对象以查看它是否为数组类型（现在可能是强化数组是 JavaScript 中的对象类型的好时机）。但事实证明，在 JavaScript 中，<code>typeof null</code> 实际上是 <code>&quot;object&quot;</code>！这是历史上不幸的事故之一。</p>
+<p>有足够经验的用户可能不会感到惊讶，但并不是每个人都在 JavaScript 中遇到过这种情况；幸运的是，TypeScript 让我们知道 <code>strs</code> 仅缩小到 <code>string[] | null</code> 而不仅仅是 <code>string[]</code>。</p>
+<p>这可能是我们称之为 “truthiness” 检查的一个很好的转义。</p>
+<h3 id="真实性缩小"><a href="#真实性缩小" class="headerlink" title="真实性缩小"></a>真实性缩小</h3><p>真实性可能不是您在字典中可以找到的词，但您会在 JavaScript 中听到很多东西。</p>
+<p>在 JavaScript 中，我们可以在条件、<code>&amp;&amp;</code>、<code>||</code>、<code>if</code> 语句、布尔否定 (<code>!</code>) 等中使用任何表达式。例如，<code>if</code> 语句不希望它们的条件总是具有 <code>boolean</code> 类型。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getUsersOnlineMessage</span>(<span class="params"><span class="attr">numUsersOnline</span>: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (numUsersOnline) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`There are <span class="subst">$&#123;numUsersOnline&#125;</span> online now!`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;Nobody&#x27;s here. :(&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 JavaScript 中，像 <code>if</code> 这样的构造首先将它们的条件 “coerce” 到 <code>boolean</code> 以理解它们，然后根据结果是 <code>true</code> 还是 <code>false</code> 来选择它们的分支。像这样的值</p>
+<ul>
+<li><code>0</code></li>
+<li><code>NaN</code></li>
+<li><code>&quot;&quot;</code>（空字符串）</li>
+<li><code>0n</code>（<code>bigint</code>版零）</li>
+<li><code>null</code></li>
+<li><code>undefined</code></li>
+</ul>
+<p>所有强制为 <code>false</code>，其他值强制为 <code>true</code>。您始终可以通过 <code>Boolean</code> 函数或使用较短的双布尔否定来将值强制为 <code>boolean</code>。（后者的优点是 TypeScript 推断出一个缩小的字面布尔类型 <code>true</code>，而将第一个推断为类型 <code>boolean</code>。）</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// both of these result in &#x27;true&#x27;</span></span><br><span class="line"><span class="title class_">Boolean</span>(<span class="string">&quot;hello&quot;</span>); <span class="comment">// type: boolean, value: true</span></span><br><span class="line">!!<span class="string">&quot;world&quot;</span>; <span class="comment">// type: true,    value: true</span></span><br></pre></td></tr></table></figure>
+
+<p>利用这种行为相当流行，尤其是在防范 <code>null</code> 或 <code>undefined</code> 之类的值时。例如，让我们尝试将它用于我们的 <code>printAll</code> 函数。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">printAll</span>(<span class="params"><span class="attr">strs</span>: <span class="built_in">string</span> | <span class="built_in">string</span>[] | <span class="literal">null</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (strs &amp;&amp; <span class="keyword">typeof</span> strs === <span class="string">&quot;object&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> s <span class="keyword">of</span> strs) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(s);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> strs === <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(strs);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你会注意到我们已经通过检查 <code>strs</code> 是否为真消除了上面的错误。这至少可以防止我们在运行以下代码时出现可怕的错误：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: null is not iterable</span><br></pre></td></tr></table></figure>
+
+<p>请记住，尽管对原语进行真实性检查通常容易出错。例如，考虑编写 <code>printAll</code> 的不同尝试</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">printAll</span>(<span class="params"><span class="attr">strs</span>: <span class="built_in">string</span> | <span class="built_in">string</span>[] | <span class="literal">null</span></span>) &#123;</span><br><span class="line">  <span class="comment">// !!!!!!!!!!!!!!!!</span></span><br><span class="line">  <span class="comment">//  DON&#x27;T DO THIS!</span></span><br><span class="line">  <span class="comment">//   KEEP READING</span></span><br><span class="line">  <span class="comment">// !!!!!!!!!!!!!!!!</span></span><br><span class="line">  <span class="keyword">if</span> (strs) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> strs === <span class="string">&quot;object&quot;</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> s <span class="keyword">of</span> strs) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(s);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> strs === <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(strs);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们将整个函数体包装在一个真值检查中，但这有一个微妙的缺点：我们可能不再正确处理空字符串大小写。</p>
+<p>TypeScript 在这里根本不会伤害我们，但如果您对 JavaScript 不太熟悉，这是值得注意的行为。TypeScript 通常可以帮助您及早发现错误，但如果您选择对值不做任何事情，那么它可以做的事情就只有这么多，而不会过于规范。如果您愿意，您可以确保使用 linter 处理此类情况。</p>
+<p>关于真实性缩小的最后一句话是带有 <code>!</code> 的布尔否定从否定分支中过滤掉。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">multiplyAll</span>(<span class="params"></span></span><br><span class="line"><span class="params">  <span class="attr">values</span>: <span class="built_in">number</span>[] | <span class="literal">undefined</span>,</span></span><br><span class="line"><span class="params">  <span class="attr">factor</span>: <span class="built_in">number</span></span></span><br><span class="line"><span class="params"></span>): <span class="built_in">number</span>[] | <span class="literal">undefined</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (!values) &#123;</span><br><span class="line">    <span class="keyword">return</span> values;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> values.<span class="title function_">map</span>(<span class="function">(<span class="params">x</span>) =&gt;</span> x * factor);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="相等性缩小"><a href="#相等性缩小" class="headerlink" title="相等性缩小"></a>相等性缩小</h3><p>TypeScript 还使用 <code>switch</code> 语句和 <code>===</code>、<code>!==</code>、<code>==</code> 和 <code>!=</code> 等相等性检查来缩小类型。例如：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">example</span>(<span class="params"><span class="attr">x</span>: <span class="built_in">string</span> | <span class="built_in">number</span>, <span class="attr">y</span>: <span class="built_in">string</span> | <span class="built_in">boolean</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (x === y) &#123;</span><br><span class="line">    <span class="comment">// We can now call any &#x27;string&#x27; method on &#x27;x&#x27; or &#x27;y&#x27;.</span></span><br><span class="line">    x.<span class="title function_">toUpperCase</span>();</span><br><span class="line">    y.<span class="title function_">toLowerCase</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(x);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(y);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当我们在上面的示例中检查 <code>x</code> 和 <code>y</code> 是否相等时，TypeScript 知道它们的类型也必须相等。由于 <code>string</code> 是 <code>x</code> 和 <code>y</code> 都可以采用的唯一常见类型，TypeScript 知道 <code>x</code> 和 <code>y</code> 在第一个分支中必须是 <code>string</code>。</p>
+<p>检查特定的字面值（而不是变量）也可以。在我们关于真实性缩小的部分中，我们编写了一个容易出错的 <code>printAll</code> 函数，因为它意外地没有正确处理空字符串。相反，我们可以做一个特定的检查来阻止 <code>null</code>，TypeScript 仍然正确地从 <code>strs</code> 的类型中删除 <code>null</code>。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">printAll</span>(<span class="params"><span class="attr">strs</span>: <span class="built_in">string</span> | <span class="built_in">string</span>[] | <span class="literal">null</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (strs !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> strs === <span class="string">&quot;object&quot;</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> s <span class="keyword">of</span> strs) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(s);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> strs === <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(strs);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript 对 <code>==</code> 和 <code>!=</code> 的更宽松的相等性检查也正确地缩小了类型。如果您不熟悉，检查某事 <code>== null</code> 是否实际上不仅检查它是否具体是值 <code>null</code> - 它还检查它是否可能是 <code>undefined</code>。这同样适用于 <code>== undefined</code>：它检查一个值是 <code>null</code> 还是 <code>undefined</code>。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Container</span> &#123;</span><br><span class="line">  <span class="attr">value</span>: <span class="built_in">number</span> | <span class="literal">null</span> | <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">multiplyValue</span>(<span class="params"><span class="attr">container</span>: <span class="title class_">Container</span>, <span class="attr">factor</span>: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">  <span class="comment">// Remove both &#x27;null&#x27; and &#x27;undefined&#x27; from the type.</span></span><br><span class="line">  <span class="keyword">if</span> (container.<span class="property">value</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(container.<span class="property">value</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Now we can safely multiply &#x27;container.value&#x27;.</span></span><br><span class="line">    container.<span class="property">value</span> *= factor;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="in-运算符缩小"><a href="#in-运算符缩小" class="headerlink" title="in 运算符缩小"></a>in 运算符缩小</h3><p>JavaScript 有一个运算符，用于确定对象是否具有带名称的属性：<code>in</code> 运算符。TypeScript 将这一点视为缩小潜在类型的一种方式。</p>
+<p>例如，使用代码：<code>&quot;value&quot; in x</code>。其中 <code>&quot;value&quot;</code> 是字符串字面，<code>x</code> 是联合类型。”true” 分支缩小了 <code>x</code> 具有可选或必需属性 <code>value</code> 的类型，而 “false” 分支缩小了具有可选或缺少属性 <code>value</code> 的类型。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Fish</span> = &#123; <span class="attr">swim</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Bird</span> = &#123; <span class="attr">fly</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">move</span>(<span class="params"><span class="attr">animal</span>: <span class="title class_">Fish</span> | <span class="title class_">Bird</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">&quot;swim&quot;</span> <span class="keyword">in</span> animal) &#123;</span><br><span class="line">    <span class="keyword">return</span> animal.<span class="title function_">swim</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> animal.<span class="title function_">fly</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重申一下可选属性将存在于类型缩小的两侧，例如人类既可以游泳又可以飞行（使用正确的设备），因此应该出现在 <code>in</code> 检查的两侧：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Fish</span> = &#123; <span class="attr">swim</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Bird</span> = &#123; <span class="attr">fly</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Human</span> = &#123; <span class="attr">swim</span>?: <span class="function">() =&gt;</span> <span class="built_in">void</span>; <span class="attr">fly</span>?: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">move</span>(<span class="params"><span class="attr">animal</span>: <span class="title class_">Fish</span> | <span class="title class_">Bird</span> | <span class="title class_">Human</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">&quot;swim&quot;</span> <span class="keyword">in</span> animal) &#123;</span><br><span class="line">    animal;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    animal;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="instanceof-缩小"><a href="#instanceof-缩小" class="headerlink" title="instanceof 缩小"></a>instanceof 缩小</h3><p>JavaScript 有一个运算符用于检查一个值是否是另一个值的 “instance”。更具体地说，在 JavaScript 中，<code>x instanceof Foo</code> 检查 <code>x</code> 的原型链是否包含 <code>Foo.prototype</code>。虽然我们不会在这里深入探讨，并且当我们进入类时您会看到更多内容，但它们对于可以使用 <code>new</code> 构造的大多数值仍然很有用。你可能已经猜到了，<code>instanceof</code> 也是一个类型保护，TypeScript 缩小了由 <code>instanceof</code> 保护的分支。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">logValue</span>(<span class="params"><span class="attr">x</span>: <span class="title class_">Date</span> | <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (x <span class="keyword">instanceof</span> <span class="title class_">Date</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(x.<span class="title function_">toUTCString</span>());</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(x.<span class="title function_">toUpperCase</span>());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用类型谓词"><a href="#使用类型谓词" class="headerlink" title="使用类型谓词"></a>使用类型谓词</h3><p>到目前为止，我们已经使用现有的 JavaScript 结构来处理类型缩小，但是有时您希望更直接地控制类型在整个代码中的变化方式。</p>
+<p>要定义用户定义的类型保护，我们只需要定义一个返回类型为类型谓词的函数：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Fish</span> = &#123; <span class="attr">swim</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Bird</span> = &#123; <span class="attr">fly</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;;</span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">getSmallPet</span>(<span class="params"></span>): <span class="title class_">Fish</span> | <span class="title class_">Bird</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isFish</span>(<span class="params"><span class="attr">pet</span>: <span class="title class_">Fish</span> | <span class="title class_">Bird</span></span>): pet is <span class="title class_">Fish</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> (pet <span class="keyword">as</span> <span class="title class_">Fish</span>).<span class="property">swim</span> !== <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>pet is Fish</code> 是本例中的类型谓词。谓词采用 <code>parameterName is Type</code> 的形式，其中 <code>parameterName</code> 必须是当前函数签名中的参数名称。</p>
+<p>任何时候使用某个变量调用 <code>isFish</code> 时，如果原始类型兼容，TypeScript 就会将该变量缩小到该特定类型。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Fish</span> = &#123; <span class="attr">swim</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Bird</span> = &#123; <span class="attr">fly</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;;</span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">getSmallPet</span>(<span class="params"></span>): <span class="title class_">Fish</span> | <span class="title class_">Bird</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isFish</span>(<span class="params"><span class="attr">pet</span>: <span class="title class_">Fish</span> | <span class="title class_">Bird</span></span>): pet is <span class="title class_">Fish</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> (pet <span class="keyword">as</span> <span class="title class_">Fish</span>).<span class="property">swim</span> !== <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Both calls to &#x27;swim&#x27; and &#x27;fly&#x27; are now okay.</span></span><br><span class="line"><span class="keyword">let</span> pet = <span class="title function_">getSmallPet</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">isFish</span>(pet)) &#123;</span><br><span class="line">  pet.<span class="title function_">swim</span>();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  pet.<span class="title function_">fly</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意，TypeScript 不仅知道 <code>if</code> 分支中的 <code>pet</code> 是 <code>Fish</code>；它也知道在<code>else</code>分支中，你没有<code>Fish</code>，所以你必须有<code>Bird</code>。</p>
+<p>您可以使用类型保护 <code>isFish</code> 过滤 <code>Fish | Bird</code> 的数组并获得 <code>Fish</code> 的数组：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Fish</span> = &#123; <span class="attr">swim</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span>; <span class="attr">name</span>: <span class="built_in">string</span> &#125;;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Bird</span> = &#123; <span class="attr">fly</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span>; <span class="attr">name</span>: <span class="built_in">string</span> &#125;;</span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">getSmallPet</span>(<span class="params"></span>): <span class="title class_">Fish</span> | <span class="title class_">Bird</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isFish</span>(<span class="params"><span class="attr">pet</span>: <span class="title class_">Fish</span> | <span class="title class_">Bird</span></span>): pet is <span class="title class_">Fish</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> (pet <span class="keyword">as</span> <span class="title class_">Fish</span>).<span class="property">swim</span> !== <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">zoo</span>: (<span class="title class_">Fish</span> | <span class="title class_">Bird</span>)[] = [<span class="title function_">getSmallPet</span>(), <span class="title function_">getSmallPet</span>(), <span class="title function_">getSmallPet</span>()];</span><br><span class="line"><span class="keyword">const</span> <span class="attr">underWater1</span>: <span class="title class_">Fish</span>[] = zoo.<span class="title function_">filter</span>(isFish);</span><br><span class="line"><span class="comment">// or, equivalently</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">underWater2</span>: <span class="title class_">Fish</span>[] = zoo.<span class="title function_">filter</span>(isFish) <span class="keyword">as</span> <span class="title class_">Fish</span>[];</span><br><span class="line"></span><br><span class="line"><span class="comment">// The predicate may need repeating for more complex examples</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">underWater3</span>: <span class="title class_">Fish</span>[] = zoo.<span class="title function_">filter</span>((pet): pet is <span class="title class_">Fish</span> =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (pet.<span class="property">name</span> === <span class="string">&quot;sharkey&quot;</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">isFish</span>(pet);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>另外，类可以<a target="_blank" rel="noopener" href="https://nodejs.cn/typescript/handbook/narrowing/##1cef09dc354d4c04a66f6e38820a8ea3">使用 <code>this is Type</code></a>来缩小他们的类型。</p>
+<h3 id="判别联合"><a href="#判别联合" class="headerlink" title="判别联合"></a>判别联合</h3><p>到目前为止，我们看到的大多数示例都集中在使用简单类型（如 <code>string</code>、<code>boolean</code> 和 <code>number</code>）来缩小单个变量的作用域。虽然这很常见，但大多数时候在 JavaScript 中我们将处理稍微复杂的结构。</p>
+<p>出于某种动机，假设我们正在尝试对圆形和正方形等形状进行编码。圆记录它们的半径，正方形记录它们的边长。我们将使用一个名为 <code>kind</code> 的字段来判断我们正在处理的形状。这是定义 <code>Shape</code> 的第一次尝试。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Shape</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;circle&quot;</span> | <span class="string">&quot;square&quot;</span>;</span><br><span class="line">  <span class="attr">radius</span>?: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">sideLength</span>?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意，我们使用字符串字面类型的联合：<code>&quot;circle&quot;</code> 和 <code>&quot;square&quot;</code> 来告诉我们应该将形状分别视为圆形还是方形。通过使用 <code>&quot;circle&quot; | &quot;square&quot;</code> 而不是 <code>string</code>，我们可以避免拼写错误的问题。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Shape</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;circle&quot;</span> | <span class="string">&quot;square&quot;</span>;</span><br><span class="line">  <span class="attr">radius</span>?: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">sideLength</span>?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">handleShape</span>(<span class="params"><span class="attr">shape</span>: <span class="title class_">Shape</span></span>) &#123;</span><br><span class="line">  <span class="comment">// oops!</span></span><br><span class="line">  <span class="keyword">if</span> (shape.<span class="property">kind</span> === <span class="string">&quot;rect&quot;</span>) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以编写一个 <code>getArea</code> 函数，根据它是处理圆形还是正方形来应用正确的逻辑。我们将首先尝试处理圈子。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Shape</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;circle&quot;</span> | <span class="string">&quot;square&quot;</span>;</span><br><span class="line">  <span class="attr">radius</span>?: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">sideLength</span>?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getArea</span>(<span class="params"><span class="attr">shape</span>: <span class="title class_">Shape</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="property">PI</span> * shape.<span class="property">radius</span> ** <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <a target="_blank" rel="noopener" href="https://nodejs.cn/typescript/handbook/narrowing/##c8ae1aa9dc0a4972be0e6d6f1ab46085"><code>strictNullChecks</code></a> 下给我们一个错误 - 这是适当的，因为 <code>radius</code> 可能没有定义。但是如果我们对 <code>kind</code> 属性进行适当的检查呢？</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Shape</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;circle&quot;</span> | <span class="string">&quot;square&quot;</span>;</span><br><span class="line">  <span class="attr">radius</span>?: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">sideLength</span>?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getArea</span>(<span class="params"><span class="attr">shape</span>: <span class="title class_">Shape</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (shape.<span class="property">kind</span> === <span class="string">&quot;circle&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="property">PI</span> * shape.<span class="property">radius</span> ** <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>嗯，TypeScript 还是不知道在这里做什么。我们已经达到了比类型检查器更了解我们的值的地步。我们可以尝试使用非空断言（<code>shape.radius</code> 之后的 <code>!</code>）来表示 <code>radius</code> 肯定存在。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Shape</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;circle&quot;</span> | <span class="string">&quot;square&quot;</span>;</span><br><span class="line">  <span class="attr">radius</span>?: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">sideLength</span>?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getArea</span>(<span class="params"><span class="attr">shape</span>: <span class="title class_">Shape</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (shape.<span class="property">kind</span> === <span class="string">&quot;circle&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="property">PI</span> * shape.<span class="property">radius</span>! ** <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但这感觉并不理想。我们不得不用那些非空断言（<code>!</code>）对类型检查器大喊大叫，以说服它定义了 <code>shape.radius</code>，但是如果我们开始移动代码，这些断言很容易出错。此外，在 <a target="_blank" rel="noopener" href="https://nodejs.cn/typescript/handbook/narrowing/##c8ae1aa9dc0a4972be0e6d6f1ab46085"><code>strictNullChecks</code></a> 之外，我们无论如何都可以意外访问这些字段中的任何一个（因为在读取它们时假定可选属性始终存在）。我们绝对可以做得更好。</p>
+<p>这种 <code>Shape</code> 编码的问题在于，类型检查器无法根据 <code>kind</code> 属性知道是否存在 <code>radius</code> 或 <code>sideLength</code>。我们需要将我们所知道的信息传达给类型检查器。考虑到这一点，让我们再次定义 <code>Shape</code>。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Circle</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;circle&quot;</span>;</span><br><span class="line">  <span class="attr">radius</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Square</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;square&quot;</span>;</span><br><span class="line">  <span class="attr">sideLength</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Shape</span> = <span class="title class_">Circle</span> | <span class="title class_">Square</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，我们已经正确地将 <code>Shape</code> 分成了 <code>kind</code> 属性具有不同值的两种类型，但是 <code>radius</code> 和 <code>sideLength</code> 在它们各自的类型中被声明为必需的属性。</p>
+<p>让我们看看当我们尝试访问 <code>Shape</code> 的 <code>radius</code> 时会发生什么。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Circle</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;circle&quot;</span>;</span><br><span class="line">  <span class="attr">radius</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Square</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;square&quot;</span>;</span><br><span class="line">  <span class="attr">sideLength</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Shape</span> = <span class="title class_">Circle</span> | <span class="title class_">Square</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getArea</span>(<span class="params"><span class="attr">shape</span>: <span class="title class_">Shape</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="property">PI</span> * shape.<span class="property">radius</span> ** <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就像我们对 <code>Shape</code> 的第一个定义一样，这仍然是一个错误。当 <code>radius</code> 是可选的时，我们得到一个错误（启用 <a target="_blank" rel="noopener" href="https://nodejs.cn/typescript/handbook/narrowing/##c8ae1aa9dc0a4972be0e6d6f1ab46085"><code>strictNullChecks</code></a>），因为 TypeScript 无法判断该属性是否存在。现在 <code>Shape</code> 是一个联合，TypeScript 告诉我们 <code>shape</code> 可能是一个 <code>Square</code>，而 <code>Square</code> 上没有定义 <code>radius</code>！两种解释都是正确的，但是无论 <a target="_blank" rel="noopener" href="https://nodejs.cn/typescript/handbook/narrowing/##c8ae1aa9dc0a4972be0e6d6f1ab46085"><code>strictNullChecks</code></a> 是如何配置的，只有 <code>Shape</code> 的联合编码会导致错误。</p>
+<p>但是，如果我们再次尝试检查 <code>kind</code> 属性会怎样？</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Circle</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;circle&quot;</span>;</span><br><span class="line">  <span class="attr">radius</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Square</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;square&quot;</span>;</span><br><span class="line">  <span class="attr">sideLength</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Shape</span> = <span class="title class_">Circle</span> | <span class="title class_">Square</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getArea</span>(<span class="params"><span class="attr">shape</span>: <span class="title class_">Shape</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (shape.<span class="property">kind</span> === <span class="string">&quot;circle&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="property">PI</span> * shape.<span class="property">radius</span> ** <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这摆脱了错误！当联合中的每个类型都包含具有字面类型的公共属性时，TypeScript 认为这是一个可区分的联合，并且可以缩小联合的成员。</p>
+<p>在这种情况下，<code>kind</code> 是该公共属性（这被认为是 <code>Shape</code> 的判别属性）。检查 <code>kind</code> 属性是否为 <code>&quot;circle&quot;</code> 删除了 <code>Shape</code> 中没有 <code>&quot;circle&quot;</code> 类型的 <code>kind</code> 属性的所有类型。这将 <code>shape</code> 缩小到 <code>Circle</code> 类型。</p>
+<p>同样的检查也适用于 <code>switch</code> 语句。现在我们可以尝试编写完整的 <code>getArea</code> 而不需要任何讨厌的 <code>!</code> 非空断言。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Circle</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;circle&quot;</span>;</span><br><span class="line">  <span class="attr">radius</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Square</span> &#123;</span><br><span class="line">  <span class="attr">kind</span>: <span class="string">&quot;square&quot;</span>;</span><br><span class="line">  <span class="attr">sideLength</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Shape</span> = <span class="title class_">Circle</span> | <span class="title class_">Square</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getArea</span>(<span class="params"><span class="attr">shape</span>: <span class="title class_">Shape</span></span>) &#123;</span><br><span class="line">  <span class="keyword">switch</span> (shape.<span class="property">kind</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;circle&quot;</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="property">PI</span> * shape.<span class="property">radius</span> ** <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;square&quot;</span>:</span><br><span class="line">      <span class="keyword">return</span> shape.<span class="property">sideLength</span> ** <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里重要的是<code>Shape</code>的编码。向 TypeScript 传达正确的信息 - <code>Circle</code> 和 <code>Square</code> 实际上是具有特定 <code>kind</code> 字段的两种不同类型 - 至关重要。这样做可以让我们编写类型安全的 TypeScript 代码，看起来与我们原本编写的 JavaScript 没有什么不同。从那里，类型系统能够做 “right” 的事情并找出我们 <code>switch</code> 语句的每个分支中的类型。</p>
+<blockquote>
+<p>顺便说一句，尝试使用上面的示例并删除一些返回关键字。您会看到类型检查有助于避免在 <code>switch</code> 语句中意外遇到不同子句时出现错误。</p>
+</blockquote>
+<p>判别联合不仅仅用于讨论圆形和正方形。它们非常适合在 JavaScript 中表示任何类型的消息传递方案，例如通过网络发送消息（客户端&#x2F;服务器通信）或在状态管理框架中编码突变。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 前端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/01/22/20240122-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%A5%E5%B8%B8%E7%B1%BB%E5%9E%8B/" rel="prev" title="TypeScript学习之日常类型">
+                  <i class="fa fa-angle-left"></i> TypeScript学习之日常类型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/02/07/20240207-TypeScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%87%BD%E6%95%B0/" rel="next" title="TypeScript学习之函数">
+                  TypeScript学习之函数 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在讲解数据结构时，数组总是一个大家早期接触的主题。但你可能会发现，不同编程语言中“数组”这一概念的使用方式和 API 有所区别。其实我们可以把「数组」分为两大类： 静态数组静态数组在创建时就已经确定了元素的个数以及连续的内存空间。我们可以通过下标索引访问数组中存储的元素，这正是数组最原始的形式，也是其 “随机访问” 能力得以实现的根本原因。 动态数组动态数组是在静态数组基础上，为了方便编程引入的一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法：数组的基本原理">
+<meta property="og:url" content="https://regulusleow.github.io/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="在讲解数据结构时，数组总是一个大家早期接触的主题。但你可能会发现，不同编程语言中“数组”这一概念的使用方式和 API 有所区别。其实我们可以把「数组」分为两大类： 静态数组静态数组在创建时就已经确定了元素的个数以及连续的内存空间。我们可以通过下标索引访问数组中存储的元素，这正是数组最原始的形式，也是其 “随机访问” 能力得以实现的根本原因。 动态数组动态数组是在静态数组基础上，为了方便编程引入的一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.334Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/","path":"2025/02/16/20250216-数据结构与算法：数组的基本原理/","title":"数据结构与算法：数组的基本原理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据结构与算法：数组的基本原理 | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%95%B0%E7%BB%84"><span class="nav-number">1.</span> <span class="nav-text">静态数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84"><span class="nav-number">2.</span> <span class="nav-text">动态数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">静态数组的基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5"><span class="nav-number">4.</span> <span class="nav-text">数组的增删改查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5-1"><span class="nav-number">4.1.</span> <span class="nav-text">数组的增删改查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0"><span class="nav-number">4.2.</span> <span class="nav-text">在中间插入元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0"><span class="nav-number">4.3.</span> <span class="nav-text">删除元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%9C%AB%E5%B0%BE%E5%85%83%E7%B4%A0%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.3.1.</span> <span class="nav-text">删除末尾元素示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E4%B8%AD%E9%97%B4%E5%85%83%E7%B4%A0%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.3.2.</span> <span class="nav-text">删除中间元素示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%89%A9%E5%AE%B9%E6%80%9D%E6%83%B3"><span class="nav-number">4.3.3.</span> <span class="nav-text">数组的扩容思想</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E4%B8%8E%E5%85%B3%E9%94%AE%E7%82%B9"><span class="nav-number">5.</span> <span class="nav-text">动态数组的代码实现与关键点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数据结构与算法：数组的基本原理 | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构与算法：数组的基本原理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-16 00:00:00" itemprop="dateCreated datePublished" datetime="2025-02-16T00:00:00+08:00">2025-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/02/16/20250216-数据结构与算法：数组的基本原理/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在讲解数据结构时，数组总是一个大家早期接触的主题。但你可能会发现，不同编程语言中“数组”这一概念的使用方式和 API 有所区别。其实我们可以把「数组」分为两大类：</p>
+<h2 id="静态数组"><a href="#静态数组" class="headerlink" title="静态数组"></a>静态数组</h2><p>静态数组在创建时就已经确定了元素的个数以及连续的内存空间。我们可以通过下标索引访问数组中存储的元素，这正是数组最原始的形式，也是其 “随机访问” 能力得以实现的根本原因。</p>
+<h2 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h2><p>动态数组是在静态数组基础上，为了方便编程引入的一层封装。动态数组在内部依然使用静态数组存储数据，但会自动进行扩容和提供一些常用的增删查改 API，如 ⁠<code>push</code>、⁠<code>insert</code>、⁠<code>remove</code> 等。了解动态数组的底层原理，有助于我们深入理解后续实现其他数据结构（例如队列、栈、哈希表等）的核心思想。</p>
+<p>本文将围绕静态数组的基本原理，并用 C 语言代码手把手实现简单版本的动态数组，展示其增删查改操作。</p>
+<span id="more"></span>
+
+<h2 id="静态数组的基本使用"><a href="#静态数组的基本使用" class="headerlink" title="静态数组的基本使用"></a>静态数组的基本使用</h2><p>在 C 语言中，我们可以直接通过如下方式定义一个大小为 10 的静态数组：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 定义一个大小为 10 的静态数组</span></span><br><span class="line">    <span class="type">int</span> arr[<span class="number">10</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 用 memset 函数把数组的值初始化为 0</span></span><br><span class="line">    <span class="built_in">memset</span>(arr, <span class="number">0</span>, <span class="keyword">sizeof</span>(arr));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用索引赋值</span></span><br><span class="line">    arr[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    arr[<span class="number">1</span>] = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用索引取值</span></span><br><span class="line">    <span class="type">int</span> a = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a = %d\n&quot;</span>, a);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中：</p>
+<ol>
+<li><p>数组 ⁠<code>arr</code> 在内存中占用了连续的 ⁠<code>10 * sizeof(int)</code> 字节空间（通常一个 ⁠<code>int</code> 占 4 字节，总共 40 字节）。</p>
+</li>
+<li><p>数组名 ⁠<code>arr</code> 就代表这块内存的首地址，因此 ⁠<code>arr[0]</code> 就是起始地址处的数据，而 ⁠<code>arr[1]</code> 则是偏移 4 字节后存储的数据。</p>
+</li>
+</ol>
+<p>这种连续内存的特性保证了数组的“随机访问”，即给定任何下标，都可以在 <code>O(1)</code> 时间内通过首地址和偏移量直接计算目标元素的内存位置。</p>
+<h2 id="数组的增删改查"><a href="#数组的增删改查" class="headerlink" title="数组的增删改查"></a>数组的增删改查</h2><p>对于静态数组来说，查改操作比较简单，需要给定下标直接访问数据，时间复杂度均为 <code>O(1)</code>。而增删操作则需要考虑两种情况：</p>
+<ul>
+<li><p>在数组<strong>末尾</strong>增加或删除元素</p>
+</li>
+<li><p>在数组<strong>中间</strong>插入或删除元素（这就需要进行数据搬移）</p>
+</li>
+</ul>
+<h3 id="数组的增删改查-1"><a href="#数组的增删改查-1" class="headerlink" title="数组的增删改查"></a>数组的增删改查</h3><p>假设我们有一个大小为 10 的数组，前 4 个位置存储数据，现在直接在末尾追加一个元素：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;  <span class="comment">// 数组初始化为 0</span></span><br><span class="line">    <span class="type">int</span> len = <span class="number">4</span>;        <span class="comment">// 当前已存储 4 个元素</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对前 4 个位置赋值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        arr[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在数组末尾追加一个元素 4</span></span><br><span class="line">    <span class="keyword">if</span> (len &lt; <span class="number">10</span>) &#123;</span><br><span class="line">        arr[len] = <span class="number">4</span>;</span><br><span class="line">        len++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出数组结果</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在末尾追加数据时只需一次赋值操作，时间复杂度为 <code>O(1)</code>。</p>
+<h3 id="在中间插入元素"><a href="#在中间插入元素" class="headerlink" title="在中间插入元素"></a>在中间插入元素</h3><p>如果要在数组的某个中间位置插入一个新元素，就需要先将后面的元素向后搬移，为新元素腾出空间。例如，在下标 2（第三个位置）插入新数据 666：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;  <span class="comment">// 初始化数组</span></span><br><span class="line">    <span class="type">int</span> len = <span class="number">4</span>;        <span class="comment">// 当前有 4 个元素</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 赋初始值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        arr[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> pos = <span class="number">2</span>;      <span class="comment">// 插入位置</span></span><br><span class="line">    <span class="type">int</span> newVal = <span class="number">666</span>; <span class="comment">// 要插入的新元素</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检测是否有足够空间</span></span><br><span class="line">    <span class="keyword">if</span> (len &lt; <span class="number">10</span>) &#123;</span><br><span class="line">        <span class="comment">// 从最后一个元素开始到插入位置，倒序搬移，避免覆盖</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = len; i &gt; pos; i--) &#123;</span><br><span class="line">            arr[i] = arr[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将新元素放入指定位置</span></span><br><span class="line">        arr[pos] = newVal;</span><br><span class="line">        len++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出数组结果</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里需要将位置 <code>pos</code> 之后的所有元素依次后移一位，因此时间复杂度为 <code>O(N)</code>。</p>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><p>删除元素同样分两种情况：</p>
+<ul>
+<li><p>删除<strong>末尾</strong>元素时，只需要将数组长度减少一位，时间复杂度为 <code>O(1)</code>。</p>
+</li>
+<li><p>删除数组中间的元素时，需要将目标元素后面的数据前移一位，时间复杂度为 <code>O(N)</code>。</p>
+</li>
+</ul>
+<h4 id="删除末尾元素示例"><a href="#删除末尾元素示例" class="headerlink" title="删除末尾元素示例"></a>删除末尾元素示例</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="type">int</span> len = <span class="number">5</span>; <span class="comment">// 假设数组中有 5 个元素</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 赋初始值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        arr[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除末尾元素，简单将 len 减 1（此处用 -1 表示已删除，仅作示例）</span></span><br><span class="line">    <span class="keyword">if</span> (len &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        arr[len - <span class="number">1</span>] = <span class="number">-1</span>;  <span class="comment">// 标记为 -1</span></span><br><span class="line">        len--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出数组结果</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除中间元素示例"><a href="#删除中间元素示例" class="headerlink" title="删除中间元素示例"></a>删除中间元素示例</h4><p>例如删除下标 1（第二个元素）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="type">int</span> len = <span class="number">5</span>; <span class="comment">// 假设数组中有 5 个元素</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 赋初始值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        arr[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> pos = <span class="number">1</span>; <span class="comment">// 删除位置</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将 pos 后面的元素依次前移</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = pos; i &lt; len - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        arr[i] = arr[i + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 最后一个位置标记为 -1，代表已删除（仅作示例）</span></span><br><span class="line">    arr[len - <span class="number">1</span>] = <span class="number">-1</span>;</span><br><span class="line">    len--;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出数组结果（仅输出数组中有效的部分）</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="数组的扩容思想"><a href="#数组的扩容思想" class="headerlink" title="数组的扩容思想"></a>数组的扩容思想</h4><p>静态数组的最大问题在于：在创建数组时就必须确定内存大小，一旦数组满了，无法直接在连续内存后面追加更多数据。我们只能重新开辟一块更大的内存，将原有数据复制到新数组中，然后插入新元素。这就是“扩容”操作，其时间复杂度为 <code>O(N)</code>。</p>
+<p>以下示例展示如何扩容一个静态数组：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 初始数组大小为 10</span></span><br><span class="line">    <span class="type">int</span> initCapacity = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span> *arr = (<span class="type">int</span> *)<span class="built_in">malloc</span>(initCapacity * <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="type">int</span> len = initCapacity;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 假设数组已满，赋值 0 ~ 9</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        arr[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 现在需要扩容，创建一个大小为 20 的新数组</span></span><br><span class="line">    <span class="type">int</span> newCapacity = <span class="number">20</span>;</span><br><span class="line">    <span class="type">int</span> *newArr = (<span class="type">int</span> *)<span class="built_in">malloc</span>(newCapacity * <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 把原来数组的数据复制到新数组中</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        newArr[i] = arr[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 释放旧数组内存</span></span><br><span class="line">    <span class="built_in">free</span>(arr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在新的大数组中追加新元素，比如新元素为 10</span></span><br><span class="line">    newArr[len] = <span class="number">10</span>;</span><br><span class="line">    len++;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出新数组中的数据</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, newArr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">free</span>(newArr);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在实际开发中，动态数组的扩容不会在每次添加元素时都发生，而是采用均摊时间复杂度（摊还分析）来评估其操作效率。正因为这种策略，使得在尾部追加元素的均摊时间复杂度依然是 <code>O(1)</code>。</p>
+<h2 id="动态数组的代码实现与关键点"><a href="#动态数组的代码实现与关键点" class="headerlink" title="动态数组的代码实现与关键点"></a>动态数组的代码实现与关键点</h2><p>动态数组是在静态数组基础上进行封装，以便更方便地进行增删查改操作。动态数组解决了静态数组大小固定的问题，最主要的改进包括：</p>
+<ul>
+<li><p><strong>自动扩缩容</strong>：当数组元素个数达到容量上限时，扩容为原来的 2 倍；当元素个数减少到容量的 1&#x2F;4 时，可以缩容为原来的 1&#x2F;2。</p>
+</li>
+<li><p><strong>索引越界检查</strong>：在插入、查找和修改时分别进行检查，保证操作合法。</p>
+</li>
+<li><p><strong>防止内存泄漏</strong>：删除元素时清除相关数据，确保不再使用的数据能被正确释放。</p>
+</li>
+</ul>
+<p>下面我们通过一个完整的 C 语言示例来实现一个只存储整数的动态数组，该示例包含了自动扩容和缩容、插入、删除、查找以及修改等功能。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义动态数组结构，用来存储整数数据</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> *data;      <span class="comment">// 指向存放数据的数组</span></span><br><span class="line">    <span class="type">int</span> size;       <span class="comment">// 当前存储的元素个数</span></span><br><span class="line">    <span class="type">int</span> capacity;   <span class="comment">// 底层数组的容量</span></span><br><span class="line">&#125; DynamicArray;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化动态数组，指定初始容量</span></span><br><span class="line">DynamicArray* <span class="title function_">initDynamicArray</span><span class="params">(<span class="type">int</span> initCapacity)</span> &#123;</span><br><span class="line">    DynamicArray *arr = (DynamicArray*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(DynamicArray));</span><br><span class="line">    <span class="keyword">if</span> (initCapacity &lt; <span class="number">1</span>) &#123;</span><br><span class="line">        initCapacity = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    arr-&gt;data = (<span class="type">int</span>*)<span class="built_in">malloc</span>(initCapacity * <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    arr-&gt;size = <span class="number">0</span>;</span><br><span class="line">    arr-&gt;capacity = initCapacity;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 释放动态数组内存</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">freeDynamicArray</span><span class="params">(DynamicArray *arr)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr) &#123;</span><br><span class="line">        <span class="built_in">free</span>(arr-&gt;data);</span><br><span class="line">        <span class="built_in">free</span>(arr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据新容量 newCap 重新分配内存</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">resize</span><span class="params">(DynamicArray *arr, <span class="type">int</span> newCap)</span> &#123;</span><br><span class="line">    <span class="comment">// 容量至少为 1</span></span><br><span class="line">    <span class="keyword">if</span> (newCap &lt; <span class="number">1</span>) &#123;</span><br><span class="line">        newCap = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> *newData = (<span class="type">int</span>*)<span class="built_in">malloc</span>(newCap * <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="comment">// 搬移数据</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; arr-&gt;size; i++) &#123;</span><br><span class="line">        newData[i] = arr-&gt;data[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 释放旧数组内存</span></span><br><span class="line">    <span class="built_in">free</span>(arr-&gt;data);</span><br><span class="line">    arr-&gt;data = newData;</span><br><span class="line">    arr-&gt;capacity = newCap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 索引检查：用于返回已有元素的位置（查找、修改、删除）</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">checkElementIndex</span><span class="params">(DynamicArray *arr, <span class="type">int</span> index)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt;= arr-&gt;size) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;IndexOutOfBoundsException: Index: %d, Size: %d\n&quot;</span>, index, arr-&gt;size);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 索引检查：用于新增元素时，允许 index == size（插入至末尾）</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">checkPositionIndex</span><span class="params">(DynamicArray *arr, <span class="type">int</span> index)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt; arr-&gt;size) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;IndexOutOfBoundsException: index: %d, Size: %d\n&quot;</span>, index, arr-&gt;size);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印数组内部状态（调试函数）</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">display</span><span class="params">(DynamicArray *arr)</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size = %d, capacity = %d\n&quot;</span>, arr-&gt;size, arr-&gt;capacity);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; arr-&gt;size; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr-&gt;data[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// --- 增 --- //</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在数组末尾追加元素</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">addLast</span><span class="params">(DynamicArray *arr, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">    <span class="comment">// 检查是否需要扩容</span></span><br><span class="line">    <span class="keyword">if</span> (arr-&gt;size == arr-&gt;capacity) &#123;</span><br><span class="line">        resize(arr, arr-&gt;capacity * <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    arr-&gt;data[arr-&gt;size] = val;</span><br><span class="line">    arr-&gt;size++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在指定位置添加元素；允许 index == size（插入空隙）</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">add</span><span class="params">(DynamicArray *arr, <span class="type">int</span> index, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">    checkPositionIndex(arr, index);</span><br><span class="line">    <span class="keyword">if</span> (arr-&gt;size == arr-&gt;capacity) &#123;</span><br><span class="line">        resize(arr, arr-&gt;capacity * <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将 index 后的所有元素向后搬移一位</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = arr-&gt;size - <span class="number">1</span>; i &gt;= index; i--) &#123;</span><br><span class="line">        arr-&gt;data[i + <span class="number">1</span>] = arr-&gt;data[i];</span><br><span class="line">    &#125;</span><br><span class="line">    arr-&gt;data[index] = val;</span><br><span class="line">    arr-&gt;size++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在数组首部添加元素，直接调用 add(index, val)</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">addFirst</span><span class="params">(DynamicArray *arr, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">    add(arr, <span class="number">0</span>, val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// --- 删 --- //</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除数组最后一个元素，并返回该值</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">removeLast</span><span class="params">(DynamicArray *arr)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr-&gt;size == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;NoSuchElementException: Array is empty\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 缩容判断</span></span><br><span class="line">    <span class="keyword">if</span> (arr-&gt;size == arr-&gt;capacity / <span class="number">4</span> &amp;&amp; arr-&gt;capacity &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        resize(arr, arr-&gt;capacity / <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> deletedVal = arr-&gt;data[arr-&gt;size - <span class="number">1</span>];</span><br><span class="line">    <span class="comment">// 清理数据，防止内存泄漏</span></span><br><span class="line">    arr-&gt;data[arr-&gt;size - <span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    arr-&gt;size--;</span><br><span class="line">    <span class="keyword">return</span> deletedVal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除指定位置的元素并返回该值</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">removeAt</span><span class="params">(DynamicArray *arr, <span class="type">int</span> index)</span> &#123;</span><br><span class="line">    checkElementIndex(arr, index);</span><br><span class="line">    <span class="comment">// 缩容判断</span></span><br><span class="line">    <span class="keyword">if</span> (arr-&gt;size == arr-&gt;capacity / <span class="number">4</span> &amp;&amp; arr-&gt;capacity &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        resize(arr, arr-&gt;capacity / <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> deletedVal = arr-&gt;data[index];</span><br><span class="line">    <span class="comment">// 搬移数据，将 index+1 ... end 向前移动</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = index + <span class="number">1</span>; i &lt; arr-&gt;size; i++) &#123;</span><br><span class="line">        arr-&gt;data[i - <span class="number">1</span>] = arr-&gt;data[i];</span><br><span class="line">    &#125;</span><br><span class="line">    arr-&gt;data[arr-&gt;size - <span class="number">1</span>] = <span class="number">0</span>; <span class="comment">// 清理数据</span></span><br><span class="line">    arr-&gt;size--;</span><br><span class="line">    <span class="keyword">return</span> deletedVal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除数组首部元素</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">removeFirst</span><span class="params">(DynamicArray *arr)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> removeAt(arr, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// --- 查 --- //</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取指定索引处的元素</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">get</span><span class="params">(DynamicArray *arr, <span class="type">int</span> index)</span> &#123;</span><br><span class="line">    checkElementIndex(arr, index);</span><br><span class="line">    <span class="keyword">return</span> arr-&gt;data[index];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// --- 改 --- //</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改指定索引处的元素，返回原值</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">set</span><span class="params">(DynamicArray *arr, <span class="type">int</span> index, <span class="type">int</span> newVal)</span> &#123;</span><br><span class="line">    checkElementIndex(arr, index);</span><br><span class="line">    <span class="type">int</span> oldVal = arr-&gt;data[index];</span><br><span class="line">    arr-&gt;data[index] = newVal;</span><br><span class="line">    <span class="keyword">return</span> oldVal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// 测试用例</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 初始容量设为 3</span></span><br><span class="line">    DynamicArray *arr = initDynamicArray(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加 5 个元素：1 2 3 4 5</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;</span><br><span class="line">        addLast(arr, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 此时数组元素为：[1, 2, 3, 4, 5]</span></span><br><span class="line">    display(arr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除下标 3 的元素（即第四个元素 4）</span></span><br><span class="line">    <span class="type">int</span> deleted = removeAt(arr, <span class="number">3</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Removed value: %d\n&quot;</span>, deleted);</span><br><span class="line">    <span class="comment">// 数组更新为：[1, 2, 3, 5]</span></span><br><span class="line">    display(arr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在下标 1 的位置插入元素 9</span></span><br><span class="line">    add(arr, <span class="number">1</span>, <span class="number">9</span>);</span><br><span class="line">    <span class="comment">// 数组更新为：[1, 9, 2, 3, 5]</span></span><br><span class="line">    display(arr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在数组首部插入元素 100</span></span><br><span class="line">    addFirst(arr, <span class="number">100</span>);</span><br><span class="line">    <span class="comment">// 更新为：[100, 1, 9, 2, 3, 5]</span></span><br><span class="line">    display(arr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除数组尾部元素</span></span><br><span class="line">    <span class="type">int</span> lastVal = removeLast(arr);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Removed last value: %d\n&quot;</span>, lastVal);</span><br><span class="line">    <span class="comment">// 数组更新为：[100, 1, 9, 2, 3]</span></span><br><span class="line">    display(arr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查、改示例</span></span><br><span class="line">    <span class="type">int</span> val = get(arr, <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Element at index 2: %d\n&quot;</span>, val);</span><br><span class="line">    <span class="built_in">set</span>(arr, <span class="number">2</span>, <span class="number">66</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;After setting index 2 to 66:\n&quot;</span>);</span><br><span class="line">    display(arr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 释放内存</span></span><br><span class="line">    freeDynamicArray(arr);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>代码说明</strong></p>
+<ol>
+<li><strong>自动扩缩容</strong></li>
+</ol>
+<ul>
+<li><p>在添加元素时，如果 ⁠<code>size == capacity</code>，调用 ⁠<code>resize</code> 扩容为原来的 2 倍。</p>
+</li>
+<li><p>删除元素后，如果 ⁠<code>size == capacity / 4（且容量不小于 1）</code>，进行缩容以节约内存。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>索引越界检查</strong></li>
+</ol>
+<ul>
+<li><p>使用 ⁠<code>checkElementIndex</code> 对已有元素的索引进行检查，确保查找、修改和删除操作在合法范围内。</p>
+</li>
+<li><p>使用 ⁠<code>checkPositionIndex</code> 检查插入操作时允许 ⁠<code>index == size</code> 的情况，从而支持在末尾插入新元素。</p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>防止内存泄漏</strong></li>
+</ol>
+<ul>
+<li>删除元素后，将对应位置的数据置为 <code>0</code>（如果存放的是指针类型，则应调用适当的释放函数），以防止出现悬挂引用的问题。</li>
+</ul>
+<ol start="4">
+<li><strong>其他细节优化</strong></li>
+</ol>
+<ul>
+<li>数据搬移在示例中采用 <code>for</code> 循环实现，这有助于理解底层算法本质；但在生产环境中，可以考虑使用更高效的内存复制函数。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文融合了静态数组与动态数组的相关内容，主要介绍了：</p>
+<ul>
+<li><p>静态数组的内存连续性和基本增删改查操作，其中在中间插入和删除元素需要搬移数据。</p>
+</li>
+<li><p>动态数组在静态数组之上封装了自动扩缩容、索引越界检查与内存清理等功能，使我们在实际开发中能够更灵活、更安全地操作数组。</p>
+</li>
+<li><p>通过 C 语言完整示例展示了动态数组的实现细节，从而帮助大家深入理解其背后的工作原理和设计思路。</p>
+</li>
+</ul>
+<p>希望这篇博客能够帮助你全面理解数组的基本原理及动态数组的实现方法，并为你后续学习队列、栈、哈希表等更复杂的数据结构打下坚实基础！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"><i class="fa fa-tag"></i> 数据结构</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/02/16/20250216-%E7%AE%97%E6%B3%95%EF%BC%9A%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" rel="prev" title="算法：两数之和">
+                  <i class="fa fa-angle-left"></i> 算法：两数之和
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/02/18/20250218-%E7%AE%97%E6%B3%95%EF%BC%9A%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/" rel="next" title="算法：两数相加">
+                  算法：两数相加 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

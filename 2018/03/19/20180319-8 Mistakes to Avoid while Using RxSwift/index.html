@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Judging by the number of talks, articles and discussions related to reactive programming in Swift, it looks like the community has been taken by the storm. It’s not that the concept of reactiveness it">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8 Mistakes to Avoid while Using RxSwift">
+<meta property="og:url" content="https://regulusleow.github.io/2018/03/19/20180319-8%20Mistakes%20to%20Avoid%20while%20Using%20RxSwift/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="Judging by the number of talks, articles and discussions related to reactive programming in Swift, it looks like the community has been taken by the storm. It’s not that the concept of reactiveness it">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180319/1.jpeg">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180319/2.jpeg">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180319/3.jpeg">
+<meta property="article:published_time" content="2018-03-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.327Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="RxSwift">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://regulusleow.github.io/my_pictures/20180319/1.jpeg">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2018/03/19/20180319-8%20Mistakes%20to%20Avoid%20while%20Using%20RxSwift/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2018/03/19/20180319-8%20Mistakes%20to%20Avoid%20while%20Using%20RxSwift/","path":"2018/03/19/20180319-8 Mistakes to Avoid while Using RxSwift/","title":"8 Mistakes to Avoid while Using RxSwift"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>8 Mistakes to Avoid while Using RxSwift | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Not-disposing-a-subscription"><span class="nav-number">1.</span> <span class="nav-text">Not disposing a subscription</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-mental-model-for-subscription-memory-management"><span class="nav-number">2.</span> <span class="nav-text">The mental model for subscription memory-management</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-implementation-of-the-subscribe-method"><span class="nav-number">3.</span> <span class="nav-text">The implementation of the subscribe method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sinking-in-the-sea-of-Observables"><span class="nav-number">4.</span> <span class="nav-text">Sinking in the sea of Observables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sink-full-of-knowledge"><span class="nav-number">5.</span> <span class="nav-text">Sink full of knowledge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Producer%E2%80%98s-reference-cycle-Sink-and-SinkDisposer"><span class="nav-number">6.</span> <span class="nav-text">The Producer‘s reference cycle: Sink and SinkDisposer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-road-goes-ever-on-and-on"><span class="nav-number">7.</span> <span class="nav-text">The road goes ever on and on</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/03/19/20180319-8%20Mistakes%20to%20Avoid%20while%20Using%20RxSwift/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="8 Mistakes to Avoid while Using RxSwift | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          8 Mistakes to Avoid while Using RxSwift
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-03-19 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-19T00:00:00+08:00">2018-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%93%8D%E5%BA%94%E5%BC%8F%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">响应式框架</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/03/19/20180319-8%20Mistakes%20to%20Avoid%20while%20Using%20RxSwift/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/19/20180319-8 Mistakes to Avoid while Using RxSwift/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Judging by the number of talks, articles and discussions related to reactive programming in Swift, it looks like the community has been taken by the storm. It’s not that the concept of <em>reactiveness</em> itself is a new shiny thing. The idea of using it for the development within the Apple ecosystem had been played with for a long time. Frameworks like <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlQ29jb2EvUmVhY3RpdmVDb2NvYQ==">ReactiveCocoa<i class="fa fa-external-link-alt"></i></span> have existed for years and did an awesome job at bringing the reactive programming to the Objective-C. However, the new and exciting features of Swift make it even more convenient to go full in on the “signals as your apps’ building blocks” model.</p>
+<p>Here at Polidea, we’ve also embraced the reactive paradigm, mostly in the form of <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0">RxSwift<i class="fa fa-external-link-alt"></i></span>, the port of C#-originated <span class="exturl" data-url="aHR0cDovL3JlYWN0aXZleC5pby8=">Reactive Extensions<i class="fa fa-external-link-alt"></i></span>. And we couldn’t be happier! It helps us build more expressive and better-architectured apps faster and easier. Unifying various patterns (target-action, completion block, notification) under a universal API that is easy to use, easy to compose and easy to test has so many benefits. Also, introducing new team members is way easier now, when so much logic is written with methods familiar either from sequences (map, filter, zip, flatMap) or from other languages that Reactive Extensions had been ported to.</p>
+<span id="more"></span>
+
+<p>The process of learning RxSwift, however, hasn’t been painless. We’ve made many mistakes, fallen into many traps and eventually arrived at the other end to share what we’ve learned along the way. This is what this series is about: showing you the most common pitfalls to avoid when going reactive. They all come from the everyday practical use of RxSwift in non-trivial applications. It took us many hours to learn our lessons and we hope that with our help it’s going to take you only few minutes to enjoy the benefits of reactive programming without ever encountering its dark side.</p>
+<p>So, let’s start!</p>
+<h3 id="Not-disposing-a-subscription"><a href="#Not-disposing-a-subscription" class="headerlink" title="Not disposing a subscription"></a>Not disposing a subscription</h3><p>When you started using RxSwift for the first time, you’ve probably tried to observe some events by writing:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">observable</span><br><span class="line">    .subscribe(onNext: &#123; <span class="operator">...</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Such an expression was, however, openly criticized by Xcode with the default <code>Result to call to &#39;subscribe&#39; is unused</code> warning. Luckily, there’s an easy fix available just around the corner. Telling the compiler that we ignore the call result with <code>_ =</code> would be enough, right? So now it’s:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">_</span> <span class="operator">=</span> observable</span><br><span class="line">        .subscribe(onNext: &#123; <span class="operator">...</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>and everything is fixed, isn’t it? If you think so, prepare yourself for a treat. There’re probably a whole lot of low-hanging fruits of undisposed subscriptions just waiting to be picked from your memory-management tree. Ignoring the subscription’s result is a clear path to memory leaks. While there are situations in which you’ll be spared any problems, in the worst-case scenario both your <code>observable</code> and the observer closure will never be released. The bad news is that by ignoring the value returned from <code>subscribe</code> method you’re giving away the control over which scenario is going to happen.</p>
+<p>To understand the problem, I’ll show you the mental model of the subscription process in terms of memory-management first. Then, I’ll derive the best practices. Finally, I’m going to peek into RxSwift source code to understand what is actually happening in the current (v3.X&#x2F;4.0) implementation and how it relates to the mental model presented earlier.</p>
+<h3 id="The-mental-model-for-subscription-memory-management"><a href="#The-mental-model-for-subscription-memory-management" class="headerlink" title="The mental model for subscription memory-management"></a>The mental model for subscription memory-management</h3><p><em>Calling <code>subscribe</code> creates a reference cycle that retains both the <code>observable</code> and the <code>observer</code></em>. Neither of them is going to be released unless the cycle is broken, and it’s broken only in two situations:</p>
+<ul>
+<li>when the observable sequence completes, either with <code>.completed</code> or <code>.error</code> event,</li>
+<li>when someone explicitly calls <code>.dispose()</code> on the <em>reference cycle manager</em> returned by <code>subscribe</code> method.</li>
+</ul>
+<p><img src="/my_pictures/20180319/1.jpeg"></p>
+<p>The details may vary, but the basic idea of what it means to <em>subscribe</em> holds regardless of your particular observable, observer or subscription. The crucial thing to spot is that ignoring the <em>reference cycle manager</em>, aka <code>disposable</code>, strips you of the possibility to break reference cycle yourself. It is your gateway drug into the memory arrangement, and once it’s not available, there is no going back. If you use the <code>_ =</code> syntax, you basically state that the only way for the <code>observable</code> and <code>observer</code> to be released is by completing the observable sequence.</p>
+<p>This might sometimes be exactly what you want! For example, if you’re calling <code>Observable.just</code>, it doesn’t really matter that you won’t ensure breaking the cycle. The single element is being emitted instantaneously, followed by <code>.completed</code> event. There are, however, many situations in which you might not be entirely sure of the completion possibilities for observable in question:</p>
+<ul>
+<li>you’re given the <code>Observable</code> from another object and the documentation doesn’t state whether it completes,</li>
+<li>you’re given the <code>Observable</code> from another object and the documentation does state it completes, but there have been some changes in the internal implementation of that object along the way and no one remembered to update documentation,</li>
+<li>the <code>Observable</code> is explicitly not completing (examples include <code>Variable</code>, <code>Observable.interval</code>, subjects),</li>
+<li>there is an error in observable implementation, such as forgetting to send <code>.completed</code> event in <code>Observable.create</code> closure.<br>Since you’re rarely in control of all the observables in your app, and even then there’s a possibility for a mistake, the rule of thumb is to ensure yourself that the reference cycle will be broken. Either keep the reference to <code>disposable</code> and call the <code>.dispose()</code> method when the time comes, or use a handy helper like <code>DisposeBag</code> that’s gonna do it for you. You might also provide a separate cycle-breaking observable with <code>.takeUntil</code> operator. What way to choose depends on your particular situation, but always remember that:</li>
+</ul>
+<blockquote>
+<p>Subscription creates a reference cycle between the observable and the observer. It might be broken implicitly, when observable completes, or explicitly, via <code>.dispose()</code>call. If you’re not 100% sure when or whether observable will complete, break the subscription reference cycle yourself!   </p>
+</blockquote>
+<p>Now that we’ve cleared things up, I feel like I owe you a little bit of explanation. The mental model I’ve drawn above is, well, a mental model, and therefore not strictly correct. What’s happening in the current RxSwift implementation (version 3.x&#x2F;4.x at the time of writing) is a little bit more complicated. To understand the actual behavior, let us have a deeper dive into the RxSwift internals.</p>
+<h3 id="The-implementation-of-the-subscribe-method"><a href="#The-implementation-of-the-subscribe-method" class="headerlink" title="The implementation of the subscribe method"></a>The implementation of the <code>subscribe</code> method</h3><p>Where is the <code>subscribe</code> method implemented? First place to search would be, unsurprisingly, the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZVR5cGUuc3dpZnQ=">ObservableType.swift<i class="fa fa-external-link-alt"></i></span> file. It contains declaration of <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZVR5cGUuc3dpZnQjTDM5">subscribe<i class="fa fa-external-link-alt"></i></span> method as a part of the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZVR5cGUuc3dpZnQjTDEw">ObservableType<i class="fa fa-external-link-alt"></i></span> protocol:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ObservableType.swift</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">subscribe</span>&lt;<span class="type">O</span>: <span class="type">ObserverType</span>&gt;(</span><br><span class="line">    <span class="keyword">_</span> <span class="params">observer</span>: <span class="type">O</span></span><br><span class="line">) -&gt; <span class="type">Disposable</span> <span class="keyword">where</span> <span class="type">O</span>.<span class="type">E</span> <span class="operator">==</span> <span class="type">E</span></span><br></pre></td></tr></table></figure>
+
+<p>What implements this protocol? Basically, all the various types of observables. Let’s concentrate on the major implementation called <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZS5zd2lmdA==">Observable<i class="fa fa-external-link-alt"></i></span>, since it’s a base class for all but one of the observables defined in RxSwift. Its version of <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZS5zd2lmdCNMMjI=">subscribe<i class="fa fa-external-link-alt"></i></span> method is short and simple:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Observable.swift</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">func</span> <span class="title function_">subscribe</span>&lt;<span class="type">O</span>: <span class="type">ObserverType</span>&gt;(</span><br><span class="line">    <span class="keyword">_</span> <span class="params">observer</span>: <span class="type">O</span></span><br><span class="line">) -&gt; <span class="type">Disposable</span> <span class="keyword">where</span> <span class="type">O</span>.<span class="type">E</span> <span class="operator">==</span> <span class="type">E</span> &#123;</span><br><span class="line">    rxAbstractMethod()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Oh, the abstract method. We need to look into the <code>Observable</code> subclasses then. A quick search reveals that there are 14 different overridden <code>subscribe</code> methods within the RxSwift source code at the time of writing. We can put each of them in one of three buckets:</p>
+<ul>
+<li>implementations in subjects, which provide their own subscription logic due to the extraordinary place they occupy in the RxSwift lore,</li>
+<li>implementations in connectable observables, which must deal with subscriptions in a special way due to their ability of multicasting,</li>
+<li>implementation in <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQ=">Producer<i class="fa fa-external-link-alt"></i></span>, a subclass of <code>Observable</code> which provides the subscription logic for most of the operators you’ve grown to love and use.</li>
+</ul>
+<p><img src="/my_pictures/20180319/2.jpeg"></p>
+<p>Let’s concentrate on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQ=">Producer<i class="fa fa-external-link-alt"></i></span> type, since it represents the variant of observable that is simplest to reason about: the emitter of the sequence of events, from the single source to single recipient. It’s definitely the most common use case. Almost all the operators are derived from <code>Producer</code> base class. While a few of them provide a dedicated subscription logic that’s optimized further to their particular needs (see <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvSnVzdC5zd2lmdA==">Just<i class="fa fa-external-link-alt"></i></span>, <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvRW1wdHkuc3dpZnQ=">Empty<i class="fa fa-external-link-alt"></i></span> or <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvRXJyb3Iuc3dpZnQ=">Error<i class="fa fa-external-link-alt"></i></span> for basic examples), the vast majority use the following implementation of <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDE0">subscribe<i class="fa fa-external-link-alt"></i></span> from <code>Producer</code> (some scheduler-related logic was stripped for better readability):</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Producer.swift</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="keyword">func</span> <span class="title function_">subscribe</span>&lt;<span class="type">O</span> : <span class="type">ObserverType</span>&gt;(</span><br><span class="line">    <span class="keyword">_</span> <span class="params">observer</span>: <span class="type">O</span></span><br><span class="line">) -&gt; <span class="type">Disposable</span> <span class="keyword">where</span> <span class="type">O</span>.<span class="type">E</span> <span class="operator">==</span> <span class="type">Element</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> disposer <span class="operator">=</span> <span class="type">SinkDisposer</span>()</span><br><span class="line">    <span class="keyword">let</span> sinkAndSubscription <span class="operator">=</span> run(observer, cancel: disposer)</span><br><span class="line">    disposer.setSinkAndSubscription(</span><br><span class="line">        sink: sinkAndSubscription.sink,</span><br><span class="line">        subscription: sinkAndSubscription.subscription</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> disposer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>So, what’s happening here? First, the observable creates a <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDM5">SinkDisposer<i class="fa fa-external-link-alt"></i></span> object. Then it uses the <code>SinkDisposer</code> instance to create two additional objects: <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDE4">sink and subscription<i class="fa fa-external-link-alt"></i></span>. They both have the same type: <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvRGlzcG9zYWJsZS5zd2lmdA==">Disposable<i class="fa fa-external-link-alt"></i></span>, which is a protocol exposing a single <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvRGlzcG9zYWJsZS5zd2lmdCNMMTI=">dispose<i class="fa fa-external-link-alt"></i></span> method. These two objects are being passed back to <code>SinkDisposer</code> via a setter method, which suggests, correctly, that their references will be kept. After all that setup is done, the <code>SinkDisposer</code> is being returned. So, when we’re calling <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDc2">.dispose()<i class="fa fa-external-link-alt"></i></span> on the object returned from the <code>subscribe</code> method to break the subscription, we’re actually calling it on <code>SinkDisposer</code> instance.</p>
+<p>So far, so good. One mystery down, still a few to go. Let’s dive into two crucial steps performed here: <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDE3">let sinkAndSubscription &#x3D; run(observer, cancel: disposer)<i class="fa fa-external-link-alt"></i></span> and <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDE4">disposer.setSinkAndSubscription(sink: sinkAndSubscription.sink, subscription: sinkAndSubscription.subscription)<i class="fa fa-external-link-alt"></i></span> methods. They are, as you’ll see, the essential parts of creating the reference cycle that keeps the subscription alive.</p>
+<h3 id="Sinking-in-the-sea-of-Observables"><a href="#Sinking-in-the-sea-of-Observables" class="headerlink" title="Sinking in the sea of Observables"></a>Sinking in the sea of Observables</h3><p>The <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDM0">run<i class="fa fa-external-link-alt"></i></span> method is provided by the <code>Producer</code>, but only in an abstract variant:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Producer.swift</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">run</span>&lt;<span class="type">O</span> : <span class="type">ObserverType</span>&gt;(</span><br><span class="line">    <span class="keyword">_</span> <span class="params">observer</span>: <span class="type">O</span>, <span class="params">cancel</span>: <span class="type">Cancelable</span></span><br><span class="line">) -&gt; (sink: <span class="type">Disposable</span>, subscription: <span class="type">Disposable</span>)</span><br><span class="line"><span class="keyword">where</span> <span class="type">O</span>.<span class="type">E</span> <span class="operator">==</span> <span class="type">Element</span> &#123;</span><br><span class="line">    rxAbstractMethod()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The actual logic is specific to the particular <code>Producer</code> subclass. Before we check them, it’s crucial to understand the pattern that is very common across the RxSwift operators implementation: <em>sink</em>. This is the way that RxSwift deals with the complexity of observable streams and how it separates the creation of the observable from the logic that is being run the moment you <code>subscribe</code> to it.</p>
+<p>The idea is simple: when you use the particular operator (say you <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvTWFwLnN3aWZ0I0wyMA==">map<i class="fa fa-external-link-alt"></i></span> the existing observable), it returns an instance of a particular observable type dedicated to the task at hand. So calling <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvSnVzdC5zd2lmdCNMMTg=">Observable.just(1)<i class="fa fa-external-link-alt"></i></span> gives you back the instance of <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvSnVzdC5zd2lmdCNMNzU=">Just<i class="fa fa-external-link-alt"></i></span> class, which is a subclass of the <code>Producer</code> optimized for returning just one element and then completing. When you call <code>Observable&lt;Int&gt;.just(1).map &#123; $0 == 42 &#125;</code>, you’re being given back the instance of <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvTWFwLnN3aWZ0I0wxNDI=">Map<i class="fa fa-external-link-alt"></i></span> class, which is a subclass of the <code>Producer</code> optimized for applying the closure to each element in the <code>.next</code> event. However, at the very moment you create an observable, there’s nothing being actually sent to anyone yet, because no one has subscribed. The actual work of passing the events starts during the <code>subscribe</code> method, more precisely: in the <code>run</code> method that we’re so interested in.</p>
+<p>That’s where the sink pattern shines. Each observable type has its own dedicated <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvU2luay5zd2lmdA==">Sink<i class="fa fa-external-link-alt"></i></span> subclass. For the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvVGltZXIuc3dpZnQjTDE5">interval<i class="fa fa-external-link-alt"></i></span> operator, represented by the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvVGltZXIuc3dpZnQjTDg4">Timer<i class="fa fa-external-link-alt"></i></span> observable, there is the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvVGltZXIuc3dpZnQjTDQ5">TimerSink<i class="fa fa-external-link-alt"></i></span>. For the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvTWVyZ2Uuc3dpZnQjTDE5">flatMap<i class="fa fa-external-link-alt"></i></span> operator, represented by the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvTWVyZ2Uuc3dpZnQjTDU0Ng==">FlatMap<i class="fa fa-external-link-alt"></i></span> observable, there is the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvTWVyZ2Uuc3dpZnQjTDM1NQ==">FlatMapSink<i class="fa fa-external-link-alt"></i></span>. For the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvQ2F0Y2guc3dpZnQjTDMy">catchErrorJustReturn<i class="fa fa-external-link-alt"></i></span> operator, represented by the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvQ2F0Y2guc3dpZnQjTDE1MQ==">Catch<i class="fa fa-external-link-alt"></i></span> observable, there is the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvQ2F0Y2guc3dpZnQjTDEwOA==">CatchSink<i class="fa fa-external-link-alt"></i></span>. I think you get the idea!</p>
+<p>But what is this <code>Sink</code> object, exactly? It is the place that stores the actual operator logic. So, for the <code>interval</code>, the <code>TimerSink</code> is the place that schedules sending events after each period and keeps track of the internal state (i.e. how many events were already sent). For the <code>flatMap</code>, the <code>FlatMapSink</code> (and its superclass, <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvTWVyZ2Uuc3dpZnQjTDQzOA==">MergeSink<i class="fa fa-external-link-alt"></i></span> ) is the place that subscribes to the observables returned from flatmapping closure, keeps track of them and passes their events further. You may basically think of a <code>Sink</code> as a wrapper for the observer. It listens for the events from observable, applies the operator-related logic and then passes those transformed events further down the stream.</p>
+<p>This is how RxSwift isolates the creation of observables from the execution of subscription logic for <code>Producer</code> -based observables. The former is encapsulated in the <code>Observable</code> subclass, the latter is provided by the <code>Sink</code> subclass. The separation of responsibilities greatly simplifies the actual objects’ implementations and makes it possible to write multiple variants of <code>Sink</code> optimized for different scenarios.</p>
+<h3 id="Sink-full-of-knowledge"><a href="#Sink-full-of-knowledge" class="headerlink" title="Sink full of knowledge"></a><code>Sink</code> full of knowledge</h3><p>Now that we know what the <em>sink</em> pattern is, let’s go back to the <code>run</code> method. Each of these <code>Producer</code> subclasses provides its own <code>run</code> implementation. While details may vary, it usually can be abstracted into three steps:</p>
+<ul>
+<li>create a <code>sink</code> object as an instance of a class that derives from <code>Sink</code> type,</li>
+<li>create a subscription instance, usually by running <code>sink.run</code> method,</li>
+<li>return both instances wrapped in a tuple.<br>To clarify things further, please look at the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvTWVyZ2Uuc3dpZnQjTDU1OA==">FlatMap.run<i class="fa fa-external-link-alt"></i></span> example:</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Merge.swift, FlatMap observable class</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="keyword">func</span> <span class="title function_">run</span>&lt;<span class="type">O</span>: <span class="type">ObserverType</span>&gt;(</span><br><span class="line">  <span class="keyword">_</span> <span class="params">observer</span>: <span class="type">O</span>, <span class="params">cancel</span>: <span class="type">Cancelable</span></span><br><span class="line">) -&gt; (sink: <span class="type">Disposable</span>, subscription: <span class="type">Disposable</span>)</span><br><span class="line"><span class="keyword">where</span> <span class="type">O</span>.<span class="type">E</span> <span class="operator">==</span> <span class="type">SourceSequence</span>.<span class="type">E</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> sink <span class="operator">=</span> <span class="type">FlatMapSink</span>(</span><br><span class="line">      selector: _selector,</span><br><span class="line">      observer: observer,</span><br><span class="line">      cancel: cancel</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">let</span> subscription <span class="operator">=</span> sink.run(_source)</span><br><span class="line">  <span class="keyword">return</span> (sink: sink, subscription: subscription)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The most important thing from the memory-management perspective is that in the moment of subscription the <code>sink</code> is given everything that’s needed to do the job:</p>
+<ul>
+<li>the events source (aka <em>Observable</em> ),</li>
+<li>the event recipient (called <code>observer</code> ),</li>
+<li>the operator-related data (for example, the flatmapping closure),</li>
+<li>and the <code>SinkDisposer</code> instance (under the name <code>cancel</code> ).<br><code>sink</code> is free to store as many of these references as it sees fit for providing the required behavior of the operator. At the minimum, it’s gonna store the <code>observer</code> and, what’s gonna be crucial later, the <code>SinkDisposer</code>. Possibly more! Looking at the memory graph, <code>sink</code> quickly becomes the Northern Star in the constellation of objects related to the subscription.</li>
+</ul>
+<p>There is, however, one more object returned from observable’s <code>run</code> method. It’s <code>subscription</code>. This is the object that takes care of the logic that should be run when the subscription is being disposed of. Remember <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvQ3JlYXRlLnN3aWZ0I0wyMA==">create<i class="fa fa-external-link-alt"></i></span> operator? It takes a closure that returns <code>Disposable</code>, an object responsible for performing the cleanup. This is the same <code>Disposable</code> that’s returned from <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvQ3JlYXRlLnN3aWZ0I0wyNQ==">AnonymousObservableSink<i class="fa fa-external-link-alt"></i></span>‘s <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvQ3JlYXRlLnN3aWZ0I0w1OQ==">run<i class="fa fa-external-link-alt"></i></span> method as <code>subscription</code>. For each operator there might be some tasks to cancel, some resources to free, some internal subscription to dispose of. They’re all enclosed in the <code>subscription</code> object, and the ability to perform the cleanup is exposed via <code>subscription.dispose</code> method.</p>
+<h3 id="The-Producer‘s-reference-cycle-Sink-and-SinkDisposer"><a href="#The-Producer‘s-reference-cycle-Sink-and-SinkDisposer" class="headerlink" title="The Producer‘s reference cycle: Sink and SinkDisposer"></a>The <code>Producer</code>‘s reference cycle: Sink and SinkDisposer</h3><p>Knowing that, let’s get back to the last component of the <code>subscribe</code> method implementation. Before the <code>SinkDisposer</code> is returned, the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDU5">setSinkAndSubscription<i class="fa fa-external-link-alt"></i></span> method is called. It does exactly what you might expect: the <code>sink</code> and <code>subscription</code> objects are passed via setter and kept in the <code>SinkDisposer</code> properties. They are referenced strongly, but wrapped into Optionals, which makes it possible set the references to <code>nil</code> later.</p>
+<p>Have you already spotted the reference cycle from our mental model? It’s hidden in the plain sight! <code>sink</code> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvU2luay5zd2lmdCNMMTE=">stores the reference<i class="fa fa-external-link-alt"></i></span> to <code>SinkDisposer</code>, and <code>SinkDisposer</code> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDUy">stores the reference<i class="fa fa-external-link-alt"></i></span> to <code>sink</code>. That’s why the subscription doesn’t release itself on the scope exit. Two objects keep each other alive, in an eternal hug of memory-lockup, until the end of the app. And since <code>sink</code> keeps <code>SinkDisposer</code> as non-Optional property, the one and only way of breaking the cycle is by asking the <code>SinkDisposer</code> to set the <code>sink</code> Optional reference to <code>nil</code>. And guess what? This is exactly what’s happening in the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDc2">SinkDisposer.dispose<i class="fa fa-external-link-alt"></i></span> method. It calls <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDkx">dispose<i class="fa fa-external-link-alt"></i></span> on <code>sink</code>, then it calls <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDky">dispose<i class="fa fa-external-link-alt"></i></span> on subscription and then it <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvUHJvZHVjZXIuc3dpZnQjTDk0">nils out references<i class="fa fa-external-link-alt"></i></span> to break the retain cycle. So for the <code>Producer</code> -based observables, the <code>SinkDisposer</code> is the <em>reference cycle manager</em> from the mental model that we’ve introduced earlier.</p>
+<p>After all those details, you might wonder how come the reference cycle breaks itself when observable completes? Well, we’ve just stated that it requires <code>SinkDisposer.dispose()</code> method, so the answer is simple. The central point of subscription process, <code>sink</code> object, keeps the reference to <code>SinkDisposer</code> and also receives all the events from the observable. So once it gets either <code>.completed</code> or <code>.error</code> event and once its own logic determines that this is the sequence completion, it simply calls <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JlYWN0aXZlWC9SeFN3aWZ0L2Jsb2IvbWFzdGVyL1J4U3dpZnQvT2JzZXJ2YWJsZXMvU2luay5zd2lmdCNMNDg=">dispose<i class="fa fa-external-link-alt"></i></span> method on its <code>SinkDisposer</code> reference. This way the cycle is being broken from the inside.</p>
+<p>To summarize the process, here comes the diagram of the actual reference cycle in the usual <code>Producer</code> -based observable subscription:</p>
+<p><img src="/my_pictures/20180319/3.jpeg"></p>
+<h3 id="The-road-goes-ever-on-and-on"><a href="#The-road-goes-ever-on-and-on" class="headerlink" title="The road goes ever on and on"></a>The road goes ever on and on</h3><p>Aren’t you curious what happens in non- <code>Producer</code> -based cases, such as subjects or connectable observables? The concept is very similar. There is always a reference cycle that’s controlled by some kind of <em>reference cycle manager</em> and there is always a way of breaking this cycle by <code>dispose</code> method invocation. I encourage you to dive into RxSwift source code and see for yourself!</p>
+<p>Now it is clear where the mental model comes from. The details of particular subscription vary, and each observable type has specific optimizations applied for better performance and cleaner architecture. However, the basic idea prevails: there’s a reference cycle and the only way of breaking this cycle is either by completing the observable or through <em>reference cycle manager</em>.</p>
+<p>Relying on the completion of the observable, while useful in many real-life situations, should always be a road taken with much care and deliberation. If you’re not sure of how to handle the subscription’s memory management, or you simply want your code to be more resilient to the future changes, it’s always best to default to supplying a mechanism of breaking the reference cycle explicitly.</p>
+<p>That’s all for this time. More ways to shoot yourself in the foot with RxSwift are coming. Next time we’re going to look at memory management from a different perspective, focusing not on the subscription process, but on what’s being passed to operators. Until then, don’t forget to <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9wb2xpZGVh">follow Polidea on Twitter<i class="fa fa-external-link-alt"></i></span> for more mobile development related posts!</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucG9saWRlYS5jb20vYmxvZy84LU1pc3Rha2VzLXRvLUF2b2lkLXdoaWxlLVVzaW5nLVJ4U3dpZnRQYXJ0LTEv">8 Mistakes to Avoid while Using RxSwift. Part 1 - Polidea<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RxSwift/" rel="tag"><i class="fa fa-tag"></i> RxSwift</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/17/20180317-layoutIfNeeded()%20%E5%87%BD%E6%95%B0%E5%AF%B9%20UIScrollView%20%E7%9A%84%E5%BD%B1%E5%93%8D/" rel="prev" title="layoutIfNeeded() 函数对 UIScrollView 的影响">
+                  <i class="fa fa-angle-left"></i> layoutIfNeeded() 函数对 UIScrollView 的影响
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/03/19/20180319-%E4%BC%98%E5%8C%96%20Swift%20%E4%B8%AD%20Notification.Name%20%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/" rel="next" title="优化 Swift 中 Notification.Name 的使用方式">
+                  优化 Swift 中 Notification.Name 的使用方式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

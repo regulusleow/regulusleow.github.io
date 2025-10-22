@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Authors: Michael Ilseman (compiled through conversations with many others)  Introduction The Big PictureOne of the top priorities for Swift right now is compatibility across future Swift versions. Co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift ABI Stability Manifesto">
+<meta property="og:url" content="https://regulusleow.github.io/2018/03/29/20180329-Swift%20ABI%20Stability%20Manifesto/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="Authors: Michael Ilseman (compiled through conversations with many others)  Introduction The Big PictureOne of the top priorities for Swift right now is compatibility across future Swift versions. Co">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-03-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.327Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2018/03/29/20180329-Swift%20ABI%20Stability%20Manifesto/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2018/03/29/20180329-Swift%20ABI%20Stability%20Manifesto/","path":"2018/03/29/20180329-Swift ABI Stability Manifesto/","title":"Swift ABI Stability Manifesto"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Swift ABI Stability Manifesto | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Big-Picture"><span class="nav-number">1.1.</span> <span class="nav-text">The Big Picture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-Is-ABI"><span class="nav-number">1.2.</span> <span class="nav-text">What Is ABI?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-Is-ABI-Stability"><span class="nav-number">1.3.</span> <span class="nav-text">What Is ABI Stability?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-Does-ABI-Stability-Enable"><span class="nav-number">1.4.</span> <span class="nav-text">What Does ABI Stability Enable?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Library-Evolution"><span class="nav-number">1.5.</span> <span class="nav-text">Library Evolution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Components-of-the-Swift-ABI"><span class="nav-number">2.</span> <span class="nav-text">Components of the Swift ABI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Layout"><span class="nav-number">3.</span> <span class="nav-text">Data Layout</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Background"><span class="nav-number">3.1.</span> <span class="nav-text">Background</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Layout-and-Properties-of-Types"><span class="nav-number">3.1.1.</span> <span class="nav-text">Layout and Properties of Types</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Opaque-Layout"><span class="nav-number">3.1.2.</span> <span class="nav-text">Opaque Layout</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Library-Evolution-1"><span class="nav-number">3.1.3.</span> <span class="nav-text">Library Evolution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Abstraction-Levels"><span class="nav-number">3.1.4.</span> <span class="nav-text">Abstraction Levels</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-Tour-of-Types"><span class="nav-number">3.2.</span> <span class="nav-text">A Tour of Types</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Structs"><span class="nav-number">3.2.1.</span> <span class="nav-text">Structs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tuples"><span class="nav-number">3.2.2.</span> <span class="nav-text">Tuples</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Enums"><span class="nav-number">3.2.3.</span> <span class="nav-text">Enums</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Classes"><span class="nav-number">3.2.4.</span> <span class="nav-text">Classes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Class-Instances"><span class="nav-number">3.2.5.</span> <span class="nav-text">Class Instances</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#References"><span class="nav-number">3.2.6.</span> <span class="nav-text">References</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Existential-Containers"><span class="nav-number">3.2.7.</span> <span class="nav-text">Existential Containers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Declaring-Stability"><span class="nav-number">3.3.</span> <span class="nav-text">Declaring Stability</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Type-Metadata"><span class="nav-number">4.</span> <span class="nav-text">Type Metadata</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Declaring-Stability-1"><span class="nav-number">4.1.</span> <span class="nav-text">Declaring Stability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generic-Parameters"><span class="nav-number">4.2.</span> <span class="nav-text">Generic Parameters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Value-Metadata"><span class="nav-number">4.3.</span> <span class="nav-text">Value Metadata</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Value-Witness-Tables"><span class="nav-number">4.3.1.</span> <span class="nav-text">Value Witness Tables</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class-Metadata"><span class="nav-number">4.4.</span> <span class="nav-text">Class Metadata</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-Dispatch"><span class="nav-number">4.4.1.</span> <span class="nav-text">Method Dispatch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Protocol-and-Existential-Metadata"><span class="nav-number">4.5.</span> <span class="nav-text">Protocol and Existential Metadata</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Protocol-Witness-Tables"><span class="nav-number">4.5.1.</span> <span class="nav-text">Protocol Witness Tables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Existential-Metadata"><span class="nav-number">4.5.2.</span> <span class="nav-text">Existential Metadata</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-Metadata"><span class="nav-number">4.6.</span> <span class="nav-text">Function Metadata</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mangling"><span class="nav-number">5.</span> <span class="nav-text">Mangling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Compact-Manglings"><span class="nav-number">5.1.</span> <span class="nav-text">Compact Manglings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Suffix-Differentiation"><span class="nav-number">5.2.</span> <span class="nav-text">Suffix Differentiation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Calling-Convention"><span class="nav-number">6.</span> <span class="nav-text">Calling Convention</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Register-convention"><span class="nav-number">6.1.</span> <span class="nav-text">Register convention</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Call-Context-Register"><span class="nav-number">6.1.1.</span> <span class="nav-text">Call Context Register</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Error-Register"><span class="nav-number">6.1.2.</span> <span class="nav-text">Error Register</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-Signature-Lowering"><span class="nav-number">6.2.</span> <span class="nav-text">Function Signature Lowering</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Lowering-Higher-Order-Functions"><span class="nav-number">6.2.1.</span> <span class="nav-text">Lowering Higher-Order Functions</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stack-Invariants"><span class="nav-number">6.3.</span> <span class="nav-text">Stack Invariants</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Runtime-Calling-Convention"><span class="nav-number">6.4.</span> <span class="nav-text">Runtime Calling Convention</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runtime"><span class="nav-number">7.</span> <span class="nav-text">Runtime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Standard-Library"><span class="nav-number">8.</span> <span class="nav-text">Standard Library</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Inlineability"><span class="nav-number">8.1.</span> <span class="nav-text">Inlineability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Upcoming-Changes"><span class="nav-number">8.2.</span> <span class="nav-text">Upcoming Changes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next-Steps"><span class="nav-number">9.</span> <span class="nav-text">Next Steps</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/03/29/20180329-Swift%20ABI%20Stability%20Manifesto/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Swift ABI Stability Manifesto | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Swift ABI Stability Manifesto
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-03-29 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-29T00:00:00+08:00">2018-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">底层原理</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/03/29/20180329-Swift%20ABI%20Stability%20Manifesto/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/29/20180329-Swift ABI Stability Manifesto/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><ul>
+<li>Authors: <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbHNlbWFu">Michael Ilseman<i class="fa fa-external-link-alt"></i></span> (compiled through conversations with many others)</li>
+</ul>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><hr>
+<h3 id="The-Big-Picture"><a href="#The-Big-Picture" class="headerlink" title="The Big Picture"></a>The Big Picture</h3><p>One of the top priorities for Swift right now is compatibility across future Swift versions. Compatibility aims at accomplishing two goals:</p>
+<ol>
+<li><strong>Source compatibility</strong> means that newer compilers can compile code written in an older version of Swift. This aims to reduce the migration pain that Swift developers face when migrating to a newer Swift version. Without source compatibility, projects face version-lock where all source code in a project and its packages must be written in the same version of Swift. With source compatibility, package authors will be able to maintain a single code base across multiple Swift versions while allowing their users to use a newer version of Swift.</li>
+</ol>
+<span id="more"></span>
+
+<ol start="2">
+<li><p><strong>Binary framework &amp; runtime compatibility</strong> enables the distribution of frameworks in a binary form that works across multiple Swift versions. Binary frameworks include both a <em>Swift module file</em>, which communicates source-level information of the framework’s API, and a <em>shared library</em>, which provides the compiled implementation that is loaded at runtime. Thus, there are two necessary goals for binary framework compatibility:</p>
+<ul>
+<li><p><strong>Module format stability</strong> stabilizes the module file, which is the compiler’s representation of the public interfaces of a framework. This includes API declarations and inlineable code. The module file is used by the compiler for necessary tasks such as type checking and code generation when compiling client code using a framework.</p>
+</li>
+<li><p><strong>ABI stability</strong> enables binary compatibility between applications and libraries compiled with different Swift versions. It is the focus of the rest of this document.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>This document is an exploration and explanation of Swift’s ABI alongside the goals and investigations needed before declaring Swift’s ABI stable. It is meant to be a resource to the community as well as a declaration of the direction of Swift’s ABI.</p>
+<p>Throughout this document there will be references to issues in Swift’s <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy8=">issue tracking system<i class="fa fa-external-link-alt"></i></span> denoted by “SR-xxxx”. These references track open engineering and design tasks for Swift’s ABI.</p>
+<h3 id="What-Is-ABI"><a href="#What-Is-ABI" class="headerlink" title="What Is ABI?"></a>What Is ABI?</h3><p>At runtime, Swift program binaries interact with other libraries and components through an ABI. ABI is Application Binary Interface, or the specification to which independently compiled binary entities must conform to be linked together and executed. These binary entities must agree on many low level details: how to call functions, how their data is represented in memory, and even where their metadata is and how to access it.</p>
+<p>ABI is per-platform, as it is a low level concern influenced by both the architecture and the OS. Most platform vendors define a “standard ABI” which is used for C code and built on by C-family languages. Swift, however, is a very different language from C and has its own per-platform ABI. While most of this document is platform-agnostic, platform-specific concerns have influenced details of the design and implementation of Swift’s ABI. For details on each platform’s standard ABI, refer to the <a href="#platform-abis">Appendix</a>.</p>
+<h3 id="What-Is-ABI-Stability"><a href="#What-Is-ABI-Stability" class="headerlink" title="What Is ABI Stability?"></a>What Is ABI Stability?</h3><p>ABI stability means locking down the ABI to the point that future compiler versions can produce binaries conforming to the stable ABI. Once an ABI is stable, it tends to persist for the rest of the platform’s lifetime due to ever-increasing mutual dependencies.</p>
+<p>ABI stability only affects invariants of externally visible public interfaces and symbols. Internal symbols, conventions, and layout can continue to change without breaking the ABI. For example, future compilers are free to change the calling conventions for internal function calls so long as the public interfaces are preserved.</p>
+<p>Decisions about the ABI will have long-term ramifications and may limit the ways in which the language can grow and evolve in the future. Future Swift versions can add new, orthogonal aspects to the ABI, but any inefficiencies or inflexibilities present when stability is declared will (effectively) persist forever for that platform.</p>
+<p>ABI changes that are new and orthogonal are called <em>ABI-additive</em> changes. ABI-additive changes may be taken advantage of when the minimum targeted Swift version supports them. This allows us to extend or progressively lock down more of the ABI. These may be ABI additions to support new features or that allow for more efficient data access. Examples appear throughout this document.</p>
+<h3 id="What-Does-ABI-Stability-Enable"><a href="#What-Does-ABI-Stability-Enable" class="headerlink" title="What Does ABI Stability Enable?"></a>What Does ABI Stability Enable?</h3><p>ABI stability enables OS vendors to embed a Swift standard library and runtime that is compatible with applications built with older or newer versions of Swift. This would remove the need for apps to distribute their own copy of these libraries on those platforms. It also allows for better decoupling of tools and better integration into the OS.</p>
+<p>As noted earlier, ABI stability is necessary, though not sufficient, for binary frameworks. Module format stability is also required and is beyond the scope of this document.</p>
+<h3 id="Library-Evolution"><a href="#Library-Evolution" class="headerlink" title="Library Evolution"></a>Library Evolution</h3><p>Expressive and performance-focused languages which have binary interfaces tend to exhibit the <span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRnJhZ2lsZV9iaW5hcnlfaW50ZXJmYWNlX3Byb2JsZW0=">fragile binary interface problem<i class="fa fa-external-link-alt"></i></span>, which makes it difficult for any library or component to change over time without requiring every user to recompile with new versions of that library. A major push in Swift currently is the plan for <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvTGlicmFyeUV2b2x1dGlvbi5yc3Q=">Library Evolution<i class="fa fa-external-link-alt"></i></span>, which aims to grant flexibility for library authors to maintain backwards and forwards binary compatibility. Many implementation concerns therein could have an impact on ABI.</p>
+<p>One of the goals of rolling out ABI stability is to remain flexible enough to accommodate library evolution changes without limiting the design space. Library evolution concerns will be addressed in each individual section, though a common refrain will be that the details are still undecided.</p>
+<h2 id="Components-of-the-Swift-ABI"><a href="#Components-of-the-Swift-ABI" class="headerlink" title="Components of the Swift ABI"></a>Components of the Swift ABI</h2><hr>
+<p>In practice, ABI concerns can be tightly coupled. But, as a conceptual model, I’d like to break them out into 6 separate classifications:</p>
+<ol>
+<li><p>Types, such as structs and classes, must have a defined in-memory layout for instances of that type. For binary entities to interoperate, they must share the same layout conventions. This layout is discussed in the <a href="#data-layout">Data Layout</a> section.</p>
+</li>
+<li><p>Type metadata is used extensively by Swift programs, the Swift runtime, reflection, and tools such as debuggers and visualizers. This metadata must either have a defined memory layout, or have a set of defined APIs for querying the metadata of a type. Type metadata is discussed in the <a href="#metadata">Type Metadata</a> section.</p>
+</li>
+<li><p>Every exported or external symbol in a library needs a unique name upon which binary entities can agree. Swift provides function overloading and contextual name spaces (such as modules and types), which means that any name in source code might not be globally unique. A unique name is produced through a technique called <em>name mangling</em>. Swift’s name mangling scheme is discussed in the <a href="#mangling">Mangling</a> section.</p>
+</li>
+<li><p>Functions must know how to call each other, which entails such things as the layout of the call stack, what registers are preserved, and ownership conventions. Calling conventions are discussed in the <a href="#calling-convention">Calling Convention</a> section.</p>
+</li>
+<li><p>Swift ships with a runtime library which handles such things as dynamic casting, reference counting, reflection, etc. Compiled Swift programs make external calls out to this runtime. Thus, Swift runtime API is Swift ABI. Runtime API stability is discussed in the <a href="#runtime">Runtime</a> section.</p>
+</li>
+<li><p>Swift ships with a standard library that defines many common types, structures, and operations on these. For a shipped standard library to work with applications written in different versions of Swift, it must expose a stable API. Thus, Swift Standard Library API is Swift ABI, as well as the layout of many of the types it defines. Swift standard library ABI stability concerns are discussed in the <a href="#standard-library">Standard Library</a> section.</p>
+</li>
+</ol>
+<h2 id="Data-Layout"><a href="#Data-Layout" class="headerlink" title="Data Layout"></a>Data Layout</h2><hr>
+<h3 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h3><p>First, let’s define some common terminology.</p>
+<ul>
+<li>An <em>object</em> is a stored entity of some type, meaning it has a location in memory or in registers. Objects can be values of struct&#x2F;enum type, class instances, references to class instances, values of protocol type, or even closures. This is <span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvT2JqZWN0XyUyOGNvbXB1dGVyX3NjaWVuY2UlMjk=">in contrast to<i class="fa fa-external-link-alt"></i></span> the class-based-OO definition of object as being an instance of a class.</li>
+<li>A <em>data member</em> of an object is any value that requires layout within the object itself. Data members include an object’s stored properties and associated values.</li>
+<li>A <em>spare bit</em> is a bit that is unused by objects of a given type. These often arise due to things such as alignment, padding, and address spaces, further described below.</li>
+<li>An <em>extra inhabitant</em> is a bit pattern that does not represent a valid value for objects of a given type. For example, a simple C-like enum with 3 cases can fit in 2 bits, where it will have one extra inhabitant: the fourth unused bit pattern.<br><em>Data layout</em>, also known as type layout, specifies the in-memory layout of an object’s data. This includes the size of an object in memory, the alignment of an object (defined later), and how to find each data member within an object.</li>
+</ul>
+<p>An object has a statically known layout if the compiler is able to determine its layout at compilation time. Objects whose layout is not determinable until runtime have <em>opaque layout</em>. Such objects are further discussed in the <a href="#opaque-layout">opaque layout section</a></p>
+<h4 id="Layout-and-Properties-of-Types"><a href="#Layout-and-Properties-of-Types" class="headerlink" title="Layout and Properties of Types"></a>Layout and Properties of Types</h4><p>For every type <code>T</code> in Swift with statically known layout, the ABI specifies a means to determine:</p>
+<ul>
+<li>The <em>alignment</em> for that type: for <code>x : T</code>, the address of <code>x</code> modulo alignment is always zero.</li>
+<li>The <em>size</em> for that type: the byte size (possibly 0) without padding at the end.</li>
+<li>The <em>offset</em> for each data member (if applicable): the address at which every member resides, relative to the object’s base address.</li>
+</ul>
+<p>Derived from alignment and size is the <em>stride</em> of the type, which is the size of objects of that type rounded up to alignment (minimum 1). The stride is mostly useful for objects laid out contiguously in memory, such as in arrays.</p>
+<p> Some types have interesting properties:</p>
+<ul>
+<li>A type is <em>trivial</em>, also known as POD (“plain ol’ data”), if it merely stores data and has no extra copy, move, or destruction semantics. Trivial objects can be copied by replicating their bits, and are destroyed through deallocation. A type is trivial only if all data members are also trivial.</li>
+<li>A type is <em>bitwise movable</em> if there are no side table references dependent on its address. A <span class="exturl" data-url="aHR0cHM6Ly9kb2MucnVzdC1sYW5nLm9yZy9ib29rL293bmVyc2hpcC5odG1sI21vdmUtc2VtYW50aWNz">move<i class="fa fa-external-link-alt"></i></span> operation can occur when an object is copied from one location into another and the original location is no longer used. Bitwise movable objects are moved by performing a bitwise copy and then invalidating the original location. A type is bitwise movable only if all its data members are also bitwise movable. All trivial types are bitwise movable.</li>
+</ul>
+<p>An example of a trivial type is a Point struct that contains two Double fields: an x coordinate and a y coordinate. This struct is trivial, as it can be copied merely by copying its bits and its destruction performs no extra operations.</p>
+<p>An example of a bitwise movable, but non-trivial, type is a struct that contains a reference to a class instance. Objects of that type cannot be copied merely by copying their bits, because a retain operation must be performed on the reference. Upon destruction, such objects must perform a release. However, the object can be moved from one address to another by copying its bits provided the original location is invalidated, keeping the overall retain count unchanged.</p>
+<p>An example of a type that is neither trivial nor bitwise movable is a struct containing a weak reference. Weak references are tracked in a side table so that they can be nil-ed out when the referenced object is destroyed. When moving an object of such type from one address to another, the side table must be updated to refer to the weak reference’s new address.</p>
+<h4 id="Opaque-Layout"><a href="#Opaque-Layout" class="headerlink" title="Opaque Layout"></a>Opaque Layout</h4><p>Opaque layout occurs whenever the layout is not known until runtime. This can come up for unspecialized generics, which do not have a known layout at compilation time. It can also come up for resilient types, which are described in the <a href="#layout-library-evolution">next section</a>.</p>
+<p>The size and alignment of an object of opaque layout, as well as whether it is trivial or bitwise movable, is determined by querying its value witness table, which is described further in the <a href="#value-witness-table">value witness table section</a>. The offsets for data members are determined by querying the type’s metadata, which is described further in the <a href="#value-metadata">value metadata section</a>. Objects of opaque layout must typically be passed indirectly, described further in the <a href="#function-signature-lowering">function signature lowering section</a>. The Swift runtime interacts with objects of opaque layout through pointers, and thus they must be addressable, described further in the <a href="#abstraction-levels">abstraction levels section</a>.</p>
+<p>In practice, layout might be partially-known at compilation time. An example is a generic struct over type <code>T</code> that stores an integer as well as an object of type <code>T</code>. In this case, the layout of the integer itself is known and its location within the generic struct might be as well, depending on the specifics of the layout algorithm. However, the generic stored property has opaque layout, and thus the struct overall has an unknown size and alignment. We are investigating how to most efficiently lay out partially-opaque aggregates [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzcyMg==">SR-3722<i class="fa fa-external-link-alt"></i></span> ]. This will likely entail placing the opaque members at the end in order to guarantee known offsets of non-opaque data members.</p>
+<h4 id="Library-Evolution-1"><a href="#Library-Evolution-1" class="headerlink" title="Library Evolution"></a>Library Evolution</h4><p>Library evolution introduces <em>resilient</em> layouts of public types by default and provides new annotations that freeze the layout for performance. A resilient layout avoids many of the pitfalls of the fragile binary problem by making the layout opaque. Resilient types have far more freedom to change and evolve without breaking binary compatibility: public data members can be rearranged, added, and even removed (by providing a computed getter&#x2F;setter instead). The new annotations provide the ability to relinquish these freedoms by making stricter guarantees about their layout in order to be more efficiently compiled and accessed.</p>
+<p>In order to allow for cross-module optimizations for modules that are distributed together, there is the concept of a <em>resilience domain</em>. A resilience domain is a grouping of modules which are version-locked with each other and thus do not have binary compatibility across multiple version requirements with each other. See <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvTGlicmFyeUV2b2x1dGlvbi5yc3QjcmVzaWxpZW5jZS1kb21haW5z">Resilience Domains<i class="fa fa-external-link-alt"></i></span> for more details.</p>
+<p>Resilient types are required to have opaque layout when exposed outside their resilience domain. Inside a resilience domain, this requirement is lifted and their layout may be statically known or opaque as determined by their type (see <a href="#opaque-layout">previous section</a> ).</p>
+<p>Annotations may be applied to a library’s types in future versions of that library, in which case the annotations are versioned, yet the library remains binary compatible. How this will impact the ABI is still under investigation [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkxMQ==">SR-3911<i class="fa fa-external-link-alt"></i></span> ].</p>
+<h4 id="Abstraction-Levels"><a href="#Abstraction-Levels" class="headerlink" title="Abstraction Levels"></a>Abstraction Levels</h4><p>All types in Swift conceptually exist at multiple levels of abstraction. For example, an <code>Int</code> value is of a concrete type and can be passed to functions in registers. But, that same value might be passed to a function expecting a generic type <code>T</code>, which has opaque layout. Since the function is expecting its argument to be passed indirectly, the integer value must be promoted to the stack. When that value has type <code>T</code>, it is said to be at a higher abstraction level than when it was an integer. Moving between abstraction levels is done through a process called <em>reabstraction</em>.</p>
+<p>For many types in Swift, reabstraction involves directly copying the value to memory so that it is addressable. Reabstraction may be more complicated for tuples and higher-order functions, explained later in the <a href="#tuples">tuples layout section</a> and the <a href="#lowering-higher-order-functions">function signature lowering section</a>.</p>
+<h3 id="A-Tour-of-Types"><a href="#A-Tour-of-Types" class="headerlink" title="A Tour of Types"></a>A Tour of Types</h3><p>What follows is a breakdown of the different kinds of types in Swift and what needs to be specified.</p>
+<h4 id="Structs"><a href="#Structs" class="headerlink" title="Structs"></a>Structs</h4><p>The layout algorithm for structs should result in an efficient use of space, possibly by laying out fields in a different order than declared [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzcyMw==">SR-3723<i class="fa fa-external-link-alt"></i></span> ]. We may want a fully declaration-order-agnostic algorithm to allow data members to be reordered in source without breaking binary compatibility [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzcyNA==">SR-3724<i class="fa fa-external-link-alt"></i></span> ]. We also need to consider whether, by default, we want to ensure struct data members are addressable (i.e. byte-aligned) or if we’d rather do bit-packing to save space [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzcyNQ==">SR-3725<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>Zero sized structs do not take up any space as data members and struct members may be laid out in the padding of sub-structs. We may want to explore whether there are implementation benefits to capping alignment at some number, e.g. 16 on many platforms [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkxMg==">SR-3912<i class="fa fa-external-link-alt"></i></span> ].</p>
+<h4 id="Tuples"><a href="#Tuples" class="headerlink" title="Tuples"></a>Tuples</h4><p>Tuples are similar to anonymous structs, but they differ in that they exhibit structural subtyping: a tuple of type e.g. <code>(Bool, Bool)</code> can be passed anywhere expecting generic types <code>(T, U)</code>. But, the type <code>(T, U)</code> exists at a higher abstraction level than <code>(Bool, Bool)</code>. Due to this, tuples may face more expensive reabstraction costs if their layout is aggressively packed. Reabstracting such a tuple would involve splitting and promoting each element into their own addresses.</p>
+<p>This may be an argument for a simple, declaration-order, non bit-packed layout algorithm for tuples. Tuples are often used for small local values and rarely persisted across ABI boundaries in a way that aggressive packing is performance-critical. This would also be more consistent with how fixed-size C arrays are presented in Swift, which are imported as tuples.</p>
+<p>We should investigate whether to aggressively bit-pack tuple elements similarly to structs, paying the reabstraction costs, or if the benefits are not worth the costs [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzcyNg==">SR-3726<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>Tuples should be binary compatible between labeled and unlabeled tuples of the same type and structure.</p>
+<h4 id="Enums"><a href="#Enums" class="headerlink" title="Enums"></a>Enums</h4><p>A value of enum type exists as one of many variants or cases. Determining which is the job of the <em>discriminator</em>, also known as a tag, which is an integer value denoting which case is presently stored. To save space, discriminators can be put in spare bits or be represented by extra inhabitants.</p>
+<p><code>@closed</code> enums, that is enums that can’t have cases added to them later, can be classified into the following:</p>
+<ul>
+<li>Degenerate - zero cased, or single cased without an associated value</li>
+<li>Trivial - no associated values</li>
+<li>Single payload - an enum where only one case has associated values</li>
+<li>Multi-payload - an enum that has multiple cases with associated values</li>
+</ul>
+<p>Degenerate enums take zero space. Trivial enums are just their discriminator.</p>
+<p>Single payload enums try to fit their discriminator in the payload’s extra inhabitants for the non-payload cases, otherwise they will store the discriminator after the payload. When the discriminator is stored after the payload, the bits are not set for the payload case. The payload is guaranteed to be layout compatible with the enum as the payload case does not use any extra inhabitants. Storing the discriminator after the payload may also result in more efficient layout of aggregates containing the enum, due to alignment.</p>
+<p>The layout algorithm for multi-payload enums is more complicated and still needs to be developed [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzcyNw==">SR-3727<i class="fa fa-external-link-alt"></i></span> ]. The algorithm should try to rearrange payloads so as to coalesce cases and save space. This rearrangement can also improve performance and code size. For example, if ARC-ed payload components reside in the same location, operations like copy can be done directly on the values without extensive switching.</p>
+<p>Enum raw values are not ABI, as they are implemented as code present in the computed property getter and setter. <code>@objc</code> enums are C-compatible, which means they must be trivial.</p>
+<p>Library evolution adds the notion of <code>@open</code> enums (which will also be resilient), which allow library owners to add new cases and reorder existing cases without breaking binary compatibility. How this is accomplished is still to be determined.</p>
+<h4 id="Classes"><a href="#Classes" class="headerlink" title="Classes"></a>Classes</h4><p>There are two constructs present when discussing about class layout: <em>class instances</em>, which reside on the heap, and <em>references</em> to class instances, which are reference-counted pointers.</p>
+<h4 id="Class-Instances"><a href="#Class-Instances" class="headerlink" title="Class Instances"></a>Class Instances</h4><p>The layout of class instances is mostly opaque. This is to avoid the vexing problem of <span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRnJhZ2lsZV9iaW5hcnlfaW50ZXJmYWNlX3Byb2JsZW0=">fragile binary interfaces<i class="fa fa-external-link-alt"></i></span>, also known as the “fragile base class problem”, in which seemingly minor changes to a base class break binary compatibility with subclasses.</p>
+<p>The run-time type of a non-final class instance or a class existential is not known statically. To facilitate dynamic casts, the object must store a pointer to its type, called the <em>isa</em> pointer. The <em>isa</em> pointer is always stored at offset 0 within the object. How that type is represented and what information it provides is part of the class’s metadata and is covered in the <a href="#class-metadata">class metadata section</a>. Similarly, the function for a non-final method call is also not known statically and is dispatched based on the run-time type. Method dispatch is covered in the <a href="#method-dispatch">method dispatch section</a>.</p>
+<p>Class instances will, as part of ABI-stability, guarantee a word-sized field of opaque data following the isa field that may be used for reference counting by the runtime [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDM1Mw==">SR-4353<i class="fa fa-external-link-alt"></i></span> ]. But, the format and conventions of this opaque data will not be ABI at first in order to have more flexibility for language or implementation changes. Instead, runtime functions provide the means to interact with reference counts. This opaque data and its conventions may be locked down for more efficient access in the future, which will be an ABI-additive change.</p>
+<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p>Classes are reference types. This means that Swift code dealing with class instances does so through references, which are pointers at the binary level. These references participate in <span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQXV0b21hdGljX1JlZmVyZW5jZV9Db3VudGluZw==">automatic reference counting<i class="fa fa-external-link-alt"></i></span> (ARC).</p>
+<p>References to Objective-C-compatible class instances (i.e. those that inherit from an Objective-C class or are imported from Objective-C) must provide the same bit-level guarantees to the Objective-C runtime as Objective-C references. Thus, such references are opaque: they have no guarantees other than that nil is 0 and provide no extra inhabitants.</p>
+<p>References to native, non-Objective-C-compatible Swift class instances do not have this constraint. The alignment of native Swift class instances is part of ABI, providing spare bits in the lower bits of references. Platforms may also provide spare bits (typically upper bits) and extra inhabitants (typically lower addresses) for references due to limited address spaces.</p>
+<p>We may want to explore using spare bits in references to store local reference counts in order to perform some ARC operations more efficiently [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzcyOA==">SR-3728<i class="fa fa-external-link-alt"></i></span> ]. These would need to be flushed to the object whenever a reference may escape or the local reference count reaches zero. If these local reference counts can cross ABI boundaries, then such a change will have to be implemented in an ABI-additive way with deployment target checking.</p>
+<h4 id="Existential-Containers"><a href="#Existential-Containers" class="headerlink" title="Existential Containers"></a>Existential Containers</h4><p>Any discussion of existentials quickly becomes bogged down in obscure terminology, so let’s first establish some background surrounding the terms <em>existential values</em>, <em>existential containers</em>, and <em>witness tables</em>.</p>
+<p>In type theory, an <span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvVHlwZV9zeXN0ZW0jRXhpc3RlbnRpYWxfdHlwZXM=">existential type<i class="fa fa-external-link-alt"></i></span> describes an interface of an abstract type. Values of an existential type are <em>existential values</em>. These arise in Swift when an object’s type is a protocol: storing or passing an object of protocol type means that the actual run-time type is opaque (not known at compile time, and thus neither is its layout). But, that opaque type has known interfaces because that type conforms to the protocol.</p>
+<p>A type’s conformance to a protocol consists of functions (whether methods or getters and setters), but the specific addresses of those functions are not known at compilation time for existential values as their actual type is not known until run time. This is a similar situation as with references to non-final class instances, and is solved using a <a href="#method-dispatch">similar technique</a>. <em>Witness tables</em> are tables of function pointers implementing a protocol conformance and are further discussed in the <a href="#witness-tables">witness table section</a>.</p>
+<p><em>Existential containers</em> store values of protocol or protocol composition type alongside corresponding witness tables for each protocol conformance. For existentials that are not class-constrained (may be value types or classes), the container needs to store:</p>
+<ul>
+<li>the value itself: either in an inline buffer or as a pointer to out-of-line storage</li>
+<li>a pointer to the type metadata</li>
+<li>a witness table pointer for every conformance.</li>
+</ul>
+<p>Class-constrained existentials omit the metadata pointer (as the object itself contains a pointer to its type), as well as any excess inline buffer space. <code>Any</code>, which is an existential value without any conformances, has no witness table pointer.</p>
+<p>We are re-evaluating the inline buffer size for existential containers prior to ABI stability [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzM0MA==">SR-3340<i class="fa fa-external-link-alt"></i></span> ]. We are also considering making the out-of-line allocation be copy-on-write (COW) [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDMzMA==">SR-4330<i class="fa fa-external-link-alt"></i></span> ]. We should also explore “exploding” existential parameters, i.e. converting an existential parameter into a protocol-constrained generic parameter [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDMzMQ==">SR-4331<i class="fa fa-external-link-alt"></i></span> ].</p>
+<h3 id="Declaring-Stability"><a href="#Declaring-Stability" class="headerlink" title="Declaring Stability"></a>Declaring Stability</h3><p>ABI stability means nailing down type layout and making decisions about how to handle the concerns of Library Evolution. The end result will be a technical specification of the layout algorithms that future compilers must adhere to in order to ensure binary compatibility [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzczMA==">SR-3730<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>For all of the areas discussed above, more aggressive layout improvements may be invented in the post-ABI stability future. For example, we may want to explore rearranging and packing nested type data members with outer type data members. Such improvements would have to be done in an ABI-additive fashion through deployment target and&#x2F;or min-version checking. This may mean that the module file will need to track per-type ABI versioning information.</p>
+<p>A potentially out of date description of Swift’s current type layout can be found in the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvQUJJLnJzdCN0eXBlLWxheW91dA==">Type Layout docs<i class="fa fa-external-link-alt"></i></span>.</p>
+<h2 id="Type-Metadata"><a href="#Type-Metadata" class="headerlink" title="Type Metadata"></a>Type Metadata</h2><hr>
+<p>While data layout specifies the layout of objects of a given type, <em>type metadata</em> holds information about the types themselves. The information available and how to access this information is part of Swift ABI.</p>
+<p>Swift keeps metadata records for every <em>concrete type</em>. Concrete types include all non-generic types as well as generic types with concrete type parameters. These records are created by the compiler as well as lazily created at run time (e.g. for generic type instantiations). This metadata stores information about its type, discussed in each section below.</p>
+<p>A potential approach to stability mechanism is to provide metadata read&#x2F;write functions alongside the runtime to interact with metadata, giving some freedom to the underlying structures to grow and change. This effectively makes large portions of metadata opaque. But, certain fields require access to be as efficient as possible (e.g. dynamic casts, calling into witness tables) and the performance hit from going through an intermediary function would be unacceptable. Thus, we will probably freeze the performance-critical parts and use accessor functions for the rest [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkyMw==">SR-3923<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>Metadata has many historical artifacts in its representation that we want to clean up [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkyNA==">SR-3924<i class="fa fa-external-link-alt"></i></span> ]. We also want to make small tweaks to present more semantic information in the metadata, to enable better future tooling and features such as reflection [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkyNQ==">SR-3925<i class="fa fa-external-link-alt"></i></span> ]. Some of these need to be done before declaring ABI stability and some may be additive.</p>
+<h3 id="Declaring-Stability-1"><a href="#Declaring-Stability-1" class="headerlink" title="Declaring Stability"></a>Declaring Stability</h3><p>Stabilizing the ABI means producing a precise technical specification for the fixed part of the metadata layout of all language constructs so that future compilers and tools can continue to read and write them. A prose description is not necessarily needed, though explanations are useful. We will also want to carve out extra space for areas where it is likely to be needed for future functionality [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzczMQ==">SR-3731<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>For more, but potentially out of date, details see the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvQUJJLnJzdCN0eXBlLW1ldGFkYXRh">Type Metadata docs<i class="fa fa-external-link-alt"></i></span>.</p>
+<h3 id="Generic-Parameters"><a href="#Generic-Parameters" class="headerlink" title="Generic Parameters"></a>Generic Parameters</h3><p>Swift has a powerful generics system, which shows up both at compilation time (through specialization optimizations) and at run time when the type is unknown. Swift types may be parameterized over generic types, and thus every type’s metadata describes whether generic type parameters are present and if so provides information about them.</p>
+<p>At run time, objects only have concrete types. If the type in source code is generic, the concrete type is an instantiation of that generic type. Generic instantiation metadata provide type metadata for each generic type parameter. If the generic type is constrained, corresponding <a href="#witness-tables">witness tables</a> for each protocol conformance are also provided in the metadata.</p>
+<h3 id="Value-Metadata"><a href="#Value-Metadata" class="headerlink" title="Value Metadata"></a>Value Metadata</h3><p>Named value types store the type name (currently mangled but we are investigating un-mangled [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkyNg==">SR-3926<i class="fa fa-external-link-alt"></i></span> ]) and a pointer to the type’s parent for nested types.</p>
+<p>Value type metadata also has kind-specific entries. Struct metadata stores information about its fields, field offsets, field names, and field metadata. Enum metadata stores information about its cases, payload sizes, and payload metadata. Tuple metadata stores information about its elements and labels.</p>
+<h4 id="Value-Witness-Tables"><a href="#Value-Witness-Tables" class="headerlink" title="Value Witness Tables"></a>Value Witness Tables</h4><p>Every concrete type has a <em>value witness table</em> that provides information about how to lay out and manipulate values of that type. When a value type has <a href="#opaque-layout">opaque layout</a>, the actual layout and properties of that value type are not known at compilation time, so the value witness table is consulted.</p>
+<p>The value witness table stores whether a type is trivial and&#x2F;or bitwise movable, whether there are extra inhabitants and if so how to store and retrieve them, etc. For enums, the value witness table will also provide functionality for interacting with the discriminator. There may be more efficient ways of representing enums that simplify this functionality (or provide a fast path), and that’s under investigation [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDMzMg==">SR-4332<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>These value witness tables may be constructed statically for known values or dynamically for some generic values. While every unique type in Swift has a unique metadata pointer, value witness tables can be shared by types so long as the information provided is identical (i.e. same layout). Value witness tables always represent a type at its highest <a href="#abstraction-levels">abstraction level</a>. The value witness table entries and structure need to be locked down for ABI stability [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkyNw==">SR-3927<i class="fa fa-external-link-alt"></i></span> ].</p>
+<h3 id="Class-Metadata"><a href="#Class-Metadata" class="headerlink" title="Class Metadata"></a>Class Metadata</h3><p>Swift class metadata is layout-compatible with Objective-C class objects on Apple’s platforms, which places requirements on the contents of the first section of class metadata. In this first section, entries such as super class pointers, instance size, instance alignment, flags, and opaque data for the Objective-C runtime are stored.</p>
+<p>Following that are superclass members, parent type metadata, generic parameter metadata, class members, and <em>vtables</em>, described below. Library evolution may present many changes to what exactly is present and will likely make many of the contents opaque to accommodate changes [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDM0Mw==">SR-4343<i class="fa fa-external-link-alt"></i></span> ].</p>
+<h4 id="Method-Dispatch"><a href="#Method-Dispatch" class="headerlink" title="Method Dispatch"></a>Method Dispatch</h4><p>Invoking a non-final instance method involves calling a function that is not known at compile time: it must be resolved at run time. This is solved through the use of a <em>vtable</em>, or virtual method table (so called because overridable methods are also known as “virtual” methods). A <em>vtable</em> is a table of function pointers to a class or subclass’s implementation of overridable methods. If the vtable is determined to be part of ABI, it needs a layout algorithm that also provides flexibility for library evolution.</p>
+<p>Alternatively, we may decide to perform inter-module calls through opaque <em>thunks</em>, or compiler-created intermediary functions, which then perform either direct or vtable dispatch as needed [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkyOA==">SR-3928<i class="fa fa-external-link-alt"></i></span> ]. This enables greater library evolution without breaking binary compatibility by allowing internal class hierarchies to change. This would also unify non-final method dispatch between open and non-open classes while still allowing for aggressive compiler optimizations like de-virtualization for non-open classes. This approach would make vtables not be ABI, as that part of the type metadata would effectively be opaque to another module.</p>
+<h3 id="Protocol-and-Existential-Metadata"><a href="#Protocol-and-Existential-Metadata" class="headerlink" title="Protocol and Existential Metadata"></a>Protocol and Existential Metadata</h3><h4 id="Protocol-Witness-Tables"><a href="#Protocol-Witness-Tables" class="headerlink" title="Protocol Witness Tables"></a>Protocol Witness Tables</h4><p>The protocol witness table is a function table of a type’s conformance to the protocol’s interfaces. If the protocol also has an associated type requirement, then the witness table will store the metadata for the associated type. Protocol witness tables are used with <a href="#existential-containers">existential containers</a> where the run time type is not known.</p>
+<p>Protocol witness tables may be created dynamically by the runtime or statically by the compiler. The layout of a protocol witness table is ABI and we need to determine a layout algorithm that also accommodates library evolution concerns, where additional protocol requirements may be added with default fall-backs [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzczMg==">SR-3732<i class="fa fa-external-link-alt"></i></span> ].</p>
+<h4 id="Existential-Metadata"><a href="#Existential-Metadata" class="headerlink" title="Existential Metadata"></a>Existential Metadata</h4><p>Existential type metadata contains the number of witness tables present, whether the type is class-constrained, and a <em>protocol descriptor</em> for each protocol constraint. A protocol descriptor describes an individual protocol constraint, such as whether it is class-constrained, the size of conforming witness tables, and protocol descriptors for any protocols it refines. Protocol descriptors are layout compatible with the Objective-C runtime’s protocol records on Apple platforms. The format of the existential type metadata needs to be reviewed as part of the ABI definition [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDM0MQ==">SR-4341<i class="fa fa-external-link-alt"></i></span> ].</p>
+<h3 id="Function-Metadata"><a href="#Function-Metadata" class="headerlink" title="Function Metadata"></a>Function Metadata</h3><p>In addition to common metadata entries, function type metadata stores information about the function signature: parameter and result type metadata, calling convention, per-parameter ownership conventions, and whether the function throws. Function type metadata always represents the function at its highest abstraction level, which is explained later in the <a href="#lowering-higher-order-functions">function signature lowering section</a>. Function parameters are currently modeled with a tuple-based design, but this should be updated to match modern Swift [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDMzMw==">SR-4333<i class="fa fa-external-link-alt"></i></span> ]. As more ownership semantics are modeled, more information may be stored about each parameter.</p>
+<h2 id="Mangling"><a href="#Mangling" class="headerlink" title="Mangling"></a>Mangling</h2><hr>
+<p>Mangling is used to produce unique symbols. It applies to both external (public) symbols as well as internal or hidden symbols. Only the mangling scheme for external symbols is part of ABI.</p>
+<p>ABI stability means a stable mangling scheme, fully specified so that future compilers and tools can honor it. For a potentially out-of-date specification of what the mangling currently looks like, see the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvQUJJLnJzdCNtYW5nbGluZw==">Name Mangling docs<i class="fa fa-external-link-alt"></i></span>.</p>
+<p>There are some corner cases currently in the mangling scheme that should be fixed before declaring ABI stability. We need to come up with a canonicalization of generic and protocol requirements to allow for order-agnostic mangling [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzczMw==">SR-3733<i class="fa fa-external-link-alt"></i></span> ]. We also may decide to more carefully mangle variadicity of function parameters, etc [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzczNA==">SR-3734<i class="fa fa-external-link-alt"></i></span> ]. Most often, though, mangling improvements focus on reducing symbol size.</p>
+<p>Mangling design centers around coming up with short and efficient manglings that still retain important properties such as uniqueness and integration with existing tools and formats. Given the prevalence of public symbols in libraries and frameworks, and debugging symbols in applications, the symbol names themselves can make up a significant portion of binary size. Reducing this impact is a major focus of stabilizing the mangling. Post-ABI-stability, any new manglings or techniques must be additive and must support the existing manglings.</p>
+<p>There are many ways to improve the existing mangling without major impact on existing tools. Throughout these endeavors, we will be empirically measuring and tracking symbol size and its impact on binary size. ABI work on mangling focuses on producing <em>compact manglings</em> and using <em>suffix differentiation</em>.</p>
+<h3 id="Compact-Manglings"><a href="#Compact-Manglings" class="headerlink" title="Compact Manglings"></a>Compact Manglings</h3><p>Minor tweaks to shorten the mangling can have a beneficial impact on all Swift program binary sizes. These tweaks should compact existing manglings while preserving a simple unique mapping. One example is not distinguishing between struct&#x2F;enum in mangling structures, which would also provide more library evolution freedom [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkzMA==">SR-3930<i class="fa fa-external-link-alt"></i></span> ]. We are considering dropping some internal witness table symbols when they don’t provide any meaningful information conducive to debugging [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkzMQ==">SR-3931<i class="fa fa-external-link-alt"></i></span> ]. We recently overhauled word substitutions in mangling, with the goal of reducing as much redundancy in names as possible [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDM0NA==">SR-4344<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>There are other aggressive directions to investigate as well, such as mangling based on a known overload set for non-resilient functions. This does have the downside of making manglings unstable when new overloads are added, so its benefits would have to be carefully weighed [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkzMw==">SR-3933<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>Any more ambitious reimagining of how to store symbols such as aggressive whole-library symbol name compression would have to be done in tight coupling with existing low level tools. Unfortunately, this might make some of the more ambitious options infeasible in time for ABI stability. They could be rolled out as ABI-additive using deployment target checking in the future.</p>
+<h3 id="Suffix-Differentiation"><a href="#Suffix-Differentiation" class="headerlink" title="Suffix Differentiation"></a>Suffix Differentiation</h3><p>There are many existing low level tools and formats that store and consume the symbol information, and some of them use efficient storage techniques such as tries. Suffix differentiation is about adjusting the mangling in ways that take advantage of them: by distinguishing manglings through suffixes, i.e. having common shared prefixes. This is currently underway and is resulting in binary size reductions for platforms that use these techniques [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzkzMg==">SR-3932<i class="fa fa-external-link-alt"></i></span> ].</p>
+<h2 id="Calling-Convention"><a href="#Calling-Convention" class="headerlink" title="Calling Convention"></a>Calling Convention</h2><hr>
+<p>For the purposes of this document, “standard calling convention” refers to the C calling convention for a given platform (see <a href="#platform-abis">appendix</a> ), and “Swift calling convention” refers to the calling convention used by Swift code when calling other Swift code. One of the first steps toward ABI stability is for Swift to adopt the Swift calling convention [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDM0Ng==">SR-4346<i class="fa fa-external-link-alt"></i></span> ]. The Swift runtime uses the standard calling convention, though it may make alterations (see section <a href="#runtime-calling-convention">Runtime calling convention</a> ).</p>
+<p>Calling convention stability pertains to public interfaces. The Swift compiler is free to choose any convention for internal (intra-module) functions and calls.</p>
+<p>For rationale and potentially-out-of-date details, see the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvQ2FsbGluZ0NvbnZlbnRpb24ucnN0">Swift Calling Convention Whitepaper<i class="fa fa-external-link-alt"></i></span>. As part of nailing down the calling conventions, that document will either be updated with the final specifications of the calling conventions or else moved to a rationale document and a more succinct and rigorous specification put in its place.</p>
+<h3 id="Register-convention"><a href="#Register-convention" class="headerlink" title="Register convention"></a>Register convention</h3><p>This section will be using the terms <em>callee-saved</em> and <em>scratch</em> to classify registers as part of a register convention.</p>
+<ul>
+<li>A <em>callee-saved register</em> must be preserved over the duration of a function call. If a called function (the <em>callee</em> ) wishes to change the value stored in the register, it must restore it before returning.</li>
+<li>A <em>scratch</em> register, also known as caller-saved or callee-clobbered, is not preserved over the duration of a function call. If the register’s value must be preserved, code surrounding a function call must save and restore the value.</li>
+</ul>
+<p>Swift uses roughly the same categorization of registers as the standard calling convention. But, for some platforms, the Swift calling convention adds additional situational uses of some callee-saved registers: the <em>call context</em> register and the <em>error</em> register.</p>
+<h4 id="Call-Context-Register"><a href="#Call-Context-Register" class="headerlink" title="Call Context Register"></a>Call Context Register</h4><p>The value held in the <em>call context</em> register depends on the kind of function called:</p>
+<ul>
+<li>Instance methods on class types: pointer to self</li>
+<li>Class methods: pointer to type metadata (which may be subclass metadata)</li>
+<li>Mutating method on value types: pointer to the value (i.e. value is passed indirectly)</li>
+<li>Non-mutating methods on value types: self may fit in one or more registers, else passed indirectly</li>
+<li><em>Thick closures</em>, i.e. closures requiring a context: the closure context</li>
+</ul>
+<p>Having the call context register be callee-saved is advantageous. It keeps the register stable across calls, where the context is very likely to be used and reused in subsequent or nested calls. Additionally, this makes partial application free as well as converting thin closures to thick.</p>
+<h4 id="Error-Register"><a href="#Error-Register" class="headerlink" title="Error Register"></a>Error Register</h4><p>Throwing functions communicate error values to their callers through the <em>error</em> register on some platforms. The error register holds a pointer to the error value if an error occurred, otherwise 0. The caller of a throwing function is expected to quickly check for 0 before continuing on with non-error code, otherwise branching to code to handle or propagate the error. Using a callee-saved register for the error register enables free conversion from non-throwing to throwing functions, which is required to honor the subtyping relationship.</p>
+<h3 id="Function-Signature-Lowering"><a href="#Function-Signature-Lowering" class="headerlink" title="Function Signature Lowering"></a>Function Signature Lowering</h3><p>Function signature lowering is the mapping of a function’s source-language type, which includes formal parameters and results, all the way down to a physical convention, which dictates what values are stored in what registers and what values to pass on the stack.</p>
+<p>ABI stability requires nailing down and fully specifying this algorithm so that future Swift versions can lower Swift types to the same physical call signature as prior Swift versions [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDM0OQ==">SR-4349<i class="fa fa-external-link-alt"></i></span> ]. More in-depth descriptions and rationale of function signature lowering can be found in the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvQ2FsbGluZ0NvbnZlbnRpb24ucnN0I2Z1bmN0aW9uLXNpZ25hdHVyZS1sb3dlcmluZw==">function signature lowering docs<i class="fa fa-external-link-alt"></i></span>.</p>
+<p>Lowering the result value is usually done first, with a certain number of registers designated to hold the result value if it fits, otherwise the result value is passed on the stack. A good heuristic is needed for the limit and is architecture specific (e.g. 4 registers on modern 64-bit architectures) [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzk0Ng==">SR-3946<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>Next comes lowering parameters, which proceeds greedily by trying to fit values into registers from left-to-right, though some parameters may be re-ordered. For example, closures are best placed at the end to take advantage of ABI compatibility between thick closures and thin ones without a context.</p>
+<p>Some values must be passed and returned indirectly as they are <em>address only</em>. Address only values include <a href="#type-properties">non-bitwise-copyable</a> values, values with <a href="#opaque-layout">opaque layout</a>, and non-class-constrained <a href="#existential-containers">existential values</a>. Even if the runtime type would normally be passed in a register, or even if the type is statically known at the call-site, if the callee receives or returns values with opaque layout, they must be passed or returned indirectly.</p>
+<p>We should investigate whether it makes sense to split values with partially opaque layout by passing the non-opaque parts in registers [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzk0Nw==">SR-3947<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>Parameter ownership is not reflected in the physical calling convention, though it will be noted in the mangling of the function name. Default argument expressions will not be ABI, as they will be emitted into the caller. This means that a library can add, modify, or remove default argument expressions without breaking binary compatibility (though modifying&#x2F;removing may break source compatibility).</p>
+<h4 id="Lowering-Higher-Order-Functions"><a href="#Lowering-Higher-Order-Functions" class="headerlink" title="Lowering Higher-Order Functions"></a>Lowering Higher-Order Functions</h4><p>Passing or returning higher-order functions may involve undergoing <a href="#abstraction-levels">reabstraction</a>, which requires that the compiler creates a thunk mapping between the actual calling convention and the expected calling convention.</p>
+<p>For example, let’s say there are two functions:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">add1</span>(<span class="keyword">_</span> <span class="params">i</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123; <span class="keyword">return</span> i<span class="operator">+</span><span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">func</span> <span class="title function_">apply</span>&lt;<span class="type">T</span>,<span class="type">U</span>&gt;(<span class="keyword">_</span> <span class="params">f</span>: (<span class="type">T</span>) -&gt; <span class="type">U</span>, <span class="keyword">_</span> <span class="params">x</span>: <span class="type">T</span>) -&gt; <span class="type">U</span> &#123; <span class="keyword">return</span> f(x) &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>apply</code>‘s function parameter <code>f</code> must take and return its values indirectly, as <code>T</code> and <code>U</code> have opaque layout. If <code>add1</code> is passed to <code>apply</code>, the compiler will create a thunk for <code>apply</code> to call that takes a parameter indirectly and calls <code>add1</code> by passing it in register. The thunk will then receive the result in register and return it indirectly back to <code>apply</code>.</p>
+<h3 id="Stack-Invariants"><a href="#Stack-Invariants" class="headerlink" title="Stack Invariants"></a>Stack Invariants</h3><p>Calling conventions include invariants about the call stack, such as stack alignment. Unless there is a very compelling reason to deviate, Swift should just honor the stack invariants of the standard calling convention. This is because Swift functions may share their call stack with non-Swift code. For example a Swift function that calls an Objective-C function, which in turn calls another Swift function, would want to maintain the proper stack alignment (and any other stack invariants) for all calls. This is far simpler if they both honor the same invariants.</p>
+<h3 id="Runtime-Calling-Convention"><a href="#Runtime-Calling-Convention" class="headerlink" title="Runtime Calling Convention"></a>Runtime Calling Convention</h3><p>The Swift runtime uses the standard calling convention, though it may evolve to preserve more invariants. It’s likely beneficial to introduce one or a number of tweaks to the scratch register sets of some runtime functions. Swift code that makes a call into the runtime assumes some registers are scratch, i.e. clobbered by the runtime function. But, some runtime functions may not need as many scratch registers and can guarantee more registers as callee-saved. Every formerly-scratch register that is denoted callee-saved (i.e. runtime function saved) relieves the register pressure of the surrounding Swift code making the runtime call.</p>
+<p>Such changes to runtime functions can be rolled out incrementally in the future, and they are backwards compatible so long as no version of that function ever clobbers the now-saved registers. But, such a change is ratcheting, that is every register that is changed to be runtime-saved can no longer go back to being scratch without breaking binary compatibility. If the reduced scratch register set causes the runtime function to spill, then the whole exercise was pointless and actively harmful. Great care should be taken and testing applied for any change to ensure that the runtime function never spills in the future.</p>
+<h2 id="Runtime"><a href="#Runtime" class="headerlink" title="Runtime"></a>Runtime</h2><p>Swift exposes a runtime that provides APIs for compiled code. Calls into the Swift runtime are produced by the compiler for concerns such as memory management and run-time type information. Additionally, the runtime exposes low-level reflection APIs that are useful to the standard library and some users.</p>
+<p>Every existing runtime function will need to be audited for its desirability and behavior [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzczNQ==">SR-3735<i class="fa fa-external-link-alt"></i></span> ]. For every function, we need to evaluate whether we want the API as is:</p>
+<ul>
+<li>If yes, then we need to precisely specify the semantics and guarantees of the API.</li>
+<li>If not, we need to either change, remove, or replace the API, and precisely specify the new semantics.</li>
+</ul>
+<p>The runtime is also responsible for lazily creating new type metadata entries at run time, either for generic type instantiations or for resilient constructs. Library evolution in general introduces a whole new category of needs from the runtime by making data and metadata more opaque, requiring interaction to be done through runtime APIs. Additionally, ownership semantics may require new runtime APIs or modifications to existing APIs. These new runtime needs are still under investigation [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDM1Mg==">SR-4352<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>There are many potential future directions to open up the ABI and operate on less-opaque data directly, as well a techniques such as call-site caching. These are ABI-additive, and will be interesting to explore in the future.</p>
+<p>For a potentially-out-of-date listing of runtime symbols and some details, see the <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvUnVudGltZS5tZA==">Runtime docs<i class="fa fa-external-link-alt"></i></span>.</p>
+<h2 id="Standard-Library"><a href="#Standard-Library" class="headerlink" title="Standard Library"></a>Standard Library</h2><hr>
+<p>Any standard library API shipped post-ABI-stability must be supported into the future to ensure binary compatibility. The standard library will also be utilizing resilience annotations and <em>inlineable</em> code. Inlineable code is code that is bundled with the client’s code, and is available for inlining to the optimizer if it decides to do so. The standard library faces the following (non-exhaustive) list of challenges for ensuring binary compatibility:</p>
+<ul>
+<li>Published public functions and types cannot be removed or changed in ways that break binary compatibility.</li>
+<li>Choosing what code to make inlineable will affect performance and flexibility.</li>
+<li>Internal functions called by inlineable code become ABI, and are subject to the same binary compatibility concerns as public functions.</li>
+<li>Non-resilient types cannot change their layout.</li>
+<li>Protocols cannot add new requirements.</li>
+</ul>
+<h3 id="Inlineability"><a href="#Inlineability" class="headerlink" title="Inlineability"></a>Inlineability</h3><p>Inlineable code that calls internal functions makes those internal functions ABI, as the client code will be making external calls to them. Thus, many internal interfaces in the standard library will need to be locked down if called from inlineable code. Whether to mark code inlineable will have to carefully weigh performance requirements against keeping flexibility for future changes.</p>
+<p>This tradeoff between performance and flexibility also affects the ability to deploy bug fixes and performance improvements to users. Users that have inlined code from the standard library will not be able to get bug fixes and performance improvements in an OS update without performing a recompilation with the new library. For more information on this topic, see <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvTGlicmFyeUV2b2x1dGlvbi5yc3QjaW5saW5lYWJsZS1mdW5jdGlvbnM=">Inlineable Functions<i class="fa fa-external-link-alt"></i></span>.</p>
+<h3 id="Upcoming-Changes"><a href="#Upcoming-Changes" class="headerlink" title="Upcoming Changes"></a>Upcoming Changes</h3><p>While the standard library is already ensuring source stability, it will be changing many of its fundamental underlying representations this year. When ABI stability lands, the standard library will be severely limited in the kinds of changes it can make to existing APIs and non-resilient types. Getting the standard library in the right place is of critical importance.</p>
+<p>The programming model for String is still being redesigned [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDM1NA==">SR-4354<i class="fa fa-external-link-alt"></i></span> ], and many types such as Int are undergoing implementation changes [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzE5Ng==">SR-3196<i class="fa fa-external-link-alt"></i></span> ]. At the same time, the standard library is simultaneously switching to new compiler features such as conditional conformances to clean up and deliver the best APIs [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItMzQ1OA==">SR-3458<i class="fa fa-external-link-alt"></i></span> ].</p>
+<p>Another goal of Swift is to improve the applicability of Swift to systems programming. Ownership semantics may make a large impact, including things such as improved <code>inout</code> semantics that allow for efficient and safe array slicing. Providing the right abstractions for efficient use of contiguous memory is still under investigation [ <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy9icm93c2UvU1ItNDM1NQ==">SR-4355<i class="fa fa-external-link-alt"></i></span> ].</p>
+<h2 id="Next-Steps"><a href="#Next-Steps" class="headerlink" title="Next Steps"></a>Next Steps</h2><p>All progress and issue tracking will be done through JIRA on <span class="exturl" data-url="aHR0cHM6Ly9idWdzLnN3aWZ0Lm9yZy8=">bugs.swift.org<i class="fa fa-external-link-alt"></i></span>, using the “AffectsABI” label. We will make an ABI stability dashboard to more easily monitor specifics and progress. The next step is to start making issues for everything that needs fixing and issues for the directions we want to explore.</p>
+<p>This document will be a living document until ABI stability is reached, updated with new findings and JIRA issues as they come up. After ABI stability is achieved, this document should be succeeded by technical specifications of Swift’s ABI.</p>
+<p>Issue tracking alone doesn’t effectively communicate the overall progress and when ABI stability can be expected to land. Some issues take longer than others and there isn’t a good indication of how long the known tasks will take, nor of how many unknown issues are yet to be filed. For that, a higher level view of the overall status will be provided, possibly on <span class="exturl" data-url="aHR0cHM6Ly9zd2lmdC5vcmcv">swift.org<i class="fa fa-external-link-alt"></i></span>.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwcGxlL3N3aWZ0L2Jsb2IvbWFzdGVyL2RvY3MvQUJJU3RhYmlsaXR5TWFuaWZlc3RvLm1k">Swift ABI Stability Manifesto<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"><i class="fa fa-tag"></i> Swift</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/28/20180328-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E5%85%AD%E3%80%91%E7%BC%96%E7%A0%81%E5%92%8C%E8%A7%A3%E7%A0%81/" rel="prev" title="Swift 进阶【六】编码和解码">
+                  <i class="fa fa-angle-left"></i> Swift 进阶【六】编码和解码
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/01/20180401-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E4%B8%83%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="next" title="Swift 进阶【七】字符串">
+                  Swift 进阶【七】字符串 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

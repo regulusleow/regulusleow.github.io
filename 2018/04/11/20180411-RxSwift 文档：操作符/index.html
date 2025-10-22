@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="just 、 from 和 of just 和 from 都能够将元素转化为 Observable 但是他们有本质的区别： just创建 Observable 发出唯一的一个元素。 just 操作符将某一个元素转换为 Observable。 示例： 1234567let oJust &#x3D; Observable.just([1, 2, 3, 4, 5])oJust.subscribe(onNext:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxSwift 文档：操作符">
+<meta property="og:url" content="https://regulusleow.github.io/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="just 、 from 和 of just 和 from 都能够将元素转化为 Observable 但是他们有本质的区别： just创建 Observable 发出唯一的一个元素。 just 操作符将某一个元素转换为 Observable。 示例： 1234567let oJust &#x3D; Observable.just([1, 2, 3, 4, 5])oJust.subscribe(onNext:">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180411/1.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180411/2.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180411/3.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180411/4.png">
+<meta property="article:published_time" content="2018-04-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.328Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="RxSwift">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://regulusleow.github.io/my_pictures/20180411/1.png">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/","path":"2018/04/11/20180411-RxSwift 文档：操作符/","title":"RxSwift 文档：操作符"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RxSwift 文档：操作符 | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#just-%E3%80%81-from-%E5%92%8C-of"><span class="nav-number">1.</span> <span class="nav-text">just 、 from 和 of</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#just"><span class="nav-number">1.1.</span> <span class="nav-text">just</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#from"><span class="nav-number">1.2.</span> <span class="nav-text">from</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#of"><span class="nav-number">1.3.</span> <span class="nav-text">of</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#concat%E3%80%81combineLatest-%E5%92%8C-zip"><span class="nav-number">2.</span> <span class="nav-text">concat、combineLatest 和 zip</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#concat"><span class="nav-number">2.1.</span> <span class="nav-text">concat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zip"><span class="nav-number">2.2.</span> <span class="nav-text">zip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#combineLatest%EF%BC%88%E5%8F%AF%E4%B8%8E-zip-%E6%AF%94%E8%BE%83%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">combineLatest（可与 zip 比较学习）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flatMap-%E5%92%8C-flatMapLatest"><span class="nav-number">3.</span> <span class="nav-text">flatMap 和 flatMapLatest</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flatMap"><span class="nav-number">3.1.</span> <span class="nav-text">flatMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flatMapLatest"><span class="nav-number">3.2.</span> <span class="nav-text">flatMapLatest</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scan"><span class="nav-number">4.</span> <span class="nav-text">scan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#materialize-%E5%92%8C-dematerialize"><span class="nav-number">5.</span> <span class="nav-text">materialize 和 dematerialize</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#materialize"><span class="nav-number">5.1.</span> <span class="nav-text">materialize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dematerialize"><span class="nav-number">5.2.</span> <span class="nav-text">dematerialize</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#take-%E3%80%81-takeLast-%E5%92%8C-elementAt"><span class="nav-number">6.</span> <span class="nav-text">take 、 takeLast 和 elementAt</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#take"><span class="nav-number">6.1.</span> <span class="nav-text">take</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#takeLast"><span class="nav-number">6.2.</span> <span class="nav-text">takeLast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elementAt"><span class="nav-number">6.3.</span> <span class="nav-text">elementAt</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RxSwift 文档：操作符 | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RxSwift 文档：操作符
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2018-04-11T00:00:00+08:00">2018-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%93%8D%E5%BA%94%E5%BC%8F%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">响应式框架</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/11/20180411-RxSwift 文档：操作符/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="just-、-from-和-of"><a href="#just-、-from-和-of" class="headerlink" title="just 、 from 和 of"></a>just 、 from 和 of</h2><hr>
+<p><code>just</code> 和 <code>from</code> 都能够将元素转化为 <code>Observable</code> 但是他们有本质的区别：</p>
+<h3 id="just"><a href="#just" class="headerlink" title="just"></a>just</h3><p>创建 <code>Observable</code> 发出<strong>唯一的一个元素</strong>。 <code>just</code> 操作符将某一个元素转换为 <code>Observable</code>。</p>
+<p>示例：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> oJust <span class="operator">=</span> <span class="type">Observable</span>.just([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">oJust.subscribe(onNext: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="variable">$0</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.dispose()</span><br><span class="line"></span><br><span class="line"><span class="comment">// [1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>相当于</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> oJust <span class="operator">=</span> <span class="type">Observable</span>&lt;<span class="type">Array</span>&lt;<span class="type">Int</span>&gt;&gt;.create &#123; (observer) -&gt; <span class="type">Disposable</span> <span class="keyword">in</span></span><br><span class="line">    observer.onNext([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">    observer.onCompleted()</span><br><span class="line">    <span class="keyword">return</span> <span class="type">Disposables</span>.create()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="from"><a href="#from" class="headerlink" title="from"></a>from</h3><p>将其他类型或者数据结构转换为 <code>Observable</code> 。当你在使用 <code>Observable</code> 时，如果能够直接将其他类型转换为 <code>Observable</code>，这将是非常省事的。<code>from</code> 操作符就提供了这种功能。</p>
+<p>示例：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> oFrom <span class="operator">=</span> <span class="type">Observable</span>.from([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">oFrom.subscribe(onNext: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="variable">$0</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.dispose()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+
+<p>相当于</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> oFrom <span class="operator">=</span> <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt;.create &#123; (observer) -&gt; <span class="type">Disposable</span> <span class="keyword">in</span></span><br><span class="line">    observer.onNext(<span class="number">1</span>)</span><br><span class="line">    observer.onNext(<span class="number">2</span>)</span><br><span class="line">    observer.onNext(<span class="number">3</span>)</span><br><span class="line">    observer.onNext(<span class="number">4</span>)</span><br><span class="line">    observer.onNext(<span class="number">5</span>)</span><br><span class="line">    observer.onCompleted()</span><br><span class="line">    <span class="keyword">return</span> <span class="type">Disposables</span>.create()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将一个值转化为 <code>Observable</code> 可以用 <code>Observable.from(optional: &lt;_?&gt;)</code> 方法。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">optional</span>: <span class="type">Int</span>? <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> value <span class="operator">=</span> <span class="type">Observable</span>.from(optional: <span class="keyword">optional</span>)</span><br></pre></td></tr></table></figure>
+
+<p>相当于</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">optional</span>: <span class="type">Int</span>? <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> value <span class="operator">=</span> <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt;.create &#123; observer <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> element <span class="operator">=</span> <span class="keyword">optional</span> &#123;</span><br><span class="line">        observer.onNext(element)</span><br><span class="line">    &#125;</span><br><span class="line">    observer.onCompleted()</span><br><span class="line">    <span class="keyword">return</span> <span class="type">Disposables</span>.create()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="of"><a href="#of" class="headerlink" title="of"></a>of</h3><p>能将多个元素转化为 <code>Observable</code> 。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Observable</span>.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>).subscribe(onNext: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="variable">$0</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.dispose()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="concat、combineLatest-和-zip"><a href="#concat、combineLatest-和-zip" class="headerlink" title="concat、combineLatest 和 zip"></a>concat、combineLatest 和 zip</h2><hr>
+<h3 id="concat"><a href="#concat" class="headerlink" title="concat"></a>concat</h3><p>让两个或多个 <code>Observables</code> <strong>按顺序</strong>串连起来。</p>
+<p><code>concat</code> 操作符将多个 <code>Observables</code> 按顺序串联起来，当前一个 <code>Observable</code> 元素发送完毕后，后一个 <code>Observable</code> 才可以开始发出元素。</p>
+<p><code>concat</code> 将等待前一个 <code>Observable</code> 产生完成事件后，才对后一个 <code>Observable</code> 进行订阅。如果后一个是“热” <code>Observable</code> ，在它前一个 <code>Observable</code> 产生完成事件前，所产生的元素将不会被发送出来。</p>
+<p> <strong><code>startWith</code> 和它十分相似。但是 <code>startWith</code> 不是在后面添加元素，而是在前面插入元素。</strong></p>
+<p><code>merge</code> 和它也是十分相似。**<code>merge</code> 并不是将多个 <code>Observables</code> 按顺序串联起来，而是将他们合并到一起，不需要 <code>Observables</code> 按先后顺序发出元素。**</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> subject1 <span class="operator">=</span> <span class="type">BehaviorSubject</span>(value: <span class="string">&quot;🍎&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> subject2 <span class="operator">=</span> <span class="type">BehaviorSubject</span>(value: <span class="string">&quot;🐶&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> variable <span class="operator">=</span> <span class="type">Variable</span>(subject1)</span><br><span class="line"></span><br><span class="line">variable.asObservable()</span><br><span class="line">    .concat()</span><br><span class="line">    .subscribe &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line">subject1.onNext(<span class="string">&quot;🍐&quot;</span>)</span><br><span class="line">subject1.onNext(<span class="string">&quot;🍊&quot;</span>)</span><br><span class="line"></span><br><span class="line">variable.value <span class="operator">=</span> subject2</span><br><span class="line"></span><br><span class="line">subject2.onNext(<span class="string">&quot;I would be ignored&quot;</span>)</span><br><span class="line">subject2.onNext(<span class="string">&quot;🐱&quot;</span>)</span><br><span class="line"></span><br><span class="line">subject1.onCompleted()</span><br><span class="line"></span><br><span class="line">subject2.onNext(<span class="string">&quot;🐭&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// next(🍎)</span></span><br><span class="line"><span class="comment">// next(🍐)</span></span><br><span class="line"><span class="comment">// next(🍊)</span></span><br><span class="line"><span class="comment">// next(🐱)</span></span><br><span class="line"><span class="comment">// next(🐭)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><p>通过一个函数将多个 <code>Observables</code> 的元素组合起来，然后将每一个组合的结果发出来。</p>
+<p><img src="/my_pictures/20180411/1.png"></p>
+<p><code>zip</code> 操作符将多个(最多不超过8个) <code>Observables</code> 的元素通过一个函数组合起来，然后将这个组合的结果发出来。它会严格的按照序列的索引数进行组合。例如，返回的 <code>Observable</code> 的第一个元素，是由每一个源 <code>Observables</code> 的第一个元素组合出来的。它的第二个元素 ，是由每一个源 <code>Observables</code> 的第二个元素组合出来的。它的第三个元素 ，是由每一个源 <code>Observables</code> 的第三个元素组合出来的，以此类推。它的元素数量等于源 <code>Observables</code> 中元素数量最少的那个。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br><span class="line"><span class="keyword">let</span> first <span class="operator">=</span> <span class="type">PublishSubject</span>&lt;<span class="type">String</span>&gt;()</span><br><span class="line"><span class="keyword">let</span> second <span class="operator">=</span> <span class="type">PublishSubject</span>&lt;<span class="type">String</span>&gt;()</span><br><span class="line"></span><br><span class="line"><span class="type">Observable</span>.zip(first, second) &#123; <span class="variable">$0</span> <span class="operator">+</span> <span class="variable">$1</span> &#125;</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line">first.onNext(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">second.onNext(<span class="string">&quot;A&quot;</span>)</span><br><span class="line">first.onNext(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">second.onNext(<span class="string">&quot;B&quot;</span>)</span><br><span class="line">second.onNext(<span class="string">&quot;C&quot;</span>)</span><br><span class="line">second.onNext(<span class="string">&quot;D&quot;</span>)</span><br><span class="line">first.onNext(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">first.onNext(<span class="string">&quot;4&quot;</span>)</span><br><span class="line">first.onNext(<span class="string">&quot;5&quot;</span>) <span class="comment">// 并没有输出</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1A</span></span><br><span class="line"><span class="comment">// 2B</span></span><br><span class="line"><span class="comment">// 3C</span></span><br><span class="line"><span class="comment">// 4D</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="combineLatest（可与-zip-比较学习）"><a href="#combineLatest（可与-zip-比较学习）" class="headerlink" title="combineLatest（可与 zip 比较学习）"></a>combineLatest（可与 zip 比较学习）</h3><p>当多个 <code>Observables</code> 中任何一个发出一个元素，就发出一个元素。这个元素是由这些 <code>Observables</code> 中最新的元素，通过一个函数组合起来的。</p>
+<p><img src="/my_pictures/20180411/2.png"></p>
+<p><code>combineLatest</code> 操作符将多个 <code>Observables</code> 中最新的元素通过一个函数组合起来，然后将这个组合的结果发出来。这些源 <code>Observables</code> 中任何一个发出一个元素，他都会发出一个元素（前提是，这些 <code>Observables</code> 曾经发出过元素）。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> first <span class="operator">=</span> <span class="type">PublishSubject</span>&lt;<span class="type">String</span>&gt;()</span><br><span class="line"><span class="keyword">let</span> second <span class="operator">=</span> <span class="type">PublishSubject</span>&lt;<span class="type">String</span>&gt;()</span><br><span class="line"></span><br><span class="line"><span class="type">Observable</span>.combineLatest(first, second) &#123; <span class="variable">$0</span> <span class="operator">+</span> <span class="variable">$1</span> &#125;</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line">first.onNext(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">second.onNext(<span class="string">&quot;A&quot;</span>)</span><br><span class="line">first.onNext(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">second.onNext(<span class="string">&quot;B&quot;</span>)</span><br><span class="line">second.onNext(<span class="string">&quot;C&quot;</span>)</span><br><span class="line">second.onNext(<span class="string">&quot;D&quot;</span>)</span><br><span class="line">first.onNext(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">first.onNext(<span class="string">&quot;4&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1A</span></span><br><span class="line"><span class="comment">// 2A</span></span><br><span class="line"><span class="comment">// 2B</span></span><br><span class="line"><span class="comment">// 2C</span></span><br><span class="line"><span class="comment">// 2D</span></span><br><span class="line"><span class="comment">// 3D</span></span><br><span class="line"><span class="comment">// 4D</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="flatMap-和-flatMapLatest"><a href="#flatMap-和-flatMapLatest" class="headerlink" title="flatMap 和 flatMapLatest"></a>flatMap 和 flatMapLatest</h2><hr>
+<h3 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h3><p>将 <code>Observable</code> 的元素转换成其他的 <code>Observable</code>，然后将这些 <code>Observables</code> 合并。</p>
+<p><code>flatMap</code> 操作符将源 <code>Observable</code> 的每一个元素应用一个转换方法，将他们转换成 <code>Observables</code>。 然后将这些 <code>Observables</code> 的元素合并之后再发送出来。</p>
+<p>这个操作符是非常有用的，例如，当 <code>Observable</code> 的元素本生拥有其他的 <code>Observable</code> 时，你可以将所有子 <code>Observables</code> 的元素发送出来。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br><span class="line"><span class="keyword">let</span> first <span class="operator">=</span> <span class="type">BehaviorSubject</span>(value: <span class="string">&quot;👦🏻&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> second <span class="operator">=</span> <span class="type">BehaviorSubject</span>(value: <span class="string">&quot;🅰️&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> variable <span class="operator">=</span> <span class="type">Variable</span>(first)</span><br><span class="line"></span><br><span class="line">variable.asObservable()</span><br><span class="line">    .flatMap &#123; <span class="variable">$0</span> &#125;</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line">first.onNext(<span class="string">&quot;🐱&quot;</span>)</span><br><span class="line">variable.value <span class="operator">=</span> second</span><br><span class="line">second.onNext(<span class="string">&quot;🅱️&quot;</span>)</span><br><span class="line">first.onNext(<span class="string">&quot;🐶&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 👦🏻</span></span><br><span class="line"><span class="comment">// 🐱</span></span><br><span class="line"><span class="comment">// 🅰️</span></span><br><span class="line"><span class="comment">// 🅱️</span></span><br><span class="line"><span class="comment">// 🐶</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="flatMapLatest"><a href="#flatMapLatest" class="headerlink" title="flatMapLatest"></a>flatMapLatest</h3><p>将 <code>Observable</code> 的元素转换成其他的 <code>Observable</code>，然后取这些 <code>Observables</code> 中<strong>最新的一个</strong>。</p>
+<p><code>flatMapLatest</code> 操作符将源 <code>Observable</code> 的每一个元素应用一个转换方法，将他们转换成 <code>Observables</code>。一旦转换出一个新的 <code>Observable</code>，就只发出它的元素，旧的 <code>Observables</code> 的元素将被忽略掉。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br><span class="line"><span class="keyword">let</span> first <span class="operator">=</span> <span class="type">BehaviorSubject</span>(value: <span class="string">&quot;👦🏻&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> second <span class="operator">=</span> <span class="type">BehaviorSubject</span>(value: <span class="string">&quot;🅰️&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> variable <span class="operator">=</span> <span class="type">Variable</span>(first)</span><br><span class="line"></span><br><span class="line">variable.asObservable()</span><br><span class="line">    .flatMapLatest &#123; <span class="variable">$0</span> &#125;</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line">first.onNext(<span class="string">&quot;🐱&quot;</span>)</span><br><span class="line">variable.value <span class="operator">=</span> second</span><br><span class="line">second.onNext(<span class="string">&quot;🅱️&quot;</span>)</span><br><span class="line">first.onNext(<span class="string">&quot;🐶&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 👦🏻</span></span><br><span class="line"><span class="comment">// 🐱</span></span><br><span class="line"><span class="comment">// 🅰️</span></span><br><span class="line"><span class="comment">// 🅱️</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="scan"><a href="#scan" class="headerlink" title="scan"></a>scan</h2><hr>
+<p>持续的将 <code>Observable</code> 的每一个元素应用一个函数，然后发出每一次函数返回的结果。</p>
+<p><code>scan</code> 操作符将对第一个元素应用一个函数，将结果作为第一个元素发出。然后，将结果作为参数填入到第二个元素的应用函数中，创建第二个元素。以此类推，直到遍历完全部的元素。</p>
+<p>这种操作符在其他地方有时候被称作是 <code>accumulator</code>。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br><span class="line"></span><br><span class="line"><span class="type">Observable</span>.of(<span class="number">10</span>, <span class="number">100</span>, <span class="number">1000</span>)</span><br><span class="line">    .scan(<span class="number">1</span>) &#123; aggregateValue, newValue <span class="keyword">in</span></span><br><span class="line">        aggregateValue <span class="operator">+</span> newValue</span><br><span class="line">    &#125;</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 11</span></span><br><span class="line"><span class="comment">// 111</span></span><br><span class="line"><span class="comment">// 1111</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="materialize-和-dematerialize"><a href="#materialize-和-dematerialize" class="headerlink" title="materialize 和 dematerialize"></a>materialize 和 dematerialize</h2><hr>
+<h3 id="materialize"><a href="#materialize" class="headerlink" title="materialize"></a>materialize</h3><p>将任何 <code>Observable</code> 转换为其事件的可观察者。</p>
+<p><img src="/my_pictures/20180411/3.png"></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Observable</span></span><br><span class="line">    .range(start: <span class="number">1</span>, count: <span class="number">3</span>)</span><br><span class="line">    .materialize()</span><br><span class="line">    .subscribe(onNext: &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="variable">$0</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: bag)</span><br><span class="line"></span><br><span class="line"><span class="comment">// next(1)</span></span><br><span class="line"><span class="comment">// next(2)</span></span><br><span class="line"><span class="comment">// next(3)</span></span><br><span class="line"><span class="comment">// completed</span></span><br></pre></td></tr></table></figure>
+
+<p>作为对比</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Observable</span></span><br><span class="line">    .range(start: <span class="number">1</span>, count: <span class="number">3</span>)</span><br><span class="line">    .subscribe(onNext: &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="variable">$0</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: bag)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="dematerialize"><a href="#dematerialize" class="headerlink" title="dematerialize"></a>dematerialize</h3><p><code>dematerialize</code> 操作符将 <code>materialize</code> 转换后的元素还原</p>
+<p><img src="/my_pictures/20180411/4.png"></p>
+<h2 id="take-、-takeLast-和-elementAt"><a href="#take-、-takeLast-和-elementAt" class="headerlink" title="take 、 takeLast 和 elementAt"></a>take 、 takeLast 和 elementAt</h2><hr>
+<h3 id="take"><a href="#take" class="headerlink" title="take"></a>take</h3><p>仅仅从 <code>Observable</code> 中发出头 n 个元素。通过 <code>take</code> 操作符你可以只发出头 n 个元素。并且忽略掉后面的元素，直接结束序列。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br><span class="line"></span><br><span class="line"><span class="type">Observable</span>.of(<span class="string">&quot;🐱&quot;</span>, <span class="string">&quot;🐰&quot;</span>, <span class="string">&quot;🐶&quot;</span>, <span class="string">&quot;🐸&quot;</span>, <span class="string">&quot;🐷&quot;</span>, <span class="string">&quot;🐵&quot;</span>)</span><br><span class="line">    .take(<span class="number">3</span>)</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 🐱</span></span><br><span class="line"><span class="comment">// 🐰</span></span><br><span class="line"><span class="comment">// 🐶</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="takeLast"><a href="#takeLast" class="headerlink" title="takeLast"></a>takeLast</h3><p>仅仅从 <code>Observable</code> 中发出尾部 n 个元素，通过 <code>takeLast</code> 操作符你可以只发出尾部 n 个元素。并且忽略掉前面的元素。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br><span class="line"></span><br><span class="line"><span class="type">Observable</span>.of(<span class="string">&quot;🐱&quot;</span>, <span class="string">&quot;🐰&quot;</span>, <span class="string">&quot;🐶&quot;</span>, <span class="string">&quot;🐸&quot;</span>, <span class="string">&quot;🐷&quot;</span>, <span class="string">&quot;🐵&quot;</span>)</span><br><span class="line">    .takeLast(<span class="number">3</span>)</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 🐸</span></span><br><span class="line"><span class="comment">// 🐷</span></span><br><span class="line"><span class="comment">// 🐵</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="elementAt"><a href="#elementAt" class="headerlink" title="elementAt"></a>elementAt</h3><p>只发出 <code>Observable</code> 中的第 n 个元素，<code>elementAt</code> 操作符将拉取 <code>Observable</code> 序列中指定索引数的元素，然后将它作为唯一的元素发出。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br><span class="line"></span><br><span class="line"><span class="type">Observable</span>.of(<span class="string">&quot;🐱&quot;</span>, <span class="string">&quot;🐰&quot;</span>, <span class="string">&quot;🐶&quot;</span>, <span class="string">&quot;🐸&quot;</span>, <span class="string">&quot;🐷&quot;</span>, <span class="string">&quot;🐵&quot;</span>)</span><br><span class="line">    .elementAt(<span class="number">3</span>)</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 🐸</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RxSwift/" rel="tag"><i class="fa fa-tag"></i> RxSwift</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E6%93%8D%E4%BD%9C%E7%AC%A6%EF%BC%9F/" rel="prev" title="RxSwift 文档：如何选择操作符？">
+                  <i class="fa fa-angle-left"></i> RxSwift 文档：如何选择操作符？
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/13/20180413-%E4%B8%BA%20Playground%20%E6%89%8B%E5%8A%A8%E8%BF%90%E8%A1%8C%E6%B7%BB%E5%8A%A0%E5%BF%AB%E6%8D%B7%E9%94%AE/" rel="next" title="为 Playground 手动运行添加快捷键">
+                  为 Playground 手动运行添加快捷键 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

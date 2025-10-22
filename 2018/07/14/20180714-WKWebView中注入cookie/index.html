@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在项目中，往往有这样的要求，用 API 进行登录之后在某个 WKWebView 的页面需要用 cookie 去验证身份（虽然我更喜欢用 accesstoken 去验证🙃）。WKWebView 是苹果官方建议的控件来替代老旧的 UIWebView。但是 WKWebView 的 cookie 无法共享 NSHTTPCookieStorage，所以这时候就需要我们自己去管理 cookie。（iOS 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WKWebView 中注入 cookie">
+<meta property="og:url" content="https://regulusleow.github.io/2018/07/14/20180714-WKWebView%E4%B8%AD%E6%B3%A8%E5%85%A5cookie/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="在项目中，往往有这样的要求，用 API 进行登录之后在某个 WKWebView 的页面需要用 cookie 去验证身份（虽然我更喜欢用 accesstoken 去验证🙃）。WKWebView 是苹果官方建议的控件来替代老旧的 UIWebView。但是 WKWebView 的 cookie 无法共享 NSHTTPCookieStorage，所以这时候就需要我们自己去管理 cookie。（iOS 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-07-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.329Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2018/07/14/20180714-WKWebView%E4%B8%AD%E6%B3%A8%E5%85%A5cookie/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2018/07/14/20180714-WKWebView%E4%B8%AD%E6%B3%A8%E5%85%A5cookie/","path":"2018/07/14/20180714-WKWebView中注入cookie/","title":"WKWebView 中注入 cookie"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>WKWebView 中注入 cookie | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/07/14/20180714-WKWebView%E4%B8%AD%E6%B3%A8%E5%85%A5cookie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="WKWebView 中注入 cookie | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WKWebView 中注入 cookie
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-14 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-14T00:00:00+08:00">2018-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">工作日志</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/07/14/20180714-WKWebView%E4%B8%AD%E6%B3%A8%E5%85%A5cookie/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/07/14/20180714-WKWebView中注入cookie/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在项目中，往往有这样的要求，用 API 进行登录之后在某个 <code>WKWebView</code> 的页面需要用 <code>cookie</code> 去验证身份（虽然我更喜欢用 <code>accesstoken</code> 去验证🙃）。<code>WKWebView</code> 是苹果官方建议的控件来替代老旧的 <code>UIWebView</code>。但是 <code>WKWebView</code> 的 <code>cookie</code> 无法共享 <code>NSHTTPCookieStorage</code>，所以这时候就需要我们自己去管理 <code>cookie</code>。（iOS 11 上新增了 <code>WKHTTPCookieStore</code> 来管理）</p>
+<p>首先我们先解析获取到的 <code>cookie</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 解析 cookie</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">analysisCookie</span>(<span class="params">response</span>: <span class="type">HTTPURLResponse</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> fields <span class="operator">=</span> response.allHeaderFields <span class="keyword">as?</span> [<span class="type">String</span>: <span class="type">String</span>],</span><br><span class="line">        <span class="keyword">let</span> url <span class="operator">=</span> response.url</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> cookies <span class="operator">=</span> <span class="type">HTTPCookie</span>.cookies(withResponseHeaderFields: fields,</span><br><span class="line">                                         for: url)</span><br><span class="line">        <span class="keyword">let</span> storage <span class="operator">=</span> <span class="type">HTTPCookieStorage</span>.shared</span><br><span class="line">        <span class="keyword">for</span> cookie <span class="keyword">in</span> cookies &#123;</span><br><span class="line">            <span class="comment">/// 将 cookie 存入本地</span></span><br><span class="line">            storage.setCookie(cookie)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>在 <code>WKWebView</code> 中注入 <code>cookie</code> 有两种方式，第一种，通过请求带过去</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> url <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> reqURL <span class="operator">=</span> <span class="type">URLRequest</span>(url: url)</span><br><span class="line">    <span class="keyword">let</span> cookie <span class="operator">=</span> (<span class="type">HTTPCookieStorage</span>.shared.cookies <span class="operator">??</span> []).strCookie</span><br><span class="line">    reqURL.addValue(cookie, forHTTPHeaderField: <span class="string">&quot;cookie&quot;</span>)</span><br><span class="line">    webView.load(reqURL)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二种方式，<code>js</code> 注入</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">createWeb</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> config <span class="operator">=</span> <span class="type">WKWebViewConfiguration</span>()</span><br><span class="line">    <span class="keyword">let</span> cookie <span class="operator">=</span> (<span class="type">HTTPCookieStorage</span>.shared.cookies <span class="operator">??</span> []).userScript</span><br><span class="line">    <span class="keyword">let</span> user <span class="operator">=</span> <span class="type">WKUserContentController</span>()</span><br><span class="line">    <span class="keyword">let</span> cookieScript <span class="operator">=</span> <span class="type">WKUserScript</span>(source: cookie,</span><br><span class="line">                                    injectionTime: .atDocumentStart,</span><br><span class="line">                                    forMainFrameOnly: <span class="literal">false</span>)</span><br><span class="line">    user.addUserScript(cookieScript)</span><br><span class="line">    config.userContentController <span class="operator">=</span> user</span><br><span class="line">    webView <span class="operator">=</span> <span class="type">WKWebView</span>(frame: <span class="keyword">self</span>.view.bounds, configuration: config)</span><br><span class="line">    <span class="keyword">self</span>.view.addSubview(webView)</span><br><span class="line">    webView.load(requestURL)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>moya 的用法</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> headers: [<span class="type">String</span> : <span class="type">String</span>]<span class="operator">?</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> .login, .checkUpdate, .idCodeImg:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="type">HTTPCookieStorage</span>.shared.cookies <span class="operator">??</span> []).moya</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们需要将 <code>HTTPCookie</code> 类型转换一下，我们给 <code>Array</code> 添加几个扩展</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Array</span> <span class="keyword">where</span> <span class="type">Element</span>: <span class="type">HTTPCookie</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回 moya 使用格式 cookie</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> moya: [<span class="type">String</span>: <span class="type">String</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> cookie: [<span class="type">String</span>: <span class="type">String</span>] <span class="operator">=</span> [:]</span><br><span class="line">        cookie[<span class="string">&quot;Cookie&quot;</span>] <span class="operator">=</span> <span class="keyword">self</span>.map &#123; <span class="string">&quot;<span class="subst">\(<span class="variable">$0</span>.name)</span>=<span class="subst">\(<span class="variable">$0</span>.value)</span>&quot;</span> &#125;.joined(separator: <span class="string">&quot;;&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> cookie</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回 js 注入的字符串格式 cookie</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> userScript: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.map &#123; <span class="string">&quot;document.cookie=&#x27;<span class="subst">\(<span class="variable">$0</span>.name)</span>=<span class="subst">\(<span class="variable">$0</span>.value)</span>&#x27;&quot;</span> &#125;.joined(separator: <span class="string">&quot;;&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回字符串类型 cookie</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> strCookie: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.map &#123; <span class="string">&quot;<span class="subst">\(<span class="variable">$0</span>.name)</span>=<span class="subst">\(<span class="variable">$0</span>.value)</span>&quot;</span> &#125;.joined(separator: <span class="string">&quot;;&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在我的项目中通过第二种方式实现了验证成功。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"><i class="fa fa-tag"></i> Swift</a>
+              <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/08/20180708-%E5%A4%84%E7%90%86%20initialize()%20%E7%9A%84%E5%BC%83%E7%94%A8%E3%80%90%E8%AF%91%E3%80%91/" rel="prev" title="处理 initialize() 的弃用【译】">
+                  <i class="fa fa-angle-left"></i> 处理 initialize() 的弃用【译】
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/07/27/20180727-Swift%E9%9D%A2%E5%90%91%E5%8D%8F%E8%AE%AE-%E4%B8%BA%E7%B1%BB%E6%8F%90%E4%BE%9B%E5%9F%BA%E4%BA%8EStoryboard%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95/" rel="next" title="Swift 面向协议 - 为类提供基于 Storyboard 的初始化方法">
+                  Swift 面向协议 - 为类提供基于 Storyboard 的初始化方法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

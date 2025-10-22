@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="更新说明：本教程已由 Nikolas Burk 更新为 Xcode 9，iOS 11 和 Swift 4。最初的教程由 Chris Wagner 编写。  这篇教程向你展示了如何在 Swift 平台上使用流行的数据库 SQLite。在软件开发的领域，你需要很长时间才能保存应用数据。在很多情况下，这是以数据结构形式出现的。但是，如何有效的存储它 – 什么是有效的存储？ 幸运的是，一些伟大的思想家已">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift 下使用 SQLite 教程：入门【译】">
+<meta property="og:url" content="https://regulusleow.github.io/2018/08/02/20180802-Swift%E4%B8%8B%E4%BD%BF%E7%94%A8SQLite%E6%95%99%E7%A8%8B%EF%BC%9A%E5%85%A5%E9%97%A8%E3%80%90%E8%AF%91%E3%80%91/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="更新说明：本教程已由 Nikolas Burk 更新为 Xcode 9，iOS 11 和 Swift 4。最初的教程由 Chris Wagner 编写。  这篇教程向你展示了如何在 Swift 平台上使用流行的数据库 SQLite。在软件开发的领域，你需要很长时间才能保存应用数据。在很多情况下，这是以数据结构形式出现的。但是，如何有效的存储它 – 什么是有效的存储？ 幸运的是，一些伟大的思想家已">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180802/1.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180802/2.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180802/3.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180802/4.png">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180802/5.png">
+<meta property="article:published_time" content="2018-08-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.330Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="SQLite">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://regulusleow.github.io/my_pictures/20180802/1.png">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2018/08/02/20180802-Swift%E4%B8%8B%E4%BD%BF%E7%94%A8SQLite%E6%95%99%E7%A8%8B%EF%BC%9A%E5%85%A5%E9%97%A8%E3%80%90%E8%AF%91%E3%80%91/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2018/08/02/20180802-Swift%E4%B8%8B%E4%BD%BF%E7%94%A8SQLite%E6%95%99%E7%A8%8B%EF%BC%9A%E5%85%A5%E9%97%A8%E3%80%90%E8%AF%91%E3%80%91/","path":"2018/08/02/20180802-Swift下使用SQLite教程：入门【译】/","title":"Swift 下使用 SQLite 教程：入门【译】"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Swift 下使用 SQLite 教程：入门【译】 | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-SQLite%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么选择 SQLite？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E7%9A%84-API"><span class="nav-number">3.</span> <span class="nav-text">C 的 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E8%BF%9E%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">打开连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%A1%A8"><span class="nav-number">5.</span> <span class="nav-text">创建一个表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E4%B8%80%E4%BA%9B%E6%95%B0%E6%8D%AE"><span class="nav-number">6.</span> <span class="nav-text">插入一些数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%91%E6%88%98%EF%BC%9A%E5%A4%9A%E4%B8%AA%E6%8F%92%E5%85%A5"><span class="nav-number">7.</span> <span class="nav-text">挑战：多个插入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E8%81%94%E7%B3%BB%E4%BA%BA"><span class="nav-number">7.1.</span> <span class="nav-text">查询联系人</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%91%E6%88%98%EF%BC%9A%E6%89%93%E5%8D%B0%E6%AF%8F%E4%B8%80%E8%A1%8C"><span class="nav-number">8.</span> <span class="nav-text">挑战：打印每一行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%81%94%E7%B3%BB%E4%BA%BA"><span class="nav-number">9.</span> <span class="nav-text">更新联系人</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%81%94%E7%B3%BB%E4%BA%BA"><span class="nav-number">10.</span> <span class="nav-text">删除联系人</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E9%94%99%E8%AF%AF"><span class="nav-number">11.</span> <span class="nav-text">处理错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5"><span class="nav-number">12.</span> <span class="nav-text">关闭数据库连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQLite-%E4%B8%8E-Swift"><span class="nav-number">13.</span> <span class="nav-text">SQLite 与 Swift</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E9%94%99%E8%AF%AF"><span class="nav-number">14.</span> <span class="nav-text">包装错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5"><span class="nav-number">15.</span> <span class="nav-text">包装数据库连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85-Prepare-%E8%AF%AD%E5%8F%A5%E7%9A%84%E8%B0%83%E7%94%A8"><span class="nav-number">16.</span> <span class="nav-text">包装 Prepare 语句的调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-Contact-%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">17.</span> <span class="nav-text">创建 Contact 结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E8%A1%A8%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">18.</span> <span class="nav-text">包装表的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5"><span class="nav-number">19.</span> <span class="nav-text">包装数据插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E8%AF%BB%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">20.</span> <span class="nav-text">包装读的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQLite-swift-%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">21.</span> <span class="nav-text">SQLite.swift 的介绍</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/08/02/20180802-Swift%E4%B8%8B%E4%BD%BF%E7%94%A8SQLite%E6%95%99%E7%A8%8B%EF%BC%9A%E5%85%A5%E9%97%A8%E3%80%90%E8%AF%91%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Swift 下使用 SQLite 教程：入门【译】 | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Swift 下使用 SQLite 教程：入门【译】
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-08-02 00:00:00" itemprop="dateCreated datePublished" datetime="2018-08-02T00:00:00+08:00">2018-08-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%96%87%E7%AB%A0%E7%BF%BB%E8%AF%91/" itemprop="url" rel="index"><span itemprop="name">文章翻译</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/08/02/20180802-Swift%E4%B8%8B%E4%BD%BF%E7%94%A8SQLite%E6%95%99%E7%A8%8B%EF%BC%9A%E5%85%A5%E9%97%A8%E3%80%90%E8%AF%91%E3%80%91/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/02/20180802-Swift下使用SQLite教程：入门【译】/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>更新说明：本教程已由 Nikolas Burk 更新为 Xcode 9，iOS 11 和 Swift 4。最初的教程由 Chris Wagner 编写。</p>
+</blockquote>
+<p>这篇教程向你展示了如何在 Swift 平台上使用流行的数据库 SQLite。在软件开发的领域，你需要很长时间才能保存应用数据。在很多情况下，这是以数据结构形式出现的。但是，如何有效的存储它 – 什么是有效的存储？</p>
+<p>幸运的是，一些伟大的思想家已经开发出用于在数据库中存储结构化数据和编写语言功能以访问数据的解决方案。SQLite 默认在 iOS 中是可用的。实际上，如果你以前使用过 Core Data，那么你实际上已经使用过 SQLite，因为 Core Data 只是 SQLite 上的一个层封装，它提供了更方便的API。</p>
+<p>通过这篇教程，你将学习到如何执行以下数据库的操作：</p>
+<ul>
+<li>创建和连接一个数据库</li>
+<li>创建一个表</li>
+<li>插入一行</li>
+<li>更新一行</li>
+<li>删除一行</li>
+<li>查询数据库</li>
+<li>处理 SQLite 错误</li>
+</ul>
+<p>在学习如何执行这些基本操作之后，你将看到如何以类似 Swift 的方式将它们包装起来。这将允许你为应用程序编写抽象 API，以便你（大多数）可以避免去直接使用 SQLite 的 C API 的痛苦！:]</p>
+<p>最后，我将简要介绍一下流行的开源 Swift 包装器 SQLite.swift，以便你能大致的了解一下底层框架是如何工作的。</p>
+<blockquote>
+<p>注意：数据库，甚至只是 SQLite 本身，都是一个非常大的主题，因此它们大多超出了本教程的范围。本教程假设你对关系数据库意识形态有基本的了解，并且你主要在这里学习如何在 Swift 下使用 SQLite。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><hr>
+<p>下载工程：<span class="exturl" data-url="aHR0cHM6Ly9rb2VuaWctbWVkaWEucmF5d2VuZGVybGljaC5jb20vdXBsb2Fkcy8yMDE3LzA5L3NxbGl0ZS1zdGFydGVyLTEuemlw">starter project for this SQLite with Swift tutorial<i class="fa fa-external-link-alt"></i></span> 并打开 <code>SQLiteTutorial.xcworkspace</code>。<br>从 <code>Project Navigator</code> 打开教程的 <code>playground</code> 文件。</p>
+<blockquote>
+<p>注意：项目打包在 Xcode 工作区中，因为它使用 SQLite3 依赖项作为嵌入式二进制文件。此二进制文件包含你将在本教程中编写的 SQLite 代码的所有功能。 </p>
+</blockquote>
+<p>请注意，请将你的 <code>Playground</code> 配置为手动而不是自动运行：</p>
+<p><img src="/my_pictures/20180802/1.png"></p>
+<p>这意味着它只会在你通过点击“运行”按钮的时候执行。</p>
+<p>你可能还会看到在页面的顶部我们调用了 <code>destroyPart1Database()</code>；你可以放心的忽略这一点，因为 Playground 每次运行的时候都会销毁这个文件。这可以确保在 Swift 教程浏览此 SQLite 时，所有的语句都能成功的执行。</p>
+<p>你的 Playground 需要在你的文件系统上编写 SQLite 数据库文件，在终端中运行以下命令以创建游乐场数据库目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/Documents/Shared\ Playground\ Data/SQLiteTutorial</span><br></pre></td></tr></table></figure>
+
+<h2 id="为什么选择-SQLite？"><a href="#为什么选择-SQLite？" class="headerlink" title="为什么选择 SQLite？"></a>为什么选择 SQLite？</h2><hr>
+<p>没错，SQLite 不是在 iOS 上保留数据的唯一方法。除了 <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYXBwbGUuY29tL2xpYnJhcnkvaW9zL2RvY3VtZW50YXRpb24vQ29jb2EvQ29uY2VwdHVhbC9Db3JlRGF0YS9pbmRleC5odG1s">Core Data<i class="fa fa-external-link-alt"></i></span>，还有许多其他数据持久性替代方案，包括 <span class="exturl" data-url="aHR0cHM6Ly9yZWFsbS5pby8=">Realm<i class="fa fa-external-link-alt"></i></span>，<span class="exturl" data-url="aHR0cDovL2RldmVsb3Blci5jb3VjaGJhc2UuY29tL21vYmlsZS8jY291Y2hiYXNlLWxpdGU=">Couchbase Lite<i class="fa fa-external-link-alt"></i></span>，<span class="exturl" data-url="aHR0cHM6Ly9maXJlYmFzZS5nb29nbGUuY29tL2RvY3Mv">Firebase<i class="fa fa-external-link-alt"></i></span> 和 <span class="exturl" data-url="aHR0cDovL25zaGlwc3Rlci5jb20vbnNjb2Rpbmcv">NSCoding<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>每个都有自己的优点和缺点 - 包括 SQLite 本身，数据持久性没有灵丹妙药，作为开发人员，你可以根据应用程序的要求确定哪个选项超过其他选项。</p>
+<p>SQLite 确实有一些优点：</p>
+<ul>
+<li>随 iOS 一起提供，因此它不会为你的应用程序包增加任何开销。</li>
+<li>试过并经过测试; 1.0 版于 2000 年 8 月发布。</li>
+<li>开源。</li>
+<li>适用于数据库开发人员和管理员的熟悉查询语言。</li>
+<li>跨平台</li>
+</ul>
+<p>SQLite 的缺点可能是非常主观和自以为是，所以我们将把研究留给你了！:]</p>
+<h2 id="C-的-API"><a href="#C-的-API" class="headerlink" title="C 的 API"></a>C 的 API</h2><hr>
+<p>这部分 SQLite with Swift 教程将引导你完成最常见和最基本的 SQLite API。你很快就会意识到在 Swift 方法中包装 C API 将是理想的选择，但要紧紧抓住并首先完成 C 代码； 你将在本教程的第二部分做一些包装。</p>
+<h2 id="打开连接"><a href="#打开连接" class="headerlink" title="打开连接"></a>打开连接</h2><hr>
+<p>在做任何事情之前，你首先需要创建一个数据库连接。<br>在 <code>Playground</code> 的“Getting Started”部分下添加以下方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">openDatabase</span>() -&gt; <span class="type">OpaquePointer</span>? &#123;</span><br><span class="line">  <span class="keyword">var</span> db: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">  <span class="keyword">if</span> sqlite3_open(part1DbPath, <span class="operator">&amp;</span>db) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Successfully opened connection to database at <span class="subst">\(part1DbPath)</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> db</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Unable to open database. Verify that you created the directory described &quot;</span> <span class="operator">+</span></span><br><span class="line">      <span class="string">&quot;in the Getting Started section.&quot;</span>)</span><br><span class="line">    <span class="type">PlaygroundPage</span>.current.finishExecution()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法调用 <code>sqlite3_open()</code>。这将打开或创建一个新的数据库文件，如果打开成功，它将会返回一个 <code>OpaquePointer</code>；这是一个用于 C 指针的 Swift 类型，无法直接在 Swift 中表示，当你调用这个方法时，你必须捕获返回的指针才能与数据库进行交互。</p>
+<p>许多 SQLite 函数返回 <code>Int32</code> 结果代码。这些代码中的大多数都被定义为 SQLite 库中的常量。例如，<code>SQLITE_OK</code> 表示结果代码 0。在这里你能找到不同的结果代码的列表：<span class="exturl" data-url="aHR0cHM6Ly93d3cuc3FsaXRlLm9yZy9yZXNjb2RlLmh0bWw=">on the main SQLite site<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>要打开数据库，请将下面的代码添加到 <code>Playground</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> db <span class="operator">=</span> openDatabase()</span><br></pre></td></tr></table></figure>
+
+<p>点击 <code>Play</code> 按钮运行 <code>Playground</code>并在控制台查看输出，如果控制台没有打开，请点击 <code>Play</code> 左侧的按钮：</p>
+<p><img src="/my_pictures/20180802/2.png"></p>
+<p>如果 <code>openDatabase()</code> 运行成功，你将看到如下的输出：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Successfully</span> opened connection to database at <span class="regexp">/Users/</span>username<span class="regexp">/Documents/</span><span class="type">Shared</span> <span class="type">Playground</span> <span class="type">Data</span><span class="regexp">/SQLiteTutorial/</span><span class="type">Part1</span>.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>username</code> 是你的 <code>Home</code> 目录。</p>
+<h2 id="创建一个表"><a href="#创建一个表" class="headerlink" title="创建一个表"></a>创建一个表</h2><hr>
+<p>现在你已经连接到数据库文件，你可以创建一个表。你将使用一个非常简单的表来存储联系人。</p>
+<p>这个表将包含两列；<code>Id</code> 是一个 <code>Int</code> 类型并且是一个主键 <code>PRIMARY KEY</code>；<code>name</code> 是一个 <code>CHAR(255)</code> 类型。</p>
+<p><img src="/my_pictures/20180802/3.png"></p>
+<p>添加以下字符串，其中包含创建表所需的 SQL 语句：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> createTableString <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">CREATE TABLE Contact(</span></span><br><span class="line"><span class="string">Id INT PRIMARY KEY NOT NULL,</span></span><br><span class="line"><span class="string">Name CHAR(255));</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>请注意，你正在使用 Swift 4 的便捷多语法来编写此语句！</p>
+<p>接下来，添加执行 <code>CREATE TABLE</code> SQL 语句的方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">createTable</span>() &#123;</span><br><span class="line">  <span class="comment">// 1</span></span><br><span class="line">  <span class="keyword">var</span> createTableStatement: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">  <span class="comment">// 2</span></span><br><span class="line">  <span class="keyword">if</span> sqlite3_prepare_v2(db, createTableString, <span class="operator">-</span><span class="number">1</span>, <span class="operator">&amp;</span>createTableStatement, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    <span class="keyword">if</span> sqlite3_step(createTableStatement) <span class="operator">==</span> <span class="type">SQLITE_DONE</span> &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Contact table created.&quot;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Contact table could not be created.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;CREATE TABLE statement could not be prepared.&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 4</span></span><br><span class="line">  sqlite3_finalize(createTableStatement)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们来一步一步的分析：</p>
+<ol>
+<li>首先，在下一步中创建一个指针。</li>
+<li><code>sqlite3_prepare_v2()</code> 将 SQL 语句编译为字节代码并返回状态代码 - 在对数据库执行任意语句之前的重要步骤。如果你有兴趣，可以在<span class="exturl" data-url="aHR0cHM6Ly93d3cuc3FsaXRlLm9yZy9jM3JlZi9wcmVwYXJlLmh0bWw=">这里<i class="fa fa-external-link-alt"></i></span>找到更多信息。检查返回的状态代码以确保语句编译成功。如果是，则该过程转到步骤3; 否则，你打印一条消息，指出该语句无法编译。</li>
+<li><code>sqlite3_step()</code> 运行已编译的语句。在这种情况下，你只需“步进”一次，因为此语句只有一个结果。稍后在本教程中，你将看到何时需要多次执行单个语句。</li>
+<li>你必须始终在编译语句上调用 <code>sqlite3_finalize()</code> 以删除它并避免资源泄漏。一旦声明完成，你就不应该再次使用它。</li>
+</ol>
+<p>现在，将以下方法调用添加到 <code>Playground</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createTable()</span><br></pre></td></tr></table></figure>
+
+<p>运行你的 <code>Playground</code>；你应该看到控制台输出中出现以下内容：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Contact</span> table created.</span><br></pre></td></tr></table></figure>
+
+<p>现在你有了一个表，是时候向它添加一些数据了。你将添加 <code>Id</code> 为 1 且 <code>Name</code> 为“Ray”的单行。</p>
+<h2 id="插入一些数据"><a href="#插入一些数据" class="headerlink" title="插入一些数据"></a>插入一些数据</h2><hr>
+<p>将以下 SQL 语句添加到 <code>Playground</code> 的底部：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> insertStatementString <span class="operator">=</span> <span class="string">&quot;INSERT INTO Contact (Id, Name) VALUES (?, ?);&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你没有太多的 SQL 经验，这可能看起来有点奇怪。为什么 <code>values</code> 由问号代表？</p>
+<p>在使用 <code>sqlite3_prepare_v2()</code> 编译语句时，请记住上面的内容？这个 <code>?</code> 语法告诉编译器在实际执行语句时将提供实际值。</p>
+<p>这有性能方面的考虑，并且允许你提前编译语句，这可以提高性能，因为编译是一项代价高昂的操作。然后可以使用不同的值重复使用已编译的语句。</p>
+<p>接下来，在你的 <code>Playground</code> 中创建以下方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">insert</span>() &#123;</span><br><span class="line">  <span class="keyword">var</span> insertStatement: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 1</span></span><br><span class="line">  <span class="keyword">if</span> sqlite3_prepare_v2(db, insertStatementString, <span class="operator">-</span><span class="number">1</span>, <span class="operator">&amp;</span>insertStatement, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> id: <span class="type">Int32</span> <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> name: <span class="type">NSString</span> <span class="operator">=</span> <span class="string">&quot;Ray&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    sqlite3_bind_int(insertStatement, <span class="number">1</span>, id)</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    sqlite3_bind_text(insertStatement, <span class="number">2</span>, name.utf8String, <span class="operator">-</span><span class="number">1</span>, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 4</span></span><br><span class="line">    <span class="keyword">if</span> sqlite3_step(insertStatement) <span class="operator">==</span> <span class="type">SQLITE_DONE</span> &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Successfully inserted row.&quot;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Could not insert row.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;INSERT statement could not be prepared.&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 5</span></span><br><span class="line">  sqlite3_finalize(insertStatement)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下是上述方法的工作原理：</p>
+<ol>
+<li>首先，编译语句并验证一切正常；</li>
+<li>在这里，你为值定义一个 <code>?</code> 占位符。函数的名称 - <code>sqlite3_bind_int()</code> - 意味着你将 <code>Int</code> 值绑定到语句。函数的第一个参数是要绑定的语句，而第二个参数是基于非零的索引 <code>?</code> 的位置。第三个也是最后一个参数是值本身。此绑定调用返回状态代码，但现在你认为它成功；</li>
+<li>执行相同的绑定过程，但这次是文本值。此次调用还有两个附加参数；出于本教程的目的，你可以简单地为它们传递 <code>-1</code> 和 <code>nil</code>。如果你愿意，可这里<span class="exturl" data-url="aHR0cHM6Ly93d3cuc3FsaXRlLm9yZy9jM3JlZi9iaW5kX2Jsb2IuaHRtbA==">此处<i class="fa fa-external-link-alt"></i></span>阅读有关绑定参数的更多信息；</li>
+<li>使用 <code>sqlite3_step()</code>函数执行语句并验证它是否已完成；</li>
+<li>一如既往，最后执行 <code>finalize</code> 语句。如果你要插入多个联系人，则可能会保留该语句并使用不同的值重新使用它。</li>
+</ol>
+<p>接下来，通过将以下内容添加到 <code>Playground</code> 中来调用你的新方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert()</span><br></pre></td></tr></table></figure>
+
+<p>运行你的 <code>Playground</code> 并验证你在控制台输出中看到以下内容：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Successfully</span> inserted row.</span><br></pre></td></tr></table></figure>
+
+<h2 id="挑战：多个插入"><a href="#挑战：多个插入" class="headerlink" title="挑战：多个插入"></a>挑战：多个插入</h2><hr>
+<p>挑战的时间！你的任务是更新 <code>insert()</code> 以插入联系人数组。</p>
+<p>作为提示，你需要在再次执行之前调用 <code>sqlite3_reset()</code> 将已编译的语句重置回其初始状态。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">insert</span>() &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> insertStatement: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">  <span class="comment">// 1</span></span><br><span class="line">  <span class="keyword">let</span> names: [<span class="type">NSString</span>] <span class="operator">=</span> [<span class="string">&quot;Ray&quot;</span>, <span class="string">&quot;Chris&quot;</span>, <span class="string">&quot;Martha&quot;</span>, <span class="string">&quot;Danielle&quot;</span>]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> sqlite3_prepare_v2(db, insertStatementString, <span class="operator">-</span><span class="number">1</span>, <span class="operator">&amp;</span>insertStatement, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">for</span> (index, name) <span class="keyword">in</span> names.enumerated() &#123;</span><br><span class="line">      <span class="comment">// 3</span></span><br><span class="line">      <span class="keyword">let</span> id <span class="operator">=</span> <span class="type">Int32</span>(index <span class="operator">+</span> <span class="number">1</span>)</span><br><span class="line">      sqlite3_bind_int(insertStatement, <span class="number">1</span>, id)</span><br><span class="line">      sqlite3_bind_text(insertStatement, <span class="number">2</span>, name.utf8String, <span class="operator">-</span><span class="number">1</span>, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> sqlite3_step(insertStatement) <span class="operator">==</span> <span class="type">SQLITE_DONE</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Successfully inserted row.&quot;</span>)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Could not insert row.&quot;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 4</span></span><br><span class="line">      sqlite3_reset(insertStatement)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sqlite3_finalize(insertStatement)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;INSERT statement could not be prepared.&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>正如你所看到的，代码与你已有的代码非常相似，但具有以下显着差异：</p>
+<ol>
+<li>现在有一系列联系人，而不是一个常数；</li>
+<li>对每个联系人列出一次数组；</li>
+<li>现在，索引是从枚举的索引生成的，该索引对应于数组中联系人姓名的位置；</li>
+<li>SQL 语句在每个枚举结束时重置，以便下一个可以使用它。</li>
+</ol>
+<h3 id="查询联系人"><a href="#查询联系人" class="headerlink" title="查询联系人"></a>查询联系人</h3><hr>
+<p>既然你已经插入了一两行，那么确定它们真的存在就确实很好！:]</p>
+<p>将以下内容添加到 <code>Playground</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> queryStatementString <span class="operator">=</span> <span class="string">&quot;SELECT * FROM Contact;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>此查询只是从联系人表中检索所有记录。使用 <code>*</code> 表示将返回所有列。</p>
+<p>添加以下方法以执行查询：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">query</span>() &#123;</span><br><span class="line">  <span class="keyword">var</span> queryStatement: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">  <span class="comment">// 1</span></span><br><span class="line">  <span class="keyword">if</span> sqlite3_prepare_v2(db, queryStatementString, <span class="operator">-</span><span class="number">1</span>, <span class="operator">&amp;</span>queryStatement, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">if</span> sqlite3_step(queryStatement) <span class="operator">==</span> <span class="type">SQLITE_ROW</span> &#123;</span><br><span class="line">      <span class="comment">// 3</span></span><br><span class="line">      <span class="keyword">let</span> id <span class="operator">=</span> sqlite3_column_int(queryStatement, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 4</span></span><br><span class="line">      <span class="keyword">let</span> queryResultCol1 <span class="operator">=</span> sqlite3_column_text(queryStatement, <span class="number">1</span>)</span><br><span class="line">      <span class="keyword">let</span> name <span class="operator">=</span> <span class="type">String</span>(cString: queryResultCol1<span class="operator">!</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 5</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Query Result:&quot;</span>)</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(id)</span> | <span class="subst">\(name)</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Query returned no results&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;SELECT statement could not be prepared&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 6</span></span><br><span class="line">  sqlite3_finalize(queryStatement)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>依次记录每个编号的评论：</p>
+<ol>
+<li>准备声明。</li>
+<li>执行该语句。请注意，你现在正在检查状态代码 <code>SQLITE_ROW</code>，这意味着你在逐步执行结果时检索了一行。</li>
+<li>是时候从返回的行中读取值了。根据你对表的结构和查询的了解，你可以逐列访问行的值。第一列是 <code>Int</code>，因此你使用 <code>sqlite3_column_int()</code>并传入语句和从零开始的列索引。你将返回的值分配给本地范围的 <code>id</code> 常量。</li>
+<li>接下来，从 <code>Name</code> 列中获取文本值。由于 C API，这有点乱。首先，将值捕获为 <code>queryResultCol1</code>，以便在下一行将其转换为正确的 Swift 字符串。</li>
+<li>打印出结果。</li>
+<li>执行 <code>finalize</code> 语句。</li>
+</ol>
+<p>现在，通过将以下内容添加到 <code>Playground</code> 的底部来调用你的新方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query()</span><br></pre></td></tr></table></figure>
+
+<p>运行你的 <code>Playground</code>，你将会在控制台看到如下的输出：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Query</span> <span class="type">Result</span>:</span><br><span class="line"><span class="number">1</span> <span class="operator">|</span> <span class="type">Ray</span></span><br></pre></td></tr></table></figure>
+
+<p>W00t！看起来你的数据已经录入到数据库中！</p>
+<h2 id="挑战：打印每一行"><a href="#挑战：打印每一行" class="headerlink" title="挑战：打印每一行"></a>挑战：打印每一行</h2><hr>
+<p>你的任务是更新 <code>query()</code> 以打印出表中的每个联系人。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">query</span>() &#123;</span><br><span class="line">  <span class="keyword">var</span> queryStatement: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">  <span class="keyword">if</span> sqlite3_prepare_v2(db, queryStatementString, <span class="operator">-</span><span class="number">1</span>, <span class="operator">&amp;</span>queryStatement, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (sqlite3_step(queryStatement) <span class="operator">==</span> <span class="type">SQLITE_ROW</span>) &#123;</span><br><span class="line">      <span class="keyword">let</span> id <span class="operator">=</span> sqlite3_column_int(queryStatement, <span class="number">0</span>)</span><br><span class="line">      <span class="keyword">let</span> queryResultCol1 <span class="operator">=</span> sqlite3_column_text(queryStatement, <span class="number">1</span>)</span><br><span class="line">      <span class="keyword">let</span> name <span class="operator">=</span> <span class="type">String</span>(cString: queryResultCol1<span class="operator">!</span>)</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Query Result:&quot;</span>)</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(id)</span> | <span class="subst">\(name)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;SELECT statement could not be prepared&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  sqlite3_finalize(queryStatement)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意，不是像前面那样使用单个步骤来检索第一行，而是这次使用 <code>while</code> 循环来执行步骤，只要返回代码是 <code>SQLITE_ROW</code> 就会发生。当你到达最后一行时，返回代码将通过 <code>SQLITE_DONE</code>，循环将中断。</p>
+<h2 id="更新联系人"><a href="#更新联系人" class="headerlink" title="更新联系人"></a>更新联系人</h2><hr>
+<p>下一个自然的进展是更新现有行。你应该开始看到一种模式出现了。</p>
+<p>首先，创建 <code>UPDATE</code> 语句：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> updateStatementString <span class="operator">=</span> <span class="string">&quot;UPDATE Contact SET Name = &#x27;Chris&#x27; WHERE Id = 1;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这里使用真正的值来代替占位符 <code>？</code>。通常你会使用占位符并执行适当的语句绑定，但为了简洁起见，你可以在这里跳过它。</p>
+<p>接下来，将以下方法添加到 <code>Playground</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">update</span>() &#123;</span><br><span class="line">  <span class="keyword">var</span> updateStatement: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">  <span class="keyword">if</span> sqlite3_prepare_v2(db, updateStatementString, <span class="operator">-</span><span class="number">1</span>, <span class="operator">&amp;</span>updateStatement, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> sqlite3_step(updateStatement) <span class="operator">==</span> <span class="type">SQLITE_DONE</span> &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Successfully updated row.&quot;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Could not update row.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;UPDATE statement could not be prepared&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  sqlite3_finalize(updateStatement)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这与你之前看到的类似：<code>prepare</code>，<code>step</code>，<code>finalize</code>！并将以下内容添加到你的 <code>Playground</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">update()</span><br><span class="line">query()</span><br></pre></td></tr></table></figure>
+
+<p>这将执行你的新方法，然后调用你先前定义的 <code>query()</code> 方法，以便你可以看到结果：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Successfully</span> updated row.</span><br><span class="line"><span class="type">Query</span> <span class="type">Result</span>:</span><br><span class="line"><span class="number">1</span> <span class="operator">|</span> <span class="type">Chris</span></span><br></pre></td></tr></table></figure>
+
+<p>恭喜你成功更新一行数据！非常容易的对吧？：]</p>
+<h2 id="删除联系人"><a href="#删除联系人" class="headerlink" title="删除联系人"></a>删除联系人</h2><hr>
+<p>成为 <code>SQLite</code> 忍者的最后一步是删除你创建的行。再次，你将使用熟悉的 <code>prepare</code>，<code>step</code> 和 <code>finalize</code>。</p>
+<p>将以下的内容添加到 <code>Playground</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> deleteStatementStirng <span class="operator">=</span> <span class="string">&quot;DELETE FROM Contact WHERE Id = 1;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>现在添加以下方法来执行语句：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">delete</span>() &#123;</span><br><span class="line">  <span class="keyword">var</span> deleteStatement: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">  <span class="keyword">if</span> sqlite3_prepare_v2(db, deleteStatementStirng, <span class="operator">-</span><span class="number">1</span>, <span class="operator">&amp;</span>deleteStatement, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> sqlite3_step(deleteStatement) <span class="operator">==</span> <span class="type">SQLITE_DONE</span> &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Successfully deleted row.&quot;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Could not delete row.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;DELETE statement could not be prepared&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  sqlite3_finalize(deleteStatement)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你现在感觉到了吗？<code>Prepare</code>，<code>step</code> 和 <code>finalize</code>！：]</p>
+<p>执行这个新方法，然后调用 <code>query()</code>，如下所示：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete()</span><br><span class="line">query()</span><br></pre></td></tr></table></figure>
+
+<p>现在运行你的 <code>Playground</code>，你应该在你的控制台中看到以下输出：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Successfully</span> deleted row.</span><br><span class="line"><span class="type">Query</span> returned no results</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：如果你完成了上面的“多个插入”挑战，由于表中仍存在其他数据，因此输出可能与上面的内容略有不同。</p>
+</blockquote>
+<h2 id="处理错误"><a href="#处理错误" class="headerlink" title="处理错误"></a>处理错误</h2><hr>
+<p>到目前为止，希望你已经设法避免 SQLite 错误。但是，当你调用一个没有意义的函数，或者根本无法编译时，就将会出现错误。在发生这些事情时处理错误消息可以节省大量的开发时间;<br>它还使你有机会向用户显示有意义的错误消息。将以下声明 - 这个错误是故意的 - 添加到你的 Playground：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> malformedQueryString <span class="operator">=</span> <span class="string">&quot;SELECT Stuff from Things WHERE Whatever;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>现在添加一个方法来执行这个格式错误的语句：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">prepareMalformedQuery</span>() &#123;</span><br><span class="line">  <span class="keyword">var</span> malformedStatement: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">  <span class="comment">// 1</span></span><br><span class="line">  <span class="keyword">if</span> sqlite3_prepare_v2(db, malformedQueryString, <span class="operator">-</span><span class="number">1</span>, <span class="operator">&amp;</span>malformedStatement, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;This should not have happened.&quot;</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">let</span> errorMessage <span class="operator">=</span> <span class="type">String</span>.<span class="keyword">init</span>(cString: sqlite3_errmsg(db))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Query could not be prepared! <span class="subst">\(errorMessage)</span>&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 3</span></span><br><span class="line">  sqlite3_finalize(malformedStatement)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下是你将如何强制执行错误：</p>
+<ol>
+<li><code>Prepare</code> 语句，这将会发生错误而且不应该返回 <code>SQLITE_OK</code>；</li>
+<li>使用 <code>sqlite3_errmsg()</code> 从数据库中获取错误消息；此函数返回最近错误的文本描述。然后，你将错误打印到控制台;</li>
+<li>一如既往，<code>finalize</code>。</li>
+</ol>
+<p>调用该方法以查看错误消息：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> prepareMalformedQuery()</span><br></pre></td></tr></table></figure>
+
+<p>运行你的 <code>Playground</code>，你将会在控制台看到如下的输出：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Query</span> could not be prepared<span class="operator">!</span> no such table: <span class="type">Things</span></span><br></pre></td></tr></table></figure>
+
+<p>嗯，这实际上很有帮助 - 你显然无法在不存在的表上运行 <code>SELECT</code> 语句！</p>
+<h2 id="关闭数据库连接"><a href="#关闭数据库连接" class="headerlink" title="关闭数据库连接"></a>关闭数据库连接</h2><hr>
+<p>完成数据库连接后，你将负责关闭它。但请注意 - 在成功关闭数据库之前，必须执行许多操作，如<span class="exturl" data-url="aHR0cHM6Ly93d3cuc3FsaXRlLm9yZy9jM3JlZi9jbG9zZS5odG1s">SQLite文档<i class="fa fa-external-link-alt"></i></span>中所述。</p>
+<p>调用 <code>close</code> 函数，如下所示：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> sqlite3_close(db)</span><br></pre></td></tr></table></figure>
+
+<p>运行你的 Playground；你应该在 Playground 的右侧结果视图中看到状态代码 0；这表示 <code>SQLITE_OK</code>，这意味着数据库关闭成功。</p>
+<p>你已经成功创建了一个数据库，添加了一个表，向表中添加了行，查询并更新了这些行，甚至删除了一行 - 所有这些都使用了 Swift 的 SQLite C API。做得好！</p>
+<p>在下一节中，你将学习如何在 Swift 中使用 SQLite。</p>
+<h2 id="SQLite-与-Swift"><a href="#SQLite-与-Swift" class="headerlink" title="SQLite 与 Swift"></a>SQLite 与 Swift</h2><hr>
+<p>作为 Swift 开发人员，你可能会对本教程第一部分中发生的事情感到有些不安。那个 C API 有点痛苦，但好消息是你可以利用 Swift 的力量包装那些 C 例程来让事情变得更容易。</p>
+<p><img src="/my_pictures/20180802/4.png"></p>
+<p>对于本教程的这部分内容，点击 Playground 底部的 <code>Making it Swift</code> 连接打开这部分的 Playground。</p>
+<p><img src="/my_pictures/20180802/5.png"></p>
+<h2 id="包装错误"><a href="#包装错误" class="headerlink" title="包装错误"></a>包装错误</h2><hr>
+<p>作为一个 Swift 开发者，从 C API 捕获错误有点尴尬。在这个美丽的新世界中，检查结果码然后调用另一个方法是没有意义的。如果方法能够抛出错误那将会更有意义。</p>
+<p>将下面的代码添加到你的 Playground：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">SQLiteError</span>: <span class="title class_ inherited__">Error</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">OpenDatabase</span>(message: <span class="type">String</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Prepare</span>(message: <span class="type">String</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Step</span>(message: <span class="type">String</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Bind</span>(message: <span class="type">String</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是一个自定义的错误枚举，涵盖了你正在使用的四个可能失败的主要操作。请注意，每个 <code>case</code> 都有一个关联值 <code>message</code>。</p>
+<h2 id="包装数据库连接"><a href="#包装数据库连接" class="headerlink" title="包装数据库连接"></a>包装数据库连接</h2><hr>
+<p>另外一个不那么 <code>Swifty</code> 的方面就是使用那些恶心的 <code>OpaquePointer</code> 类型。在自己的类中包装数据库的连接指针，如下所示：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SQLiteDatabase</span> &#123;</span><br><span class="line">  <span class="keyword">fileprivate</span> <span class="keyword">let</span> dbPointer: <span class="type">OpaquePointer</span>?</span><br><span class="line"></span><br><span class="line">  <span class="keyword">fileprivate</span> <span class="keyword">init</span>(<span class="params">dbPointer</span>: <span class="type">OpaquePointer</span>?) &#123;</span><br><span class="line">    <span class="keyword">self</span>.dbPointer <span class="operator">=</span> dbPointer</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">deinit</span> &#123;</span><br><span class="line">    sqlite3_close(dbPointer)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样看起来好多了，当你需要一个数据库连接的时候，你能创建一个更有意义的 <code>SQLiteDatabase</code> 的引用，而不是 <code>OpaquePointer</code>。</p>
+<p>你会注意到，初始化是 <code>fileprivate</code>；那是因为你不希望你的 Swift 开发者传入那个 <code>OpaquePointer</code>。相反，你让他们用数据库文件的路径实例化这个类。</p>
+<p>将以下静态方法添加到 <code>SQLiteDatabase</code>，如下所示：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">open</span>(<span class="params">path</span>: <span class="type">String</span>) <span class="keyword">throws</span> -&gt; <span class="type">SQLiteDatabase</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> db: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">  <span class="comment">// 1</span></span><br><span class="line">  <span class="keyword">if</span> sqlite3_open(path, <span class="operator">&amp;</span>db) <span class="operator">==</span> <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">return</span> <span class="type">SQLiteDatabase</span>(dbPointer: db)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    <span class="keyword">defer</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> db <span class="operator">!=</span> <span class="literal">nil</span> &#123;</span><br><span class="line">        sqlite3_close(db)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> errorPointer <span class="operator">=</span> sqlite3_errmsg(db) &#123;</span><br><span class="line">      <span class="keyword">let</span> message <span class="operator">=</span> <span class="type">String</span>.<span class="keyword">init</span>(cString: errorPointer)</span><br><span class="line">      <span class="keyword">throw</span> <span class="type">SQLiteError</span>.<span class="type">OpenDatabase</span>(message: message)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="type">SQLiteError</span>.<span class="type">OpenDatabase</span>(message: <span class="string">&quot;No error message provided from sqlite.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里发生了这些事情；</p>
+<ol>
+<li>尝试在提供的路径上打开数据库；</li>
+<li>如果成功，则返回 <code>SQLiteDatabase</code> 的新实例；</li>
+<li>否则，如果状态代码不是 <code>SQLITE_OK</code>，则推迟关闭数据库并抛出错误。</li>
+</ol>
+<p>现在，您可以使用更清晰的语法创建和打开数据库连接。</p>
+<p>将下面的代码添加到你的 PLayground：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> db: <span class="type">SQLiteDatabase</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">  db <span class="operator">=</span> <span class="keyword">try</span> <span class="type">SQLiteDatabase</span>.open(path: part2DbPath)</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&quot;Successfully opened connection to database.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="type">SQLiteError</span>.<span class="type">OpenDatabase</span>(<span class="keyword">let</span> message) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&quot;Unable to open database. Verify that you created the directory described in the Getting Started section.&quot;</span>)</span><br><span class="line">  <span class="type">PlaygroundPage</span>.current.finishExecution()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Ah，我太喜欢 Swift 了。这里，尝试打开数据库的代码被包装在 <code>do-try-catch</code> 中，并且 SQLite 会将错误的信息传递给 <code>catch</code> 块儿，这要感谢你之前创建的自定义枚举。</p>
+<p>运行你的 Playground 并查看控制台的输出；你将会看到如下的内容：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Successfully</span> opened connection to database.</span><br></pre></td></tr></table></figure>
+
+<p>现在，您可以使用并检查数据库实例作为正确且有意义的类型。</p>
+<p>在继续编写执行语句之前，如果 <code>SQLiteDatabase</code> 允许您轻松访问SQLite错误消息，那将是很好的。</p>
+<p>将以下计算属性添加到 <code>SQLiteDatabase</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fileprivate</span> <span class="keyword">var</span> errorMessage: <span class="type">String</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">let</span> errorPointer <span class="operator">=</span> sqlite3_errmsg(dbPointer) &#123;</span><br><span class="line">    <span class="keyword">let</span> errorMessage <span class="operator">=</span> <span class="type">String</span>(cString: errorPointer)</span><br><span class="line">    <span class="keyword">return</span> errorMessage</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;No error message provided from sqlite.&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，您添加了一个计算属性，它只返回 SQLite 知道的最新错误。如果没有错误，它只会返回一条声明的通用消息。</p>
+<h2 id="包装-Prepare-语句的调用"><a href="#包装-Prepare-语句的调用" class="headerlink" title="包装 Prepare 语句的调用"></a>包装 Prepare 语句的调用</h2><hr>
+<p>既然你经常这样做，像其他方法一样包装它将会更有意义。在你进行开发并且向 <code>SQLiteDatabase</code> 中添加功能时，你会用到类的扩展。</p>
+<p>添加如下的扩展，将来的方法将使用它来调用 SQL 语句上的 <code>sqlite3_prepare_v2()</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">SQLiteDatabase</span> &#123;</span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">prepareStatement</span>(<span class="params">sql</span>: <span class="type">String</span>) <span class="keyword">throws</span> -&gt; <span class="type">OpaquePointer</span>? &#123;</span><br><span class="line">    <span class="keyword">var</span> statement: <span class="type">OpaquePointer</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">guard</span> sqlite3_prepare_v2(dbPointer, sql, <span class="operator">-</span><span class="number">1</span>, <span class="operator">&amp;</span>statement, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="type">SQLiteError</span>.<span class="type">Prepare</span>(message: errorMessage)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> statement</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里你定义的 <code>prepareStatement(_:)</code> 函数能够抛出错误，然后当 <code>sqlite3_prepare_v2()</code> 出错时使用 <code>guard</code> 语句来抛出错误。就像之前一样，你将 SQLite中 的错误消息传递给自定义枚举的相关案例。</p>
+<h2 id="创建-Contact-结构体"><a href="#创建-Contact-结构体" class="headerlink" title="创建 Contact 结构体"></a>创建 Contact 结构体</h2><hr>
+<p>在这些例子中，你将使用与之前相同的 <code>Contact</code> 表，因此，定义一个适当的结构来表示联系人是有意义的。将以下内容添加到你的 Playground：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Contact</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> id: <span class="type">Int32</span></span><br><span class="line">  <span class="keyword">let</span> name: <span class="type">NSString</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="包装表的创建"><a href="#包装表的创建" class="headerlink" title="包装表的创建"></a>包装表的创建</h2><hr>
+<p>您将完成与以前相同的数据库任务，但这次您将使用更 Swifter 的方法。</p>
+<p>要创建一个表，你需要一个 <code>CREATE TABLE</code> 的 SQL 语句。<code>Contact</code> 定义自己的 <code>CREATE TABLE</code> 语句是有意义的。</p>
+<p>为了这个目的，我们我们创建下面的协议：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">SQLTable</span> &#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">var</span> createStatement: <span class="type">String</span> &#123; <span class="keyword">get</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，扩展 <code>Contact</code>，然后遵守这个协议：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">Contact</span>: <span class="title class_ inherited__">SQLTable</span> &#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">var</span> createStatement: <span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    CREATE TABLE Contact(</span></span><br><span class="line"><span class="string">      Id INT PRIMARY KEY NOT NULL,</span></span><br><span class="line"><span class="string">      Name CHAR(255)</span></span><br><span class="line"><span class="string">    );</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，你可以编写以下方法来接受一个符合 <code>SQLTable</code> 的类型来创建表：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">SQLiteDatabase</span> &#123;</span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">createTable</span>(<span class="params">table</span>: <span class="type">SQLTable</span>.<span class="keyword">Type</span>) <span class="keyword">throws</span> &#123;</span><br><span class="line">    <span class="comment">// 1</span></span><br><span class="line">    <span class="keyword">let</span> createTableStatement <span class="operator">=</span> <span class="keyword">try</span> prepareStatement(sql: table.createStatement)</span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">defer</span> &#123;</span><br><span class="line">      sqlite3_finalize(createTableStatement)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    <span class="keyword">guard</span> sqlite3_step(createTableStatement) <span class="operator">==</span> <span class="type">SQLITE_DONE</span> <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="type">SQLiteError</span>.<span class="type">Step</span>(message: errorMessage)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(table)</span> table created.&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里来分析发生了什么：</p>
+<ol>
+<li><code>prepareStatement()</code> 会抛出错误，所以你必须使用 <code>try</code> 语句。你并没有在 <code>do-try-catch</code> 块儿中执行此操作，因为这个方法本身会抛出错误，所以任何来自 <code>prepareStatement()</code> 的错误都会简单的抛出给调用者 <code>createTable()</code>；</li>
+<li>凭借 <code>defer</code> 的力量，无论此方法如何退出其执行范围，你都可以确保你的 <code>sqlite3_finalize</code> 语句始终最终执行；</li>
+<li><code>guard</code> 能让你写的检查 SQL 状态代码更具可读性。</li>
+</ol>
+<p>通过将以下的代码添加到 Playground 来尝试尝试新的方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> db.createTable(table: <span class="type">Contact</span>.<span class="keyword">self</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(db.errorMessage)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，您只需尝试创建联系人，并捕获错误（如果有的话）。</p>
+<p>运行你的 Playground；你将会在你的控制台看到如下的输出：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Contact</span> table created.</span><br></pre></td></tr></table></figure>
+
+<p>太棒了！这不是一个更清洁的 API 吗？</p>
+<h2 id="包装数据插入"><a href="#包装数据插入" class="headerlink" title="包装数据插入"></a>包装数据插入</h2><hr>
+<p>沿着右边移动，是时候向你的 <code>Contact</code> 表中插入一条数据了。添加如下代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">SQLiteDatabase</span> &#123;</span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">insertContact</span>(<span class="params">contact</span>: <span class="type">Contact</span>) <span class="keyword">throws</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> insertSql <span class="operator">=</span> <span class="string">&quot;INSERT INTO Contact (Id, Name) VALUES (?, ?);&quot;</span></span><br><span class="line">    <span class="keyword">let</span> insertStatement <span class="operator">=</span> <span class="keyword">try</span> prepareStatement(sql: insertSql)</span><br><span class="line">    <span class="keyword">defer</span> &#123;</span><br><span class="line">      sqlite3_finalize(insertStatement)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> name: <span class="type">NSString</span> <span class="operator">=</span> contact.name</span><br><span class="line">    <span class="keyword">guard</span> sqlite3_bind_int(insertStatement, <span class="number">1</span>, contact.id) <span class="operator">==</span> <span class="type">SQLITE_OK</span>  <span class="operator">&amp;&amp;</span></span><br><span class="line">      sqlite3_bind_text(insertStatement, <span class="number">2</span>, name.utf8String, <span class="operator">-</span><span class="number">1</span>, <span class="literal">nil</span>) <span class="operator">==</span> <span class="type">SQLITE_OK</span> <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="type">SQLiteError</span>.<span class="type">Bind</span>(message: errorMessage)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">guard</span> sqlite3_step(insertStatement) <span class="operator">==</span> <span class="type">SQLITE_DONE</span> <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="type">SQLiteError</span>.<span class="type">Step</span>(message: errorMessage)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Successfully inserted row.&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>既然你已经得到了你的 SQLegs - 看看我在那里做了什么？:] - 这段代码不应该太令人惊讶。给定一个 <code>Contact</code> 实例，你准备一个语句，绑定值，执行然后 <code>finalize</code> 操作。同样，使用 <code>defer</code>，<code>guard</code> 和 <code>throw</code> 的强大组合可以让您充分利用现代语言 Swift 的功能。</p>
+<p>编写代码来调用这个新方法，如下所示：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> db.insertContact(contact: <span class="type">Contact</span>(id: <span class="number">1</span>, name: <span class="string">&quot;Ray&quot;</span>))</span><br><span class="line">&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(db.errorMessage)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行你的 Playground；你将会在你的控制台看到如下的输出：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Successfully</span> inserted row.</span><br></pre></td></tr></table></figure>
+
+<h2 id="包装读的操作"><a href="#包装读的操作" class="headerlink" title="包装读的操作"></a>包装读的操作</h2><hr>
+<p>包装起来（抱歉，我无法抗拒！）的这部分是用 Swift 创建的数据库查询。</p>
+<p>添加以下方法以查询联系人的数据库：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">SQLiteDatabase</span> &#123;</span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">contact</span>(<span class="params">id</span>: <span class="type">Int32</span>) -&gt; <span class="type">Contact</span>? &#123;</span><br><span class="line">    <span class="keyword">let</span> querySql <span class="operator">=</span> <span class="string">&quot;SELECT * FROM Contact WHERE Id = ?;&quot;</span></span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> queryStatement <span class="operator">=</span> <span class="keyword">try?</span> prepareStatement(sql: querySql) <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> &#123;</span><br><span class="line">      sqlite3_finalize(queryStatement)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">guard</span> sqlite3_bind_int(queryStatement, <span class="number">1</span>, id) <span class="operator">==</span> <span class="type">SQLITE_OK</span> <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">guard</span> sqlite3_step(queryStatement) <span class="operator">==</span> <span class="type">SQLITE_ROW</span> <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> id <span class="operator">=</span> sqlite3_column_int(queryStatement, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> queryResultCol1 <span class="operator">=</span> sqlite3_column_text(queryStatement, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">let</span> name <span class="operator">=</span> <span class="type">String</span>(cString: queryResultCol1<span class="operator">!</span>) <span class="keyword">as</span> <span class="type">NSString</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="type">Contact</span>(id: id, name: name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此方法只接受联系人的 <code>id</code> 并返回该联系人，如果没有该 <code>id</code> 的联系人，则返回 <code>nil</code>。同样，这些语句现在应该有些熟悉了。</p>
+<p>写一个查询第一个联系人的代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> first <span class="operator">=</span> db.contact(id: <span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(first<span class="operator">?</span>.id)</span> <span class="subst">\(first<span class="operator">?</span>.name)</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行你的 Playground；你应该能在控制台看到如下的输出：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Optional</span>(<span class="number">1</span>) <span class="type">Optional</span>(<span class="type">Ray</span>)</span><br></pre></td></tr></table></figure>
+
+<p>到目前为止，您可能已经确定了一些可以用通用方式创建的调用，并将它们应用于完全不同的表。上述练习的目的是展示如何使用 Swift 来包装低级 C 的 API。对于 SQLite 来说，这不是一项简单的任务；SQLite 有很多错综复杂的内容，这里没有涉及。</p>
+<p>你可能会想“没有人已经为此创建了一个包装器吗？” - 让我现在回答你的问题！</p>
+<h2 id="SQLite-swift-的介绍"><a href="#SQLite-swift-的介绍" class="headerlink" title="SQLite.swift 的介绍"></a>SQLite.swift 的介绍</h2><hr>
+<p>Stephen Celis 慷慨地为 SQLite 编写了一个名为 SQLite.swift 的全功能 Swift 包装器。如果您认为 SQLite 适合您应用中的数据存储，我强烈建议您查看一下。</p>
+<p>SQLite.swift 提供了一种表示表的表达方式，让您可以开始使用 SQLite - 而无需担心 SQLite 的许多底层细节和特性。您甚至可以考虑包装SQLite.swift 本身，为您的应用程序的域模型创建一个高级 API。</p>
+<p>查看编写良好的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0ZXBoZW5jZWxpcy9TUUxpdGUuc3dpZnQvYmxvYi9tYXN0ZXIvUkVBRE1FLm1k">README.md for SQLite.swift<i class="fa fa-external-link-alt"></i></span>，并自行决定它是否在您的个人代码工具箱中占有一席之地。</p>
+<p>原文地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cucmF5d2VuZGVybGljaC5jb20vMTY3NzQzL3NxbGl0ZS1zd2lmdC10dXRvcmlhbC1nZXR0aW5nLXN0YXJ0ZWQ=">SQLite With Swift Tutorial: Getting Started<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"><i class="fa fa-tag"></i> Swift</a>
+              <a href="/tags/SQLite/" rel="tag"><i class="fa fa-tag"></i> SQLite</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/27/20180727-Swift%E9%9D%A2%E5%90%91%E5%8D%8F%E8%AE%AE-%E4%B8%BA%E7%B1%BB%E6%8F%90%E4%BE%9B%E5%9F%BA%E4%BA%8EStoryboard%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95/" rel="prev" title="Swift 面向协议 - 为类提供基于 Storyboard 的初始化方法">
+                  <i class="fa fa-angle-left"></i> Swift 面向协议 - 为类提供基于 Storyboard 的初始化方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/09/27/20180927-iOS%E9%A1%B5%E9%9D%A2%E5%8D%A1%E6%AD%BB%EF%BC%8C%E4%BD%86%E5%B9%B6%E4%B8%8D%E6%98%AFCrash%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" rel="next" title="iOS 页面卡死，但并不是 Crash 的问题解决">
+                  iOS 页面卡死，但并不是 Crash 的问题解决 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

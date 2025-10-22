@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="之前的文章介绍过，字符串是以空字符（\0）结尾的char类型数组。常用的输出字符串的方式有两种 printf()和puts()，他们不同之处在于，printf()是格式化输出字符串，而puts()只显示字符串。 在程序中定义字符串用双引号括起来的内容称为字符串字面量，也叫字符串常量。字符串常量属于静态存储类别，这说明如果在函数中使用字符串常量，该字符串只会被存储一次，在整个程序的生命期内存在，即使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 语言重拾【六】字符串和字符串函数">
+<meta property="og:url" content="https://regulusleow.github.io/2023/03/28/20230328-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E5%85%AD%E3%80%91/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="之前的文章介绍过，字符串是以空字符（\0）结尾的char类型数组。常用的输出字符串的方式有两种 printf()和puts()，他们不同之处在于，printf()是格式化输出字符串，而puts()只显示字符串。 在程序中定义字符串用双引号括起来的内容称为字符串字面量，也叫字符串常量。字符串常量属于静态存储类别，这说明如果在函数中使用字符串常量，该字符串只会被存储一次，在整个程序的生命期内存在，即使">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://regulusleow.github.io/my_pictures/20230328/1.png">
+<meta property="article:published_time" content="2023-03-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.332Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://regulusleow.github.io/my_pictures/20230328/1.png">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2023/03/28/20230328-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E5%85%AD%E3%80%91/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2023/03/28/20230328-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E5%85%AD%E3%80%91/","path":"2023/03/28/20230328-C 语言重拾【六】/","title":"C 语言重拾【六】字符串和字符串函数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C 语言重拾【六】字符串和字符串函数 | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%AE%9A%E4%B9%89%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.</span> <span class="nav-text">在程序中定义字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E4%B8%8E%E6%8C%87%E9%92%88"><span class="nav-number">2.</span> <span class="nav-text">字符串数组与指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.</span> <span class="nav-text">指针初始化字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">字符串数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E5%AD%97%E7%AC%A6%E4%B8%8E%E7%A9%BA%E6%8C%87%E9%92%88"><span class="nav-number">5.</span> <span class="nav-text">空字符与空指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">字符串函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5"><span class="nav-number">7.</span> <span class="nav-text">关键概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">9.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2023/03/28/20230328-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E5%85%AD%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="C 语言重拾【六】字符串和字符串函数 | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 语言重拾【六】字符串和字符串函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2023-03-28T00:00:00+08:00">2023-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/03/28/20230328-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E5%85%AD%E3%80%91/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/28/20230328-C 语言重拾【六】/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>之前的文章介绍过，字符串是以空字符（\0）结尾的<code>char</code>类型数组。常用的输出字符串的方式有两种 <code>printf()</code>和<code>puts()</code>，他们不同之处在于，<code>printf()</code>是格式化输出字符串，而<code>puts()</code>只显示字符串。</p>
+<h2 id="在程序中定义字符串"><a href="#在程序中定义字符串" class="headerlink" title="在程序中定义字符串"></a>在程序中定义字符串</h2><p>用双引号括起来的内容称为<strong>字符串字面量</strong>，也叫<strong>字符串常量</strong>。字符串常量属于<strong>静态存储类别</strong>，这说明如果在函数中使用字符串常量，该字符串只会被存储一次，在整个程序的生命期内存在，即使函数被调用多次。用双引号括起来的内容被视为指向该字符串存储位置的指针。这类似于把数组名作为指向该数组位置的指针。如果确实如此，下面的程序会输出什么？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s, %p, %c\n&quot;</span>, <span class="string">&quot;we&quot;</span>, <span class="string">&quot;are&quot;</span>, *<span class="string">&quot;space farers&quot;</span>);  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">we, 0x100003fa7, s</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="字符串数组与指针"><a href="#字符串数组与指针" class="headerlink" title="字符串数组与指针"></a>字符串数组与指针</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span> ar1[] = <span class="string">&quot;Something is pointing at me.&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>数组形式和指针形式有何不同？以上面的声明为例，数组形式（<code>ar1[]</code>）在计算机的内存中分配为一个内含 29 个元素的数组（每个元素对应一个字符，还加上一个末尾的空字符 <code>&#39;\0&#39;</code>），每个元素被初始化为字符串字面量对应的字符。</p>
+<blockquote>
+<p>通常，字符串都作为可执行文件的一部分储存在数据段中。当把程序载入内存时，也载入了程序中的字符串。字符串储存在静态存储区（static memory）中。但是，程序在开始运行时才会为该数组分配内存。此时，才将字符串拷贝到数组中（接下来的章节将详细讲解）。注意，此时字符串有两个副本。一个是在静态内存中的字符串字面量，另一个是储存在 <code>ar1</code> 数组中的字符串。</p>
+</blockquote>
+<p>此后，编译器便把数组名 <code>ar1</code> 识别为该数组首元素地址（<code>&amp;ar1[0]</code>）的别名。这里关键要理解，在数组形式中，<code>ar1</code> 是地址常量。不能更改 <code>ar1</code>，如果改变了 <code>ar1</code>，则意味着改变了数组的存储位置（即地址）。可以进行类似 <code>ar1+1</code> 这样的操作，标识数组的下一个元素。但是不允许进行 <code>++ar1</code> 这样的操作。递增运算符只能用于变量名前（或概括地说，只能用于可修改的左值），不能用于常量。</p>
+<p>指针形式（<code>*pt1</code>）也使得编译器为字符串在静态存储区预留 29 个元素的空间。另外，一旦开始执行程序，它会为指针变量 <code>pt1</code> 留出一个储存位置，并把字符串的地址储存在指针变量中。该变量最初指向该字符串的首字符，但是它的值可以改变。因此，可以使用递增运算符。例如，<code>++pt1</code> 将指向第 2 个字符（<code>o</code>）。</p>
+<p>字符串字面量被视为 <code>const</code> 数据。由于 <code>pt1</code> 指向这个 <code>const</code> 数据，所以应该把 <code>pt1</code> 声明为指向 <code>const</code> 数据的指针。这意味着不能用 <code>pt1</code> 改变它所指向的数据，但是仍然可以改变 <code>pt1</code> 的值（即，<code>pt1</code> 指向的位置）。如果把一个字符串字面量拷贝给一个数组，就可以随意改变数据，除非把数组声明为 <code>const</code>。</p>
+<p>总之，初始化数组把静态存储区的字符串拷贝到数组中，而初始化指针只把字符串的地址拷贝给指针。程序清单11.3演示了这一点。</p>
+<p><strong>程序清单 11.3 addresses.c 程序</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// addresses.c -- 字符串的地址</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MSG <span class="string">&quot;I&#x27;m special&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="type">char</span> ar[] = MSG;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *pt = MSG;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;address of \&quot;I&#x27;m special\&quot;: %p \n&quot;</span>, <span class="string">&quot;I&#x27;m special&quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;                address ar: %p\n&quot;</span>, ar);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;                address pt: %p\n&quot;</span>, pt);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;            address of MSG: %p\n&quot;</span>, MSG);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;address of \&quot;I&#x27;m special\&quot;: %p \n&quot;</span>, <span class="string">&quot;I&#x27;m special&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是在我们的系统中运行该程序后的输出：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">address of <span class="string">&quot;I&#x27;m special&quot;</span>:  <span class="number">0x100000f10</span></span><br><span class="line">              address ar:  <span class="number">0x7fff5fbff858</span></span><br><span class="line">              address pt:  <span class="number">0x100000f10</span></span><br><span class="line">          address of MSG:  <span class="number">0x100000f10</span></span><br><span class="line">address of <span class="string">&quot;I&#x27;m special&quot;</span>:  <span class="number">0x100000f10</span></span><br></pre></td></tr></table></figure>
+
+<p>该程序的输出说明了什么？</p>
+<ol>
+<li><code>pt</code> 和 <code>MSG</code> 的地址相同，而 <code>ar</code> 的地址不同，这与我们前面讨论的内容一致。</li>
+<li>虽然字符串字面量 <code>&quot;I&#39;m special&quot;</code> 在程序的两个 <code>printf()</code> 函数中出现了两次，但是编译器只使用了一个存储位置，而且与 <code>MSG</code> 的地址相同。编译器可以把多次使用的相同字面量储存在一处或多处。另一个编译器可能在不同的位置储存 3 个 <code>&quot;I&#39;m special&quot;</code>。</li>
+<li>静态数据使用的内存与 <code>ar</code> 使用的动态内存不同。不仅值不同，特定编译器甚至使用不同的位数表示两种内存。</li>
+</ol>
+<h2 id="指针初始化字符串"><a href="#指针初始化字符串" class="headerlink" title="指针初始化字符串"></a>指针初始化字符串</h2><p>我们来看一下未使用 <code>const</code> 限定符的指针初始化：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> * word = <span class="string">&quot;frame&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>是否能使用该指针修改这个字符串？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">word[<span class="number">1</span>] = <span class="string">&#x27;l&#x27;</span>; <span class="comment">// 是否允许？</span></span><br></pre></td></tr></table></figure>
+
+<p>编译器可能允许这样做，但是对当前的 C 标准而言，这样的行为是未定义的。例如，这样的语句可能导致内存访问错误。原因前面提到过，编译器可以使用内存中的一个副本来表示所有完全相同的字符串字面量。例如，下面的语句都引用字符串 <code>&quot;Klingon&quot;</code> 的一个内存位置：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> * p1 = <span class="string">&quot;Klingon&quot;</span>;</span><br><span class="line">p1[<span class="number">0</span>] = <span class="string">&#x27;F&#x27;</span>; <span class="comment">// ok?</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Klingon&quot;</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;: Beware the %ss!\n&quot;</span>, <span class="string">&quot;Klingon&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，编译器可以用相同的地址替换每个 <code>&quot;Klingon&quot;</code> 实例。如果编译器使用这种单次副本表示法，并允许 <code>p1[0]</code> 修改 <code>&#39;F&#39;</code>，那将影响所有使用该字符串的代码。所以以上语句打印字符串字面量 <code>&quot;Klingon&quot;</code> 时实际上显示的是 <code>&quot;Flingon&quot;</code>：</p>
+<blockquote>
+<p>Flingon: Beware the Flingons!</p>
+</blockquote>
+<p>实际上在过去，一些编译器由于这方面的原因，其行为难以捉摸，而另一些编译器则导致程序异常中断。因此，建议在把指针初始化为字符串字面量时使用 <code>const</code> 限定符：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span> * pl = <span class="string">&quot;Klingon&quot;</span>;　 <span class="comment">// 推荐用法</span></span><br></pre></td></tr></table></figure>
+
+<p>然而，把非 <code>const</code> 数组初始化为字符串字面量却不会导致类似的问题。因为数组获得的是原始字符串的副本。</p>
+<p>总之，如果不修改字符串，不要用指针指向字符串字面量。</p>
+<h2 id="字符串数组"><a href="#字符串数组" class="headerlink" title="字符串数组"></a>字符串数组</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span>　SLEN　40</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>　LIM　5</span></span><br><span class="line">  </span><br><span class="line"><span class="type">const</span> <span class="type">char</span> *mytalents[LIM] = &#123;</span><br><span class="line">  <span class="string">&quot;Adding　numbers　swiftly&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Multiplying　accurately&quot;</span>,　<span class="string">&quot;Stashing　data&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Following　instructions　to　the　letter&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Understanding　the　C　language&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">char</span> yourtalents[LIM][SLEN]　=　&#123;</span><br><span class="line">  <span class="string">&quot;Walking　in　a　straight　line&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Sleeping&quot;</span>,　<span class="string">&quot;Watching　television&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Mailing　letters&quot;</span>,　<span class="string">&quot;Reading　email&quot;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>从某些方面来看，<code>mytalents</code> 和 <code>yourtalents</code> 非常相似。两者都代表 5 个字符串。使用一个下标时都分别表示一个字符串，如 <code>mytalents[0]</code> 和 <code>yourtalents[0]</code> 使用两个下标时都分别表示一个字符，例如 <code>mytalents[1][2]</code> 表示 <code>mytalents</code> 数组中第 2 个指针所指向的字符串的第 3 个字符 <code>&#39;l&#39;</code>， <code>yourtalents[1][2]</code> 表示<code>youttalentes</code> 数组的第 2 个字符串的第 3 个字符 <code>&#39;e&#39;</code>。而且，两者的初始化方式也相同。</p>
+<p>但是，它们也有区别。<code>mytalents</code> 数组是一个内含 5 个指针的数组，在我们的系统中共占用 40 字节。而 <code>yourtalents</code> 是一个内含 5 个数组的数组，每个数组内含 40 个 <code>char</code> 类型的值，共占用 200 字节。所以，虽然 <code>mytalents[0]</code> 和 <code>yourtalents[0]</code> 都分别表示一个字符串，但 <code>mytalents</code> 和 <code>yourtalents</code> 的类型并不相同。<code>mytalents</code> 中的指针指向初始化时所用的字符串字面量的位置，这些字符串字面量被储存在静态内存中；而 <code>yourtalents</code> 中的数组则储存着字符串字面量的副本，所以每个字符串都被储存了两次。此外，为字符串数组分配内存的使用率较低。<code>yourtalents</code> 中的每个元素的大小必须相同，而且必须是能储存最长字符串的大小。</p>
+<p>我们可以把 <code>yourtalents</code> 想象成矩形二维数组，每行的长度都是 40 字节；把 <code>mytalents</code> 想象成不规则的数组，每行的长度不同。图 11.2 演示了这两种数组的情况（<strong>实际上，<code>mytalents</code> 数组的指针元素所指向的字符串不必储存在连续的内存中</strong>，图中所示只是为了强调两种数组的不同）。</p>
+<img src="/my_pictures/20230328/1.png" style="zoom: 33%;" />
+
+<p>综上所述，<strong>如果要用数组表示一系列待显示的字符串，请使用指针数组</strong>，因为它比二维字符数组的效率高。但是，指针数组也有自身的缺点。<code>mytalents</code> 中的指针指向的字符串字面量不能更改；而 <code>yourtalentsde</code> 中的内容可以更改。所以，<strong>如果要改变字符串或为字符串输入预留空间，不要使用指向字符串字面量的指针。</strong></p>
+<h2 id="空字符与空指针"><a href="#空字符与空指针" class="headerlink" title="空字符与空指针"></a>空字符与空指针</h2><p>从概念上看，两者完全不同。空字符（或 <code>&#39;\0&#39;</code>）是用于标记 C 字符串末尾的字符，其对应字符编码是 0。由于其他字符的编码不可能是 0，所以不可能是字符串的一部分。</p>
+<p>空指针（或 <code>NULL</code>）有一个值，该值不会与任何数据的有效地址对应。通常，函数使用它返回一个有效地址表示某些特殊情况发生，例如遇到文件结尾或未能按预期执行。</p>
+<p>空字符是整数类型，而空指针是指针类型。两者有时容易混淆的原因是：它们都可以用数值 0 来表示。但是，从概念上看，两者是不同类型的 0。另外，<strong>空字符是一个字符，占 1 字节；而空指针是一个地址，通常占 4 字节</strong>。</p>
+<h2 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h2><p>ANSI C 库有 20 多个用于处理字符串的函数，下面总结了一些常用的函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strcpy</span><span class="params">(<span class="type">char</span> * <span class="keyword">restrict</span> s1, <span class="type">const</span> <span class="type">char</span> * <span class="keyword">restrict</span> s2)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数把 <code>s2</code> 指向的字符串（包括空字符）拷贝至 <code>s1</code> 指向的位置，返回值是 s1。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strncpy</span><span class="params">(<span class="type">char</span> * <span class="keyword">restrict</span> s1, <span class="type">const</span> <span class="type">char</span> * <span class="keyword">restrict</span> s2, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数把 <code>s2</code> 指向的字符串拷贝至 <code>s1</code> 指向的位置，拷贝的字符数不超过 <code>n</code>，其返回值是 <code>s1</code>。该函数不会拷贝空字符后面的字符，如果源字符串的字符少于 <code>n</code> 个，目标字符串就以拷贝的空字符结尾；如果源字符串有 <code>n</code> 个或超过 <code>n</code> 个字符，就不拷贝空字符。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strcat</span><span class="params">(<span class="type">char</span> * <span class="keyword">restrict</span> s1, <span class="type">const</span> <span class="type">char</span> * <span class="keyword">restrict</span> s2)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数把 <code>s2</code> 指向的字符串拷贝至 <code>s1</code> 指向的字符串末尾。<code>s2</code> 字符串的第 1 个字符将覆盖 <code>s1</code> 字符串末尾的空字符。该函数返回 <code>s1</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strncat</span><span class="params">(<span class="type">char</span> * <span class="keyword">restrict</span> s1, <span class="type">const</span> <span class="type">char</span> * <span class="keyword">restrict</span> s2, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数把 <code>s2</code> 字符串中的 <code>n</code> 个字符拷贝至 <code>s1</code> 字符串末尾。<code>s2</code> 字符串的第 1 个字符将覆盖 <code>s1</code> 字符串末尾的空字符。不会拷贝 <code>s2</code> 字符串中空字符和其后的字符，并在拷贝字符的末尾添加一个空字符。该函数返回 <code>s1</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * s1, <span class="type">const</span> <span class="type">char</span> * s2)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>s1</code> 字符串在机器排序序列中位于 <code>s2</code> 字符串的后面，该函数返回一个正数；如果两个字符串相等，则返回 0；如果 <code>s1</code> 字符串在机器排序序列中位于s2字符串的前面，则返回一个负数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">strncmp</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * s1, <span class="type">const</span> <span class="type">char</span> * s2, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数的作用和 <code>strcmp()</code> 类似，不同的是，该函数在比较 <code>n</code> 个字符后或遇到第 1 个空字符时停止比较。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strchr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * s, <span class="type">int</span> c)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>s</code> 字符串中包含 <code>c</code> 字符，该函数返回指向 <code>s</code> 字符串首位置的指针（末尾的空字符也是字符串的一部分，所以在查找范围内）；如果在字符串 <code>s</code> 中未找到 <code>c</code> 字符，该函数则返回空指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strpbrk</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * s1, <span class="type">const</span> <span class="type">char</span> * s2)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>s1</code> 字符中包含 <code>s2</code> 字符串中的任意字符，该函数返回指向 <code>s1</code> 字符串首位置的指针；如果在 <code>s1</code> 字符串中未找到任何 <code>s2</code> 字符串中的字符，则返回空字符。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strrchr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * s, <span class="type">int</span> c)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数返回 <code>s</code> 字符串中 <code>c</code> 字符的最后一次出现的位置（末尾的空字符也是字符串的一部分，所以在查找范围内）。如果未找到 <code>c</code> 字符，则返回空指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strstr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * s1, <span class="type">const</span> <span class="type">char</span> * s2)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数返回指向 <code>s1</code> 字符串中 <code>s2</code> 字符串出现的首位置。如果在 <code>s1</code> 中没有找到 <code>s2</code>，则返回空指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> <span class="title function_">strlen</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * s)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数返回 <code>s</code> 字符串中的字符数，不包括末尾的空字符。</p>
+<p>请注意，那些使用 <code>const</code> 关键字的函数原型表明，函数不会更改字符串。例如，下面的函数原型：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strcpy</span><span class="params">(<span class="type">char</span> * <span class="keyword">restrict</span> s1, <span class="type">const</span> <span class="type">char</span> * <span class="keyword">restrict</span> s2)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>表明不能更改 <code>s2</code> 指向的字符串，至少不能在 <code>strcpy()</code> 函数中更改。但是可以更改 <code>s1</code> 指向的字符串。这样做很合理，因为 <code>s1</code> 是目标字符串，要改变，而 <code>s2</code> 是源字符串，不能更改。</p>
+<p>关键字 <code>restrict</code> 将在接下来的章节中介绍，该关键字限制了函数参数的用法。例如，不能把字符串拷贝给本身。</p>
+<h2 id="关键概念"><a href="#关键概念" class="headerlink" title="关键概念"></a>关键概念</h2><p>许多程序都要处理文本数据。一个程序可能要求用户输入姓名、公司列表、地址、一种蕨类植物的学名、音乐剧的演员等。毕竟，我们用言语与现实世界互动，使用文本的例子不计其数。C 程序通过字符串的方式来处理它们。</p>
+<p>字符串，无论是由字符数组、指针还是字符串常量标识，都储存为包含字符编码的一系列字节，并以空字符串结尾。C 提供库函数处理字符串，查找字符串并分析它们。尤其要牢记，应该使用 <code>strcmp()</code> 来代替关系运算符，当比较字符串时，应该使用 <code>strcpy()</code> 或 <code>strncpy()</code> 代替赋值运算符把字符串赋给字符数组。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>C 字符串是一系列 <code>char</code> 类型的字符，以空字符（<code>&#39;\0&#39;</code>）结尾。字符串可以储存在字符数组中。字符串还可以用字符串常量来表示，里面都是字符，括在双引号中（空字符除外）。编译器提供空字符。因此，<code>&quot;joy&quot;</code> 被储存为 4 个字符 <code>j、o、y 和 \0</code>。<code>strlen()</code> 函数可以统计字符串的长度，空字符不计算在内。</p>
+<p>字符串常量也叫作字符串——字面量，可用于初始化字符数组。为了容纳末尾的空字符，数组大小应该至少比容纳的数组长度多 1。也可以用字符串常量初始化指向 <code>char</code> 的指针。</p>
+<p>函数使用指向字符串首字符的指针来表示待处理的字符串。通常，对应的实际参数是数组名、指针变量或用双引号括起来的字符串。无论是哪种情况，传递的都是首字符的地址。一般而言，没必要传递字符串的长度，因为函数可以通过末尾的空字符确定字符串的结束。</p>
+<p><code>fgets()</code> 函数获取一行输入，<code>puts()</code> 和 <code>fputs()</code> 函数显示一行输出。它们都是 <code>stdio.h</code> 头文件中的函数，用于代替已被弃用的 <code>gets()</code>。</p>
+<p>C 库中有多个字符串处理函数。在 ANSI C 中，这些函数都声明在 <code>string.h</code> 文件中。C 库中还有许多字符处理函数，声明在 <code>ctype.h</code> 文件中。</p>
+<p>给 <code>main()</code> 函数提供两个合适的形式参数，可以让程序访问命令行参数。第 1 个参数通常是 <code>int</code> 类型的 <code>argc</code>，其值是命令行的单词数量。第 2 个参数通常是一个指向数组的指针 <code>argv</code>，数组内含指向 <code>char</code> 的指针。每个指向 <code>char</code> 的指针都指向一个命令行参数字符串，<code>argv[0]</code> 指向命令名称，<code>argv[1]</code>指向第 1 个命令行参数，以此类推。</p>
+<p><code>atoi()</code>、<code>atol()</code> 和 <code>atof()</code> 函数把字符串形式的数字分别转换成 <code>int</code>、<code>long</code> 和 <code>double</code> 类型的数字。<code>strtol()</code>、<code>strtoul()</code> 和<code>strtod()</code> 函数把字符串形式的数字分别转换成 <code>long</code>、<code>unsigned long</code> 和 <code>double</code> 类型的数字。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>C Primer Plus</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/27/20230327-%E4%BD%BF%E7%94%A8%20Homebrew%20%E7%AE%A1%E7%90%86%20Ruby/" rel="prev" title="使用 Homebrew 管理 Ruby">
+                  <i class="fa fa-angle-left"></i> 使用 Homebrew 管理 Ruby
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/30/20230330-ProvisionQL%E7%AE%80%E4%BB%8B/" rel="next" title="ProvisionQL 简介">
+                  ProvisionQL 简介 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

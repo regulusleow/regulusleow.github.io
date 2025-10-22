@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.22.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="React Native 新架构简介React Native 的新架构是为了解决旧架构中存在的性能瓶颈和开发体验问题而推出的重大升级。新架构主要包含以下几个核心组件：  JSI (JavaScript Interface): 取代了旧架构中的 JSC (JavaScriptCore)，提供了 JS 和原生代码之间的直接通信能力。 Fabric: 新的渲染系统，通过 C++ 桥接层实现了更高效的 U">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactNative 新架构中 iOS 通过 JSI 调用 RN 函数">
+<meta property="og:url" content="https://regulusleow.github.io/2025/04/03/20250403-iOS%E9%80%9A%E8%BF%87JSI%E8%B0%83%E7%94%A8RN%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="React Native 新架构简介React Native 的新架构是为了解决旧架构中存在的性能瓶颈和开发体验问题而推出的重大升级。新架构主要包含以下几个核心组件：  JSI (JavaScript Interface): 取代了旧架构中的 JSC (JavaScriptCore)，提供了 JS 和原生代码之间的直接通信能力。 Fabric: 新的渲染系统，通过 C++ 桥接层实现了更高效的 U">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-22T04:01:25.334Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="JSI">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2025/04/03/20250403-iOS%E9%80%9A%E8%BF%87JSI%E8%B0%83%E7%94%A8RN%E5%87%BD%E6%95%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2025/04/03/20250403-iOS%E9%80%9A%E8%BF%87JSI%E8%B0%83%E7%94%A8RN%E5%87%BD%E6%95%B0/","path":"2025/04/03/20250403-iOS通过JSI调用RN函数/","title":"ReactNative 新架构中 iOS 通过 JSI 调用 RN 函数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ReactNative 新架构中 iOS 通过 JSI 调用 RN 函数 | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Native-%E6%96%B0%E6%9E%B6%E6%9E%84%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">React Native 新架构简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSI-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">JSI 是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RCTBridge-%E5%9C%A8%E6%96%B0%E6%9E%B6%E6%9E%84%E4%B8%AD%E7%9A%84%E8%A7%92%E8%89%B2"><span class="nav-number">3.</span> <span class="nav-text">RCTBridge 在新架构中的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS-%E9%80%9A%E8%BF%87-JSI-%E8%B0%83%E7%94%A8-RN-%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">iOS 通过 JSI 调用 RN 函数的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AE-AppDelegate"><span class="nav-number">4.1.</span> <span class="nav-text">1. 配置 AppDelegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA-JSIBridge-%E7%B1%BB"><span class="nav-number">4.2.</span> <span class="nav-text">2. 创建 JSIBridge 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%AE%9E%E7%8E%B0-JSIBridge-%E7%B1%BB"><span class="nav-number">4.3.</span> <span class="nav-text">3. 实现 JSIBridge 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%9C%A8-JavaScript-%E4%B8%AD%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0"><span class="nav-number">4.4.</span> <span class="nav-text">4. 在 JavaScript 中定义函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%9C%A8%E5%8E%9F%E7%94%9F%E4%BB%A3%E7%A0%81%E4%B8%AD%E8%B0%83%E7%94%A8-JavaScript-%E5%87%BD%E6%95%B0"><span class="nav-number">4.5.</span> <span class="nav-text">5. 在原生代码中调用 JavaScript 函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RCTBridge-%E5%9C%A8%E6%96%B0%E6%9E%B6%E6%9E%84%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">RCTBridge 在新架构中的实际应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E5%92%8C%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">6.</span> <span class="nav-text">注意事项和最佳实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%EF%BC%9A%E6%94%AF%E6%8C%81%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E5%8F%82%E6%95%B0%E5%92%8C%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">7.</span> <span class="nav-text">扩展：支持更复杂的参数和返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2025/04/03/20250403-iOS%E9%80%9A%E8%BF%87JSI%E8%B0%83%E7%94%A8RN%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ReactNative 新架构中 iOS 通过 JSI 调用 RN 函数 | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ReactNative 新架构中 iOS 通过 JSI 调用 RN 函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-03 00:00:00" itemprop="dateCreated datePublished" datetime="2025-04-03T00:00:00+08:00">2025-04-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ReactNative/" itemprop="url" rel="index"><span itemprop="name">ReactNative</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/04/03/20250403-iOS%E9%80%9A%E8%BF%87JSI%E8%B0%83%E7%94%A8RN%E5%87%BD%E6%95%B0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/04/03/20250403-iOS通过JSI调用RN函数/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="React-Native-新架构简介"><a href="#React-Native-新架构简介" class="headerlink" title="React Native 新架构简介"></a>React Native 新架构简介</h2><p>React Native 的新架构是为了解决旧架构中存在的性能瓶颈和开发体验问题而推出的重大升级。新架构主要包含以下几个核心组件：</p>
+<ol>
+<li><strong>JSI (JavaScript Interface)</strong>: 取代了旧架构中的 JSC (JavaScriptCore)，提供了 JS 和原生代码之间的直接通信能力。</li>
+<li><strong>Fabric</strong>: 新的渲染系统，通过 C++ 桥接层实现了更高效的 UI 渲染。</li>
+<li><strong>TurboModules</strong>: 新的原生模块系统，允许更高效地调用原生 API。</li>
+<li><strong>CodeGen</strong>: 自动代码生成工具，减少了手动编写样板代码的工作量。</li>
+<li><strong>Hermes</strong>: Facebook 开发的专为移动应用优化的 JavaScript 引擎。</li>
+</ol>
+<p>相比于旧架构，新架构最大的优势在于消除了异步桥接带来的性能损耗，允许 JavaScript 和原生代码直接通信，大幅提升了应用性能和开发体验。</p>
+<span id="more"></span>
+
+<h2 id="JSI-是什么？"><a href="#JSI-是什么？" class="headerlink" title="JSI 是什么？"></a>JSI 是什么？</h2><p>JSI (JavaScript Interface) 是 React Native 新架构中的核心组件之一，它是一个轻量级的 C++ API 层，提供了 JavaScript 和原生代码之间的直接通信能力。</p>
+<p>与旧架构中的 Bridge 不同，JSI 允许：</p>
+<ol>
+<li><strong>同步调用</strong>: JavaScript 可以同步调用原生方法，无需通过异步消息队列。</li>
+<li><strong>引用共享</strong>: JavaScript 可以持有原生对象的引用，反之亦然。</li>
+<li><strong>引擎无关</strong>: JSI 设计为 JS 引擎无关的接口，可以兼容不同的 JS 引擎（如 JSC、Hermes 等）。</li>
+<li><strong>双向通信</strong>: 不仅 JS 可以调用原生代码，原生代码也可以直接调用 JS 函数。</li>
+</ol>
+<p>这种设计解决了旧架构中的大量性能问题，特别是由于异步通信导致的延迟和序列化&#x2F;反序列化开销。</p>
+<h2 id="RCTBridge-在新架构中的角色"><a href="#RCTBridge-在新架构中的角色" class="headerlink" title="RCTBridge 在新架构中的角色"></a>RCTBridge 在新架构中的角色</h2><p>在 React Native 的新架构中，<code>RCTBridge</code> 仍然存在，但其角色发生了变化。它主要承担以下职责：</p>
+<ol>
+<li><strong>兼容性层</strong>: 为了保证旧代码能在新架构中正常运行，<code>RCTBridge</code> 提供了向后兼容的接口。</li>
+<li><strong>生命周期管理</strong>: 管理 JS 运行时的生命周期，包括初始化、加载 JS bundle 和销毁。</li>
+<li><strong>提供 JSI 访问</strong>: 通过 <code>RCTCxxBridge</code> 暴露 JSI 运行时，允许原生代码访问 JS 运行时。</li>
+<li><strong>线程管理</strong>: 维护专用的 JavaScript 线程，确保 JSI 操作的线程安全性。React Native 的架构中有明确的线程划分，包括 JavaScript 线程、主线程（UI 线程）和 Shadow 线程，<code>RCTBridge</code> 通过 <code>dispatchBlock:queue:</code> 等方法在适当的线程上执行代码。</li>
+</ol>
+<p>在新架构中，直接通信大多通过 JSI 实现，而 <code>RCTBridge</code> 则更多地充当一个容器和生命周期管理者的角色。特别是它的 <code>RCTCxxBridge</code> 子类，提供了从原生代码到 JSI 运行时的重要桥梁。</p>
+<h2 id="iOS-通过-JSI-调用-RN-函数的实现"><a href="#iOS-通过-JSI-调用-RN-函数的实现" class="headerlink" title="iOS 通过 JSI 调用 RN 函数的实现"></a>iOS 通过 JSI 调用 RN 函数的实现</h2><p>接下来，我们将详细介绍如何在 iOS 端通过 JSI 调用 React Native 中定义的 JavaScript 函数。</p>
+<h3 id="1-配置-AppDelegate"><a href="#1-配置-AppDelegate" class="headerlink" title="1. 配置 AppDelegate"></a>1. 配置 AppDelegate</h3><p>首先，我们需要在 AppDelegate 中进行必要的配置，包括创建 RCTBridge 实例和注册通知：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AppDelegate.swift</span></span><br><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> React</span><br><span class="line"><span class="keyword">import</span> CocoaLumberjack</span><br><span class="line"></span><br><span class="line"><span class="keyword">@main</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AppDelegate</span>: <span class="title class_ inherited__">UIResponder</span>, <span class="title class_ inherited__">UIApplicationDelegate</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> window: <span class="type">UIWindow</span>?</span><br><span class="line">  <span class="keyword">var</span> bridge: <span class="type">RCTBridge</span>?</span><br><span class="line"></span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">application</span>(<span class="keyword">_</span> <span class="params">application</span>: <span class="type">UIApplication</span>, <span class="params">didFinishLaunchingWithOptions</span> <span class="params">launchOptions</span>: [<span class="type">UIApplication</span>.<span class="params">LaunchOptionsKey</span>: <span class="keyword">Any</span>]<span class="operator">?</span>) -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">    <span class="comment">// 创建 RCTBridge 实例</span></span><br><span class="line">    bridge <span class="operator">=</span> <span class="type">RCTBridge</span>(delegate: <span class="keyword">self</span>, launchOptions: launchOptions)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 注册 JavaScript 加载完成的通知</span></span><br><span class="line">    <span class="type">NotificationCenter</span>.default.addObserver(<span class="keyword">self</span>,</span><br><span class="line">                                         selector: <span class="keyword">#selector</span>(onJSDidLoad),</span><br><span class="line">                                         name: <span class="type">NSNotification</span>.<span class="type">Name</span>(<span class="string">&quot;RCTJavaScriptDidLoadNotification&quot;</span>),</span><br><span class="line">                                         object: <span class="literal">nil</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 其他配置...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 其他 AppDelegate 方法...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现 RCTBridgeDelegate 协议</span></span><br><span class="line"><span class="keyword">extension</span> <span class="title class_">AppDelegate</span>: <span class="title class_ inherited__">RCTBridgeDelegate</span> &#123;</span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">sourceURL</span>(<span class="params">for</span> <span class="params">bridge</span>: <span class="type">RCTBridge</span>) -&gt; <span class="type">URL</span>? &#123;</span><br><span class="line">    <span class="keyword">#if</span> <span class="type">DEBUG</span></span><br><span class="line">      <span class="comment">// 开发环境使用本地开发服务器</span></span><br><span class="line">      <span class="keyword">let</span> jsCodeLocation <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;http://localhost:8081/index.bundle?platform=ios&quot;</span>)</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;React Native 开发服务器 URL: <span class="subst">\(jsCodeLocation<span class="operator">?</span>.absoluteString <span class="operator">??</span> <span class="string">&quot;无效URL&quot;</span>)</span>&quot;</span>)</span><br><span class="line">      <span class="keyword">return</span> jsCodeLocation</span><br><span class="line">    <span class="keyword">#else</span></span><br><span class="line">      <span class="comment">// 生产环境使用打包后的 JS bundle</span></span><br><span class="line">      <span class="keyword">guard</span> <span class="keyword">let</span> bundleURL <span class="operator">=</span> <span class="type">Bundle</span>.main.url(forResource: <span class="string">&quot;main&quot;</span>, withExtension: <span class="string">&quot;jsbundle&quot;</span>) <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;错误: 无法找到 main.jsbundle 文件&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> bundleURL</span><br><span class="line">    <span class="keyword">#endif</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// JavaScript 加载完成的通知处理</span></span><br><span class="line"><span class="keyword">@objc</span> <span class="keyword">extension</span> <span class="title class_">AppDelegate</span> &#123;</span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">onJSDidLoad</span>() &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;JS 加载完成&quot;</span>)</span><br><span class="line">    <span class="comment">// 此处可以添加 JS 环境准备就绪后的逻辑</span></span><br><span class="line">    <span class="comment">// 例如：检查全局函数是否可用</span></span><br><span class="line">    <span class="keyword">let</span> hasSayHello <span class="operator">=</span> <span class="type">JSIBridge</span>.hasJavaScriptFunction(<span class="string">&quot;sayHello&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;sayHello 函数是否存在: <span class="subst">\(hasSayHello)</span>&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段配置代码包含以下关键部分：</p>
+<ol>
+<li><strong>创建 RCTBridge 实例</strong>：在应用启动时创建 RCTBridge，这是连接原生代码和 JavaScript 的桥梁。</li>
+<li><strong>注册通知</strong>：注册 <code>RCTJavaScriptDidLoadNotification</code> 通知，以便在 JavaScript 加载完成后执行相应的操作。</li>
+<li><strong>实现 RCTBridgeDelegate</strong>：提供 JavaScript bundle 的加载路径，区分开发环境和生产环境。</li>
+<li><strong>JavaScript 加载完成的处理</strong>：在 <code>onJSDidLoad</code> 方法中处理 JavaScript 环境准备就绪后的逻辑。</li>
+</ol>
+<p>这些配置是使用 JSI 调用 JavaScript 函数的前提，确保了 JavaScript 环境的正确初始化和加载。</p>
+<h3 id="2-创建-JSIBridge-类"><a href="#2-创建-JSIBridge-类" class="headerlink" title="2. 创建 JSIBridge 类"></a>2. 创建 JSIBridge 类</h3><p>首先，我们需要创建一个桥接类，用于封装 JSI 调用的具体实现。这里我们创建了 <code>JSIBridge</code> 类：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JSIBridge.h</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">JSIBridge</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查 JavaScript 全局函数是否存在</span></span><br><span class="line">+ (<span class="type">BOOL</span>)hasJavaScriptFunction:(<span class="built_in">NSString</span> *)functionName;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用 JavaScript 全局函数</span></span><br><span class="line">+ (<span class="built_in">NSString</span> *)callJavaScriptFunction:(<span class="built_in">NSString</span> *)functionName</span><br><span class="line">                        withArgument:(<span class="built_in">NSString</span> *)argument;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+<p>这个类提供了两个主要方法：</p>
+<ul>
+<li><code>hasJavaScriptFunction</code>: 检查指定名称的 JavaScript 全局函数是否存在</li>
+<li><code>callJavaScriptFunction:withArgument</code>: 调用指定名称的 JavaScript 全局函数，并传递一个字符串参数</li>
+</ul>
+<h3 id="3-实现-JSIBridge-类"><a href="#3-实现-JSIBridge-类" class="headerlink" title="3. 实现 JSIBridge 类"></a>3. 实现 JSIBridge 类</h3><p>接下来，我们在 JSIBridge.mm 文件中实现这些方法。由于需要直接访问 JSI 接口，我们使用 Objective-C++ 编写：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JSIBridge.mm</span></span><br><span class="line"><span class="meta">#import <span class="string">&quot;JSIBridge.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jsi/jsi.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;React/RCTBridge+Private.h&gt;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;React/RCTBridge.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">using namespace facebook::jsi;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">JSIBridge</span></span></span><br><span class="line"></span><br><span class="line">+ (RCTBridge *)getBridge &#123;</span><br><span class="line">  <span class="keyword">return</span> [RCTBridge currentBridge];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="type">BOOL</span>)hasJavaScriptFunction:(<span class="built_in">NSString</span> *)functionName &#123;</span><br><span class="line">  RCTBridge *bridge = [<span class="keyword">self</span> getBridge];</span><br><span class="line">  __block <span class="type">BOOL</span> hasFunction = <span class="literal">NO</span>;</span><br><span class="line">  dispatch_semaphore_t semaphore = dispatch_semaphore_create(<span class="number">0</span>);</span><br><span class="line">  </span><br><span class="line">  [bridge dispatchBlock:^&#123;</span><br><span class="line">    RCTCxxBridge* cxxbridge = (RCTCxxBridge*)bridge;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (cxxbridge.runtime) &#123;</span><br><span class="line">      Runtime&amp; runtime = *(Runtime*)cxxbridge.runtime;</span><br><span class="line">      <span class="keyword">const</span> <span class="type">char</span> *name = functionName.UTF8String;</span><br><span class="line">      </span><br><span class="line">      try &#123;</span><br><span class="line">        Function function = runtime.global().getPropertyAsFunction(runtime, name);</span><br><span class="line">        hasFunction = function.isFunction(runtime);</span><br><span class="line">      &#125; catch (JSError&amp; error) &#123;</span><br><span class="line">        hasFunction = <span class="literal">NO</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    dispatch_semaphore_signal(semaphore);</span><br><span class="line">  &#125; queue:RCTJSThread];</span><br><span class="line">  </span><br><span class="line">  dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> hasFunction;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="built_in">NSString</span> *)callJavaScriptFunction:(<span class="built_in">NSString</span> *)functionName</span><br><span class="line">                        withArgument:(<span class="built_in">NSString</span> *)argument &#123;</span><br><span class="line">  RCTBridge *bridge = [<span class="keyword">self</span> getBridge];</span><br><span class="line">  __block <span class="built_in">NSString</span> *result = <span class="string">@&quot;&quot;</span>;</span><br><span class="line">  dispatch_semaphore_t semaphore = dispatch_semaphore_create(<span class="number">0</span>);</span><br><span class="line">  </span><br><span class="line">  [bridge dispatchBlock:^&#123;</span><br><span class="line">    RCTCxxBridge* cxxbridge = (RCTCxxBridge*)bridge;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (cxxbridge.runtime) &#123;</span><br><span class="line">      <span class="comment">// 所有 JSI 代码都在 JS 线程上执行，避免线程重入问题</span></span><br><span class="line">      Runtime&amp; runtime = *(Runtime*)cxxbridge.runtime;</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 获取全局函数</span></span><br><span class="line">      Function function = runtime.global().getPropertyAsFunction(runtime, functionName.UTF8String);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 调用函数并传递参数</span></span><br><span class="line">      Value param = Value(runtime, String::createFromUtf8(runtime, argument.UTF8String));</span><br><span class="line">      Value jsResult = function.call(runtime, std::move(param), <span class="number">1</span>);</span><br><span class="line">      </span><br><span class="line">      string str = jsResult.asString(runtime).utf8(runtime);</span><br><span class="line">      result = [<span class="built_in">NSString</span> stringWithUTF8String:str.c_str()];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    dispatch_semaphore_signal(semaphore);</span><br><span class="line">  &#125; queue:RCTJSThread];</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 等待JavaScript线程执行完毕</span></span><br><span class="line">  dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+<p>这段代码的核心逻辑包括：</p>
+<ol>
+<li>获取当前 RCTBridge 实例</li>
+<li>从 RCTBridge 中获取 RCTCxxBridge，它提供了对 JSI 运行时的访问</li>
+<li>通过 JSI API 获取全局函数对象并调用它</li>
+<li>使用信号量确保 JS 线程执行完毕后再返回结果（同步调用）</li>
+</ol>
+<h3 id="4-在-JavaScript-中定义函数"><a href="#4-在-JavaScript-中定义函数" class="headerlink" title="4. 在 JavaScript 中定义函数"></a>4. 在 JavaScript 中定义函数</h3><p>在 React Native 的 JavaScript 代码中，我们需要定义全局函数，使其可以被原生代码调用。以下是一个简单的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 index.js 或其他入口文件中</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将函数挂载到全局对象上</span></span><br><span class="line"><span class="variable language_">global</span>.<span class="property">sayHello</span> = <span class="function">(<span class="params">name</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`Hello, <span class="subst">$&#123;name&#125;</span>! From React Native.`</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">global</span>.<span class="property">getAppVersion</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;1.0.0&quot;</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更复杂的例子：调用 Redux 状态获取数据</span></span><br><span class="line"><span class="variable language_">global</span>.<span class="property">getUserInfo</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> store = <span class="built_in">require</span>(<span class="string">&#x27;./store&#x27;</span>).<span class="property">default</span>;</span><br><span class="line">  <span class="keyword">const</span> state = store.<span class="title function_">getState</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(state.<span class="property">user</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-在原生代码中调用-JavaScript-函数"><a href="#5-在原生代码中调用-JavaScript-函数" class="headerlink" title="5. 在原生代码中调用 JavaScript 函数"></a>5. 在原生代码中调用 JavaScript 函数</h3><p>现在，我们可以在任何原生代码中使用 JSIBridge 调用 JavaScript 函数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 ViewController 或其他 Swift 文件中</span></span><br><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyViewController</span>: <span class="title class_ inherited__">UIViewController</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">override</span> <span class="keyword">func</span> <span class="title function_">viewDidLoad</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 检查函数是否存在</span></span><br><span class="line">    <span class="keyword">let</span> hasSayHello <span class="operator">=</span> <span class="type">JSIBridge</span>.hasJavaScriptFunction(<span class="string">&quot;sayHello&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;sayHello 函数存在: <span class="subst">\(hasSayHello)</span>&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> hasSayHello &#123;</span><br><span class="line">      <span class="comment">// 调用函数并获取结果</span></span><br><span class="line">      <span class="keyword">let</span> result <span class="operator">=</span> <span class="type">JSIBridge</span>.callJavaScriptFunction(<span class="string">&quot;sayHello&quot;</span>, withArgument: <span class="string">&quot;iOS&quot;</span>)</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;调用结果: <span class="subst">\(result)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 调用获取版本的函数</span></span><br><span class="line">    <span class="keyword">if</span> <span class="type">JSIBridge</span>.hasJavaScriptFunction(<span class="string">&quot;getAppVersion&quot;</span>) &#123;</span><br><span class="line">      <span class="keyword">let</span> version <span class="operator">=</span> <span class="type">JSIBridge</span>.callJavaScriptFunction(<span class="string">&quot;getAppVersion&quot;</span>, withArgument: <span class="string">&quot;&quot;</span>)</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;应用版本: <span class="subst">\(version)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="RCTBridge-在新架构中的实际应用"><a href="#RCTBridge-在新架构中的实际应用" class="headerlink" title="RCTBridge 在新架构中的实际应用"></a>RCTBridge 在新架构中的实际应用</h2><p>在上面的代码中，我们可以看到 RCTBridge 在新架构中的几个关键应用：</p>
+<ol>
+<li><strong>提供 JavaScript 运行时访问</strong>：通过 <code>RCTCxxBridge</code> 的 <code>runtime</code> 属性，我们可以获取 JSI 运行时，进而调用 JavaScript 函数。</li>
+<li><strong>管理 JavaScript 线程</strong>：使用 <code>dispatchBlock:queue:</code> 方法在 JavaScript 线程上执行代码，确保线程安全。</li>
+<li><strong>生命周期通知</strong>：通过 <code>RCTJavaScriptDidLoadNotification</code> 通知，我们可以知道 JavaScript 环境何时准备就绪。</li>
+<li><strong>提供 bundle 加载机制</strong>：通过 <code>RCTBridgeDelegate</code> 协议，我们可以控制 JavaScript bundle 的加载方式。</li>
+</ol>
+<p>虽然在新架构中，直接通信主要通过 JSI 实现，但 RCTBridge 仍然在初始化阶段和生命周期管理中发挥着重要作用，是连接新旧架构的重要桥梁。</p>
+<h2 id="注意事项和最佳实践"><a href="#注意事项和最佳实践" class="headerlink" title="注意事项和最佳实践"></a>注意事项和最佳实践</h2><p>在使用 JSI 进行原生与 JavaScript 通信时，需要注意以下几点：</p>
+<ol>
+<li><strong>线程安全</strong>: JSI 调用必须在 JavaScript 线程上执行，否则会导致崩溃。上面的代码通过 <code>dispatchBlock</code> 和信号量确保了线程安全。</li>
+<li><strong>错误处理</strong>: 调用 JavaScript 函数时可能会抛出异常，需要适当处理这些异常。</li>
+<li><strong>内存管理</strong>: JSI 允许原生代码和 JavaScript 互相持有对方的引用，需要注意避免循环引用导致的内存泄漏。</li>
+<li><strong>性能考虑</strong>: 虽然 JSI 提供了同步调用能力，但对于耗时操作，仍然应该考虑异步处理，避免阻塞主线程。</li>
+<li><strong>兼容性</strong>: 在混合使用新旧架构的过渡期，需要考虑兼容性问题。</li>
+</ol>
+<h2 id="扩展：支持更复杂的参数和返回值"><a href="#扩展：支持更复杂的参数和返回值" class="headerlink" title="扩展：支持更复杂的参数和返回值"></a>扩展：支持更复杂的参数和返回值</h2><p>上面的示例只演示了如何传递和返回简单的字符串参数，在实际应用中，我们可能需要处理更复杂的数据类型。以下是一个扩展版本，支持 JSON 对象的传递：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 扩展 JSIBridge，添加支持 JSON 对象的方法</span></span><br><span class="line">+ (<span class="type">id</span>)callJavaScriptFunctionWithJSON:(<span class="built_in">NSString</span> *)functionName</span><br><span class="line">                      jsonArgument:(<span class="built_in">NSDictionary</span> *)argument &#123;</span><br><span class="line">  <span class="built_in">NSError</span> *error;</span><br><span class="line">  <span class="built_in">NSData</span> *jsonData = [<span class="built_in">NSJSONSerialization</span> dataWithJSONObject:argument</span><br><span class="line">                                                     options:<span class="number">0</span></span><br><span class="line">                                                       error:&amp;error];</span><br><span class="line">  <span class="keyword">if</span> (error) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;JSON序列化错误: %@&quot;</span>, error);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">NSString</span> *jsonString = [[<span class="built_in">NSString</span> alloc] initWithData:jsonData</span><br><span class="line">                                              encoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line">  <span class="built_in">NSString</span> *resultString = [<span class="keyword">self</span> callJavaScriptFunction:functionName</span><br><span class="line">                                          withArgument:jsonString];</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 尝试将结果解析为 JSON</span></span><br><span class="line">  <span class="built_in">NSData</span> *resultData = [resultString dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line">  <span class="type">id</span> resultObject = [<span class="built_in">NSJSONSerialization</span> JSONObjectWithData:resultData</span><br><span class="line">                                                  options:<span class="number">0</span></span><br><span class="line">                                                    error:&amp;error];</span><br><span class="line">  <span class="keyword">if</span> (error) &#123;</span><br><span class="line">    <span class="comment">// 如果不是有效的 JSON，则返回原始字符串</span></span><br><span class="line">    <span class="keyword">return</span> resultString;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> resultObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过 JSI，React Native 的新架构为原生代码和 JavaScript 之间的通信提供了更直接、更高效的方式。本文介绍了如何在 iOS 端通过 JSI 调用 React Native 中定义的 JavaScript 函数，包括:</p>
+<ol>
+<li>React Native 新架构的核心组件和优势</li>
+<li>JSI 的基本概念和特性</li>
+<li>RCTBridge 在新架构中的角色变化</li>
+<li>实现 JSI 调用的具体步骤和示例代码</li>
+<li>使用过程中的注意事项和最佳实践</li>
+</ol>
+<p>这种方法不仅提高了应用性能，还简化了原生与 JavaScript 之间的交互流程，为开发更复杂的混合应用提供了强大支持。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9yZWFjdG5hdGl2ZS5kZXYvYmxvZy8yMDI0LzEwLzIzL3RoZS1uZXctYXJjaGl0ZWN0dXJlLWlzLWhlcmU=">New Architecture is here<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNzA4NjU5NzIvcmVhY3QtbmF0aXZlLWpzaS1ob3ctdG8tY2FsbC1hbnktamF2YXNjcmlwdC1mdW5jdGlvbi1mcm9tLW5hdGl2ZQ==">Call JavaScript functions from native using JSI<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtbWFyYWhtLWVkL3JlYWN0LW5hdGl2ZS1qc2ktdGVtcGxhdGU=">react-native-jsi-template<i class="fa fa-external-link-alt"></i></span></li>
+<li><a target="_blank" rel="noopener" href="https://reactnative.dev/blog/2024/08/12/release-0.75#accessing-jsiruntime-in-turbomodules">Accessing <code>jsi::Runtime</code> in TurboModules</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+              <a href="/tags/JSI/" rel="tag"><i class="fa fa-tag"></i> JSI</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/02/26/20250226-%E7%AE%97%E6%B3%95%EF%BC%9A%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%AC%20N%20%E4%B8%AA%E7%BB%93%E7%82%B9/" rel="prev" title="算法：删除链表的倒数第 N 个结点">
+                  <i class="fa fa-angle-left"></i> 算法：删除链表的倒数第 N 个结点
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/10/18/20251018-iOS%20%E4%B8%AD%E7%9A%84%20MMap%20%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3/" rel="next" title="iOS 中的 MMap 内存映射技术详解">
+                  iOS 中的 MMap 内存映射技术详解 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
