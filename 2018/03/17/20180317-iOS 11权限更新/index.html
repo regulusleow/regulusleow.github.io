@@ -28,9 +28,11 @@
 <meta property="og:description" content="最近项目中遇到了一个崩溃，当点击图片选择保存的时候，并没有出现请求相册权限的对话框，而是直接就崩溃，并且没有任何错误信息。开始以为是权限没有添加，但是 NSPhotoLibraryUsageDescription 是添加了的，搞不懂了。去翻了翻官方的文档，果然找到了解决方式。 从 iOS 11 开始，相册的权限参数发生了变化，适配 iOS 11 还需要添加一个 NSPhotoLibraryAddU">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-03-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-22T04:01:25.326Z">
+<meta property="article:modified_time" content="2025-10-22T04:22:44.015Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="iOS">
+<meta property="article:tag" content="权限">
+<meta property="article:tag" content="隐私">
 <meta name="twitter:card" content="summary">
 
 
@@ -161,12 +163,12 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">125</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -241,7 +243,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" itemprop="url" rel="index"><span itemprop="name">工作日志</span></a>
+          <a href="/categories/iOS-%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">iOS 开发</span></a>
         </span>
     </span>
 
@@ -292,19 +294,21 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+              <a href="/tags/%E6%9D%83%E9%99%90/" rel="tag"><i class="fa fa-tag"></i> 权限</a>
+              <a href="/tags/%E9%9A%90%E7%A7%81/" rel="tag"><i class="fa fa-tag"></i> 隐私</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/03/16/20180316-Swift%20%E8%BF%9B%E9%98%B6%E3%80%90%E4%BA%94%E3%80%91%E5%87%BD%E6%95%B0/" rel="prev" title="Swift 进阶【五】函数">
-                  <i class="fa fa-angle-left"></i> Swift 进阶【五】函数
+                <a href="/2018/03/17/20180317-layoutIfNeeded()%20%E5%87%BD%E6%95%B0%E5%AF%B9%20UIScrollView%20%E7%9A%84%E5%BD%B1%E5%93%8D/" rel="prev" title="layoutIfNeeded() 函数对 UIScrollView 的影响">
+                  <i class="fa fa-angle-left"></i> layoutIfNeeded() 函数对 UIScrollView 的影响
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/03/17/20180317-layoutIfNeeded()%20%E5%87%BD%E6%95%B0%E5%AF%B9%20UIScrollView%20%E7%9A%84%E5%BD%B1%E5%93%8D/" rel="next" title="layoutIfNeeded() 函数对 UIScrollView 的影响">
-                  layoutIfNeeded() 函数对 UIScrollView 的影响 <i class="fa fa-angle-right"></i>
+                <a href="/2018/03/19/20180319-%E4%BC%98%E5%8C%96%20Swift%20%E4%B8%AD%20Notification.Name%20%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/" rel="next" title="优化 Swift 中 Notification.Name 的使用方式">
+                  优化 Swift 中 Notification.Name 的使用方式 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

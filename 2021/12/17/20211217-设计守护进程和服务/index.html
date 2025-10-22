@@ -28,9 +28,11 @@
 <meta property="og:description" content="后台进程类型在 macOS 中有四种类型的后台进程。不同之处在下表中进行了总结，并在下面的小节中进行了详细描述。要选择适当类型的后台进程，请考虑以下事项：  它是针对当前登录的用户还是针对所有用户执行某些操作。 它是由单个应用程序使用还是由多个应用程序使用。 它是否需要显示用户界面或启动GUI应用程序。     类型 由 launchd 管理？ 在哪种环境下运行 可以显示 UI 吗    Logi">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-22T04:01:25.331Z">
+<meta property="article:modified_time" content="2025-10-22T04:21:53.163Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="macOS">
+<meta property="article:tag" content="守护进程">
+<meta property="article:tag" content="系统服务">
 <meta name="twitter:card" content="summary">
 
 
@@ -162,12 +164,12 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">125</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -242,7 +244,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/macOS/" itemprop="url" rel="index"><span itemprop="name">macOS</span></a>
+          <a href="/categories/%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">系统原理</span></a>
         </span>
     </span>
 
@@ -342,6 +344,8 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/macOS/" rel="tag"><i class="fa fa-tag"></i> macOS</a>
+              <a href="/tags/%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 守护进程</a>
+              <a href="/tags/%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 系统服务</a>
           </div>
 
         

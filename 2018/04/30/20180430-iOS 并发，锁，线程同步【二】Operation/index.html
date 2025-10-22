@@ -28,9 +28,11 @@
 <meta property="og:description" content="在之前的一篇文章中【iOS 并发，锁，线程同步【一】GCD】，我们讨论了一下 GCD 的并发，锁和线程同步的问题，今天，我们来讨论一下 Operation 的并发与线程同步。 在 Operation 中，我们一般是将所有的 Operation 添加到 OperationQueue 中进行执行，这里需要注意一点，**Operation 添加到队列当中，默认就是执行的并发操作。我们可以设置队列的最大并">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-04-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-22T04:01:25.329Z">
+<meta property="article:modified_time" content="2025-10-22T04:23:35.657Z">
 <meta property="article:author" content="轩辕十四">
-<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="多线程">
+<meta property="article:tag" content="Operation">
 <meta name="twitter:card" content="summary">
 
 
@@ -161,12 +163,12 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">125</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -241,7 +243,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a>
+          <a href="/categories/iOS-%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">iOS 开发</span></a>
         </span>
     </span>
 
@@ -323,7 +325,9 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Swift/" rel="tag"><i class="fa fa-tag"></i> Swift</a>
+              <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 多线程</a>
+              <a href="/tags/Operation/" rel="tag"><i class="fa fa-tag"></i> Operation</a>
           </div>
 
         
