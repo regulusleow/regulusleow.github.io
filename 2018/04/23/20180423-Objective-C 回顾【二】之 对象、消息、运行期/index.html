@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180423/2.png">
 <meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180423/3.png">
 <meta property="article:published_time" content="2018-04-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-22T04:23:35.656Z">
+<meta property="article:modified_time" content="2025-10-22T04:38:34.081Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="Objective-C">
 <meta property="article:tag" content="Runtime">
@@ -331,7 +331,7 @@
 <li>开发 iOS 程序时应该使用 <code>nonatomic</code> 属性，因为 <code>atomic</code> 属性会严重影响性能。</li>
 </ul>
 <h3 id="在对象内部尽量直接访问实例变量"><a href="#在对象内部尽量直接访问实例变量" class="headerlink" title="在对象内部尽量直接访问实例变量"></a>在对象内部尽量直接访问实例变量</h3><hr>
-<p><strong>在读取实例变量的时候采用直接访问的形式，而在设置实例变量的时候通过属性来做。</strong>此办法既能提高读取操作的速度，又能控制对属性的写入操作。之所以要通过“设置方法”来写入实例变量，其首要原因在于，这样做能够确保相关属性的“内存管理语义”得以贯彻。选用这种做法时，需要注意两点：</p>
+<p>**在读取实例变量的时候采用直接访问的形式，而在设置实例变量的时候通过属性来做。**此办法既能提高读取操作的速度，又能控制对属性的写入操作。之所以要通过“设置方法”来写入实例变量，其首要原因在于，这样做能够确保相关属性的“内存管理语义”得以贯彻。选用这种做法时，需要注意两点：</p>
 <ul>
 <li>在初始化方法中应该如何设置属性值。这种情况下<strong>总是应该直接访问实例变量</strong>，因为子类可能会“覆写”设置方法。</li>
 <li>“惰性初始化”：这种情况下<strong>必须通过“获取方法”来访问属性</strong>，否则，实例变量就永远不会初始化。</li>
@@ -525,8 +525,8 @@
 <p>此结构体存放类的“元数据”（metadata），例如类的实力实现了几个方法，具备多少个实例变量等信息。此结构体的首个变量也是 <code>isa</code> 指针，这说明 <code>Class</code> 本身亦为 Objective-C 对象。结构体里还有个变量叫做 <code>super_class</code>，它定义了本类的超类。类对象所属的类型（也就是 <code>isa</code> 指针所指向的类型）是另外一个类，叫做“元类”（metaclass），用来表述类对象本身所具备的元数据。<strong>“类方法”就定义与此处</strong>，因为这些方法可以理解成类对象的实例方法。每个类仅有一个“类对象”，而每个“类对象”仅有一个与之相关的“元类”。</p>
 <p>假设有个名为 <code>SomeClass</code> 的子类从 <code>NSObject</code> 中继承而来，则其继承体系如图所示：</p>
 <p><img src="/my_pictures/20180423/3.png"></p>
-<p><strong><code>super_class</code> 指针确立了继承关系，而 <code>isa</code> 指针描述了实例所属的类。</strong>通过这张布局关系图即可执行“类型信息查询”。我们可以查出对象是否能相应某个选择器，是否遵从某项协议，并且能看出此对象位于“类继承体系”的哪一部分。</p>
-<h4 id="在类继承体系中查询类型信息"><a href="#在类继承体系中查询类型信息" class="headerlink" title="在类继承体系中查询类型信息"></a>在类继承体系中查询类型信息</h4><p><strong>可以用类型信息查询方法类检视类继承体系。<code>isMemberOfClass:</code>能够判断出对象是否为某个特定类的实例，而<code>isKindOfClass:</code>则能够判断出对象是否为其类或派生类的实例。</strong>例如：</p>
+<p>**<code>super_class</code> 指针确立了继承关系，而 <code>isa</code> 指针描述了实例所属的类。**通过这张布局关系图即可执行“类型信息查询”。我们可以查出对象是否能相应某个选择器，是否遵从某项协议，并且能看出此对象位于“类继承体系”的哪一部分。</p>
+<h4 id="在类继承体系中查询类型信息"><a href="#在类继承体系中查询类型信息" class="headerlink" title="在类继承体系中查询类型信息"></a>在类继承体系中查询类型信息</h4><p>**可以用类型信息查询方法类检视类继承体系。<code>isMemberOfClass:</code>能够判断出对象是否为某个特定类的实例，而<code>isKindOfClass:</code>则能够判断出对象是否为其类或派生类的实例。**例如：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Demo *demo = [[Demo alloc] init];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%d&quot;</span>, [demo isMemberOfClass:[Demo <span class="keyword">class</span>]]); <span class="comment">// YES</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%d&quot;</span>, [demo isMemberOfClass:[SubForDemo <span class="keyword">class</span>]]); <span class="comment">// NO</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%d&quot;</span>, [demo isKindOfClass:[Demo <span class="keyword">class</span>]]); <span class="comment">// YES</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%d&quot;</span>, [demo isKindOfClass:[<span class="built_in">NSString</span> <span class="keyword">class</span>]]); <span class="comment">// NO</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>要点：</strong></p>

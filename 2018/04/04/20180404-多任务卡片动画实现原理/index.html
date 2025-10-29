@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180404/10.png">
 <meta property="og:image" content="https://regulusleow.github.io/my_pictures/20180404/11.png">
 <meta property="article:published_time" content="2018-04-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-22T04:23:35.655Z">
+<meta property="article:modified_time" content="2025-10-22T04:38:34.079Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="UIKit">
@@ -326,7 +326,7 @@
 <p>这里 x 是指 <code>collectionView.contentOffset.y</code> ，y0 是指 <code>cell0.origin.y</code> ；</p>
 <h4 id="生成第-i-个-cell-的位移函数"><a href="#生成第-i-个-cell-的位移函数" class="headerlink" title="生成第 i 个 cell 的位移函数"></a>生成第 i 个 cell 的位移函数</h4><p>定义了cell0 的位置函数，就可以以一定规律生成 cell1、cell2…… 的位置函数了，也就是生成每个cell 的 m、n 值。</p>
 <h4 id="mi-的计算"><a href="#mi-的计算" class="headerlink" title="mi 的计算"></a>mi 的计算</h4><p><strong>我们可以定义，当手指往下滑动140个点时，第1个 cell 会运动到第2个 cell的位置</strong>，以此类推，每个 <code>cell</code> 会运动到下一个 <code>cell</code> 的位置。所以我们定义 $m_i&#x3D;m_{i-1}+140$ 也就是 $m_i&#x3D;m_0 + itimes140$; （ps:这里140决定了 cell 之间的间距，当然可以根据需求改变这个值来调整视觉效果）</p>
-<h4 id="ni-的计算"><a href="#ni-的计算" class="headerlink" title="ni 的计算"></a>ni 的计算</h4><p>需要通过 $y_0&#x3D;((1000-x)&#x2F;1000)^4times250$ 来计算。我们知道，当 x&#x3D;0 时，$y_0&#x3D;n_0&#x3D;250$。在上一步计算时，我们定义了手指往下滑140时第0个 <code>cell</code> 会运动到第1个 <code>cell</code> 的位置，也就是说 <code>cell1</code> 的位置 $n_1$ 可以由 $y_0&#x3D;((1000-x)&#x2F;1000)^4times250$ 得到，**这里 x 的值应该是手指从 0 下滑140个点，也就是 <code>collectionView.contentOffset.y=-140</code> ，所以x&#x3D;(-140)**。（ps：往下滑动时 <code>contentOffset.y</code> 是递减的，所以这里的x是负的140。）所以</p>
+<h4 id="ni-的计算"><a href="#ni-的计算" class="headerlink" title="ni 的计算"></a>ni 的计算</h4><p>需要通过 $y_0&#x3D;((1000-x)&#x2F;1000)^4times250$ 来计算。我们知道，当 x&#x3D;0 时，$y_0&#x3D;n_0&#x3D;250$。在上一步计算时，我们定义了手指往下滑140时第0个 <code>cell</code> 会运动到第1个 <code>cell</code> 的位置，也就是说 <code>cell1</code> 的位置 $n_1$ 可以由 $y_0&#x3D;((1000-x)&#x2F;1000)^4times250$ 得到，<strong>这里 x 的值应该是手指从 0 下滑140个点，也就是 <code>collectionView.contentOffset.y=-140</code> ，所以x&#x3D;(-140)</strong>。（ps：往下滑动时 <code>contentOffset.y</code> 是递减的，所以这里的x是负的140。）所以</p>
 <p><img src="/my_pictures/20180404/8.png"></p>
 <p>同理，可以推出 ni 的公式：</p>
 <p><img src="/my_pictures/20180404/9.png">、</p>

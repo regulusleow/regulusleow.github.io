@@ -28,7 +28,7 @@
 <meta property="og:description" content="定义一个函数 你可以定义一个由自己想要功能的函数，以下是简单的规则：  函数代码块以 def 关键词开头，后接函数标识符名称和圆括号()。 任何传入参数和自变量必须放在圆括号中间。圆括号之间可以用于定义参数。 函数的第一行语句可以选择性地使用文档字符串—用于存放函数说明。 函数内容以冒号起始，并且缩进。 return [表达式] 结束函数，选择性地返回一个值给调用方。不带表达式的return相当于">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-02-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-22T04:23:35.659Z">
+<meta property="article:modified_time" content="2025-10-22T04:38:34.074Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="函数">
@@ -339,7 +339,7 @@
 <p>以上实例输出结果：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">相加后的值为 :  <span class="number">30</span></span><br><span class="line">相加后的值为 :  <span class="number">40</span></span><br></pre></td></tr></table></figure>
 
-<p>补充：<br>    在Python中，有 filter，map，reduce方法，lambda用于此方法中如下：</p>
+<p>补充：<br>	在Python中，有 filter，map，reduce方法，lambda用于此方法中如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>foo = [<span class="number">2</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">22</span>, <span class="number">17</span>, <span class="number">24</span>, <span class="number">8</span>, <span class="number">12</span>, <span class="number">27</span>]</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span> <span class="built_in">filter</span>(<span class="keyword">lambda</span> x: x % <span class="number">3</span> == <span class="number">0</span>, foo)</span><br><span class="line">[<span class="number">18</span>, <span class="number">9</span>, <span class="number">24</span>, <span class="number">12</span>, <span class="number">27</span>]</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span> <span class="built_in">map</span>(<span class="keyword">lambda</span> x: x * <span class="number">2</span> + <span class="number">10</span>, foo)</span><br><span class="line">[<span class="number">14</span>, <span class="number">46</span>, <span class="number">28</span>, <span class="number">54</span>, <span class="number">44</span>, <span class="number">58</span>, <span class="number">26</span>, <span class="number">34</span>, <span class="number">64</span>]</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span> reduce(<span class="keyword">lambda</span> x, y: x + y, foo)</span><br><span class="line"><span class="number">139</span></span><br></pre></td></tr></table></figure>
     </div>
 

@@ -28,7 +28,7 @@
 <meta property="og:description" content="我们在进行 SSH 登陆的时候，每次都需要输入密码，就感到十分的不方便，这里可以利用 SSH Key（ssh公钥） 来验证登录，从而实现免密登陆。 通过命令生成 SSH Key生成 SSH Key 我们需要 ssh-keygen 命令 1234ssh-keygen -t rsa -C &quot;xxxxx@xxxxx.com&quot;  # Generating public&#x2F;private">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-02-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-22T04:28:55.168Z">
+<meta property="article:modified_time" content="2025-10-22T04:38:34.075Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="SSH">
@@ -287,7 +287,7 @@
 <li>know_hosts :  已知的主机公钥清单</li>
 </ul>
 <p>我们需要用的就在 <code>id_rsa.pub</code> 文件中。</p>
-<p>如果希望ssh公钥生效需满足至少下面两个条件：<br>    * <code>.ssh</code> 目录的权限必须是700<br>    * <code>.ssh/authorized_keys</code> 文件权限必须是600</p>
+<p>如果希望ssh公钥生效需满足至少下面两个条件：<br>	* <code>.ssh</code> 目录的权限必须是700<br>	* <code>.ssh/authorized_keys</code> 文件权限必须是600</p>
 <h3 id="将-SSH-Key-上传到服务器"><a href="#将-SSH-Key-上传到服务器" class="headerlink" title="将 SSH Key 上传到服务器"></a>将 SSH Key 上传到服务器</h3><h4 id="方法一：手动复制"><a href="#方法一：手动复制" class="headerlink" title="方法一：手动复制"></a>方法一：手动复制</h4><p>先登录服务器</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@服务器IP地址 -p 端口</span><br></pre></td></tr></table></figure>
 

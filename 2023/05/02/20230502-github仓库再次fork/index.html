@@ -28,7 +28,7 @@
 <meta property="og:description" content="在 GitHub 上，我们可以使用 Fork 操作将其他用户的仓库复制到自己的账户下。但如果原始仓库更新了，我们可能需要将其再次 fork 到自己的账户下，以保持代码与原始仓库同步。下面将介绍如何使用 Git 命令行进行 GitHub 仓库再次 fork 的操作。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-22T04:21:16.992Z">
+<meta property="article:modified_time" content="2025-10-22T04:38:34.089Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="Git">
 <meta property="article:tag" content="GitHub">
@@ -302,7 +302,7 @@
 <h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>还有一个更加简便快捷的命令，如下（下述命令执行前请先根据<em><strong>方法一</strong></em>设置好 <code>upstream</code>）：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch upstream &amp;&amp; git reset --hard upstream/master &amp;&amp; git push -f</span><br></pre></td></tr></table></figure>
 
-<p>这种方法只适用于不用保存自己版本的情况。<em><strong>当执行上述命令时，你一定要知道你在做什么。</strong></em>接下来，我们来解释一下这段命令的含义。</p>
+<p>这种方法只适用于不用保存自己版本的情况。***当执行上述命令时，你一定要知道你在做什么。***接下来，我们来解释一下这段命令的含义。</p>
 <p>这行命令做了以下三个操作：</p>
 <ol>
 <li><p><code>git fetch upstream</code>: 这个命令从远程仓库 <code>upstream</code> 中拉取最新的代码到本地的 <code>upstream/master</code> 分支中。这样可以让你的本地仓库知道有哪些新的提交。</p>

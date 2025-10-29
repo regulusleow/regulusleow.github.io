@@ -28,7 +28,7 @@
 <meta property="og:description" content="题目给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target 的那 两个 整数，并返回它们的数组下标。 你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。 你可以按任意顺序返回答案。 示例 1： 123输入：nums &#x3D; [2,7,11,15], target &#x3D; 9输出：[0,1]解释：因为 nums[0] + nums[1] &#x3D;&#x3D;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-02-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-22T04:19:28.429Z">
+<meta property="article:modified_time" content="2025-10-22T04:38:34.091Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="数组">
 <meta property="article:tag" content="算法">
@@ -291,7 +291,7 @@
 <li><code>-109 &lt;= target &lt;= 109</code></li>
 <li><strong>只会存在一个有效答案</strong></li>
 </ul>
-<p><strong>进阶：</strong>你可以想出一个时间复杂度小于 <code>O(n2)</code> 的算法吗？</p>
+<p>**进阶：**你可以想出一个时间复杂度小于 <code>O(n2)</code> 的算法吗？</p>
 <span id="more"></span>
 
 <h2 id="方法一：暴力遍历"><a href="#方法一：暴力遍历" class="headerlink" title="方法一：暴力遍历"></a>方法一：暴力遍历</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">twoSum</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">target</span>: <span class="type">Int</span>) -&gt; [<span class="type">Int</span>] &#123;</span><br><span class="line">  <span class="keyword">for</span> (i, num) <span class="keyword">in</span> nums.enumerated() &#123;</span><br><span class="line">    <span class="keyword">let</span> complement <span class="operator">=</span> target <span class="operator">-</span> num</span><br><span class="line">    <span class="keyword">for</span> (j, otherNum) <span class="keyword">in</span> nums.enumerated() <span class="keyword">where</span> i <span class="operator">!=</span> j &#123;</span><br><span class="line">      <span class="keyword">if</span> otherNum <span class="operator">==</span> complement &#123;</span><br><span class="line">        <span class="keyword">return</span> [i, j]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
