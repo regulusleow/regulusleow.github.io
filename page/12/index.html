@@ -200,219 +200,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/08/20180208-Objective-C%20%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88__strong%EF%BC%89%E5%92%8C%20%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88__weak%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/02/08/20180208-Objective-C%20%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88__strong%EF%BC%89%E5%92%8C%20%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88__weak%EF%BC%89/" class="post-title-link" itemprop="url">Objective-C 中的强引用（__strong）和 弱引用（__weak）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-02-08 00:00:00" itemprop="dateCreated datePublished" datetime="2018-02-08T00:00:00+08:00">2018-02-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/02/08/20180208-Objective-C%20%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88__strong%EF%BC%89%E5%92%8C%20%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88__weak%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/08/20180208-Objective-C 中的强引用（__strong）和 弱引用（__weak）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在Objective-C的ARC模式中，</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">id</span> obj1 = [[<span class="built_in">NSObject</span> alloc] init];</span><br></pre></td></tr></table></figure>
-
-<p>这里虽然没有显示的声明为 <code>__strong</code> ，但是 <code>Objective-C</code> 默认声明的一个对象就为 <code>__strong</code> ，即：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">id</span> obj1 = [[<span class="built_in">NSObject</span> alloc] init];</span><br></pre></td></tr></table></figure>
-
-<p>和</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">id</span> __<span class="keyword">strong</span> obj1 = [[<span class="built_in">NSObject</span> alloc] init];</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/02/08/20180208-Objective-C%20%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88__strong%EF%BC%89%E5%92%8C%20%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88__weak%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/08/20180208-iOS%20%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E6%9D%A1%E5%BD%A2%E7%A0%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%99%90%E5%88%B6%E6%89%AB%E6%8F%8F%E5%8C%BA%E5%9F%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/02/08/20180208-iOS%20%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E6%9D%A1%E5%BD%A2%E7%A0%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%99%90%E5%88%B6%E6%89%AB%E6%8F%8F%E5%8C%BA%E5%9F%9F/" class="post-title-link" itemprop="url">iOS 原生实现扫描二维码和条形码功能，限制扫描区域</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-02-08 00:00:00" itemprop="dateCreated datePublished" datetime="2018-02-08T00:00:00+08:00">2018-02-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/iOS-%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">iOS 开发</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/02/08/20180208-iOS%20%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E6%9D%A1%E5%BD%A2%E7%A0%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%99%90%E5%88%B6%E6%89%AB%E6%8F%8F%E5%8C%BA%E5%9F%9F/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/08/20180208-iOS 原生实现扫描二维码和条形码功能，限制扫描区域/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>现在苹果iOS系统已经原生支持了二维码扫描的功能，使用原生来扫描需要导入 <strong>AVFoundation</strong> 。  </p>
-</blockquote>
-<h3 id="扫描准备"><a href="#扫描准备" class="headerlink" title="扫描准备"></a>扫描准备</h3><hr>
-<p><strong>一、获取摄像设备：</strong></p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device <span class="operator">=</span> <span class="type">AVCaptureDevice</span>.defaultDevice(withMediaType: <span class="type">AVMediaTypeVideo</span>)</span><br></pre></td></tr></table></figure>
-
-<p><strong>二、创建输入流</strong></p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> input <span class="operator">=</span> <span class="type">AVCaptureDeviceInput</span>(device: device)</span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="keyword">let</span> e <span class="keyword">as</span> <span class="type">NSError</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(e.localizedDescription)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/02/08/20180208-iOS%20%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E6%9D%A1%E5%BD%A2%E7%A0%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%99%90%E5%88%B6%E6%89%AB%E6%8F%8F%E5%8C%BA%E5%9F%9F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/08/20180208-%E8%87%AA%E5%AE%9A%E4%B9%89OS%20X%E7%9A%84window%20button/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -617,7 +404,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/07/20180207-Pod%20Search%20%E5%87%BA%E7%8E%B0%20JSON%20ParserError%20%E9%94%99%E8%AF%AF/">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/08/20180208-iOS%20%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E6%9D%A1%E5%BD%A2%E7%A0%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%99%90%E5%88%B6%E6%89%AB%E6%8F%8F%E5%8C%BA%E5%9F%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/avatar_images/avatar.webp">
@@ -635,7 +422,220 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/02/07/20180207-Pod%20Search%20%E5%87%BA%E7%8E%B0%20JSON%20ParserError%20%E9%94%99%E8%AF%AF/" class="post-title-link" itemprop="url">Pod Search 出现 JSON ParserError 错误</a>
+          <a href="/2018/02/08/20180208-iOS%20%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E6%9D%A1%E5%BD%A2%E7%A0%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%99%90%E5%88%B6%E6%89%AB%E6%8F%8F%E5%8C%BA%E5%9F%9F/" class="post-title-link" itemprop="url">iOS 原生实现扫描二维码和条形码功能，限制扫描区域</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-02-08 00:00:00" itemprop="dateCreated datePublished" datetime="2018-02-08T00:00:00+08:00">2018-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS-%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">iOS 开发</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/02/08/20180208-iOS%20%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E6%9D%A1%E5%BD%A2%E7%A0%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%99%90%E5%88%B6%E6%89%AB%E6%8F%8F%E5%8C%BA%E5%9F%9F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/08/20180208-iOS 原生实现扫描二维码和条形码功能，限制扫描区域/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>现在苹果iOS系统已经原生支持了二维码扫描的功能，使用原生来扫描需要导入 <strong>AVFoundation</strong> 。  </p>
+</blockquote>
+<h3 id="扫描准备"><a href="#扫描准备" class="headerlink" title="扫描准备"></a>扫描准备</h3><hr>
+<p><strong>一、获取摄像设备：</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device <span class="operator">=</span> <span class="type">AVCaptureDevice</span>.defaultDevice(withMediaType: <span class="type">AVMediaTypeVideo</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>二、创建输入流</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> input <span class="operator">=</span> <span class="type">AVCaptureDeviceInput</span>(device: device)</span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="keyword">let</span> e <span class="keyword">as</span> <span class="type">NSError</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(e.localizedDescription)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/02/08/20180208-iOS%20%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E6%9D%A1%E5%BD%A2%E7%A0%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%99%90%E5%88%B6%E6%89%AB%E6%8F%8F%E5%8C%BA%E5%9F%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/08/20180208-Objective-C%20%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88__strong%EF%BC%89%E5%92%8C%20%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88__weak%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/08/20180208-Objective-C%20%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88__strong%EF%BC%89%E5%92%8C%20%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88__weak%EF%BC%89/" class="post-title-link" itemprop="url">Objective-C 中的强引用（__strong）和 弱引用（__weak）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-02-08 00:00:00" itemprop="dateCreated datePublished" datetime="2018-02-08T00:00:00+08:00">2018-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/02/08/20180208-Objective-C%20%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88__strong%EF%BC%89%E5%92%8C%20%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88__weak%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/08/20180208-Objective-C 中的强引用（__strong）和 弱引用（__weak）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在Objective-C的ARC模式中，</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">id</span> obj1 = [[<span class="built_in">NSObject</span> alloc] init];</span><br></pre></td></tr></table></figure>
+
+<p>这里虽然没有显示的声明为 <code>__strong</code> ，但是 <code>Objective-C</code> 默认声明的一个对象就为 <code>__strong</code> ，即：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">id</span> obj1 = [[<span class="built_in">NSObject</span> alloc] init];</span><br></pre></td></tr></table></figure>
+
+<p>和</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">id</span> __<span class="keyword">strong</span> obj1 = [[<span class="built_in">NSObject</span> alloc] init];</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/02/08/20180208-Objective-C%20%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88__strong%EF%BC%89%E5%92%8C%20%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88__weak%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/" class="post-title-link" itemprop="url">ShareSDK 回调一直是 SSDKResponseStateCancel</a>
         </h2>
 
         <div class="post-meta-container">
@@ -667,8 +667,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/02/07/20180207-Pod%20Search%20%E5%87%BA%E7%8E%B0%20JSON%20ParserError%20%E9%94%99%E8%AF%AF/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/07/20180207-Pod Search 出现 JSON ParserError 错误/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/07/20180207-ShareSDK 回调一直是 SSDKResponseStateCancel/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -682,15 +682,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>今天执行 <code>pod search</code> 命令的时候出现了 <code>JSON ParserError</code> 的错误，类似于如下：</p>
-<h3 id="Report"><a href="#Report" class="headerlink" title="Report"></a>Report</h3><ul>
-<li>Run pod search PureLayout</li>
-<li>List the search result</li>
-<li>can not get the result list, and shows JSON::ParserError - A JSON text must at least contain two octets!</li>
-</ul>
+          <p>之前解决了，点击登录无反应的 <code>ShareSDK</code> 问题，今天又碰到了点击登陆后回调的 <code>SSDKResponseState</code> 参数一直都是 <code>cancel</code> 的问题。</p>
+<p>刚开始以为是我的配置文件出现了问题，一直修改 <code>info.plist</code> 文件，但是问题依旧。问了技术支持，说让我升级到最新的版本，我又 <code>pod update</code>  一下，确实是最新的版本。之后觉得可能我的 <code>repo</code>  不是最新的，又更新了我的 <code>repo</code> ，发现还是不行。我看了一下 <code>sharesdk </code> 的版本，确实是<strong>4.0.4</strong>最新的没错啊，之后在 GitHub 上看 sharesdk 最新版本的时候，无意间看到了 sharesdk 名字改成了 <code>mob_sharesdk</code> 最新版本是<strong>4.0.9</strong>，终于知道原因了。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/02/07/20180207-Pod%20Search%20%E5%87%BA%E7%8E%B0%20JSON%20ParserError%20%E9%94%99%E8%AF%AF/#more" rel="contents">
+              <a class="btn" href="/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -828,7 +824,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/02/07/20180207-Pod%20Search%20%E5%87%BA%E7%8E%B0%20JSON%20ParserError%20%E9%94%99%E8%AF%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/avatar_images/avatar.webp">
@@ -846,7 +842,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/" class="post-title-link" itemprop="url">ShareSDK 回调一直是 SSDKResponseStateCancel</a>
+          <a href="/2018/02/07/20180207-Pod%20Search%20%E5%87%BA%E7%8E%B0%20JSON%20ParserError%20%E9%94%99%E8%AF%AF/" class="post-title-link" itemprop="url">Pod Search 出现 JSON ParserError 错误</a>
         </h2>
 
         <div class="post-meta-container">
@@ -878,8 +874,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/07/20180207-ShareSDK 回调一直是 SSDKResponseStateCancel/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2018/02/07/20180207-Pod%20Search%20%E5%87%BA%E7%8E%B0%20JSON%20ParserError%20%E9%94%99%E8%AF%AF/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/07/20180207-Pod Search 出现 JSON ParserError 错误/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -893,11 +889,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>之前解决了，点击登录无反应的 <code>ShareSDK</code> 问题，今天又碰到了点击登陆后回调的 <code>SSDKResponseState</code> 参数一直都是 <code>cancel</code> 的问题。</p>
-<p>刚开始以为是我的配置文件出现了问题，一直修改 <code>info.plist</code> 文件，但是问题依旧。问了技术支持，说让我升级到最新的版本，我又 <code>pod update</code>  一下，确实是最新的版本。之后觉得可能我的 <code>repo</code>  不是最新的，又更新了我的 <code>repo</code> ，发现还是不行。我看了一下 <code>sharesdk </code> 的版本，确实是<strong>4.0.4</strong>最新的没错啊，之后在 GitHub 上看 sharesdk 最新版本的时候，无意间看到了 sharesdk 名字改成了 <code>mob_sharesdk</code> 最新版本是<strong>4.0.9</strong>，终于知道原因了。</p>
+          <p>今天执行 <code>pod search</code> 命令的时候出现了 <code>JSON ParserError</code> 的错误，类似于如下：</p>
+<h3 id="Report"><a href="#Report" class="headerlink" title="Report"></a>Report</h3><ul>
+<li>Run pod search PureLayout</li>
+<li>List the search result</li>
+<li>can not get the result list, and shows JSON::ParserError - A JSON text must at least contain two octets!</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/02/07/20180207-ShareSDK%20%E5%9B%9E%E8%B0%83%E4%B8%80%E7%9B%B4%E6%98%AF%20SSDKResponseStateCancel/#more" rel="contents">
+              <a class="btn" href="/2018/02/07/20180207-Pod%20Search%20%E5%87%BA%E7%8E%B0%20JSON%20ParserError%20%E9%94%99%E8%AF%AF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

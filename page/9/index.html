@@ -306,7 +306,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9AObservable%20%E5%92%8C%20Observer/">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/avatar_images/avatar.webp">
@@ -324,7 +324,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9AObservable%20%E5%92%8C%20Observer/" class="post-title-link" itemprop="url">RxSwift 文档：Observable 和 Observer</a>
+          <a href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/" class="post-title-link" itemprop="url">RxSwift 文档：Schedulers</a>
         </h2>
 
         <div class="post-meta-container">
@@ -356,8 +356,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9AObservable%20%E5%92%8C%20Observer/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/09/20180409-RxSwift 文档：Observable 和 Observer/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/09/20180409-RxSwift 文档：Schedulers/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -371,15 +371,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Observer-观察者"><a href="#Observer-观察者" class="headerlink" title="Observer - 观察者"></a>Observer - 观察者</h2><hr>
-<h3 id="AnyObserver"><a href="#AnyObserver" class="headerlink" title="AnyObserver"></a>AnyObserver</h3><hr>
-<p><code>AnyObserver</code> 可以用来描叙任意一种观察者。</p>
-<p>例如：</p>
-<p>打印网络请求结果：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">URLSession</span>.shared.rx.data(request: <span class="type">URLRequest</span>(url: url))</span><br><span class="line">    .subscribe(onNext: &#123; data <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Data Task Success with count: <span class="subst">\(data.count)</span>&quot;</span>)</span><br><span class="line">    &#125;, onError: &#123; error <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Data Task Error: <span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+          <h2 id="Schedulers-调度器"><a href="#Schedulers-调度器" class="headerlink" title="Schedulers - 调度器"></a>Schedulers - 调度器</h2><hr>
+<p><code>Schedulers</code> 是 Rx 实现多线程的核心模块，它主要用于控制任务在哪个线程或队列运行。</p>
+<p>如果你曾经使用过 <code>GCD</code>， 那你对以下代码应该不会陌生：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 后台取得数据，主线程处理结果</span></span><br><span class="line"><span class="type">DispatchQueue</span>.global(qos: .userInitiated).async &#123;</span><br><span class="line">    <span class="keyword">let</span> data <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">Data</span>(contentsOf: url)</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="keyword">self</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9AObservable%20%E5%92%8C%20Observer/#more" rel="contents">
+              <a class="btn" href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -621,7 +619,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9AObservable%20%E5%92%8C%20Observer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/avatar_images/avatar.webp">
@@ -639,7 +637,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/" class="post-title-link" itemprop="url">RxSwift 文档：Schedulers</a>
+          <a href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9AObservable%20%E5%92%8C%20Observer/" class="post-title-link" itemprop="url">RxSwift 文档：Observable 和 Observer</a>
         </h2>
 
         <div class="post-meta-container">
@@ -671,8 +669,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/09/20180409-RxSwift 文档：Schedulers/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9AObservable%20%E5%92%8C%20Observer/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/09/20180409-RxSwift 文档：Observable 和 Observer/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -686,13 +684,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Schedulers-调度器"><a href="#Schedulers-调度器" class="headerlink" title="Schedulers - 调度器"></a>Schedulers - 调度器</h2><hr>
-<p><code>Schedulers</code> 是 Rx 实现多线程的核心模块，它主要用于控制任务在哪个线程或队列运行。</p>
-<p>如果你曾经使用过 <code>GCD</code>， 那你对以下代码应该不会陌生：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 后台取得数据，主线程处理结果</span></span><br><span class="line"><span class="type">DispatchQueue</span>.global(qos: .userInitiated).async &#123;</span><br><span class="line">    <span class="keyword">let</span> data <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">Data</span>(contentsOf: url)</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="keyword">self</span>.data <span class="operator">=</span> data</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="Observer-观察者"><a href="#Observer-观察者" class="headerlink" title="Observer - 观察者"></a>Observer - 观察者</h2><hr>
+<h3 id="AnyObserver"><a href="#AnyObserver" class="headerlink" title="AnyObserver"></a>AnyObserver</h3><hr>
+<p><code>AnyObserver</code> 可以用来描叙任意一种观察者。</p>
+<p>例如：</p>
+<p>打印网络请求结果：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">URLSession</span>.shared.rx.data(request: <span class="type">URLRequest</span>(url: url))</span><br><span class="line">    .subscribe(onNext: &#123; data <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Data Task Success with count: <span class="subst">\(data.count)</span>&quot;</span>)</span><br><span class="line">    &#125;, onError: &#123; error <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Data Task Error: <span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9ASchedulers/#more" rel="contents">
+              <a class="btn" href="/2018/04/09/20180409-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9AObservable%20%E5%92%8C%20Observer/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

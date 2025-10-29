@@ -1044,6 +1044,109 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/" class="post-title-link" itemprop="url">RxSwift 文档：操作符</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2018-04-11T00:00:00+08:00">2018-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/11/20180411-RxSwift 文档：操作符/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="just-、-from-和-of"><a href="#just-、-from-和-of" class="headerlink" title="just 、 from 和 of"></a>just 、 from 和 of</h2><hr>
+<p><code>just</code> 和 <code>from</code> 都能够将元素转化为 <code>Observable</code> 但是他们有本质的区别：</p>
+<h3 id="just"><a href="#just" class="headerlink" title="just"></a>just</h3><p>创建 <code>Observable</code> 发出<strong>唯一的一个元素</strong>。 <code>just</code> 操作符将某一个元素转换为 <code>Observable</code>。</p>
+<p>示例：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> oJust <span class="operator">=</span> <span class="type">Observable</span>.just([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">oJust.subscribe(onNext: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="variable">$0</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.dispose()</span><br><span class="line"></span><br><span class="line"><span class="comment">// [1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E6%93%8D%E4%BD%9C%E7%AC%A6%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1128,109 +1231,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E6%93%8D%E4%BD%9C%E7%AC%A6%EF%BC%9F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/" class="post-title-link" itemprop="url">RxSwift 文档：操作符</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2018-04-11T00:00:00+08:00">2018-04-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/11/20180411-RxSwift 文档：操作符/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="just-、-from-和-of"><a href="#just-、-from-和-of" class="headerlink" title="just 、 from 和 of"></a>just 、 from 和 of</h2><hr>
-<p><code>just</code> 和 <code>from</code> 都能够将元素转化为 <code>Observable</code> 但是他们有本质的区别：</p>
-<h3 id="just"><a href="#just" class="headerlink" title="just"></a>just</h3><p>创建 <code>Observable</code> 发出<strong>唯一的一个元素</strong>。 <code>just</code> 操作符将某一个元素转换为 <code>Observable</code>。</p>
-<p>示例：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> oJust <span class="operator">=</span> <span class="type">Observable</span>.just([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">oJust.subscribe(onNext: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="variable">$0</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.dispose()</span><br><span class="line"></span><br><span class="line"><span class="comment">// [1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/04/11/20180411-RxSwift%20%E6%96%87%E6%A1%A3%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%AC%A6/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

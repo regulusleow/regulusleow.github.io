@@ -1080,108 +1080,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/avatar_images/avatar.webp">
-      <meta itemprop="name" content="轩辕十四">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="轩辕十四">
-      <meta itemprop="description" content="Stay hungry. Stay foolish.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 轩辕十四">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">数据结构与算法：数组的基本原理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-02-16 00:00:00" itemprop="dateCreated datePublished" datetime="2025-02-16T00:00:00+08:00">2025-02-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/02/16/20250216-数据结构与算法：数组的基本原理/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在讲解数据结构时，数组总是一个大家早期接触的主题。但你可能会发现，不同编程语言中“数组”这一概念的使用方式和 API 有所区别。其实我们可以把「数组」分为两大类：</p>
-<h2 id="静态数组"><a href="#静态数组" class="headerlink" title="静态数组"></a>静态数组</h2><p>静态数组在创建时就已经确定了元素的个数以及连续的内存空间。我们可以通过下标索引访问数组中存储的元素，这正是数组最原始的形式，也是其 “随机访问” 能力得以实现的根本原因。</p>
-<h2 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h2><p>动态数组是在静态数组基础上，为了方便编程引入的一层封装。动态数组在内部依然使用静态数组存储数据，但会自动进行扩容和提供一些常用的增删查改 API，如 ⁠<code>push</code>、⁠<code>insert</code>、⁠<code>remove</code> 等。了解动态数组的底层原理，有助于我们深入理解后续实现其他数据结构（例如队列、栈、哈希表等）的核心思想。</p>
-<p>本文将围绕静态数组的基本原理，并用 C 语言代码手把手实现简单版本的动态数组，展示其增删查改操作。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2025/02/16/20250216-%E7%AE%97%E6%B3%95%EF%BC%9A%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1270,6 +1168,108 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2025/02/16/20250216-%E7%AE%97%E6%B3%95%EF%BC%9A%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">数据结构与算法：数组的基本原理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-16 00:00:00" itemprop="dateCreated datePublished" datetime="2025-02-16T00:00:00+08:00">2025-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/02/16/20250216-数据结构与算法：数组的基本原理/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在讲解数据结构时，数组总是一个大家早期接触的主题。但你可能会发现，不同编程语言中“数组”这一概念的使用方式和 API 有所区别。其实我们可以把「数组」分为两大类：</p>
+<h2 id="静态数组"><a href="#静态数组" class="headerlink" title="静态数组"></a>静态数组</h2><p>静态数组在创建时就已经确定了元素的个数以及连续的内存空间。我们可以通过下标索引访问数组中存储的元素，这正是数组最原始的形式，也是其 “随机访问” 能力得以实现的根本原因。</p>
+<h2 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h2><p>动态数组是在静态数组基础上，为了方便编程引入的一层封装。动态数组在内部依然使用静态数组存储数据，但会自动进行扩容和提供一些常用的增删查改 API，如 ⁠<code>push</code>、⁠<code>insert</code>、⁠<code>remove</code> 等。了解动态数组的底层原理，有助于我们深入理解后续实现其他数据结构（例如队列、栈、哈希表等）的核心思想。</p>
+<p>本文将围绕静态数组的基本原理，并用 C 语言代码手把手实现简单版本的动态数组，展示其增删查改操作。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/02/16/20250216-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
