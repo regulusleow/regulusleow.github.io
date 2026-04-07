@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/avatar_images/apple-touch-icon-avatar.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/avatar_images/favicon-32x32-avatar.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/avatar_images/favicon-16x16-avatar.webp">
+  <meta name="google-site-verification" content="XhaJbrdsD96m39iYKuBCoofZVM7q9cGB5zf-KI1L7Ss">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.27.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"default"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="前三篇我分别在解决三个问题：第一，怎么把任务说清楚；第二，怎么让结果更稳定；第三，怎么把行为边界和输出契约定义清楚。但继续往下学，很快就会撞上第四个问题：如果任务本身就不是单步能完成的，那一个 Prompt 写得再完整，是不是也不够？ 这也是我学到 Chain-of-Thought（CoT）和 Prompt Chaining 之后最明显的认知变化。很多 AI 应用的问题，不是 Prompt 写得不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prompt学习四：为什么复杂任务不能只靠一个 Prompt">
+<meta property="og:url" content="https://regulusleow.github.io/2026/02/26/20260226-Prompt%E5%AD%A6%E4%B9%A0%E5%9B%9B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%8D%E6%9D%82%E4%BB%BB%E5%8A%A1%E4%B8%8D%E8%83%BD%E5%8F%AA%E9%9D%A0%E4%B8%80%E4%B8%AA%20Prompt/index.html">
+<meta property="og:site_name" content="轩辕十四">
+<meta property="og:description" content="前三篇我分别在解决三个问题：第一，怎么把任务说清楚；第二，怎么让结果更稳定；第三，怎么把行为边界和输出契约定义清楚。但继续往下学，很快就会撞上第四个问题：如果任务本身就不是单步能完成的，那一个 Prompt 写得再完整，是不是也不够？ 这也是我学到 Chain-of-Thought（CoT）和 Prompt Chaining 之后最明显的认知变化。很多 AI 应用的问题，不是 Prompt 写得不">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-07T12:28:28.806Z">
+<meta property="article:author" content="轩辕十四">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="AI 应用开发">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Prompt Engineering">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://regulusleow.github.io/2026/02/26/20260226-Prompt%E5%AD%A6%E4%B9%A0%E5%9B%9B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%8D%E6%9D%82%E4%BB%BB%E5%8A%A1%E4%B8%8D%E8%83%BD%E5%8F%AA%E9%9D%A0%E4%B8%80%E4%B8%AA%20Prompt/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://regulusleow.github.io/2026/02/26/20260226-Prompt%E5%AD%A6%E4%B9%A0%E5%9B%9B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%8D%E6%9D%82%E4%BB%BB%E5%8A%A1%E4%B8%8D%E8%83%BD%E5%8F%AA%E9%9D%A0%E4%B8%80%E4%B8%AA%20Prompt/","path":"2026/02/26/20260226-Prompt学习四：为什么复杂任务不能只靠一个 Prompt/","title":"Prompt学习四：为什么复杂任务不能只靠一个 Prompt"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Prompt学习四：为什么复杂任务不能只靠一个 Prompt | 轩辕十四</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;1cb638399d744ce59f291432164b2248&quot;}'></script>
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">轩辕十四</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索科技与创新的个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E6%AD%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E4%BB%BB%E5%8A%A1%EF%BC%8C%E5%BE%80%E5%BE%80%E4%B8%8D%E6%98%AF%E2%80%9C%E4%B8%80%E6%AC%A1%E7%94%9F%E6%88%90%E2%80%9D%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">真正复杂的任务，往往不是“一次生成”问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CoT-%E8%A7%A3%E5%86%B3%E7%9A%84%EF%BC%8C%E4%B8%8D%E6%98%AF%E2%80%9C%E8%AE%A9%E6%A8%A1%E5%9E%8B%E5%A4%9A%E8%AF%B4%E4%B8%80%E7%82%B9%E2%80%9D"><span class="nav-number">2.</span> <span class="nav-text">CoT 解决的，不是“让模型多说一点”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E8%AE%A9%E6%A8%A1%E5%9E%8B%E2%80%9C%E9%80%90%E6%AD%A5%E6%80%9D%E8%80%83%E2%80%9D"><span class="nav-number">3.</span> <span class="nav-text">什么时候该让模型“逐步思考”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt-Chaining-%E6%89%8D%E6%98%AF%E7%9C%9F%E6%AD%A3%E6%8E%A5%E8%BF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">4.</span> <span class="nav-text">Prompt Chaining 才是真正接近系统设计的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%85%B8%E5%9E%8B%E4%BE%8B%E5%AD%90%EF%BC%9A%E9%95%BF%E6%96%87%E7%AB%A0%E7%94%9F%E6%88%90%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BA%94%E8%AF%A5%E5%85%88%E6%8F%90%E7%BA%B2%E5%86%8D%E6%89%A9%E5%86%99"><span class="nav-number">5.</span> <span class="nav-text">一个典型例子：长文章生成，为什么应该先提纲再扩写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%8F%AA%E5%81%9A%E6%8F%90%E7%BA%B2"><span class="nav-number">5.1.</span> <span class="nav-text">第一步：只做提纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%8C%89%E6%8F%90%E7%BA%B2%E6%89%A9%E5%86%99"><span class="nav-number">5.2.</span> <span class="nav-text">第二步：按提纲扩写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E4%B8%BE%E4%B8%80%E4%B8%AA%E6%9B%B4%E8%B4%B4%E8%BF%91-AI-%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A%E5%85%88%E6%8A%BD%E8%AF%81%E6%8D%AE%EF%BC%8C%E5%86%8D%E5%9B%9E%E7%AD%94%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">再举一个更贴近 AI 系统的例子：先抽证据，再回答问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%8A%BD%E5%8F%96%E8%AF%81%E6%8D%AE"><span class="nav-number">6.1.</span> <span class="nav-text">第一步：抽取证据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E5%9B%9E%E7%AD%94"><span class="nav-number">6.2.</span> <span class="nav-text">第二步：基于证据回答</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Self-Consistency-%E7%BB%99%E6%88%91%E7%9A%84%E6%8F%90%E9%86%92%EF%BC%9A%E4%B8%8D%E8%A6%81%E5%8F%AA%E7%9B%AF%E7%9D%80%E5%8D%95%E6%AC%A1%E7%BB%93%E6%9E%9C"><span class="nav-number">7.</span> <span class="nav-text">Self-Consistency 给我的提醒：不要只盯着单次结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%8E%B0%E5%9C%A8%E4%BC%9A%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%EF%BC%9A%E8%AF%A5%E7%94%A8%E5%8D%95%E4%B8%AA-Prompt%EF%BC%8C%E8%BF%98%E6%98%AF%E8%AF%A5%E6%8B%86%E9%93%BE%E8%B7%AF"><span class="nav-number">8.</span> <span class="nav-text">我现在会怎么判断：该用单个 Prompt，还是该拆链路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E5%9D%97%E7%9C%9F%E6%AD%A3%E8%AE%A9%E6%88%91%E5%BC%80%E5%A7%8B%E2%80%9C%E5%83%8F%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%B8%80%E6%A0%B7%E6%80%9D%E8%80%83-AI%E2%80%9D"><span class="nav-number">9.</span> <span class="nav-text">这一块真正让我开始“像工程师一样思考 AI”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">10.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">11.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="轩辕十四"
+      src="/avatar_images/avatar.webp">
+  <p class="site-author-name" itemprop="name">轩辕十四</p>
+  <div class="site-description" itemprop="description">Stay hungry. Stay foolish.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">129</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;regulusleow"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9yZWd1bHVzX3dq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;regulus_wj"><i class="fab fa-twitter fa-fw"></i>Twitter</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL3JlZ3Vzdw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;regusw"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://regulusleow.github.io/2026/02/26/20260226-Prompt%E5%AD%A6%E4%B9%A0%E5%9B%9B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%8D%E6%9D%82%E4%BB%BB%E5%8A%A1%E4%B8%8D%E8%83%BD%E5%8F%AA%E9%9D%A0%E4%B8%80%E4%B8%AA%20Prompt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/avatar_images/avatar.webp">
+      <meta itemprop="name" content="轩辕十四">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="轩辕十四">
+      <meta itemprop="description" content="Stay hungry. Stay foolish.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Prompt学习四：为什么复杂任务不能只靠一个 Prompt | 轩辕十四">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Prompt学习四：为什么复杂任务不能只靠一个 Prompt
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-26 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-26T00:00:00+08:00">2026-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">AI 应用开发</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2026/02/26/20260226-Prompt%E5%AD%A6%E4%B9%A0%E5%9B%9B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%8D%E6%9D%82%E4%BB%BB%E5%8A%A1%E4%B8%8D%E8%83%BD%E5%8F%AA%E9%9D%A0%E4%B8%80%E4%B8%AA%20Prompt/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/02/26/20260226-Prompt学习四：为什么复杂任务不能只靠一个 Prompt/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>前三篇我分别在解决三个问题：第一，怎么把任务说清楚；第二，怎么让结果更稳定；第三，怎么把行为边界和输出契约定义清楚。但继续往下学，很快就会撞上第四个问题：<strong>如果任务本身就不是单步能完成的，那一个 Prompt 写得再完整，是不是也不够？</strong></p>
+<p>这也是我学到 Chain-of-Thought（CoT）和 Prompt Chaining 之后最明显的认知变化。很多 AI 应用的问题，不是 Prompt 写得不够精致，而是你让模型在一次输出里同时承担了太多职责：既要理解任务，又要提取信息，又要判断优先级，还要组织结果。任务一旦变复杂，单个 Prompt 的可控性就会快速下降。</p>
+<span id="more"></span>
+
+<h2 id="真正复杂的任务，往往不是“一次生成”问题"><a href="#真正复杂的任务，往往不是“一次生成”问题" class="headerlink" title="真正复杂的任务，往往不是“一次生成”问题"></a>真正复杂的任务，往往不是“一次生成”问题</h2><p>如果只是简单改写、摘要或者分类，单轮 Prompt 往往已经够用。但真实的 AI 应用里，更常见的是这种链路：</p>
+<ul>
+<li>先理解输入</li>
+<li>再提取关键信息</li>
+<li>再做判断或规划</li>
+<li>最后组织成可交付结果</li>
+</ul>
+<p>比如一个“根据需求文档生成开发建议”的任务，看起来只是“生成一份输出”，但中间其实至少包含几层不同工作：</p>
+<ol>
+<li>识别业务目标</li>
+<li>提取约束条件</li>
+<li>判断哪些信息缺失</li>
+<li>组织实现方案</li>
+<li>输出给人看或给程序消费的结果</li>
+</ol>
+<p>如果这些步骤全塞进一个 Prompt，模型当然有机会答出一个“看起来差不多”的结果，但工程上最麻烦的地方也会跟着出现：</p>
+<ul>
+<li>某一步做错了，却不知道错在哪</li>
+<li>中间推理不稳定，导致最终结果漂移</li>
+<li>输出很长，但信息密度不高</li>
+<li>一旦需求稍微复杂一点，结果质量迅速下降</li>
+</ul>
+<p>所以这块内容最重要的一个变化，不是学会某个技巧名词，而是建立一个更工程化的判断：</p>
+<blockquote>
+<p>当任务本身包含多个认知阶段时，问题往往不在“Prompt 写得够不够好”，而在“任务有没有被正确拆开”。</p>
+</blockquote>
+<h2 id="CoT-解决的，不是“让模型多说一点”"><a href="#CoT-解决的，不是“让模型多说一点”" class="headerlink" title="CoT 解决的，不是“让模型多说一点”"></a>CoT 解决的，不是“让模型多说一点”</h2><p>一开始看到 Chain-of-Thought（链式思维）时，很容易把它理解成：让模型把思考过程写出来。但如果只是停在这个层面，其实很容易学偏。</p>
+<p>对我来说，CoT 真正有价值的地方不在于“让模型展开推理文字”，而在于：</p>
+<blockquote>
+<p>当任务需要多个判断环节时，显式地提示模型按步骤处理，往往比让它直接给结论更稳定。</p>
+</blockquote>
+<p>举个非常简单的例子。假设我们要分析一段用户反馈，并判断是否应该升级为高优先级问题。</p>
+<p>如果直接写成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请阅读下面的用户反馈，并判断是否为高优先级问题，同时给出原因和摘要。</span><br></pre></td></tr></table></figure>
+
+<p>这当然能得到结果，但这个 Prompt 把几件不同的事揉在了一起：</p>
+<ul>
+<li>理解反馈内容</li>
+<li>识别问题类型</li>
+<li>判断严重程度</li>
+<li>解释判断理由</li>
+<li>输出总结</li>
+</ul>
+<p>这时候模型可能会：</p>
+<ul>
+<li>判断结果对了，但理由不稳定</li>
+<li>理由讲了很多，但没有真正抓住高优先级标准</li>
+<li>摘要和判断标准不一致</li>
+</ul>
+<p>如果换成更明确的分步提示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请按以下步骤处理这条用户反馈：</span><br><span class="line"></span><br><span class="line">1. 先提取用户反馈中明确提到的问题</span><br><span class="line">2. 再判断这些问题分别影响什么核心流程</span><br><span class="line">3. 再基于影响范围判断是否属于高优先级</span><br><span class="line">4. 最后输出结论、理由和摘要</span><br></pre></td></tr></table></figure>
+
+<p>这里真正发生的事情，不是 Prompt “更长了”，而是模型被要求先完成中间判断，再汇总到最终结论。</p>
+<p>也就是说，CoT 的核心不是“多写推理”，而是<strong>把隐藏在任务里的中间步骤显式化</strong>。</p>
+<h2 id="什么时候该让模型“逐步思考”"><a href="#什么时候该让模型“逐步思考”" class="headerlink" title="什么时候该让模型“逐步思考”"></a>什么时候该让模型“逐步思考”</h2><p>并不是所有任务都需要 CoT。</p>
+<p>如果一个任务本身很直接，比如：</p>
+<ul>
+<li>情感分类</li>
+<li>固定字段抽取</li>
+<li>简单摘要</li>
+<li>格式改写</li>
+</ul>
+<p>那强行要求模型逐步展开，可能只会增加 token 和噪声。</p>
+<p>但当任务出现下面这些特征时，我会更倾向于考虑 CoT：</p>
+<ul>
+<li>需要先分析再判断</li>
+<li>需要结合多个条件做结论</li>
+<li>需要先找证据再回答</li>
+<li>需要处理歧义、冲突或缺失信息</li>
+<li>需要保证结论和理由之间可追踪</li>
+</ul>
+<p>换句话说，是否要引入 CoT，判断标准不是“这个技巧高级不高级”，而是：</p>
+<blockquote>
+<p>这个任务的最终结果，是否依赖一串中间判断。</p>
+</blockquote>
+<p>如果依赖，那把这串判断显式化，通常就比让模型“一步到位”更可控。</p>
+<h2 id="Prompt-Chaining-才是真正接近系统设计的地方"><a href="#Prompt-Chaining-才是真正接近系统设计的地方" class="headerlink" title="Prompt Chaining 才是真正接近系统设计的地方"></a>Prompt Chaining 才是真正接近系统设计的地方</h2><p>如果说 CoT 还是在单个 Prompt 内部做“步骤展开”，那 Prompt Chaining（提示词链）就更进一步了：</p>
+<blockquote>
+<p>不是让一个 Prompt 包办所有事，而是把复杂任务拆成多个前后衔接的小步骤。</p>
+</blockquote>
+<p>这是我学到 Prompt Chaining 之后，最有工程感的一部分。</p>
+<p>因为一旦开始把任务拆成链路，你思考问题的方式就会明显变化。你不再问：</p>
+<ul>
+<li>有没有一个更厉害的 Prompt 可以一次解决？</li>
+</ul>
+<p>而开始问：</p>
+<ul>
+<li>哪一步先做更合理？</li>
+<li>哪一步应该产出中间结构？</li>
+<li>哪一步需要校验再继续？</li>
+<li>哪一步应该由模型做，哪一步应该由程序做？</li>
+</ul>
+<p>这已经很像常规软件工程里的流水线设计了。</p>
+<p>例如“基于长文档回答问题”这个任务，一个更合理的链路往往不是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请阅读这篇长文档，并回答下面的问题。</span><br></pre></td></tr></table></figure>
+
+<p>而是拆成：</p>
+<ol>
+<li>先抽取和问题相关的片段</li>
+<li>再整理这些片段里的关键证据</li>
+<li>最后基于证据生成回答</li>
+</ol>
+<p>这样做的好处非常直接：</p>
+<ul>
+<li>每一步目标更单一</li>
+<li>每一步更容易调试</li>
+<li>可以替换某一步而不重写全流程</li>
+<li>更容易做评估和对比</li>
+<li>更容易接上检索、工具调用或程序逻辑</li>
+</ul>
+<p>所以 Prompt Chaining 真正带来的，不是“Prompt 花样更多了”，而是你开始从“写一句话”转向“设计一条工作流”。</p>
+<h2 id="一个典型例子：长文章生成，为什么应该先提纲再扩写"><a href="#一个典型例子：长文章生成，为什么应该先提纲再扩写" class="headerlink" title="一个典型例子：长文章生成，为什么应该先提纲再扩写"></a>一个典型例子：长文章生成，为什么应该先提纲再扩写</h2><p>这块内容里，一个很容易感受到差异的例子就是长文章生成。</p>
+<p>如果直接写：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请围绕 AI 应用开发工程师的成长路径，写一篇 3000 字文章。</span><br></pre></td></tr></table></figure>
+
+<p>模型也能写，但常见问题通常包括：</p>
+<ul>
+<li>结构不稳定</li>
+<li>前后重复</li>
+<li>中段跑偏</li>
+<li>后半部分开始空泛</li>
+</ul>
+<p>因为模型在一次生成里，同时承担了：</p>
+<ul>
+<li>想结构</li>
+<li>定重点</li>
+<li>排顺序</li>
+<li>写细节</li>
+<li>控篇幅</li>
+</ul>
+<p>这些事情本来就不是一个认知层级。</p>
+<p>如果改成两步：</p>
+<h3 id="第一步：只做提纲"><a href="#第一步：只做提纲" class="headerlink" title="第一步：只做提纲"></a>第一步：只做提纲</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">请围绕“AI 应用开发工程师的成长路径”生成一份文章提纲。</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">1. 文章面向有软件开发背景、刚接触大语言模型的工程师</span><br><span class="line">2. 控制在 5 个一级部分以内</span><br><span class="line">3. 每个部分写一句说明它要解决什么问题</span><br><span class="line">4. 不展开正文</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二步：按提纲扩写"><a href="#第二步：按提纲扩写" class="headerlink" title="第二步：按提纲扩写"></a>第二步：按提纲扩写</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">请基于下面这份提纲扩写成正文。</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">1. 保持结构顺序不变</span><br><span class="line">2. 每部分先解释问题，再解释为什么重要</span><br><span class="line">3. 避免重复前文观点</span><br><span class="line">4. 结尾回到“为什么这是一条工程化能力路径”</span><br><span class="line"></span><br><span class="line">提纲：</span><br><span class="line">&#123;&#123;outline&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这时候，你得到的不只是“好像更顺一点”的结果，而是整个过程变得更可控了：</p>
+<ul>
+<li>提纲阶段负责定结构</li>
+<li>扩写阶段负责填内容</li>
+<li>两个阶段的验收标准也被分开了</li>
+</ul>
+<p>这其实就是 Prompt Chaining 最朴素也最实用的价值。</p>
+<h2 id="再举一个更贴近-AI-系统的例子：先抽证据，再回答问题"><a href="#再举一个更贴近-AI-系统的例子：先抽证据，再回答问题" class="headerlink" title="再举一个更贴近 AI 系统的例子：先抽证据，再回答问题"></a>再举一个更贴近 AI 系统的例子：先抽证据，再回答问题</h2><p>另一个很典型的场景，是文档问答。</p>
+<p>如果直接问模型：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请根据下面文档回答问题：这个功能为什么要增加人工兜底？</span><br></pre></td></tr></table></figure>
+
+<p>只要文档稍微长一点，问题就会冒出来：</p>
+<ul>
+<li>模型找错段落</li>
+<li>模型凭经验补全没写过的内容</li>
+<li>回答里有结论，但证据链不清楚</li>
+</ul>
+<p>更好的链路通常会拆成两步：</p>
+<h3 id="第一步：抽取证据"><a href="#第一步：抽取证据" class="headerlink" title="第一步：抽取证据"></a>第一步：抽取证据</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请只从下面文档中抽取和“人工兜底”相关的原文证据。</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">1. 只保留原文中明确提到的内容</span><br><span class="line">2. 每条证据附带一句简要说明</span><br><span class="line">3. 如果找不到，明确返回“未找到相关证据”</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二步：基于证据回答"><a href="#第二步：基于证据回答" class="headerlink" title="第二步：基于证据回答"></a>第二步：基于证据回答</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">请基于下面证据回答问题：这个功能为什么要增加人工兜底？</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">1. 只能依据证据回答</span><br><span class="line">2. 如果证据不足，明确说明</span><br><span class="line">3. 先给结论，再给依据</span><br><span class="line"></span><br><span class="line">证据：</span><br><span class="line">&#123;&#123;evidence&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样拆开的好处是，你不再把“检索证据”和“组织回答”混成一个黑盒步骤。问题一旦出错，也更容易知道：</p>
+<ul>
+<li>是证据没找对？</li>
+<li>还是证据找对了，但回答环节组织错了？</li>
+</ul>
+<p>这正是工程里最重要的一种可调试性。</p>
+<h2 id="Self-Consistency-给我的提醒：不要只盯着单次结果"><a href="#Self-Consistency-给我的提醒：不要只盯着单次结果" class="headerlink" title="Self-Consistency 给我的提醒：不要只盯着单次结果"></a>Self-Consistency 给我的提醒：不要只盯着单次结果</h2><p>这一部分里我还顺带看了 Self-Consistency。它不一定是我当前最常用的手段，但它给了我一个很重要的提醒：</p>
+<blockquote>
+<p>对复杂任务，不要只看某一次答案像不像对，而要看同样的问题在多次推理下是否收敛。</p>
+</blockquote>
+<p>这个思路其实和前面讲“稳定性”是连着的。</p>
+<p>如果一个复杂任务在不同推理路径下，总能落到接近的结论，那说明你的任务拆分、提示边界和中间步骤设计，大概率是比较健康的。</p>
+<p>反过来，如果每次答案都很像“有道理”，但路径和结论漂移很大，那通常说明：</p>
+<ul>
+<li>任务定义仍然有歧义</li>
+<li>中间步骤没有被说清楚</li>
+<li>最终结论依赖了过多模型自由发挥</li>
+</ul>
+<p>所以 Self-Consistency 对我的价值，不只是一个技术名词，而更像是一种验收视角：</p>
+<p><strong>复杂任务的质量，不该只看一次成功，而要看多次执行是否收敛。</strong></p>
+<h2 id="我现在会怎么判断：该用单个-Prompt，还是该拆链路"><a href="#我现在会怎么判断：该用单个-Prompt，还是该拆链路" class="headerlink" title="我现在会怎么判断：该用单个 Prompt，还是该拆链路"></a>我现在会怎么判断：该用单个 Prompt，还是该拆链路</h2><p>学完这块之后，我会用一组更清楚的问题来判断任务该怎么设计：</p>
+<ol>
+<li>这个任务是不是本质上包含多个认知阶段？</li>
+<li>最终结果是否依赖中间判断？</li>
+<li>如果结果错了，我能不能快速定位错在哪一步？</li>
+<li>输出是否需要中间结构来支撑下游流程？</li>
+<li>这一步应该由模型完成，还是更适合交给程序规则处理？</li>
+</ol>
+<p>如果这些问题里，前 3 个的答案都是“是”，那我通常就不会再执着于“一个 Prompt 解决全部”，而会优先考虑：</p>
+<ul>
+<li>先用 CoT 显式化步骤</li>
+<li>再看是否应该进一步拆成 Prompt Chaining</li>
+</ul>
+<p>这背后的判断其实很简单：</p>
+<blockquote>
+<p>单个 Prompt 更像一次调用，Prompt Chaining 更像一条流程。</p>
+</blockquote>
+<p>任务越复杂，越应该用流程思维，而不是继续往一次调用里堆要求。</p>
+<h2 id="这一块真正让我开始“像工程师一样思考-AI”"><a href="#这一块真正让我开始“像工程师一样思考-AI”" class="headerlink" title="这一块真正让我开始“像工程师一样思考 AI”"></a>这一块真正让我开始“像工程师一样思考 AI”</h2><p>回头看这部分内容，我觉得它最重要的收获不是掌握了 CoT、Self-Consistency、Prompt Chaining 这些术语，而是思维方式变了。</p>
+<p>以前更容易把 Prompt 问题理解成“这句话怎么写更好”；现在我会更自然地先想：</p>
+<ul>
+<li>这个任务有没有拆错层次？</li>
+<li>哪些步骤应该单独拿出来？</li>
+<li>哪些结果应该先产出中间对象再继续？</li>
+<li>哪些环节应该加入校验或证据约束？</li>
+</ul>
+<p>一旦这么想，Prompt 学习就开始从“输入写法”走向“流程设计”。</p>
+<p>而这一步，正是 AI 应用开发和普通聊天用法之间非常关键的一条分界线。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>第一篇我在学怎么把任务说清楚，第二篇我在学怎么让输出更稳定，第三篇我开始把 Prompt 理解成模型与系统之间的接口。到了第四篇，我真正开始意识到：</p>
+<blockquote>
+<p>很多复杂任务的问题，已经不是 Prompt 句子怎么写，而是任务流程怎么拆。</p>
+</blockquote>
+<p>CoT 让我学会把中间判断显式化，Prompt Chaining 让我开始按步骤设计工作流，Self-Consistency 则提醒我不要只盯着单次结果，而要关注复杂任务在多次执行中的收敛性。</p>
+<p>如果说前三篇更多是在打 Prompt 这层输入和接口基础，那这一篇开始让我第一次真正进入 AI 系统设计的思路：<strong>一个 Prompt 干不完的事，就不要硬塞给一个 Prompt。</strong></p>
+<p>接下来继续往下学，我会进入工具调用、上下文设计和更完整的系统协作方式。到那时，Prompt 就不再只是“写给模型的话”，而会越来越像一套围绕模型展开的工作流设计。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvdGVjaG5pcXVlcy9jb3Q=">Prompt Engineering Guide - Chain-of-Thought Prompting<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvdGVjaG5pcXVlcy9jb25zaXN0ZW5jeQ==">Prompt Engineering Guide - Self-Consistency<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvdGVjaG5pcXVlcy9wcm9tcHRfY2hhaW5pbmc=">Prompt Engineering Guide - Prompt Chaining<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvemgvaW50cm9kdWN0aW9uL2V4YW1wbGVz">Prompt Engineering Guide - 提示词示例<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"><i class="fa fa-tag"></i> AI</a>
+              <a href="/tags/Prompt-Engineering/" rel="tag"><i class="fa fa-tag"></i> Prompt Engineering</a>
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/AI-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag"><i class="fa fa-tag"></i> AI 应用开发</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/02/22/20260222-Prompt%E5%AD%A6%E4%B9%A0%E4%B8%89%EF%BC%9A%E4%BB%8E%E8%A7%92%E8%89%B2%E6%8F%90%E7%A4%BA%E5%88%B0%E7%BB%93%E6%9E%84%E5%8C%96%E6%8E%A5%E5%8F%A3/" rel="prev" title="Prompt学习三：从角色提示到结构化接口">
+                  <i class="fa fa-angle-left"></i> Prompt学习三：从角色提示到结构化接口
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">轩辕十四</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZ3VsdXNsZW93" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"regulusleow-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>
