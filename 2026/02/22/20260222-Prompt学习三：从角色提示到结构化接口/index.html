@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.27.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"default"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="前两篇我分别在讲两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接进系统，就必须让输出更稳定。但继续往下学，很快会遇到第三个问题：如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 应该怎么继续往前走？ 这也是我学习 system prompt、角色结构、Function Calling（工具调用）和 JSON Sche">
+    <meta name="description" content="前两篇我分别在讲两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接进系统，就必须让输出更稳定。但继续往下学，很快会遇到第三个问题：如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 应该怎么继续往前走？ 学到 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Prompt学习三：从角色提示到结构化接口">
 <meta property="og:url" content="https://regulusleow.github.io/2026/02/22/20260222-Prompt%E5%AD%A6%E4%B9%A0%E4%B8%89%EF%BC%9A%E4%BB%8E%E8%A7%92%E8%89%B2%E6%8F%90%E7%A4%BA%E5%88%B0%E7%BB%93%E6%9E%84%E5%8C%96%E6%8E%A5%E5%8F%A3/index.html">
 <meta property="og:site_name" content="轩辕十四">
-<meta property="og:description" content="前两篇我分别在讲两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接进系统，就必须让输出更稳定。但继续往下学，很快会遇到第三个问题：如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 应该怎么继续往前走？ 这也是我学习 system prompt、角色结构、Function Calling（工具调用）和 JSON Sche">
+<meta property="og:description" content="前两篇我分别在讲两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接进系统，就必须让输出更稳定。但继续往下学，很快会遇到第三个问题：如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 应该怎么继续往前走？ 学到 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 这">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-02-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-06T13:46:09.348Z">
+<meta property="article:modified_time" content="2026-04-09T04:27:23.192Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="AI 应用开发">
@@ -180,7 +180,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">132</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -294,7 +294,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><p>前两篇我分别在讲两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接进系统，就必须让输出更稳定。但继续往下学，很快会遇到第三个问题：<strong>如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 应该怎么继续往前走？</strong></p>
-<p>这也是我学习 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 之后最大的认知变化：到了这一步，Prompt 已经越来越不像“提问方式”，而更像一层写给模型看的<strong>接口定义</strong>。</p>
+<p>学到 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 这一块时，我越来越强烈地感觉到：到了这一步，Prompt 已经不像“提问方式”，更像一层写给模型看的<strong>接口定义</strong>。</p>
 <span id="more"></span>
 
 <h2 id="从“说清楚”到“约束清楚”"><a href="#从“说清楚”到“约束清楚”" class="headerlink" title="从“说清楚”到“约束清楚”"></a>从“说清楚”到“约束清楚”</h2><p>如果说第一篇解决的是“怎么把任务说清楚”，第二篇解决的是“怎么让结果更稳定”，那这一篇真正解决的是：</p>
@@ -327,7 +327,7 @@
 </ul>
 <p>当这些边界不清楚时，模型其实是在替你做决定；而一旦模型开始替你做决定，下游系统的不确定性也会一起放大。</p>
 <h2 id="这时候，Prompt-开始像接口设计"><a href="#这时候，Prompt-开始像接口设计" class="headerlink" title="这时候，Prompt 开始像接口设计"></a>这时候，Prompt 开始像接口设计</h2><p>学到这里，我对 Prompt 的理解又往前推进了一步。</p>
-<p>之前我更愿意把 Prompt 看成一种结构化输入；现在我会更进一步，把它看成一种<strong>给模型看的接口说明</strong>。</p>
+<p>之前我更多把 Prompt 看成一种结构化输入；到了这里，它更像是一份<strong>给模型看的接口说明</strong>。</p>
 <p>这个接口里通常包含四类信息：</p>
 <ol>
 <li>这个模型要完成什么任务</li>
@@ -375,7 +375,7 @@
 <li>不允许额外字段</li>
 </ul>
 <p>到这一步，Prompt 的含义就从“请帮我提取一下”变成了“请按这个返回协议交付结果”。</p>
-<h2 id="一个很有帮助的类比：配置文件为什么也要有-schema"><a href="#一个很有帮助的类比：配置文件为什么也要有-schema" class="headerlink" title="一个很有帮助的类比：配置文件为什么也要有 schema"></a>一个很有帮助的类比：配置文件为什么也要有 schema</h2><p>这次学习里，我顺手还看了一类带 schema 的 CLI 配置系统，这反而让我更容易理解 schema 在 AI 里的意义。</p>
+<h2 id="一个很有帮助的类比：配置文件为什么也要有-schema"><a href="#一个很有帮助的类比：配置文件为什么也要有-schema" class="headerlink" title="一个很有帮助的类比：配置文件为什么也要有 schema"></a>一个很有帮助的类比：配置文件为什么也要有 schema</h2><p>这次学习里，我顺手看了一类带 schema 的 CLI 配置系统，反而一下子把 schema 在 AI 里的意义想明白了。</p>
 <p>配置文件为什么要有 schema？因为它解决的从来都不是“文件写得漂不漂亮”，而是：</p>
 <ul>
 <li>哪些字段合法</li>
@@ -433,7 +433,7 @@
 <p>结构化输出不是格式美化，而是系统边界的一部分。</p>
 </blockquote>
 <p>当你开始这样理解时，就不会再把“输出 JSON”当成一个小技巧，而会把它看成系统设计中的交付协议。</p>
-<h2 id="一个足够说明问题的例子：让模型返回可校验的对象"><a href="#一个足够说明问题的例子：让模型返回可校验的对象" class="headerlink" title="一个足够说明问题的例子：让模型返回可校验的对象"></a>一个足够说明问题的例子：让模型返回可校验的对象</h2><p>这一块如果只停留在概念层，确实容易显得有点空。所以我更愿意用一个很小的例子把它讲透。</p>
+<h2 id="一个足够说明问题的例子：让模型返回可校验的对象"><a href="#一个足够说明问题的例子：让模型返回可校验的对象" class="headerlink" title="一个足够说明问题的例子：让模型返回可校验的对象"></a>一个足够说明问题的例子：让模型返回可校验的对象</h2><p>这一块如果只停留在概念层，确实容易显得有点空。所以我想用一个很小的例子把它讲透。</p>
 <p>假设我们要从一段自然语言里提取用户信息，目标不是“总结一下”，而是得到一个后续程序能直接消费的对象。</p>
 <p>如果按 Structured Outputs 的思路，约束会更像这样。下面这段不是 JSON Schema 裸结构本身，而是某类 API 在接收结构化输出约束时的配置包装；这里借它来说明 schema 是怎样进入模型调用的：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;json_schema&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;json_schema&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;person&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;strict&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;schema&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;object&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;properties&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;string&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;number&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;minimum&quot;</span><span class="punctuation">:</span> <span class="number">0</span> <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;required&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;name&quot;</span><span class="punctuation">,</span> <span class="string">&quot;age&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;additionalProperties&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
