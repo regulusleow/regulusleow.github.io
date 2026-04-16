@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.27.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"default"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="前两篇我分别在讲两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接进系统，就必须让输出更稳定。但继续往下学，很快会遇到第三个问题：如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 应该怎么继续往前走？ 学到 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 这">
+    <meta name="description" content="前两篇分别讨论了两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接入系统，就必须让输出更稳定。继续往下，会遇到第三个问题：如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 还需要向什么方向推进？ 在 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 这一部分中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Prompt学习三：从角色提示到结构化接口">
 <meta property="og:url" content="https://regulusleow.github.io/2026/02/22/20260222-Prompt%E5%AD%A6%E4%B9%A0%E4%B8%89%EF%BC%9A%E4%BB%8E%E8%A7%92%E8%89%B2%E6%8F%90%E7%A4%BA%E5%88%B0%E7%BB%93%E6%9E%84%E5%8C%96%E6%8E%A5%E5%8F%A3/index.html">
 <meta property="og:site_name" content="轩辕十四">
-<meta property="og:description" content="前两篇我分别在讲两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接进系统，就必须让输出更稳定。但继续往下学，很快会遇到第三个问题：如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 应该怎么继续往前走？ 学到 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 这">
+<meta property="og:description" content="前两篇分别讨论了两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接入系统，就必须让输出更稳定。继续往下，会遇到第三个问题：如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 还需要向什么方向推进？ 在 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 这一部分中">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-02-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-09T04:27:23.192Z">
+<meta property="article:modified_time" content="2026-04-16T03:50:44.873Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="AI 应用开发">
@@ -165,7 +165,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E2%80%9C%E8%AF%B4%E6%B8%85%E6%A5%9A%E2%80%9D%E5%88%B0%E2%80%9C%E7%BA%A6%E6%9D%9F%E6%B8%85%E6%A5%9A%E2%80%9D"><span class="nav-number">1.</span> <span class="nav-text">从“说清楚”到“约束清楚”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#system-user-assistant-%E4%B8%8D%E6%98%AF%E8%81%8A%E5%A4%A9%E6%A0%87%E7%AD%BE%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BE%93%E5%85%A5%E5%88%86%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">system &#x2F; user &#x2F; assistant 不是聊天标签，而是输入分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E6%97%B6%E5%80%99%EF%BC%8CPrompt-%E5%BC%80%E5%A7%8B%E5%83%8F%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">这时候，Prompt 开始像接口设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON-Schema-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E7%AA%81%E7%84%B6%E5%8F%98%E9%87%8D%E8%A6%81"><span class="nav-number">4.</span> <span class="nav-text">JSON Schema 为什么会突然变重要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%BE%88%E6%9C%89%E5%B8%AE%E5%8A%A9%E7%9A%84%E7%B1%BB%E6%AF%94%EF%BC%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B9%9F%E8%A6%81%E6%9C%89-schema"><span class="nav-number">5.</span> <span class="nav-text">一个很有帮助的类比：配置文件为什么也要有 schema</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Calling-%E8%AE%A9%E6%88%91%E9%87%8D%E6%96%B0%E7%90%86%E8%A7%A3%E2%80%9C%E6%A8%A1%E5%9E%8B%E4%BC%9A%E8%B0%83%E7%94%A8%E5%B7%A5%E5%85%B7%E2%80%9D%E8%BF%99%E5%8F%A5%E8%AF%9D"><span class="nav-number">6.</span> <span class="nav-text">Function Calling 让我重新理解“模型会调用工具”这句话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Structured-Outputs-%E7%9C%9F%E6%AD%A3%E8%A7%A3%E5%86%B3%E7%9A%84%E6%98%AF%E2%80%9C%E7%BB%93%E6%9E%9C%E6%80%8E%E4%B9%88%E8%90%BD%E5%9C%B0%E2%80%9D"><span class="nav-number">7.</span> <span class="nav-text">Structured Outputs 真正解决的是“结果怎么落地”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E8%B6%B3%E5%A4%9F%E8%AF%B4%E6%98%8E%E9%97%AE%E9%A2%98%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A%E8%AE%A9%E6%A8%A1%E5%9E%8B%E8%BF%94%E5%9B%9E%E5%8F%AF%E6%A0%A1%E9%AA%8C%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">8.</span> <span class="nav-text">一个足够说明问题的例子：让模型返回可校验的对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC%E5%A6%82%E4%BD%95%E6%B6%88%E8%B4%B9%EF%BC%8C%E6%89%8D%E6%98%AF%E8%BF%99%E4%B8%80%E5%9D%97%E7%9C%9F%E6%AD%A3%E8%90%BD%E5%9C%B0%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">9.</span> <span class="nav-text">返回值如何消费，才是这一块真正落地的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%8E%B0%E5%9C%A8%E4%BC%9A%E6%80%8E%E6%A0%B7%E5%88%A4%E6%96%AD%E8%BF%99%E4%B8%80%E7%B1%BB-Prompt-%E6%98%AF%E5%90%A6%E5%B7%B2%E7%BB%8F%E5%8F%AF%E7%94%A8"><span class="nav-number">10.</span> <span class="nav-text">我现在会怎样判断这一类 Prompt 是否已经可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">11.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">12.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E2%80%9C%E8%AF%B4%E6%B8%85%E6%A5%9A%E2%80%9D%E5%88%B0%E2%80%9C%E7%BA%A6%E6%9D%9F%E6%B8%85%E6%A5%9A%E2%80%9D"><span class="nav-number">1.</span> <span class="nav-text">从“说清楚”到“约束清楚”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#system-user-assistant-%E4%B8%8D%E6%98%AF%E8%81%8A%E5%A4%A9%E6%A0%87%E7%AD%BE%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BE%93%E5%85%A5%E5%88%86%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">system &#x2F; user &#x2F; assistant 不是聊天标签，而是输入分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E6%97%B6%E5%80%99%EF%BC%8CPrompt-%E5%BC%80%E5%A7%8B%E5%83%8F%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">这时候，Prompt 开始像接口设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON-Schema-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E7%AA%81%E7%84%B6%E5%8F%98%E9%87%8D%E8%A6%81"><span class="nav-number">4.</span> <span class="nav-text">JSON Schema 为什么会突然变重要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%BE%88%E6%9C%89%E5%B8%AE%E5%8A%A9%E7%9A%84%E7%B1%BB%E6%AF%94%EF%BC%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B9%9F%E8%A6%81%E6%9C%89-schema"><span class="nav-number">5.</span> <span class="nav-text">一个很有帮助的类比：配置文件为什么也要有 schema</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Calling-%E5%A6%82%E4%BD%95%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E2%80%9C%E6%A8%A1%E5%9E%8B%E4%BC%9A%E8%B0%83%E7%94%A8%E5%B7%A5%E5%85%B7%E2%80%9D"><span class="nav-number">6.</span> <span class="nav-text">Function Calling 如何重新定义“模型会调用工具”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Structured-Outputs-%E7%9C%9F%E6%AD%A3%E8%A7%A3%E5%86%B3%E7%9A%84%E6%98%AF%E2%80%9C%E7%BB%93%E6%9E%9C%E6%80%8E%E4%B9%88%E8%90%BD%E5%9C%B0%E2%80%9D"><span class="nav-number">7.</span> <span class="nav-text">Structured Outputs 真正解决的是“结果怎么落地”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E8%B6%B3%E5%A4%9F%E8%AF%B4%E6%98%8E%E9%97%AE%E9%A2%98%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A%E8%AE%A9%E6%A8%A1%E5%9E%8B%E8%BF%94%E5%9B%9E%E5%8F%AF%E6%A0%A1%E9%AA%8C%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">8.</span> <span class="nav-text">一个足够说明问题的例子：让模型返回可校验的对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC%E5%A6%82%E4%BD%95%E6%B6%88%E8%B4%B9%EF%BC%8C%E6%89%8D%E6%98%AF%E8%BF%99%E4%B8%80%E5%9D%97%E7%9C%9F%E6%AD%A3%E8%90%BD%E5%9C%B0%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">9.</span> <span class="nav-text">返回值如何消费，才是这一块真正落地的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E7%B1%BB-Prompt-%E6%98%AF%E5%90%A6%E5%B7%B2%E7%BB%8F%E5%8F%AF%E7%94%A8%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%80%8E%E6%A0%B7%E5%88%A4%E6%96%AD"><span class="nav-number">10.</span> <span class="nav-text">这一类 Prompt 是否已经可用，可以怎样判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E7%AF%87%E7%BB%93%E8%AE%BA"><span class="nav-number">11.</span> <span class="nav-text">本篇结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">12.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -180,7 +180,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">133</span>
+          <span class="site-state-item-count">134</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -293,11 +293,11 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>前两篇我分别在讲两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接进系统，就必须让输出更稳定。但继续往下学，很快会遇到第三个问题：<strong>如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 应该怎么继续往前走？</strong></p>
-<p>学到 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 这一块时，我越来越强烈地感觉到：到了这一步，Prompt 已经不像“提问方式”，更像一层写给模型看的<strong>接口定义</strong>。</p>
+    <div class="post-body" itemprop="articleBody"><p>前两篇分别讨论了两件事：第一，Prompt 不是聊天技巧，而是结构化输入设计；第二，想让模型真正接入系统，就必须让输出更稳定。继续往下，会遇到第三个问题：<strong>如果目标不只是“答得差不多”，而是“行为边界清楚、输出结构稳定、结果能被程序消费”，Prompt 还需要向什么方向推进？</strong></p>
+<p>在 system prompt、角色结构、Function Calling（工具调用）和 JSON Schema 这一部分中，可以看到：Prompt 已经不再只是“提问方式”，而更像一层写给模型的<strong>接口定义</strong>。</p>
 <span id="more"></span>
 
-<h2 id="从“说清楚”到“约束清楚”"><a href="#从“说清楚”到“约束清楚”" class="headerlink" title="从“说清楚”到“约束清楚”"></a>从“说清楚”到“约束清楚”</h2><p>如果说第一篇解决的是“怎么把任务说清楚”，第二篇解决的是“怎么让结果更稳定”，那这一篇真正解决的是：</p>
+<h2 id="从“说清楚”到“约束清楚”"><a href="#从“说清楚”到“约束清楚”" class="headerlink" title="从“说清楚”到“约束清楚”"></a>从“说清楚”到“约束清楚”</h2><p>如果说第一篇解决的是“怎么把任务说清楚”，第二篇解决的是“怎么让结果更稳定”，那么这一篇解决的是：</p>
 <blockquote>
 <p>怎样让模型不只是看起来懂了，而是按你定义的边界来工作。</p>
 </blockquote>
@@ -311,13 +311,13 @@
 <li>人能看懂，程序却没法可靠接入</li>
 </ul>
 <p>也就是说，继续往前学 Prompt，重点已经不再是“怎么写得更像人”，而是“怎么把行为约束和输出契约定义清楚”。</p>
-<h2 id="system-user-assistant-不是聊天标签，而是输入分层"><a href="#system-user-assistant-不是聊天标签，而是输入分层" class="headerlink" title="system &#x2F; user &#x2F; assistant 不是聊天标签，而是输入分层"></a>system &#x2F; user &#x2F; assistant 不是聊天标签，而是输入分层</h2><p>刚接触聊天模型时，很容易把 <code>system</code>、<code>user</code>、<code>assistant</code> 理解成对话界面上的角色标签。但从工程角度看，它们更像是三层不同职责的输入：</p>
+<h2 id="system-user-assistant-不是聊天标签，而是输入分层"><a href="#system-user-assistant-不是聊天标签，而是输入分层" class="headerlink" title="system &#x2F; user &#x2F; assistant 不是聊天标签，而是输入分层"></a>system &#x2F; user &#x2F; assistant 不是聊天标签，而是输入分层</h2><p><code>system</code>、<code>user</code>、<code>assistant</code> 容易被理解成对话界面上的角色标签。但从工程角度看，它们更像是三层不同职责的输入：</p>
 <ul>
 <li><code>system</code>：定义整体行为边界</li>
 <li><code>user</code>：提供当前任务和输入内容</li>
 <li><code>assistant</code>：承载历史回答，或者作为 few-shot 示例的一部分</li>
 </ul>
-<p>这三层拆开之后，一个很重要的变化是：你开始知道什么信息应该长期稳定存在，什么信息只属于当前请求，什么内容只是给模型看的示范。</p>
+<p>这三层拆开之后，信息职责会更清楚：哪些信息应长期稳定存在，哪些信息只属于当前请求，哪些内容只是给模型看的示范。</p>
 <p>所以 <code>system prompt</code> 真正的作用，并不是让模型“扮演一个专家”这么简单，而是给模型设定稳定的工作边界。比如：</p>
 <ul>
 <li>回答时是否允许扩写</li>
@@ -326,8 +326,7 @@
 <li>是否只能依据提供的上下文作答</li>
 </ul>
 <p>当这些边界不清楚时，模型其实是在替你做决定；而一旦模型开始替你做决定，下游系统的不确定性也会一起放大。</p>
-<h2 id="这时候，Prompt-开始像接口设计"><a href="#这时候，Prompt-开始像接口设计" class="headerlink" title="这时候，Prompt 开始像接口设计"></a>这时候，Prompt 开始像接口设计</h2><p>学到这里，我对 Prompt 的理解又往前推进了一步。</p>
-<p>之前我更多把 Prompt 看成一种结构化输入；到了这里，它更像是一份<strong>给模型看的接口说明</strong>。</p>
+<h2 id="这时候，Prompt-开始像接口设计"><a href="#这时候，Prompt-开始像接口设计" class="headerlink" title="这时候，Prompt 开始像接口设计"></a>这时候，Prompt 开始像接口设计</h2><p>到这一步，Prompt 更适合被理解为一份<strong>给模型看的接口说明</strong>。</p>
 <p>这个接口里通常包含四类信息：</p>
 <ol>
 <li>这个模型要完成什么任务</li>
@@ -343,11 +342,11 @@
 <li>返回协议</li>
 </ul>
 <p>Prompt 到这一层之后，已经不只是“让模型听懂”，而是在定义模型和系统之间怎么交互。</p>
-<h2 id="JSON-Schema-为什么会突然变重要"><a href="#JSON-Schema-为什么会突然变重要" class="headerlink" title="JSON Schema 为什么会突然变重要"></a>JSON Schema 为什么会突然变重要</h2><p>学到结构化输出和 Function Calling 这一块时，我最大的一个体感是：</p>
+<h2 id="JSON-Schema-为什么会突然变重要"><a href="#JSON-Schema-为什么会突然变重要" class="headerlink" title="JSON Schema 为什么会突然变重要"></a>JSON Schema 为什么会突然变重要</h2><p>结构化输出和 Function Calling 这一部分可以归纳出一个重要结论：</p>
 <blockquote>
 <p>JSON Schema 并不是额外知识点，而是把 Prompt 从自然语言推进到工程契约的关键工具。</p>
 </blockquote>
-<p>一开始看 schema，很容易把它当成“多写了一层格式说明”。但如果站在工程角度看，它做的是更本质的事情：</p>
+<p>schema 容易被理解成“多写了一层格式说明”。但从工程角度看，它做的是更本质的事情：</p>
 <ul>
 <li>定义字段有哪些</li>
 <li>定义字段类型是什么</li>
@@ -366,7 +365,7 @@
 <li>是返回字符串，还是数组？</li>
 <li>会不会额外加一段解释？</li>
 </ul>
-<p>如果继续把结构定义清楚，情况就完全不一样了。你开始告诉模型：</p>
+<p>如果继续把结构定义清楚，情况就会完全不同。此时实际上是在告诉模型：</p>
 <ul>
 <li><code>people</code> 是数组</li>
 <li><code>locations</code> 是数组</li>
@@ -375,7 +374,7 @@
 <li>不允许额外字段</li>
 </ul>
 <p>到这一步，Prompt 的含义就从“请帮我提取一下”变成了“请按这个返回协议交付结果”。</p>
-<h2 id="一个很有帮助的类比：配置文件为什么也要有-schema"><a href="#一个很有帮助的类比：配置文件为什么也要有-schema" class="headerlink" title="一个很有帮助的类比：配置文件为什么也要有 schema"></a>一个很有帮助的类比：配置文件为什么也要有 schema</h2><p>这次学习里，我顺手看了一类带 schema 的 CLI 配置系统，反而一下子把 schema 在 AI 里的意义想明白了。</p>
+<h2 id="一个很有帮助的类比：配置文件为什么也要有-schema"><a href="#一个很有帮助的类比：配置文件为什么也要有-schema" class="headerlink" title="一个很有帮助的类比：配置文件为什么也要有 schema"></a>一个很有帮助的类比：配置文件为什么也要有 schema</h2><p>带 schema 的 CLI 配置系统可以作为一个很好的类比，用来理解 schema 在 AI 场景中的意义。</p>
 <p>配置文件为什么要有 schema？因为它解决的从来都不是“文件写得漂不漂亮”，而是：</p>
 <ul>
 <li>哪些字段合法</li>
@@ -388,12 +387,12 @@
 <p>这个思路放到 AI 里几乎是一样的。</p>
 <p>当你要求模型返回结构化输出时，本质上也是在做一件事：把模型原本可能高度发散的自然语言结果，收敛成一个可以校验、可以消费、可以接入流程的结构化对象。</p>
 <p>所以 schema 不是 AI 特有的新概念，它只是第一次以非常直接的方式进入了 Prompt 学习过程。</p>
-<h2 id="Function-Calling-让我重新理解“模型会调用工具”这句话"><a href="#Function-Calling-让我重新理解“模型会调用工具”这句话" class="headerlink" title="Function Calling 让我重新理解“模型会调用工具”这句话"></a>Function Calling 让我重新理解“模型会调用工具”这句话</h2><p>以前看到 Function Calling（工具调用），我会下意识理解成“模型可以调用函数”。但真正把文档看进去之后，会发现这句话有一点容易误导。</p>
-<p>更准确的说法应该是：</p>
+<h2 id="Function-Calling-如何重新定义“模型会调用工具”"><a href="#Function-Calling-如何重新定义“模型会调用工具”" class="headerlink" title="Function Calling 如何重新定义“模型会调用工具”"></a>Function Calling 如何重新定义“模型会调用工具”</h2><p>Function Calling（工具调用）容易被理解成“模型可以调用函数”，但这种说法有一定误导性。</p>
+<p>更准确的说法是：</p>
 <blockquote>
 <p>模型负责判断要不要用工具，以及应该传什么参数；真正执行工具的，仍然是你的程序。</p>
 </blockquote>
-<p>这件事非常关键。</p>
+<p>这一点非常关键。</p>
 <p>因为一旦这么理解，Function Calling 就不再神秘了。它本质上是在做下面这条链路：</p>
 <ol>
 <li>用户给出自然语言请求</li>
@@ -408,7 +407,7 @@
 <li>让模型按约定格式提供调用参数</li>
 <li>让系统能稳定接住这些参数并继续执行</li>
 </ul>
-<p>一旦理解到这一步，你会发现 tool description、parameter schema、字段约束这些东西，其实都已经属于接口设计范畴了。</p>
+<p>一旦理解到这一步，就会发现 tool description、parameter schema、字段约束这些东西其实都已经属于接口设计范畴了。</p>
 <h2 id="Structured-Outputs-真正解决的是“结果怎么落地”"><a href="#Structured-Outputs-真正解决的是“结果怎么落地”" class="headerlink" title="Structured Outputs 真正解决的是“结果怎么落地”"></a>Structured Outputs 真正解决的是“结果怎么落地”</h2><p>如果说 Function Calling（工具调用）更像是在定义“调用接口”，那么 Structured Outputs（结构化输出）更像是在定义“返回接口”。</p>
 <p>这个区别很重要。</p>
 <p>有些任务，你需要模型决定是否调用工具；但另外一些任务，你只是想让它直接给你一个可消费的最终结构，比如：</p>
@@ -428,12 +427,12 @@
 <li>枚举范围明确</li>
 <li>没有额外字段污染</li>
 </ul>
-<p>这也是我这块学习里最强烈的一个感受：</p>
+<p>这一部分最重要的结论是：</p>
 <blockquote>
 <p>结构化输出不是格式美化，而是系统边界的一部分。</p>
 </blockquote>
-<p>当你开始这样理解时，就不会再把“输出 JSON”当成一个小技巧，而会把它看成系统设计中的交付协议。</p>
-<h2 id="一个足够说明问题的例子：让模型返回可校验的对象"><a href="#一个足够说明问题的例子：让模型返回可校验的对象" class="headerlink" title="一个足够说明问题的例子：让模型返回可校验的对象"></a>一个足够说明问题的例子：让模型返回可校验的对象</h2><p>这一块如果只停留在概念层，确实容易显得有点空。所以我想用一个很小的例子把它讲透。</p>
+<p>在这种理解下，“输出 JSON”就不再只是一个小技巧，而应被看成系统设计中的交付协议。</p>
+<h2 id="一个足够说明问题的例子：让模型返回可校验的对象"><a href="#一个足够说明问题的例子：让模型返回可校验的对象" class="headerlink" title="一个足够说明问题的例子：让模型返回可校验的对象"></a>一个足够说明问题的例子：让模型返回可校验的对象</h2><p>如果这一部分只停留在概念层，内容会显得比较抽象。下面用一个小例子说明其中的关键点。</p>
 <p>假设我们要从一段自然语言里提取用户信息，目标不是“总结一下”，而是得到一个后续程序能直接消费的对象。</p>
 <p>如果按 Structured Outputs 的思路，约束会更像这样。下面这段不是 JSON Schema 裸结构本身，而是某类 API 在接收结构化输出约束时的配置包装；这里借它来说明 schema 是怎样进入模型调用的：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;json_schema&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;json_schema&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;person&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;strict&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;schema&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;object&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;properties&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;string&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;number&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;minimum&quot;</span><span class="punctuation">:</span> <span class="number">0</span> <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;required&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;name&quot;</span><span class="punctuation">,</span> <span class="string">&quot;age&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;additionalProperties&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
@@ -451,7 +450,7 @@
 <li>两个字段都必须出现</li>
 <li>不允许多余字段污染结果</li>
 </ul>
-<p>一旦你开始这样定义输出，模型返回的内容就不再只是“看着像 JSON”，而是一个可以继续做校验、渲染、入库或传给下游流程的结构化对象。</p>
+<p>一旦按这种方式定义输出，模型返回的内容就不再只是“看着像 JSON”，而是一个可以继续做校验、渲染、入库或传给下游流程的结构化对象。</p>
 <p>如果再往前一步接程序，这个链路就会变成：</p>
 <ol>
 <li>模型按 schema 返回 JSON</li>
@@ -464,7 +463,7 @@
 <p>从这里开始，Prompt 已经不是单纯在“引导回答”，而是在“定义交付结果”。</p>
 </blockquote>
 <h2 id="返回值如何消费，才是这一块真正落地的地方"><a href="#返回值如何消费，才是这一块真正落地的地方" class="headerlink" title="返回值如何消费，才是这一块真正落地的地方"></a>返回值如何消费，才是这一块真正落地的地方</h2><p>只学习“怎么让模型返回 JSON”其实还不够，因为真正的工程问题在下一步：<strong>这个 JSON 怎么被程序消费？</strong></p>
-<p>这里我对这块内容最重要的理解是：</p>
+<p>这里最重要的理解是：</p>
 <blockquote>
 <p>LLM 输出本质上仍然是外部输入，不能因为它看起来合理，就跳过验证。</p>
 </blockquote>
@@ -481,7 +480,7 @@
 <p>Prompt 负责定义输出契约，Schema 负责约束结果边界，Validator 负责保证程序消费安全。</p>
 </blockquote>
 <p>这才是 AI 应用工程里真正稳定的输出链路。</p>
-<h2 id="我现在会怎样判断这一类-Prompt-是否已经可用"><a href="#我现在会怎样判断这一类-Prompt-是否已经可用" class="headerlink" title="我现在会怎样判断这一类 Prompt 是否已经可用"></a>我现在会怎样判断这一类 Prompt 是否已经可用</h2><p>经过这块学习之后，我会用一组比以前更工程化的问题去验收 Prompt：</p>
+<h2 id="这一类-Prompt-是否已经可用，可以怎样判断"><a href="#这一类-Prompt-是否已经可用，可以怎样判断" class="headerlink" title="这一类 Prompt 是否已经可用，可以怎样判断"></a>这一类 Prompt 是否已经可用，可以怎样判断</h2><p>这一部分可以用一组更工程化的问题来验收 Prompt：</p>
 <ul>
 <li>system prompt 定义的是行为边界，还是只是角色口吻？</li>
 <li>当前输入里，规则、上下文、示例、真实任务有没有分层？</li>
@@ -491,12 +490,13 @@
 <li>这个输出是“看起来像对”，还是“真的能接进后续流程”？</li>
 </ul>
 <p>如果这些问题答不上来，那这个 Prompt 即使某一次结果不错，也更像 Demo，而不是可以长期维护的工程接口。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>第一篇我把 Prompt 理解成结构化表达，第二篇我开始理解怎样收窄输出空间，而到了第三篇，我真正开始意识到：</p>
+<h2 id="本篇结论"><a href="#本篇结论" class="headerlink" title="本篇结论"></a>本篇结论</h2><p>第一篇把 Prompt 理解成结构化表达，第二篇开始理解怎样收窄输出空间，到了第三篇，可以进一步得到这样的结论：</p>
 <blockquote>
 <p>Prompt 的下一步，不是继续学会几种写法，而是学会定义模型和系统之间的接口。</p>
 </blockquote>
 <p>system prompt 负责定义行为边界，system &#x2F; user &#x2F; assistant 这组消息角色负责组织输入分层，schema 负责约束参数和返回值，Function Calling 和 Structured Outputs 则分别把“调用工具”和“交付结果”变成可接入系统的结构。</p>
 <p>到这一步，Prompt 学习就已经不只是“怎么和模型说话”，而是在进入 AI 应用开发最核心的一层：<strong>如何让模型产出的内容，真正成为系统里可以被校验、被安全消费的一部分。</strong></p>
+<p>下一篇将进入“为什么复杂任务不能只靠一个 Prompt”，重点讨论 CoT、Prompt Chaining 和多阶段任务拆分。</p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvemgvaW50cm9kdWN0aW9uL2Jhc2ljcw==">Prompt Engineering Guide - 基本概念<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvemgvbW9kZWxzL2NoYXRncHQ=">Prompt Engineering Guide - ChatGPT 提示工程<i class="fa fa-external-link-alt"></i></span></li>

@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.27.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"default"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="前四篇我一直在往同一个方向推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。但继续往下学，很快就会发现一个新的问题：当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？ 学完 Function Calling，又继续看 AI Workflows、AI Agents、Context Engine">
+    <meta name="description" content="前四篇一直沿着同一条主线推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。继续往下，会遇到一个新的问题：当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？ 在 Function Calling、AI Workflows、AI Agents、Context Engineering 和 RAG">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Prompt学习五：从工具调用到上下文工程">
 <meta property="og:url" content="https://regulusleow.github.io/2026/03/02/20260302-Prompt%E5%AD%A6%E4%B9%A0%E4%BA%94%EF%BC%9A%E4%BB%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E5%88%B0%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B/index.html">
 <meta property="og:site_name" content="轩辕十四">
-<meta property="og:description" content="前四篇我一直在往同一个方向推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。但继续往下学，很快就会发现一个新的问题：当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？ 学完 Function Calling，又继续看 AI Workflows、AI Agents、Context Engine">
+<meta property="og:description" content="前四篇一直沿着同一条主线推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。继续往下，会遇到一个新的问题：当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？ 在 Function Calling、AI Workflows、AI Agents、Context Engineering 和 RAG">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-03-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-09T04:28:09.727Z">
+<meta property="article:modified_time" content="2026-04-16T03:50:44.874Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="AI 应用开发">
@@ -165,7 +165,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Calling-%E4%B8%8D%E6%98%AF%E7%BB%88%E7%82%B9%EF%BC%8C%E8%80%8C%E6%98%AF%E7%B3%BB%E7%BB%9F%E5%8D%8F%E4%BD%9C%E7%9A%84%E8%B5%B7%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">Function Calling 不是终点，而是系统协作的起点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Call-%E5%92%8C-Tool-Call-%E5%88%B0%E5%BA%95%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">Function Call 和 Tool Call 到底有什么区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%8E%B0%E5%9C%A8%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%A4%9A%E4%BA%BA%E6%9B%B4%E5%B8%B8%E8%AF%B4-Tool-Call"><span class="nav-number">3.</span> <span class="nav-text">为什么现在越来越多人更常说 Tool Call</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%A3%E7%AC%AC%E4%BA%94%E7%AF%87%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E4%BB%8E-Function-Calling-%E8%AE%B2%E8%B5%B7"><span class="nav-number">4.</span> <span class="nav-text">那第五篇为什么还从 Function Calling 讲起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E6%AD%A3%E9%9A%BE%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%8C%E4%B8%8D%E6%98%AF%E2%80%9C%E4%BC%9A%E4%B8%8D%E4%BC%9A%E8%B0%83%E5%B7%A5%E5%85%B7%E2%80%9D%EF%BC%8C%E8%80%8C%E6%98%AF%E2%80%9C%E4%B8%8A%E4%B8%8B%E6%96%87%E7%BB%99%E5%BE%97%E5%AF%B9%E4%B8%8D%E5%AF%B9%E2%80%9D"><span class="nav-number">5.</span> <span class="nav-text">真正难的地方，不是“会不会调工具”，而是“上下文给得对不对”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E5%8F%AB%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">什么叫上下文工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E6%97%B6%EF%BC%8CWorkflow-%E5%92%8C-AI-Agent-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%89%8D%E7%9C%9F%E6%AD%A3%E5%8F%98%E5%BE%97%E9%87%8D%E8%A6%81"><span class="nav-number">7.</span> <span class="nav-text">这时，Workflow 和 AI Agent 的区别才真正变得重要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Workflow"><span class="nav-number">7.1.</span> <span class="nav-text">Workflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AI-Agent"><span class="nav-number">7.2.</span> <span class="nav-text">AI Agent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%8E%B0%E5%9C%A8%E4%BC%9A%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%EF%BC%9A%E7%94%A8-Workflow%EF%BC%8C%E8%BF%98%E6%98%AF%E7%94%A8-Agent"><span class="nav-number">8.</span> <span class="nav-text">我现在会怎么判断：用 Workflow，还是用 Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAG-%E4%B8%8D%E5%8F%AA%E6%98%AF%E7%9F%A5%E8%AF%86%E5%BA%93%E9%97%AE%E7%AD%94%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BE%9B%E7%BB%99%E6%96%B9%E5%BC%8F"><span class="nav-number">9.</span> <span class="nav-text">RAG 不只是知识库问答，而是上下文供给方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%8A-RAG-%E6%94%BE%E8%BF%9B-Workflow-%E5%92%8C-Agent-%E9%87%8C%EF%BC%8C%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%9B%B4%E6%B8%85%E6%A5%9A%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">10.</span> <span class="nav-text">把 RAG 放进 Workflow 和 Agent 里，会看到更清楚的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-Workflow-%E9%87%8C"><span class="nav-number">10.1.</span> <span class="nav-text">在 Workflow 里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-Agent-%E9%87%8C"><span class="nav-number">10.2.</span> <span class="nav-text">在 Agent 里</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E8%B6%8A%E6%9D%A5%E8%B6%8A%E6%B8%85%E6%A5%9A%E7%9A%84%E4%B8%BB%E7%BA%BF%EF%BC%9APrompt-%E6%AD%A3%E5%9C%A8%E5%8D%87%E7%BA%A7%E6%88%90%E2%80%9C%E4%B8%8A%E4%B8%8B%E6%96%87%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%9D"><span class="nav-number">11.</span> <span class="nav-text">一个越来越清楚的主线：Prompt 正在升级成“上下文操作系统”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%8E%B0%E5%9C%A8%E4%BC%9A%E6%80%8E%E4%B9%88%E9%AA%8C%E6%94%B6%E8%BF%99%E7%B1%BB%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">12.</span> <span class="nav-text">我现在会怎么验收这类系统设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">13.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">14.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Calling-%E4%B8%8D%E6%98%AF%E7%BB%88%E7%82%B9%EF%BC%8C%E8%80%8C%E6%98%AF%E7%B3%BB%E7%BB%9F%E5%8D%8F%E4%BD%9C%E7%9A%84%E8%B5%B7%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">Function Calling 不是终点，而是系统协作的起点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Call-%E5%92%8C-Tool-Call-%E5%88%B0%E5%BA%95%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">Function Call 和 Tool Call 到底有什么区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%8E%B0%E5%9C%A8%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%A4%9A%E4%BA%BA%E6%9B%B4%E5%B8%B8%E8%AF%B4-Tool-Call"><span class="nav-number">3.</span> <span class="nav-text">为什么现在越来越多人更常说 Tool Call</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%A3%E7%AC%AC%E4%BA%94%E7%AF%87%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E4%BB%8E-Function-Calling-%E8%AE%B2%E8%B5%B7"><span class="nav-number">4.</span> <span class="nav-text">那第五篇为什么还从 Function Calling 讲起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E6%AD%A3%E9%9A%BE%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%8C%E4%B8%8D%E6%98%AF%E2%80%9C%E4%BC%9A%E4%B8%8D%E4%BC%9A%E8%B0%83%E5%B7%A5%E5%85%B7%E2%80%9D%EF%BC%8C%E8%80%8C%E6%98%AF%E2%80%9C%E4%B8%8A%E4%B8%8B%E6%96%87%E7%BB%99%E5%BE%97%E5%AF%B9%E4%B8%8D%E5%AF%B9%E2%80%9D"><span class="nav-number">5.</span> <span class="nav-text">真正难的地方，不是“会不会调工具”，而是“上下文给得对不对”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E5%8F%AB%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">什么叫上下文工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E6%97%B6%EF%BC%8CWorkflow-%E5%92%8C-AI-Agent-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%89%8D%E7%9C%9F%E6%AD%A3%E5%8F%98%E5%BE%97%E9%87%8D%E8%A6%81"><span class="nav-number">7.</span> <span class="nav-text">这时，Workflow 和 AI Agent 的区别才真正变得重要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Workflow"><span class="nav-number">7.1.</span> <span class="nav-text">Workflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AI-Agent"><span class="nav-number">7.2.</span> <span class="nav-text">AI Agent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%EF%BC%9A%E7%94%A8-Workflow%EF%BC%8C%E8%BF%98%E6%98%AF%E7%94%A8-Agent"><span class="nav-number">8.</span> <span class="nav-text">如何判断：用 Workflow，还是用 Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAG-%E4%B8%8D%E5%8F%AA%E6%98%AF%E7%9F%A5%E8%AF%86%E5%BA%93%E9%97%AE%E7%AD%94%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BE%9B%E7%BB%99%E6%96%B9%E5%BC%8F"><span class="nav-number">9.</span> <span class="nav-text">RAG 不只是知识库问答，而是上下文供给方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%8A-RAG-%E6%94%BE%E8%BF%9B-Workflow-%E5%92%8C-Agent-%E9%87%8C%EF%BC%8C%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%9B%B4%E6%B8%85%E6%A5%9A%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">10.</span> <span class="nav-text">把 RAG 放进 Workflow 和 Agent 里，会看到更清楚的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-Workflow-%E9%87%8C"><span class="nav-number">10.1.</span> <span class="nav-text">在 Workflow 里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-Agent-%E9%87%8C"><span class="nav-number">10.2.</span> <span class="nav-text">在 Agent 里</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E8%B6%8A%E6%9D%A5%E8%B6%8A%E6%B8%85%E6%A5%9A%E7%9A%84%E4%B8%BB%E7%BA%BF%EF%BC%9APrompt-%E6%AD%A3%E5%9C%A8%E5%8D%87%E7%BA%A7%E6%88%90%E2%80%9C%E4%B8%8A%E4%B8%8B%E6%96%87%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%9D"><span class="nav-number">11.</span> <span class="nav-text">一个越来越清楚的主线：Prompt 正在升级成“上下文操作系统”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E7%B1%BB%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%8F%AF%E4%BB%A5%E6%80%8E%E6%A0%B7%E9%AA%8C%E6%94%B6"><span class="nav-number">12.</span> <span class="nav-text">这类系统设计可以怎样验收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E7%AF%87%E7%BB%93%E8%AE%BA"><span class="nav-number">13.</span> <span class="nav-text">本篇结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">14.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -180,7 +180,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">133</span>
+          <span class="site-state-item-count">134</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -293,11 +293,11 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>前四篇我一直在往同一个方向推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。但继续往下学，很快就会发现一个新的问题：<strong>当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？</strong></p>
-<p>学完 Function Calling，又继续看 AI Workflows、AI Agents、Context Engineering 和 RAG 相关内容之后，我越来越强烈地感觉到：到了这一步，Prompt 已经不只是输入设计，也不只是接口设计，而是在逐渐变成一种<strong>系统上下文设计能力</strong>。</p>
+    <div class="post-body" itemprop="articleBody"><p>前四篇一直沿着同一条主线推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。继续往下，会遇到一个新的问题：<strong>当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？</strong></p>
+<p>在 Function Calling、AI Workflows、AI Agents、Context Engineering 和 RAG 这些内容中，可以看到：Prompt 已经不只是输入设计，也不只是接口设计，而是在逐渐变成一种<strong>系统上下文设计能力</strong>。</p>
 <span id="more"></span>
 
-<h2 id="Function-Calling-不是终点，而是系统协作的起点"><a href="#Function-Calling-不是终点，而是系统协作的起点" class="headerlink" title="Function Calling 不是终点，而是系统协作的起点"></a>Function Calling 不是终点，而是系统协作的起点</h2><p>一开始学 Function Calling，很容易把重点放在这件事本身：</p>
+<h2 id="Function-Calling-不是终点，而是系统协作的起点"><a href="#Function-Calling-不是终点，而是系统协作的起点" class="headerlink" title="Function Calling 不是终点，而是系统协作的起点"></a>Function Calling 不是终点，而是系统协作的起点</h2><p>Function Calling 容易让注意力停留在调用行为本身：</p>
 <ul>
 <li>模型能不能选对工具</li>
 <li>参数能不能传对</li>
@@ -319,12 +319,12 @@
 <li>它开始参与“调度动作”</li>
 <li>而 Prompt &#x2F; Tool Definition &#x2F; Context 则一起构成了它的运行环境</li>
 </ul>
-<p>所以到这里，我会把 Function Calling 理解成：</p>
+<p>因此，Function Calling 更适合被理解成：</p>
 <blockquote>
 <p>它不是给模型加一个技巧，而是在把模型接入系统协作。</p>
 </blockquote>
-<h2 id="Function-Call-和-Tool-Call-到底有什么区别"><a href="#Function-Call-和-Tool-Call-到底有什么区别" class="headerlink" title="Function Call 和 Tool Call 到底有什么区别"></a>Function Call 和 Tool Call 到底有什么区别</h2><p>这一部分里，我也专门停下来理了一次这个问题。因为在不同平台、不同文档里，你会同时看到 <code>function calling</code> 和 <code>tool calling</code> 两种说法，如果不主动分清楚，很容易以为它们完全等价。</p>
-<p>我后来把这两个词的关系慢慢理成了这样：</p>
+<h2 id="Function-Call-和-Tool-Call-到底有什么区别"><a href="#Function-Call-和-Tool-Call-到底有什么区别" class="headerlink" title="Function Call 和 Tool Call 到底有什么区别"></a>Function Call 和 Tool Call 到底有什么区别</h2><p>这一部分需要先理清一个问题：在不同平台、不同文档里，会同时看到 <code>function calling</code> 和 <code>tool calling</code> 两种说法。如果不主动区分，很容易把它们理解成完全等价的概念。</p>
+<p>这两个词的关系可以概括为：</p>
 <blockquote>
 <p><strong>Function Call 更像 Tool Call 的一个子集。</strong></p>
 </blockquote>
@@ -347,7 +347,7 @@
 <blockquote>
 <p>模型在完成任务时，是否要借助外部能力采取动作。</p>
 </blockquote>
-<h2 id="为什么现在越来越多人更常说-Tool-Call"><a href="#为什么现在越来越多人更常说-Tool-Call" class="headerlink" title="为什么现在越来越多人更常说 Tool Call"></a>为什么现在越来越多人更常说 Tool Call</h2><p>这里其实有一个很自然的变化。</p>
+<h2 id="为什么现在越来越多人更常说-Tool-Call"><a href="#为什么现在越来越多人更常说-Tool-Call" class="headerlink" title="为什么现在越来越多人更常说 Tool Call"></a>为什么现在越来越多人更常说 Tool Call</h2><p>这里存在一个很自然的变化。</p>
 <p>如果系统能力还比较简单，只有几个结构化函数，那讲 Function Calling 没问题，因为你面对的确实就是一组函数定义。</p>
 <p>但一旦系统开始变复杂，模型能接触到的外部能力就不再只是狭义上的 function：</p>
 <ul>
@@ -383,9 +383,9 @@
 <li>工具结果为什么会影响下一步行为</li>
 </ul>
 <p>但继续往后学，就要把视角从 Function Calling 扩展到 Tool Calling。因为真实系统里，你设计的已经不是单个函数，而是一整套外部能力如何被模型安全、准确、低成本地使用。</p>
-<p>如果用一句话把两者关系说清楚，大概就是：</p>
+<p>两者关系可以概括为：</p>
 <blockquote>
-<p>Function Calling 帮我理解了模型如何调用一个定义良好的接口；Tool Calling 则让我开始理解模型如何在系统里使用外部能力。</p>
+<p>Function Calling 用于理解模型如何调用一个定义良好的接口；Tool Calling 则用于理解模型如何在系统里使用外部能力。</p>
 </blockquote>
 <h2 id="真正难的地方，不是“会不会调工具”，而是“上下文给得对不对”"><a href="#真正难的地方，不是“会不会调工具”，而是“上下文给得对不对”" class="headerlink" title="真正难的地方，不是“会不会调工具”，而是“上下文给得对不对”"></a>真正难的地方，不是“会不会调工具”，而是“上下文给得对不对”</h2><p>如果只看最简单的天气查询例子，Function Calling 好像很好理解：用户问天气，模型调用天气工具，结果返回给用户。</p>
 <p>但真实场景一复杂，问题就不在“能不能调用工具”，而在：</p>
@@ -398,9 +398,9 @@
 </ul>
 <p>也就是说，Function Calling 背后真正难的，不是调用动作本身，而是：</p>
 <blockquote>
-<p>你到底给了模型什么信息，让它有能力在当前这一步做出合理决策。</p>
+<p>系统到底给了模型什么信息，使它有能力在当前这一步做出合理决策。</p>
 </blockquote>
-<p>这也是我开始真正理解“上下文工程”为什么重要的地方。</p>
+<p>这也解释了为什么“上下文工程”会变得重要。</p>
 <p>因为很多时候，系统表现不好，并不是模型不会，也不是工具不行，而是上下文设计出了问题：</p>
 <ul>
 <li>规则太少，模型自由发挥过度</li>
@@ -409,9 +409,9 @@
 <li>不该塞进去的噪声塞太多</li>
 <li>历史状态混乱，导致模型每一步都在错误前提上继续推理</li>
 </ul>
-<p>所以学到这里之后，我对 Prompt 的理解又往前推进了一步：</p>
+<p>到这一步，Prompt 的理解可以再往前推进一层：</p>
 <p><strong>Prompt 不只是“怎么说”，而是“给模型看什么、在什么时候给、给多少、给到哪一层”。</strong></p>
-<h2 id="什么叫上下文工程"><a href="#什么叫上下文工程" class="headerlink" title="什么叫上下文工程"></a>什么叫上下文工程</h2><p>如果用一句最朴素的话概括，上下文工程就是：</p>
+<h2 id="什么叫上下文工程"><a href="#什么叫上下文工程" class="headerlink" title="什么叫上下文工程"></a>什么叫上下文工程</h2><p>如果用一句最直接的话概括，上下文工程就是：</p>
 <blockquote>
 <p>为了让模型在当前任务里表现更稳定、更准确、更可控，去主动设计和管理它能看到的全部信息。</p>
 </blockquote>
@@ -435,10 +435,10 @@
 <li>什么信息应该结构化表达？</li>
 <li>什么信息如果继续保留，只会污染模型判断？</li>
 </ul>
-<p>这也是为什么我会觉得“上下文工程”这个词很贴切。它强调的已经不是一句 Prompt 的写法，而是整套信息架构。</p>
-<h2 id="这时，Workflow-和-AI-Agent-的区别才真正变得重要"><a href="#这时，Workflow-和-AI-Agent-的区别才真正变得重要" class="headerlink" title="这时，Workflow 和 AI Agent 的区别才真正变得重要"></a>这时，Workflow 和 AI Agent 的区别才真正变得重要</h2><p>在前一篇里，我已经写过 Prompt Chaining，也就是把复杂任务拆成多个步骤。继续往后学的时候，一个特别重要的变化就是：</p>
-<p><strong>你开始不只是在拆 Prompt，而是在选择系统应该做成 Workflow，还是做成 Agent。</strong></p>
-<p>我现在会把两者的区别理解成这样：</p>
+<p>“上下文工程”这个词之所以贴切，就在于它强调的已经不是一句 Prompt 的写法，而是整套信息架构。</p>
+<h2 id="这时，Workflow-和-AI-Agent-的区别才真正变得重要"><a href="#这时，Workflow-和-AI-Agent-的区别才真正变得重要" class="headerlink" title="这时，Workflow 和 AI Agent 的区别才真正变得重要"></a>这时，Workflow 和 AI Agent 的区别才真正变得重要</h2><p>前一篇已经讨论过 Prompt Chaining，也就是把复杂任务拆成多个步骤。继续往后，一个特别重要的变化是：</p>
+<p><strong>这时不再只是在拆 Prompt，而是在选择系统应该做成 Workflow，还是做成 Agent。</strong></p>
+<p>两者的区别可以概括为：</p>
 <h3 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h3><p>Workflow 的特点是：</p>
 <ul>
 <li>路径是预先定义好的</li>
@@ -476,8 +476,8 @@
 <blockquote>
 <p>决策权更多掌握在代码里，还是更多交给模型。</p>
 </blockquote>
-<h2 id="我现在会怎么判断：用-Workflow，还是用-Agent"><a href="#我现在会怎么判断：用-Workflow，还是用-Agent" class="headerlink" title="我现在会怎么判断：用 Workflow，还是用 Agent"></a>我现在会怎么判断：用 Workflow，还是用 Agent</h2><p>这块内容里最有帮助的一点，不是记住定义，而是开始有判断标准。</p>
-<p>我现在会先问下面几个问题：</p>
+<h2 id="如何判断：用-Workflow，还是用-Agent"><a href="#如何判断：用-Workflow，还是用-Agent" class="headerlink" title="如何判断：用 Workflow，还是用 Agent"></a>如何判断：用 Workflow，还是用 Agent</h2><p>这部分最有帮助的地方，不是记住定义，而是建立判断标准。</p>
+<p>判断时可以先问下面几个问题：</p>
 <ol>
 <li>任务步骤是否清楚、稳定、可预定义？</li>
 <li>任务是否需要高可控性和高可调试性？</li>
@@ -487,14 +487,14 @@
 </ol>
 <p>如果前面几个问题的答案偏向“是”，那更适合做 <strong>Workflow</strong>。</p>
 <p>如果后面几个问题的答案偏向“是”，那才更适合做 <strong>Agent</strong>。</p>
-<p>所以我越来越觉得，很多团队一开始就想做 Agent，其实有点像还没把流程设计清楚，就急着把控制权交给模型。</p>
+<p>很多团队一开始就想做 Agent，但从工程角度看，这往往意味着流程设计尚未清楚，就先把控制权交给了模型。</p>
 <p>从工程角度看，更稳妥的路径通常是：</p>
 <blockquote>
 <p>先把能 Workflow 化的部分 Workflow 化，再把真的需要动态决策的部分交给 Agent。</p>
 </blockquote>
-<p>这其实也是一种上下文工程思想。因为你本质上是在决定：<strong>模型应该在哪些边界内拥有自由度。</strong></p>
-<h2 id="RAG-不只是知识库问答，而是上下文供给方式"><a href="#RAG-不只是知识库问答，而是上下文供给方式" class="headerlink" title="RAG 不只是知识库问答，而是上下文供给方式"></a>RAG 不只是知识库问答，而是上下文供给方式</h2><p>继续往后看时，我越来越觉得，如果只把 RAG 单独理解成“做个知识库问答”，其实会低估它在系统里的位置。</p>
-<p>在我看来，把 RAG 放在上下文工程里理解会更顺：</p>
+<p>这也是一种上下文工程思想。因为本质上是在决定：<strong>模型应该在哪些边界内拥有自由度。</strong></p>
+<h2 id="RAG-不只是知识库问答，而是上下文供给方式"><a href="#RAG-不只是知识库问答，而是上下文供给方式" class="headerlink" title="RAG 不只是知识库问答，而是上下文供给方式"></a>RAG 不只是知识库问答，而是上下文供给方式</h2><p>如果只把 RAG 理解成“做个知识库问答”，往往会低估它在系统里的位置。</p>
+<p>把 RAG 放在上下文工程里理解，会更顺畅：</p>
 <blockquote>
 <p>RAG 的本质，不只是检索，而是在运行时为模型补充当前任务真正需要的外部知识。</p>
 </blockquote>
@@ -546,18 +546,18 @@
 <li>如果检索失败或证据不足，行为边界也要清楚</li>
 </ul>
 <p>也就是说，把 RAG 放进 Agent 之后，问题就不再只是“召回准不准”，而是整个上下文回路是否健康。</p>
-<h2 id="一个越来越清楚的主线：Prompt-正在升级成“上下文操作系统”"><a href="#一个越来越清楚的主线：Prompt-正在升级成“上下文操作系统”" class="headerlink" title="一个越来越清楚的主线：Prompt 正在升级成“上下文操作系统”"></a>一个越来越清楚的主线：Prompt 正在升级成“上下文操作系统”</h2><p>把这些内容串起来之后，我最大的体感是：</p>
+<h2 id="一个越来越清楚的主线：Prompt-正在升级成“上下文操作系统”"><a href="#一个越来越清楚的主线：Prompt-正在升级成“上下文操作系统”" class="headerlink" title="一个越来越清楚的主线：Prompt 正在升级成“上下文操作系统”"></a>一个越来越清楚的主线：Prompt 正在升级成“上下文操作系统”</h2><p>把这些内容串起来之后，可以看到一条更清楚的主线：</p>
 <ul>
-<li>第一阶段前面几篇更像在学“怎么写 Prompt”</li>
-<li>到了这一篇，开始真正进入“怎么组织模型工作的环境”</li>
+<li>前面几篇更像在学“怎么写 Prompt”</li>
+<li>到了这一篇，开始进入“怎么组织模型工作的环境”</li>
 </ul>
 <p>Function Calling 让模型可以接触外部能力；<br>Workflow 帮你把稳定流程写死；<br>Agent 让模型拥有有限度的动态决策权；<br>RAG 让系统在运行时补充外部知识；<br>而 Context Engineering 则在更高一层上，决定这一切该怎样组合。</p>
-<p>如果一定要给这一块找一个核心问题，我会把它写成：</p>
+<p>如果要给这一部分提炼一个核心问题，可以写成：</p>
 <blockquote>
 <p>当模型已经不只是回答，而是在一个系统里持续决策、持续调用、持续读取上下文时，你怎么设计它所处的整个信息环境？</p>
 </blockquote>
-<p>这就是我理解的这一阶段真正主题。</p>
-<h2 id="我现在会怎么验收这类系统设计"><a href="#我现在会怎么验收这类系统设计" class="headerlink" title="我现在会怎么验收这类系统设计"></a>我现在会怎么验收这类系统设计</h2><p>学完这部分之后，我判断一个方案是否靠谱，关注点已经不只是 Prompt 写得好不好，而会变成这些问题：</p>
+<p>这就是这一阶段的真正主题。</p>
+<h2 id="这类系统设计可以怎样验收"><a href="#这类系统设计可以怎样验收" class="headerlink" title="这类系统设计可以怎样验收"></a>这类系统设计可以怎样验收</h2><p>这一部分之后，判断一个方案是否靠谱，关注点已经不只是 Prompt 写得好不好，而会变成这些问题：</p>
 <ul>
 <li>工具定义是否真的足够清楚？</li>
 <li>模型是否知道什么时候该调用工具，什么时候不该？</li>
@@ -565,16 +565,17 @@
 <li>历史状态和当前任务有没有混淆？</li>
 <li>这个场景究竟更适合 Workflow 还是 Agent？</li>
 <li>RAG 注入的信息，是否真的和当前任务相关？</li>
-<li>如果系统出错，我能不能定位是 Prompt、工具、检索还是上下文拼装的问题？</li>
+<li>如果系统出错，是否能够定位是 Prompt、工具、检索还是上下文拼装的问题？</li>
 </ul>
-<p>这些问题一旦问出来，你就会发现：</p>
+<p>这些问题一旦被问出来，就会发现：</p>
 <p>AI 应用开发到了这里，已经越来越像系统工程，而不是 Prompt 小技巧。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>第一篇我把 Prompt 理解成结构化表达，第二篇开始理解输出稳定性，第三篇开始定义接口，第四篇开始拆流程。到了第五篇，我真正开始意识到：</p>
+<h2 id="本篇结论"><a href="#本篇结论" class="headerlink" title="本篇结论"></a>本篇结论</h2><p>第一篇把 Prompt 理解成结构化表达，第二篇开始理解输出稳定性，第三篇开始定义接口，第四篇开始拆流程。到了第五篇，可以进一步得到这样的结论：</p>
 <blockquote>
-<p>当模型开始调用工具、访问知识、管理状态并在多步链路里行动时，你真正设计的，已经不只是 Prompt，而是上下文本身。</p>
+<p>当模型开始调用工具、访问知识、管理状态并在多步链路里行动时，真正设计的，已经不只是 Prompt，而是上下文本身。</p>
 </blockquote>
 <p>Function Calling 只是入口，Context Engineering 才是更大的主题；Workflow 和 Agent 不是谁更高级，而是谁更适合当前问题；RAG 也不只是知识库问答，而是给模型补充高相关上下文的一种系统手段。</p>
-<p>如果说前四篇还主要在建立“如何跟模型协作”，那这一篇开始真正进入“如何围绕模型设计系统环境”。这也是我现在越来越强烈的一种感受：<strong>Prompt 的下一步，不是更会写，而是更会组织上下文。</strong></p>
+<p>如果说前四篇还主要在建立“如何跟模型协作”，那么这一篇开始进入“如何围绕模型设计系统环境”。这一部分的核心结论是：<strong>Prompt 的下一步，不是更会写，而是更会组织上下文。</strong></p>
+<p>下一篇将进入 Prompt 的安全、测试与维护问题，重点讨论 Prompt Injection、测试集、回归比较和版本化迭代。</p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvemgvYXBwbGljYXRpb25zL2Z1bmN0aW9uX2NhbGxpbmc=">Prompt Engineering Guide - Function Calling<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvZW4vYWdlbnRzL2Z1bmN0aW9uLWNhbGxpbmc=">Prompt Engineering Guide - Function Calling in AI Agents<i class="fa fa-external-link-alt"></i></span></li>

@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.27.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"default"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="前三篇我分别在解决三个问题：第一，怎么把任务说清楚；第二，怎么让结果更稳定；第三，怎么把行为边界和输出契约定义清楚。但继续往下学，很快就会撞上第四个问题：如果任务本身就不是单步能完成的，那一个 Prompt 写得再完整，是不是也不够？ 学到 Chain-of-Thought（CoT）和 Prompt Chaining 这一块时，我最大的感受是：很多 AI 应用的问题，不是 Prompt 写得不够精">
+    <meta name="description" content="前三篇分别在解决三个问题：第一，怎么把任务说清楚；第二，怎么让结果更稳定；第三，怎么把行为边界和输出契约定义清楚。继续往下，会遇到第四个问题：如果任务本身就不是单步能完成的，那么一个 Prompt 写得再完整，是不是仍然不够？ Chain-of-Thought（CoT）和 Prompt Chaining 这一部分说明了一个问题：很多 AI 应用的问题，不是 Prompt 写得不够精致，而是模型在一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Prompt学习四：为什么复杂任务不能只靠一个 Prompt">
 <meta property="og:url" content="https://regulusleow.github.io/2026/02/26/20260226-Prompt%E5%AD%A6%E4%B9%A0%E5%9B%9B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%8D%E6%9D%82%E4%BB%BB%E5%8A%A1%E4%B8%8D%E8%83%BD%E5%8F%AA%E9%9D%A0%E4%B8%80%E4%B8%AA%20Prompt/index.html">
 <meta property="og:site_name" content="轩辕十四">
-<meta property="og:description" content="前三篇我分别在解决三个问题：第一，怎么把任务说清楚；第二，怎么让结果更稳定；第三，怎么把行为边界和输出契约定义清楚。但继续往下学，很快就会撞上第四个问题：如果任务本身就不是单步能完成的，那一个 Prompt 写得再完整，是不是也不够？ 学到 Chain-of-Thought（CoT）和 Prompt Chaining 这一块时，我最大的感受是：很多 AI 应用的问题，不是 Prompt 写得不够精">
+<meta property="og:description" content="前三篇分别在解决三个问题：第一，怎么把任务说清楚；第二，怎么让结果更稳定；第三，怎么把行为边界和输出契约定义清楚。继续往下，会遇到第四个问题：如果任务本身就不是单步能完成的，那么一个 Prompt 写得再完整，是不是仍然不够？ Chain-of-Thought（CoT）和 Prompt Chaining 这一部分说明了一个问题：很多 AI 应用的问题，不是 Prompt 写得不够精致，而是模型在一">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-02-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-09T04:27:23.193Z">
+<meta property="article:modified_time" content="2026-04-16T03:50:44.874Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="AI 应用开发">
@@ -165,7 +165,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E6%AD%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E4%BB%BB%E5%8A%A1%EF%BC%8C%E5%BE%80%E5%BE%80%E4%B8%8D%E6%98%AF%E2%80%9C%E4%B8%80%E6%AC%A1%E7%94%9F%E6%88%90%E2%80%9D%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">真正复杂的任务，往往不是“一次生成”问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CoT-%E8%A7%A3%E5%86%B3%E7%9A%84%EF%BC%8C%E4%B8%8D%E6%98%AF%E2%80%9C%E8%AE%A9%E6%A8%A1%E5%9E%8B%E5%A4%9A%E8%AF%B4%E4%B8%80%E7%82%B9%E2%80%9D"><span class="nav-number">2.</span> <span class="nav-text">CoT 解决的，不是“让模型多说一点”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E8%AE%A9%E6%A8%A1%E5%9E%8B%E2%80%9C%E9%80%90%E6%AD%A5%E6%80%9D%E8%80%83%E2%80%9D"><span class="nav-number">3.</span> <span class="nav-text">什么时候该让模型“逐步思考”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt-Chaining-%E6%89%8D%E6%98%AF%E7%9C%9F%E6%AD%A3%E6%8E%A5%E8%BF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">4.</span> <span class="nav-text">Prompt Chaining 才是真正接近系统设计的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%85%B8%E5%9E%8B%E4%BE%8B%E5%AD%90%EF%BC%9A%E9%95%BF%E6%96%87%E7%AB%A0%E7%94%9F%E6%88%90%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BA%94%E8%AF%A5%E5%85%88%E6%8F%90%E7%BA%B2%E5%86%8D%E6%89%A9%E5%86%99"><span class="nav-number">5.</span> <span class="nav-text">一个典型例子：长文章生成，为什么应该先提纲再扩写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%8F%AA%E5%81%9A%E6%8F%90%E7%BA%B2"><span class="nav-number">5.1.</span> <span class="nav-text">第一步：只做提纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%8C%89%E6%8F%90%E7%BA%B2%E6%89%A9%E5%86%99"><span class="nav-number">5.2.</span> <span class="nav-text">第二步：按提纲扩写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E4%B8%BE%E4%B8%80%E4%B8%AA%E6%9B%B4%E8%B4%B4%E8%BF%91-AI-%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A%E5%85%88%E6%8A%BD%E8%AF%81%E6%8D%AE%EF%BC%8C%E5%86%8D%E5%9B%9E%E7%AD%94%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">再举一个更贴近 AI 系统的例子：先抽证据，再回答问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%8A%BD%E5%8F%96%E8%AF%81%E6%8D%AE"><span class="nav-number">6.1.</span> <span class="nav-text">第一步：抽取证据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E5%9B%9E%E7%AD%94"><span class="nav-number">6.2.</span> <span class="nav-text">第二步：基于证据回答</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Self-Consistency-%E7%BB%99%E6%88%91%E7%9A%84%E6%8F%90%E9%86%92%EF%BC%9A%E4%B8%8D%E8%A6%81%E5%8F%AA%E7%9B%AF%E7%9D%80%E5%8D%95%E6%AC%A1%E7%BB%93%E6%9E%9C"><span class="nav-number">7.</span> <span class="nav-text">Self-Consistency 给我的提醒：不要只盯着单次结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%8E%B0%E5%9C%A8%E4%BC%9A%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%EF%BC%9A%E8%AF%A5%E7%94%A8%E5%8D%95%E4%B8%AA-Prompt%EF%BC%8C%E8%BF%98%E6%98%AF%E8%AF%A5%E6%8B%86%E9%93%BE%E8%B7%AF"><span class="nav-number">8.</span> <span class="nav-text">我现在会怎么判断：该用单个 Prompt，还是该拆链路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E5%9D%97%E7%9C%9F%E6%AD%A3%E8%AE%A9%E6%88%91%E5%BC%80%E5%A7%8B%E2%80%9C%E5%83%8F%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%B8%80%E6%A0%B7%E6%80%9D%E8%80%83-AI%E2%80%9D"><span class="nav-number">9.</span> <span class="nav-text">这一块真正让我开始“像工程师一样思考 AI”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">10.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">11.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E6%AD%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E4%BB%BB%E5%8A%A1%EF%BC%8C%E5%BE%80%E5%BE%80%E4%B8%8D%E6%98%AF%E2%80%9C%E4%B8%80%E6%AC%A1%E7%94%9F%E6%88%90%E2%80%9D%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">真正复杂的任务，往往不是“一次生成”问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CoT-%E8%A7%A3%E5%86%B3%E7%9A%84%EF%BC%8C%E4%B8%8D%E6%98%AF%E2%80%9C%E8%AE%A9%E6%A8%A1%E5%9E%8B%E5%A4%9A%E8%AF%B4%E4%B8%80%E7%82%B9%E2%80%9D"><span class="nav-number">2.</span> <span class="nav-text">CoT 解决的，不是“让模型多说一点”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E8%AE%A9%E6%A8%A1%E5%9E%8B%E2%80%9C%E9%80%90%E6%AD%A5%E6%80%9D%E8%80%83%E2%80%9D"><span class="nav-number">3.</span> <span class="nav-text">什么时候该让模型“逐步思考”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt-Chaining-%E6%89%8D%E6%98%AF%E7%9C%9F%E6%AD%A3%E6%8E%A5%E8%BF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">4.</span> <span class="nav-text">Prompt Chaining 才是真正接近系统设计的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%85%B8%E5%9E%8B%E4%BE%8B%E5%AD%90%EF%BC%9A%E9%95%BF%E6%96%87%E7%AB%A0%E7%94%9F%E6%88%90%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BA%94%E8%AF%A5%E5%85%88%E6%8F%90%E7%BA%B2%E5%86%8D%E6%89%A9%E5%86%99"><span class="nav-number">5.</span> <span class="nav-text">一个典型例子：长文章生成，为什么应该先提纲再扩写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%8F%AA%E5%81%9A%E6%8F%90%E7%BA%B2"><span class="nav-number">5.1.</span> <span class="nav-text">第一步：只做提纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%8C%89%E6%8F%90%E7%BA%B2%E6%89%A9%E5%86%99"><span class="nav-number">5.2.</span> <span class="nav-text">第二步：按提纲扩写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E4%B8%BE%E4%B8%80%E4%B8%AA%E6%9B%B4%E8%B4%B4%E8%BF%91-AI-%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A%E5%85%88%E6%8A%BD%E8%AF%81%E6%8D%AE%EF%BC%8C%E5%86%8D%E5%9B%9E%E7%AD%94%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">再举一个更贴近 AI 系统的例子：先抽证据，再回答问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%8A%BD%E5%8F%96%E8%AF%81%E6%8D%AE"><span class="nav-number">6.1.</span> <span class="nav-text">第一步：抽取证据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E5%9B%9E%E7%AD%94"><span class="nav-number">6.2.</span> <span class="nav-text">第二步：基于证据回答</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Self-Consistency-%E7%BB%99%E5%87%BA%E7%9A%84%E6%8F%90%E9%86%92%EF%BC%9A%E4%B8%8D%E8%A6%81%E5%8F%AA%E7%9B%AF%E7%9D%80%E5%8D%95%E6%AC%A1%E7%BB%93%E6%9E%9C"><span class="nav-number">7.</span> <span class="nav-text">Self-Consistency 给出的提醒：不要只盯着单次结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A5%E7%94%A8%E5%8D%95%E4%B8%AA-Prompt%EF%BC%8C%E8%BF%98%E6%98%AF%E8%AF%A5%E6%8B%86%E9%93%BE%E8%B7%AF"><span class="nav-number">8.</span> <span class="nav-text">该用单个 Prompt，还是该拆链路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E9%83%A8%E5%88%86%E5%A6%82%E4%BD%95%E6%8A%8A%E9%97%AE%E9%A2%98%E6%8E%A8%E8%BF%9B%E5%88%B0%E5%B7%A5%E7%A8%8B%E8%A7%86%E8%A7%92"><span class="nav-number">9.</span> <span class="nav-text">这一部分如何把问题推进到工程视角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E7%AF%87%E7%BB%93%E8%AE%BA"><span class="nav-number">10.</span> <span class="nav-text">本篇结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">11.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -180,7 +180,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">133</span>
+          <span class="site-state-item-count">134</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -293,8 +293,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>前三篇我分别在解决三个问题：第一，怎么把任务说清楚；第二，怎么让结果更稳定；第三，怎么把行为边界和输出契约定义清楚。但继续往下学，很快就会撞上第四个问题：<strong>如果任务本身就不是单步能完成的，那一个 Prompt 写得再完整，是不是也不够？</strong></p>
-<p>学到 Chain-of-Thought（CoT）和 Prompt Chaining 这一块时，我最大的感受是：很多 AI 应用的问题，不是 Prompt 写得不够精致，而是你让模型在一次输出里同时承担了太多职责：既要理解任务，又要提取信息，又要判断优先级，还要组织结果。任务一旦变复杂，单个 Prompt 的可控性就会快速下降。</p>
+    <div class="post-body" itemprop="articleBody"><p>前三篇分别在解决三个问题：第一，怎么把任务说清楚；第二，怎么让结果更稳定；第三，怎么把行为边界和输出契约定义清楚。继续往下，会遇到第四个问题：<strong>如果任务本身就不是单步能完成的，那么一个 Prompt 写得再完整，是不是仍然不够？</strong></p>
+<p>Chain-of-Thought（CoT）和 Prompt Chaining 这一部分说明了一个问题：很多 AI 应用的问题，不是 Prompt 写得不够精致，而是模型在一次输出里同时承担了过多职责：既要理解任务，又要提取信息，又要判断优先级，还要组织结果。任务一旦变复杂，单个 Prompt 的可控性就会快速下降。</p>
 <span id="more"></span>
 
 <h2 id="真正复杂的任务，往往不是“一次生成”问题"><a href="#真正复杂的任务，往往不是“一次生成”问题" class="headerlink" title="真正复杂的任务，往往不是“一次生成”问题"></a>真正复杂的任务，往往不是“一次生成”问题</h2><p>如果只是简单改写、摘要或者分类，单轮 Prompt 往往已经够用。但真实的 AI 应用里，更常见的是这种链路：</p>
@@ -324,7 +324,7 @@
 <p>当任务本身包含多个认知阶段时，问题往往不在“Prompt 写得够不够好”，而在“任务有没有被正确拆开”。</p>
 </blockquote>
 <h2 id="CoT-解决的，不是“让模型多说一点”"><a href="#CoT-解决的，不是“让模型多说一点”" class="headerlink" title="CoT 解决的，不是“让模型多说一点”"></a>CoT 解决的，不是“让模型多说一点”</h2><p>一开始看到 Chain-of-Thought（链式思维）时，很容易把它理解成：让模型把思考过程写出来。但如果只是停在这个层面，其实很容易学偏。</p>
-<p>对我来说，CoT 真正有价值的地方不在于“让模型展开推理文字”，而在于：</p>
+<p>CoT 真正有价值的地方不在于“让模型展开推理文字”，而在于：</p>
 <blockquote>
 <p>当任务需要多个判断环节时，显式地提示模型按步骤处理，往往比让它直接给结论更稳定。</p>
 </blockquote>
@@ -360,7 +360,7 @@
 <li>格式改写</li>
 </ul>
 <p>那强行要求模型逐步展开，可能只会增加 token 和噪声。</p>
-<p>但当任务出现下面这些特征时，我会更倾向于考虑 CoT：</p>
+<p>但当任务出现下面这些特征时，就应更倾向于考虑 CoT：</p>
 <ul>
 <li>需要先分析再判断</li>
 <li>需要结合多个条件做结论</li>
@@ -377,8 +377,7 @@
 <blockquote>
 <p>不是让一个 Prompt 包办所有事，而是把复杂任务拆成多个前后衔接的小步骤。</p>
 </blockquote>
-<p>这是我学到 Prompt Chaining 之后，最有工程感的一部分。</p>
-<p>因为一旦开始把任务拆成链路，你思考问题的方式就会明显变化。你不再问：</p>
+<p>Prompt Chaining 是最接近系统设计的一部分。因为一旦开始把任务拆成链路，思考问题的方式就会明显变化，不再只问：</p>
 <ul>
 <li>有没有一个更厉害的 Prompt 可以一次解决？</li>
 </ul>
@@ -407,7 +406,7 @@
 <li>更容易做评估和对比</li>
 <li>更容易接上检索、工具调用或程序逻辑</li>
 </ul>
-<p>所以 Prompt Chaining 真正带来的，不是“Prompt 花样更多了”，而是你开始从“写一句话”转向“设计一条工作流”。</p>
+<p>所以 Prompt Chaining 真正带来的，不是“Prompt 花样更多了”，而是从“写一句话”转向“设计一条工作流”。</p>
 <h2 id="一个典型例子：长文章生成，为什么应该先提纲再扩写"><a href="#一个典型例子：长文章生成，为什么应该先提纲再扩写" class="headerlink" title="一个典型例子：长文章生成，为什么应该先提纲再扩写"></a>一个典型例子：长文章生成，为什么应该先提纲再扩写</h2><p>长文章生成就是一个特别容易看出差异的例子。</p>
 <p>如果直接写：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请围绕 AI 应用开发工程师的成长路径，写一篇 3000 字文章。</span><br></pre></td></tr></table></figure>
@@ -433,7 +432,7 @@
 
 <h3 id="第二步：按提纲扩写"><a href="#第二步：按提纲扩写" class="headerlink" title="第二步：按提纲扩写"></a>第二步：按提纲扩写</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">请基于下面这份提纲扩写成正文。</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">1. 保持结构顺序不变</span><br><span class="line">2. 每部分先解释问题，再解释为什么重要</span><br><span class="line">3. 避免重复前文观点</span><br><span class="line">4. 结尾回到“为什么这是一条工程化能力路径”</span><br><span class="line"></span><br><span class="line">提纲：</span><br><span class="line">&#123;&#123;outline&#125;&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这时候，你得到的不只是“好像更顺一点”的结果，而是整个过程变得更可控了：</p>
+<p>这时候，得到的不只是“好像更顺一点”的结果，而是整个过程变得更可控了：</p>
 <ul>
 <li>提纲阶段负责定结构</li>
 <li>扩写阶段负责填内容</li>
@@ -455,13 +454,13 @@
 
 <h3 id="第二步：基于证据回答"><a href="#第二步：基于证据回答" class="headerlink" title="第二步：基于证据回答"></a>第二步：基于证据回答</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">请基于下面证据回答问题：这个功能为什么要增加人工兜底？</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">1. 只能依据证据回答</span><br><span class="line">2. 如果证据不足，明确说明</span><br><span class="line">3. 先给结论，再给依据</span><br><span class="line"></span><br><span class="line">证据：</span><br><span class="line">&#123;&#123;evidence&#125;&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这样拆开的好处是，你不再把“检索证据”和“组织回答”混成一个黑盒步骤。问题一旦出错，也更容易知道：</p>
+<p>这样拆开的好处是，“检索证据”和“组织回答”不再混成一个黑盒步骤。问题一旦出错，也更容易知道：</p>
 <ul>
 <li>是证据没找对？</li>
 <li>还是证据找对了，但回答环节组织错了？</li>
 </ul>
 <p>这正是工程里最重要的一种可调试性。</p>
-<h2 id="Self-Consistency-给我的提醒：不要只盯着单次结果"><a href="#Self-Consistency-给我的提醒：不要只盯着单次结果" class="headerlink" title="Self-Consistency 给我的提醒：不要只盯着单次结果"></a>Self-Consistency 给我的提醒：不要只盯着单次结果</h2><p>这一部分里我还顺带看了 Self-Consistency。它不一定是我现在最常用的手段，但它给了我一个很重要的提醒：</p>
+<h2 id="Self-Consistency-给出的提醒：不要只盯着单次结果"><a href="#Self-Consistency-给出的提醒：不要只盯着单次结果" class="headerlink" title="Self-Consistency 给出的提醒：不要只盯着单次结果"></a>Self-Consistency 给出的提醒：不要只盯着单次结果</h2><p>Self-Consistency 虽然未必是最常用的手段，但它给出了一条很重要的提醒：</p>
 <blockquote>
 <p>对复杂任务，不要只看某一次答案像不像对，而要看同样的问题在多次推理下是否收敛。</p>
 </blockquote>
@@ -473,9 +472,9 @@
 <li>中间步骤没有被说清楚</li>
 <li>最终结论依赖了过多模型自由发挥</li>
 </ul>
-<p>所以 Self-Consistency 对我的价值，不只是一个技术名词，而更像是一种验收视角：</p>
+<p>因此，Self-Consistency 的价值不只是一个技术名词，而更像是一种验收视角：</p>
 <p><strong>复杂任务的质量，不该只看一次成功，而要看多次执行是否收敛。</strong></p>
-<h2 id="我现在会怎么判断：该用单个-Prompt，还是该拆链路"><a href="#我现在会怎么判断：该用单个-Prompt，还是该拆链路" class="headerlink" title="我现在会怎么判断：该用单个 Prompt，还是该拆链路"></a>我现在会怎么判断：该用单个 Prompt，还是该拆链路</h2><p>学完这块之后，我会用一组更清楚的问题来判断任务该怎么设计：</p>
+<h2 id="该用单个-Prompt，还是该拆链路"><a href="#该用单个-Prompt，还是该拆链路" class="headerlink" title="该用单个 Prompt，还是该拆链路"></a>该用单个 Prompt，还是该拆链路</h2><p>这一部分可以用一组更清楚的问题来判断任务该怎么设计：</p>
 <ol>
 <li>这个任务是不是本质上包含多个认知阶段？</li>
 <li>最终结果是否依赖中间判断？</li>
@@ -483,7 +482,7 @@
 <li>输出是否需要中间结构来支撑下游流程？</li>
 <li>这一步应该由模型完成，还是更适合交给程序规则处理？</li>
 </ol>
-<p>如果这些问题里，前 3 个的答案都是“是”，那我通常就不会再执着于“一个 Prompt 解决全部”，而会优先考虑：</p>
+<p>如果这些问题里，前 3 个的答案都是“是”，那么就不应再执着于“一个 Prompt 解决全部”，而应优先考虑：</p>
 <ul>
 <li>先用 CoT 显式化步骤</li>
 <li>再看是否应该进一步拆成 Prompt Chaining</li>
@@ -493,8 +492,8 @@
 <p>单个 Prompt 更像一次调用，Prompt Chaining 更像一条流程。</p>
 </blockquote>
 <p>任务越复杂，越应该用流程思维，而不是继续往一次调用里堆要求。</p>
-<h2 id="这一块真正让我开始“像工程师一样思考-AI”"><a href="#这一块真正让我开始“像工程师一样思考-AI”" class="headerlink" title="这一块真正让我开始“像工程师一样思考 AI”"></a>这一块真正让我开始“像工程师一样思考 AI”</h2><p>回头看这部分内容，我觉得它最重要的收获不是掌握了 CoT、Self-Consistency、Prompt Chaining 这些术语，而是思维方式变了。</p>
-<p>以前更容易把 Prompt 问题理解成“这句话怎么写更好”；现在我会更自然地先想：</p>
+<h2 id="这一部分如何把问题推进到工程视角"><a href="#这一部分如何把问题推进到工程视角" class="headerlink" title="这一部分如何把问题推进到工程视角"></a>这一部分如何把问题推进到工程视角</h2><p>回看这部分内容，最重要的收获不是掌握了 CoT、Self-Consistency、Prompt Chaining 这些术语，而是思维方式发生了变化。</p>
+<p>过去更容易把 Prompt 问题理解成“这句话怎么写更好”；现在更应优先考虑：</p>
 <ul>
 <li>这个任务有没有拆错层次？</li>
 <li>哪些步骤应该单独拿出来？</li>
@@ -503,13 +502,13 @@
 </ul>
 <p>一旦这么想，Prompt 学习就开始从“输入写法”走向“流程设计”。</p>
 <p>而这一步，正是 AI 应用开发和普通聊天用法之间非常关键的一条分界线。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>第一篇我在学怎么把任务说清楚，第二篇我在学怎么让输出更稳定，第三篇我开始把 Prompt 理解成模型与系统之间的接口。到了第四篇，我真正开始意识到：</p>
+<h2 id="本篇结论"><a href="#本篇结论" class="headerlink" title="本篇结论"></a>本篇结论</h2><p>第一篇关注怎么把任务说清楚，第二篇关注怎么让输出更稳定，第三篇开始把 Prompt 理解成模型与系统之间的接口。到了第四篇，可以得到这样的结论：</p>
 <blockquote>
 <p>很多复杂任务的问题，已经不是 Prompt 句子怎么写，而是任务流程怎么拆。</p>
 </blockquote>
-<p>CoT 让我学会把中间判断显式化，Prompt Chaining 让我开始按步骤设计工作流，Self-Consistency 则提醒我不要只盯着单次结果，而要关注复杂任务在多次执行中的收敛性。</p>
-<p>如果说前三篇更多是在打 Prompt 这层输入和接口基础，那这一篇开始让我第一次真正进入 AI 系统设计的思路：<strong>一个 Prompt 干不完的事，就不要硬塞给一个 Prompt。</strong></p>
-<p>接下来继续往下学，我会进入工具调用、上下文设计和更完整的系统协作方式。到那时，Prompt 就不再只是“写给模型的话”，而会越来越像一套围绕模型展开的工作流设计。</p>
+<p>CoT 用于把中间判断显式化，Prompt Chaining 用于按步骤设计工作流，Self-Consistency 则提醒不要只盯着单次结果，而要关注复杂任务在多次执行中的收敛性。</p>
+<p>如果说前三篇更多是在打 Prompt 这一层输入和接口基础，那么这一篇开始进入 AI 系统设计的思路：<strong>一个 Prompt 无法稳定完成的事，就不应强行塞进一个 Prompt。</strong></p>
+<p>下一篇将进入工具调用、上下文设计和更完整的系统协作方式。到那时，Prompt 将不再只是“写给模型的话”，而会越来越接近一套围绕模型展开的工作流设计。</p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvdGVjaG5pcXVlcy9jb3Q=">Prompt Engineering Guide - Chain-of-Thought Prompting<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvdGVjaG5pcXVlcy9jb25zaXN0ZW5jeQ==">Prompt Engineering Guide - Self-Consistency<i class="fa fa-external-link-alt"></i></span></li>

@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"regulusleow.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.27.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"default"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="前五篇我一直在往同一个方向推进：先把任务说清楚，再让输出更稳定，再定义输入输出接口，再把复杂任务拆成流程，最后开始从工具和上下文的角度理解系统。但继续往下学，很快会遇到另一个很容易被低估的问题：一个 Prompt 即使已经能跑通，也不代表它真的可上线、可维护、可长期使用。 学到 Prompt Injection、对抗性输入、测试集、回归比较和迭代方法这一块时，我越来越强烈地感觉到：到了这里，Pro">
+    <meta name="description" content="前五篇一直沿着同一条主线推进：先把任务说清楚，再让输出更稳定，再定义输入输出接口，再把复杂任务拆成流程，最后开始从工具和上下文的角度理解系统。继续往下，会遇到另一个容易被低估的问题：一个 Prompt 即使已经能跑通，也不代表它真的可上线、可维护、可长期使用。 在 Prompt Injection、对抗性输入、测试集、回归比较和迭代方法这一部分中，可以看到：Prompt 已经不能再被看成一次性聊天">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Prompt学习六：为什么写完 Prompt 还不算结束">
 <meta property="og:url" content="https://regulusleow.github.io/2026/04/15/20260415-Prompt%E5%AD%A6%E4%B9%A0%E5%85%AD%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%AE%8C%20Prompt%20%E8%BF%98%E4%B8%8D%E7%AE%97%E7%BB%93%E6%9D%9F/index.html">
 <meta property="og:site_name" content="轩辕十四">
-<meta property="og:description" content="前五篇我一直在往同一个方向推进：先把任务说清楚，再让输出更稳定，再定义输入输出接口，再把复杂任务拆成流程，最后开始从工具和上下文的角度理解系统。但继续往下学，很快会遇到另一个很容易被低估的问题：一个 Prompt 即使已经能跑通，也不代表它真的可上线、可维护、可长期使用。 学到 Prompt Injection、对抗性输入、测试集、回归比较和迭代方法这一块时，我越来越强烈地感觉到：到了这里，Pro">
+<meta property="og:description" content="前五篇一直沿着同一条主线推进：先把任务说清楚，再让输出更稳定，再定义输入输出接口，再把复杂任务拆成流程，最后开始从工具和上下文的角度理解系统。继续往下，会遇到另一个容易被低估的问题：一个 Prompt 即使已经能跑通，也不代表它真的可上线、可维护、可长期使用。 在 Prompt Injection、对抗性输入、测试集、回归比较和迭代方法这一部分中，可以看到：Prompt 已经不能再被看成一次性聊天">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-04-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-15T03:20:11.260Z">
+<meta property="article:modified_time" content="2026-04-16T03:50:44.875Z">
 <meta property="article:author" content="轩辕十四">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="AI 应用开发">
@@ -165,7 +165,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt-%E5%86%99%E5%87%BA%E6%9D%A5%EF%BC%8C%E4%B8%8D%E7%AD%89%E4%BA%8E%E9%97%AE%E9%A2%98%E5%B7%B2%E7%BB%8F%E8%A7%A3%E5%86%B3"><span class="nav-number">1.</span> <span class="nav-text">Prompt 写出来，不等于问题已经解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt-Injection-%E4%B8%8D%E6%98%AF%E7%90%86%E8%AE%BA%E5%90%8D%E8%AF%8D%EF%BC%8C%E8%80%8C%E6%98%AF%E7%9C%9F%E5%AE%9E%E5%B7%A5%E7%A8%8B%E9%A3%8E%E9%99%A9"><span class="nav-number">2.</span> <span class="nav-text">Prompt Injection 不是理论名词，而是真实工程风险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84-Prompt%EF%BC%8C%E5%BE%80%E5%BE%80%E5%85%88%E5%81%9A%E7%9A%84%E6%98%AF%E8%BE%B9%E7%95%8C%E5%88%86%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">更安全的 Prompt，往往先做的是边界分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E7%9A%84%E5%85%B3%E9%94%AE%EF%BC%8C%E4%B8%8D%E5%8F%AA%E6%98%AF%E9%98%B2%E6%94%BB%E5%87%BB%EF%BC%8C%E8%BF%98%E8%A6%81%E9%98%B2%E8%AF%AF%E6%89%A7%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">安全问题的关键，不只是防攻击，还要防误执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B0%E4%BA%86%E8%BF%99%E9%87%8C%EF%BC%8CPrompt-%E9%9C%80%E8%A6%81%E5%83%8F%E4%BB%A3%E7%A0%81%E4%B8%80%E6%A0%B7%E8%A2%AB%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">到了这里，Prompt 需要像代码一样被测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E6%9C%89%E4%BB%A3%E8%A1%A8%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E9%9B%86"><span class="nav-number">5.1.</span> <span class="nav-text">第一层：有代表性的样本集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E7%89%88%E6%9C%AC%E9%97%B4%E5%8F%AF%E6%AF%94%E8%BE%83"><span class="nav-number">5.2.</span> <span class="nav-text">第二层：版本间可比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%9B%9E%E5%BD%92%E6%84%8F%E8%AF%86"><span class="nav-number">5.3.</span> <span class="nav-text">第三层：回归意识</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Self-Consistency-%E8%AE%A9%E6%88%91%E9%87%8D%E6%96%B0%E7%90%86%E8%A7%A3%E2%80%9C%E7%A8%B3%E5%AE%9A%E2%80%9D%E8%BF%99%E4%BB%B6%E4%BA%8B"><span class="nav-number">6.</span> <span class="nav-text">Self-Consistency 让我重新理解“稳定”这件事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context-Engineering-%E5%9C%A8%E8%BF%99%E9%87%8C%E5%BC%80%E5%A7%8B%E5%92%8C%E5%AE%89%E5%85%A8%E3%80%81%E8%AF%84%E4%BC%B0%E8%BF%9E%E5%9C%A8%E4%B8%80%E8%B5%B7"><span class="nav-number">7.</span> <span class="nav-text">Context Engineering 在这里开始和安全、评估连在一起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%8E%B0%E5%9C%A8%E4%BC%9A%E6%8A%8A-Prompt-%E5%BD%93%E6%88%90%E4%BB%80%E4%B9%88%E6%9D%A5%E7%BB%B4%E6%8A%A4"><span class="nav-number">8.</span> <span class="nav-text">我现在会把 Prompt 当成什么来维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%8E%B0%E5%9C%A8%E4%BC%9A%E6%80%8E%E4%B9%88%E9%AA%8C%E6%94%B6%E8%BF%99%E4%B8%80%E7%B1%BB-Prompt"><span class="nav-number">9.</span> <span class="nav-text">我现在会怎么验收这一类 Prompt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">10.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">11.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt-%E5%86%99%E5%87%BA%E6%9D%A5%EF%BC%8C%E4%B8%8D%E7%AD%89%E4%BA%8E%E9%97%AE%E9%A2%98%E5%B7%B2%E7%BB%8F%E8%A7%A3%E5%86%B3"><span class="nav-number">1.</span> <span class="nav-text">Prompt 写出来，不等于问题已经解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt-Injection-%E4%B8%8D%E6%98%AF%E7%90%86%E8%AE%BA%E5%90%8D%E8%AF%8D%EF%BC%8C%E8%80%8C%E6%98%AF%E7%9C%9F%E5%AE%9E%E5%B7%A5%E7%A8%8B%E9%A3%8E%E9%99%A9"><span class="nav-number">2.</span> <span class="nav-text">Prompt Injection 不是理论名词，而是真实工程风险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84-Prompt%EF%BC%8C%E5%BE%80%E5%BE%80%E5%85%88%E5%81%9A%E7%9A%84%E6%98%AF%E8%BE%B9%E7%95%8C%E5%88%86%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">更安全的 Prompt，往往先做的是边界分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E7%9A%84%E5%85%B3%E9%94%AE%EF%BC%8C%E4%B8%8D%E5%8F%AA%E6%98%AF%E9%98%B2%E6%94%BB%E5%87%BB%EF%BC%8C%E8%BF%98%E8%A6%81%E9%98%B2%E8%AF%AF%E6%89%A7%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">安全问题的关键，不只是防攻击，还要防误执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B0%E4%BA%86%E8%BF%99%E9%87%8C%EF%BC%8CPrompt-%E9%9C%80%E8%A6%81%E5%83%8F%E4%BB%A3%E7%A0%81%E4%B8%80%E6%A0%B7%E8%A2%AB%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">到了这里，Prompt 需要像代码一样被测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E6%9C%89%E4%BB%A3%E8%A1%A8%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E9%9B%86"><span class="nav-number">5.1.</span> <span class="nav-text">第一层：有代表性的样本集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E7%89%88%E6%9C%AC%E9%97%B4%E5%8F%AF%E6%AF%94%E8%BE%83"><span class="nav-number">5.2.</span> <span class="nav-text">第二层：版本间可比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%9B%9E%E5%BD%92%E6%84%8F%E8%AF%86"><span class="nav-number">5.3.</span> <span class="nav-text">第三层：回归意识</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Self-Consistency-%E5%A6%82%E4%BD%95%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E2%80%9C%E7%A8%B3%E5%AE%9A%E2%80%9D"><span class="nav-number">6.</span> <span class="nav-text">Self-Consistency 如何重新定义“稳定”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context-Engineering-%E5%9C%A8%E8%BF%99%E9%87%8C%E5%BC%80%E5%A7%8B%E5%92%8C%E5%AE%89%E5%85%A8%E3%80%81%E8%AF%84%E4%BC%B0%E8%BF%9E%E5%9C%A8%E4%B8%80%E8%B5%B7"><span class="nav-number">7.</span> <span class="nav-text">Context Engineering 在这里开始和安全、评估连在一起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt-%E5%9C%A8%E8%BF%99%E4%B8%80%E9%98%B6%E6%AE%B5%E5%BA%94%E5%BD%93%E5%A6%82%E4%BD%95%E7%BB%B4%E6%8A%A4"><span class="nav-number">8.</span> <span class="nav-text">Prompt 在这一阶段应当如何维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E7%B1%BB-Prompt-%E5%8F%AF%E4%BB%A5%E6%80%8E%E6%A0%B7%E9%AA%8C%E6%94%B6"><span class="nav-number">9.</span> <span class="nav-text">这一类 Prompt 可以怎样验收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E7%AF%87%E7%BB%93%E8%AE%BA"><span class="nav-number">10.</span> <span class="nav-text">本篇结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">11.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -180,7 +180,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">133</span>
+          <span class="site-state-item-count">134</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -293,8 +293,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>前五篇我一直在往同一个方向推进：先把任务说清楚，再让输出更稳定，再定义输入输出接口，再把复杂任务拆成流程，最后开始从工具和上下文的角度理解系统。但继续往下学，很快会遇到另一个很容易被低估的问题：<strong>一个 Prompt 即使已经能跑通，也不代表它真的可上线、可维护、可长期使用。</strong></p>
-<p>学到 Prompt Injection、对抗性输入、测试集、回归比较和迭代方法这一块时，我越来越强烈地感觉到：到了这里，Prompt 已经不能再被看成一次性聊天内容，而更像是一种需要持续维护的<strong>系统资产</strong>。</p>
+    <div class="post-body" itemprop="articleBody"><p>前五篇一直沿着同一条主线推进：先把任务说清楚，再让输出更稳定，再定义输入输出接口，再把复杂任务拆成流程，最后开始从工具和上下文的角度理解系统。继续往下，会遇到另一个容易被低估的问题：<strong>一个 Prompt 即使已经能跑通，也不代表它真的可上线、可维护、可长期使用。</strong></p>
+<p>在 Prompt Injection、对抗性输入、测试集、回归比较和迭代方法这一部分中，可以看到：Prompt 已经不能再被看成一次性聊天内容，而更像是一种需要持续维护的<strong>系统资产</strong>。</p>
 <span id="more"></span>
 
 <h2 id="Prompt-写出来，不等于问题已经解决"><a href="#Prompt-写出来，不等于问题已经解决" class="headerlink" title="Prompt 写出来，不等于问题已经解决"></a>Prompt 写出来，不等于问题已经解决</h2><p>前面几篇内容更像是在回答：</p>
@@ -314,7 +314,7 @@
 <li>出问题时，你能不能知道到底是哪一层出了问题</li>
 </ul>
 <p>也就是说，到了这一阶段，Prompt 面对的已经不只是表达问题，而是<strong>安全、评估和维护问题</strong>。</p>
-<h2 id="Prompt-Injection-不是理论名词，而是真实工程风险"><a href="#Prompt-Injection-不是理论名词，而是真实工程风险" class="headerlink" title="Prompt Injection 不是理论名词，而是真实工程风险"></a>Prompt Injection 不是理论名词，而是真实工程风险</h2><p>刚接触 Prompt Injection 时，很容易把它理解成一种“专门研究攻击的人才会碰到的高级话题”。但从工程角度看，它其实一点都不遥远。</p>
+<h2 id="Prompt-Injection-不是理论名词，而是真实工程风险"><a href="#Prompt-Injection-不是理论名词，而是真实工程风险" class="headerlink" title="Prompt Injection 不是理论名词，而是真实工程风险"></a>Prompt Injection 不是理论名词，而是真实工程风险</h2><p>Prompt Injection 容易被理解成一种“只有专门研究攻击的人才会碰到的高级话题”。但从工程角度看，它并不遥远。</p>
 <p>因为只要你的系统满足下面任意一种情况，就已经在面对这类风险：</p>
 <ul>
 <li>模型要读取用户提供的原始文本</li>
@@ -330,7 +330,7 @@
 <blockquote>
 <p>系统没有把指令层和数据层的边界划清楚。</p>
 </blockquote>
-<h2 id="更安全的-Prompt，往往先做的是边界分层"><a href="#更安全的-Prompt，往往先做的是边界分层" class="headerlink" title="更安全的 Prompt，往往先做的是边界分层"></a>更安全的 Prompt，往往先做的是边界分层</h2><p>这次学习里，我一个很明显的感受是：防 Prompt Injection，第一步通常不是堆更多提醒语，而是先把输入结构设计对。</p>
+<h2 id="更安全的-Prompt，往往先做的是边界分层"><a href="#更安全的-Prompt，往往先做的是边界分层" class="headerlink" title="更安全的 Prompt，往往先做的是边界分层"></a>更安全的 Prompt，往往先做的是边界分层</h2><p>防 Prompt Injection 的第一步通常不是堆更多提醒语，而是先把输入结构设计正确。</p>
 <p>比如同样是做内容总结，如果只是这样写：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">请总结下面的内容：</span><br><span class="line">&#123;&#123;user_content&#125;&#125;</span><br></pre></td></tr></table></figure>
 
@@ -345,7 +345,7 @@
 <li>先定义不该做什么，再定义该做什么</li>
 </ul>
 <p>也就是说，更安全的 Prompt 往往不是“更有气势”，而是<strong>层次更清楚、边界更明确</strong>。</p>
-<h2 id="安全问题的关键，不只是防攻击，还要防误执行"><a href="#安全问题的关键，不只是防攻击，还要防误执行" class="headerlink" title="安全问题的关键，不只是防攻击，还要防误执行"></a>安全问题的关键，不只是防攻击，还要防误执行</h2><p>这块内容还有一个很重要的变化，是我开始不再把安全只理解成“有人恶意攻击怎么办”。</p>
+<h2 id="安全问题的关键，不只是防攻击，还要防误执行"><a href="#安全问题的关键，不只是防攻击，还要防误执行" class="headerlink" title="安全问题的关键，不只是防攻击，还要防误执行"></a>安全问题的关键，不只是防攻击，还要防误执行</h2><p>这部分内容还带来一个重要变化：安全问题不能只理解成“有人恶意攻击怎么办”。</p>
 <p>很多时候，更常见的其实是误执行：</p>
 <ul>
 <li>文档里有示例指令，模型把它当成当前任务</li>
@@ -359,8 +359,8 @@
 <p>进入上下文的内容里，哪些应该被当成事实，哪些应该被当成规则，哪些根本不应该被执行。</p>
 </blockquote>
 <p>一旦这个分层做不好，模型就会在错误前提上继续推理。后面即使输出结构很漂亮，也只是把错误结果更整齐地交付出来。</p>
-<h2 id="到了这里，Prompt-需要像代码一样被测试"><a href="#到了这里，Prompt-需要像代码一样被测试" class="headerlink" title="到了这里，Prompt 需要像代码一样被测试"></a>到了这里，Prompt 需要像代码一样被测试</h2><p>这是这一块让我最有工程感的地方。</p>
-<p>以前更容易把 Prompt 当成“写出来试一下”的东西：这次结果不错，就先记下来；下次感觉不对，再临时改几句。但继续往下学之后，我越来越觉得这种方式不够了。</p>
+<h2 id="到了这里，Prompt-需要像代码一样被测试"><a href="#到了这里，Prompt-需要像代码一样被测试" class="headerlink" title="到了这里，Prompt 需要像代码一样被测试"></a>到了这里，Prompt 需要像代码一样被测试</h2><p>这一部分最具有工程特征的地方在于：Prompt 需要像代码一样被测试。</p>
+<p>把 Prompt 当成“写出来试一下”的东西并不够。只要 Prompt 会进入真实系统，它就需要更稳定的测试方式。</p>
 <p>原因很简单：只要 Prompt 会进入真实系统，它就应该像代码、配置和接口一样被测试。</p>
 <p>这里的“测试”至少包含三层意思：</p>
 <h3 id="第一层：有代表性的样本集"><a href="#第一层：有代表性的样本集" class="headerlink" title="第一层：有代表性的样本集"></a>第一层：有代表性的样本集</h3><p>不能只拿一两个顺手样本验证，因为那样只能说明“这次看起来能跑”。</p>
@@ -372,9 +372,9 @@
 <li>容易歧义的样本</li>
 <li>明显带干扰信息的样本</li>
 </ul>
-<p>只有当一组不同类型的输入都过得去，你才更接近知道它真正的能力边界。</p>
+<p>只有当一组不同类型的输入都能通过，才更接近知道它真正的能力边界。</p>
 <h3 id="第二层：版本间可比较"><a href="#第二层：版本间可比较" class="headerlink" title="第二层：版本间可比较"></a>第二层：版本间可比较</h3><p>很多 Prompt 迭代看起来是在“优化”，但如果没有对比方法，其实很容易只是换了一种失败方式。</p>
-<p>比如你改完之后可能出现：</p>
+<p>例如，改完之后可能出现：</p>
 <ul>
 <li>A 类样本更好了，但 B 类样本退化了</li>
 <li>输出更简洁了，但关键信息漏得更多</li>
@@ -392,21 +392,21 @@
 <li>以前防住的异常输入会不会重新穿透？</li>
 </ul>
 <p>如果没有这层回归意识，Prompt 版本越多，系统状态往往只会越来越不可控。</p>
-<h2 id="Self-Consistency-让我重新理解“稳定”这件事"><a href="#Self-Consistency-让我重新理解“稳定”这件事" class="headerlink" title="Self-Consistency 让我重新理解“稳定”这件事"></a>Self-Consistency 让我重新理解“稳定”这件事</h2><p>前面第二篇我主要把稳定理解成：同类输入下，输出结构和判断尽量一致。继续看 Self-Consistency 这一类内容之后，我对“稳定”又多了一层理解。</p>
-<p>它提醒我的不是“让模型多采样几次”这个技巧本身，而是：</p>
+<h2 id="Self-Consistency-如何重新定义“稳定”"><a href="#Self-Consistency-如何重新定义“稳定”" class="headerlink" title="Self-Consistency 如何重新定义“稳定”"></a>Self-Consistency 如何重新定义“稳定”</h2><p>前面第二篇主要把稳定理解成：同类输入下，输出结构和判断尽量一致。Self-Consistency 这一部分又补充了对“稳定”的另一层理解。</p>
+<p>它提醒的不是“让模型多采样几次”这个技巧本身，而是：</p>
 <blockquote>
 <p>一个结果如果只能偶尔答对，却无法在重复尝试中表现出稳定模式，那它的工程价值其实很有限。</p>
 </blockquote>
-<p>这会直接影响你怎么看待评估。</p>
-<p>以前容易关注的是某一次输出够不够聪明；现在我会更在意：</p>
+<p>这会直接影响对评估的理解方式。</p>
+<p>过去更容易关注某一次输出是否足够聪明；现在更应在意：</p>
 <ul>
 <li>多次运行时，结论是否大体一致</li>
 <li>如果出现分歧，分歧集中在哪类输入上</li>
 <li>这种不一致是任务定义问题，还是上下文问题，还是 Prompt 本身约束不够</li>
 </ul>
-<p>也就是说，稳定不只是“平均分还行”，而是你要知道它<strong>不稳定在什么地方</strong>。</p>
-<h2 id="Context-Engineering-在这里开始和安全、评估连在一起"><a href="#Context-Engineering-在这里开始和安全、评估连在一起" class="headerlink" title="Context Engineering 在这里开始和安全、评估连在一起"></a>Context Engineering 在这里开始和安全、评估连在一起</h2><p>第五篇里我已经开始把 Prompt 理解成上下文工程的一部分。到了这一块，这种理解会更完整。</p>
-<p>因为一旦进入安全和测试问题，你会越来越明显地看到：上下文设计、安全边界和评估方法，其实是绑在一起的。</p>
+<p>也就是说，稳定不只是“平均分还行”，而是要知道它<strong>不稳定在什么地方</strong>。</p>
+<h2 id="Context-Engineering-在这里开始和安全、评估连在一起"><a href="#Context-Engineering-在这里开始和安全、评估连在一起" class="headerlink" title="Context Engineering 在这里开始和安全、评估连在一起"></a>Context Engineering 在这里开始和安全、评估连在一起</h2><p>第五篇已经开始把 Prompt 理解成上下文工程的一部分。到了这一部分，这种理解会更完整。</p>
+<p>一旦进入安全和测试问题，就会更明显地看到：上下文设计、安全边界和评估方法其实是绑在一起的。</p>
 <p>比如：</p>
 <ul>
 <li>如果上下文注入过量，模型更容易被噪声带偏</li>
@@ -414,14 +414,14 @@
 <li>如果工具结果没有明确标注来源，后续判断就更难追踪</li>
 <li>如果系统没有记录版本和样本，问题复现就会非常困难</li>
 </ul>
-<p>所以这一步最重要的变化，不是又学了几个新名词，而是开始意识到：</p>
+<p>所以这一步最重要的变化，不是又学了几个新名词，而是开始明确：</p>
 <blockquote>
 <p>Prompt 的效果，不能只靠写作直觉判断，而要放进完整的上下文、安全和评估回路里一起看。</p>
 </blockquote>
-<h2 id="我现在会把-Prompt-当成什么来维护"><a href="#我现在会把-Prompt-当成什么来维护" class="headerlink" title="我现在会把 Prompt 当成什么来维护"></a>我现在会把 Prompt 当成什么来维护</h2><p>学到这里之后，我对 Prompt 的角色理解又往前推进了一步。</p>
-<p>第一篇我更把它看成结构化输入；第三篇开始把它看成接口；第五篇开始把它看成上下文设计的一部分；到了这一篇，我会更愿意把它理解成：</p>
+<h2 id="Prompt-在这一阶段应当如何维护"><a href="#Prompt-在这一阶段应当如何维护" class="headerlink" title="Prompt 在这一阶段应当如何维护"></a>Prompt 在这一阶段应当如何维护</h2><p>到这一步，Prompt 的角色理解又往前推进了一层。</p>
+<p>第一篇更偏向把它看成结构化输入；第三篇开始把它看成接口；第五篇开始把它看成上下文设计的一部分；到了这一篇，更适合把它理解成：</p>
 <p><strong>一种需要版本化、测试、评估和防护的系统资产。</strong></p>
-<p>这意味着一个更成熟的工作方式应该包括：</p>
+<p>更成熟的工作方式应当包括：</p>
 <ul>
 <li>有版本记录，而不是改完就覆盖</li>
 <li>有样本集，而不是靠记忆验证</li>
@@ -430,22 +430,23 @@
 <li>有安全边界定义，而不是把所有内容都混在一起</li>
 </ul>
 <p>Prompt 到这里，已经越来越不像一次性聊天输入，而更像一份会持续演化的配置与接口说明。</p>
-<h2 id="我现在会怎么验收这一类-Prompt"><a href="#我现在会怎么验收这一类-Prompt" class="headerlink" title="我现在会怎么验收这一类 Prompt"></a>我现在会怎么验收这一类 Prompt</h2><p>如果把这部分内容真正落到实践里，我现在会用一组比前几篇更偏系统化的问题去验收：</p>
+<h2 id="这一类-Prompt-可以怎样验收"><a href="#这一类-Prompt-可以怎样验收" class="headerlink" title="这一类 Prompt 可以怎样验收"></a>这一类 Prompt 可以怎样验收</h2><p>如果把这部分内容落到实践里，可以用一组比前几篇更偏系统化的问题去验收：</p>
 <ul>
 <li>这段 Prompt 有没有明确区分规则、上下文和待处理内容？</li>
 <li>用户输入或外部资料里如果带有指令，系统会不会误执行？</li>
 <li>这个版本是否有一组固定样本可用于复测？</li>
 <li>新版本相对旧版本，是局部优化，还是整体更稳定？</li>
-<li>如果输出异常，我能不能定位是 Prompt、上下文、工具结果还是评估方式出了问题？</li>
+<li>如果输出异常，是否能够定位是 Prompt、上下文、工具结果还是评估方式出了问题？</li>
 <li>这段 Prompt 是否已经值得被复用、迭代和版本管理？</li>
 </ul>
 <p>如果这些问题答不上来，那它可能还只是“能跑起来”，还谈不上“可以长期维护”。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>前几篇我一直在理解：怎么把 Prompt 写清楚、写稳定、写成接口、写进流程、写进系统环境。到了这一篇，我真正开始意识到：</p>
+<h2 id="本篇结论"><a href="#本篇结论" class="headerlink" title="本篇结论"></a>本篇结论</h2><p>前几篇一直在讨论：怎么把 Prompt 写清楚、写稳定、写成接口、写进流程、写进系统环境。到了这一篇，可以进一步得到这样的结论：</p>
 <blockquote>
 <p>Prompt 的后半程，不是继续研究怎么写一句更厉害的话，而是学会怎样让它更安全、更可测、更可迭代。</p>
 </blockquote>
-<p>Prompt Injection 让我看到模型并不天然知道哪些内容该执行、哪些内容只该被分析；测试集和回归意识让我开始把 Prompt 当成需要持续验证的对象；而版本迭代和上下文工程，则把这些零散技巧真正连成了一条工程化路径。</p>
+<p>Prompt Injection 说明模型并不天然知道哪些内容该执行、哪些内容只该被分析；测试集和回归意识则把 Prompt 变成一个需要持续验证的对象；而版本迭代和上下文工程，则把这些零散技巧连成了一条工程化路径。</p>
 <p>如果说前五篇更多在建立“如何设计模型输入与系统交互”，那这一篇开始真正进入“如何维护这套能力”。到这一步，Prompt 学习才算从“会写”真正走向“会做系统”。</p>
+<p>至此，这一组文章已经从输入设计、输出稳定、接口约束、任务拆分、上下文组织，一直推进到安全、评估与长期维护。</p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvemgvcmlza3MvYWR2ZXJzYXJpYWw=">Prompt Engineering Guide - Adversarial Prompting<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvbXB0aW5nZ3VpZGUuYWkvemgvcmlza3MvcHJvbXB0LWluamVjdGlvbg==">Prompt Engineering Guide - Prompt Injection<i class="fa fa-external-link-alt"></i></span></li>
@@ -477,6 +478,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2026/04/16/20260416-C%20%E8%AF%AD%E8%A8%80%E9%87%8D%E6%8B%BE%E3%80%90%E4%B9%9D%E3%80%91/" rel="next" title="C 语言重拾【九】联合类型 union">
+                  C 语言重拾【九】联合类型 union <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
