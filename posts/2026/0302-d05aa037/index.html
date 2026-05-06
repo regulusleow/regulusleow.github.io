@@ -1,0 +1,575 @@
+<!DOCTYPE html><html dir="ltr" lang="zh-CN" class="scroll-smooth" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/webp" sizes="32x32" href="/favicon-32x32-avatar.webp"><link rel="icon" type="image/webp" sizes="16x16" href="/favicon-16x16-avatar.webp"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-avatar.webp"><link rel="canonical" href="https://regulusleow.github.io/posts/2026/0302-d05aa037/"><meta name="generator" content="Astro v6.1.10"><!-- Load Fonts --><!-- Only preload the primary body font. Others load async to avoid bandwidth contention. --><style>@font-face{font-family:Wotfard-1fe9c73deb2fb6a1;src:url("/_astro/fonts/599b54395ea144f1.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}:root{--font-wotfard:Wotfard-1fe9c73deb2fb6a1;}</style><style>@font-face{font-family:Sriracha-0c1557e4d8c0b1eb;src:url("/_astro/fonts/503c6623fb2bca4e.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}:root{--font-sriracha:Sriracha-0c1557e4d8c0b1eb;}</style><style>@font-face{font-family:"Cartograph CF-1a234bdfe17fc7f2";src:url("/_astro/fonts/57754488e24c2ca2.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:"Cartograph CF-1a234bdfe17fc7f2 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:400;font-style:normal;size-adjust:102.4833%;ascent-override:98.5526%;descent-override:18.5396%;}:root{--font-cartograph:"Cartograph CF-1a234bdfe17fc7f2","Cartograph CF-1a234bdfe17fc7f2 fallback: Courier New",monospace;}</style><style>@font-face{font-family:"Cascadia Code-92b4fb7167366a33";src:url("/_astro/fonts/8b0f431118263881.woff2") format("woff2");font-display:swap;font-weight:200 700;font-style:normal;}@font-face{font-family:"Cascadia Code-92b4fb7167366a33 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:200 700;font-style:normal;size-adjust:97.6404%;ascent-override:95.0155%;descent-override:24.0039%;}:root{--font-cascadia-code:"Cascadia Code-92b4fb7167366a33","Cascadia Code-92b4fb7167366a33 fallback: Courier New",monospace;}</style><!-- General Meta Tags --><title>Prompt学习五：从工具调用到上下文工程 | Stellar Wake</title><meta name="description" content="前四篇一直沿着同一条主线推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。继续往下，会遇到一个新的问题：当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？"><meta name="author" content="轩辕十四"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="Prompt学习五：从工具调用到上下文工程 | Stellar Wake"><meta property="og:description" content="前四篇一直沿着同一条主线推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。继续往下，会遇到一个新的问题：当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？"><meta property="og:url" content="https://regulusleow.github.io/posts/2026/0302-d05aa037/"><meta property="og:image" content="https://regulusleow.github.io/posts/2026/0302-d05aa037/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2026-03-01T16:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://regulusleow.github.io/posts/2026/0302-d05aa037/"><meta property="twitter:title" content="Prompt学习五：从工具调用到上下文工程 | Stellar Wake"><meta property="twitter:description" content="前四篇一直沿着同一条主线推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。继续往下，会遇到一个新的问题：当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？"><meta property="twitter:image" content="https://regulusleow.github.io/posts/2026/0302-d05aa037/index.png"><!-- Google JSON-LD Structured data (only on blog posts) --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Prompt学习五：从工具调用到上下文工程 | Stellar Wake","image":"https://regulusleow.github.io/posts/2026/0302-d05aa037/index.png","datePublished":"2026-03-01T16:00:00.000Z","author":[{"@type":"Person","name":"轩辕十四","url":"https://github.com/regulusleow"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="Stellar Wake" href="https://regulusleow.github.io/rss.xml"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.j56hQv-j.js"></script><!-- Minimal inline script to prevent FOUC - sets theme immediately --><script>
+      (function () {
+        const initialColorScheme = ""; // "light" | "dark"
+        const currentTheme = localStorage.getItem("theme");
+
+        function getPreferTheme() {
+          if (currentTheme) return currentTheme;
+          if (initialColorScheme) return initialColorScheme;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        const themeValue = getPreferTheme();
+
+        // Set theme immediately to prevent flash
+        document.firstElementChild?.setAttribute("data-theme", themeValue);
+
+        // Export minimal API for external script
+        window.theme = {
+          themeValue: themeValue,
+          getTheme: () => window.theme.themeValue,
+          setTheme: val => {
+            window.theme.themeValue = val;
+          },
+        };
+      })();
+    </script><link rel="stylesheet" href="/_astro/Footer.96XQ-jn6.css">
+<link rel="stylesheet" href="/_astro/index@_@astro.BLobtBVd.css">
+<style>.breadcrumb-bar[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:.2rem;max-width:100%;overflow-x:auto;padding:.4rem .75rem;border:1px solid color-mix(in srgb,var(--border) 30%,transparent);border-radius:999px;background:linear-gradient(130deg,color-mix(in srgb,var(--accent) 10%,transparent) 0%,transparent 44%),color-mix(in srgb,var(--foreground) 3%,var(--background));box-shadow:inset 0 1px color-mix(in srgb,white 20%,transparent),0 10px 28px -20px color-mix(in srgb,var(--accent) 45%,transparent);-webkit-backdrop-filter:blur(10px) saturate(125%);backdrop-filter:blur(10px) saturate(125%);scrollbar-width:none;animation:breadcrumb-in .35s ease-out both}.breadcrumb-bar[data-astro-cid-qaanghzh].has-back{max-width:100%;overflow-x:auto;-webkit-backdrop-filter:blur(6px);scrollbar-width:none}.breadcrumb-bar[data-astro-cid-qaanghzh]::-webkit-scrollbar{display:none}.breadcrumb-item[data-astro-cid-qaanghzh]{flex-shrink:0;min-width:0;display:inline-flex;align-items:center}.breadcrumb-item[data-astro-cid-qaanghzh]+.breadcrumb-item[data-astro-cid-qaanghzh]:before{content:"/";margin-inline:.3rem;opacity:.6;color:color-mix(in srgb,var(--accent) 65%,var(--foreground))}.breadcrumb-home[data-astro-cid-qaanghzh],.breadcrumb-link[data-astro-cid-qaanghzh],.breadcrumb-current[data-astro-cid-qaanghzh]{display:inline-flex;align-items:center;border-radius:.45rem;line-height:1;text-decoration:none}.breadcrumb-home[data-astro-cid-qaanghzh]{justify-content:center;width:1.65rem;height:1.65rem;color:color-mix(in srgb,var(--foreground) 65%,transparent);transition:color .2s ease,background-color .2s ease,transform .2s ease}.breadcrumb-home[data-astro-cid-qaanghzh]:hover,.breadcrumb-home[data-astro-cid-qaanghzh]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent);transform:translateY(-1px)}.breadcrumb-link-soft[data-astro-cid-qaanghzh]{width:auto;height:auto;padding:.15rem .45rem;border-radius:.35rem;color:color-mix(in srgb,var(--foreground) 72%,transparent);transition:color .2s ease,background-color .2s ease}.breadcrumb-link-soft[data-astro-cid-qaanghzh]:hover,.breadcrumb-link-soft[data-astro-cid-qaanghzh]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent);transform:none}.back-btn[data-astro-cid-qaanghzh]{flex-shrink:0}.breadcrumb-link[data-astro-cid-qaanghzh],.breadcrumb-current[data-astro-cid-qaanghzh]{padding:.35rem .55rem;white-space:nowrap}.breadcrumb-link[data-astro-cid-qaanghzh]{color:color-mix(in srgb,var(--foreground) 72%,transparent);transition:color .2s ease,background-color .2s ease}.breadcrumb-link[data-astro-cid-qaanghzh]:hover,.breadcrumb-link[data-astro-cid-qaanghzh]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}.breadcrumb-current[data-astro-cid-qaanghzh]{max-width:min(34ch,64vw);overflow:hidden;text-overflow:ellipsis;color:color-mix(in srgb,var(--accent) 92%,var(--foreground));background:color-mix(in srgb,var(--accent) 11%,transparent);border:1px solid color-mix(in srgb,var(--accent) 24%,transparent)}.visually-hidden[data-astro-cid-qaanghzh]{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:640px){.breadcrumb-bar[data-astro-cid-qaanghzh].has-back .breadcrumb-item[data-astro-cid-qaanghzh]:not(.is-back):not(.is-current){display:none}}@media(prefers-reduced-motion:reduce){.breadcrumb-bar[data-astro-cid-qaanghzh],.breadcrumb-home[data-astro-cid-qaanghzh],.breadcrumb-link[data-astro-cid-qaanghzh],.back-btn[data-astro-cid-qaanghzh],.breadcrumb-link-soft[data-astro-cid-qaanghzh]{animation:none;transition:none}}@keyframes breadcrumb-in{0%{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+</style><style>[data-astro-transition-scope="astro-ti6a3mbw-1"] { view-transition-name: prompt\5B66\4E60\4E94\FF1A\4ECE\5DE5\5177\8C03\7528\5230\4E0A\4E0B\6587\5DE5\7A0B; }@layer astro { ::view-transition-old(prompt\5B66\4E60\4E94\FF1A\4ECE\5DE5\5177\8C03\7528\5230\4E0A\4E0B\6587\5DE5\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(prompt\5B66\4E60\4E94\FF1A\4ECE\5DE5\5177\8C03\7528\5230\4E0A\4E0B\6587\5DE5\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(prompt\5B66\4E60\4E94\FF1A\4ECE\5DE5\5177\8C03\7528\5230\4E0A\4E0B\6587\5DE5\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(prompt\5B66\4E60\4E94\FF1A\4ECE\5DE5\5177\8C03\7528\5230\4E0A\4E0B\6587\5DE5\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body data-astro-cid-sckkx6r4> <!-- Global decorative backdrop (grid, glow, cursor glow, noise) --> <div class="site-backdrop pointer-events-none" aria-hidden="true" data-astro-cid-sckkx6r4 data-astro-transition-persist="astro-sus445yd-2"> <div class="site-grid" data-astro-cid-sckkx6r4></div>  <div class="site-grain" data-astro-cid-sckkx6r4></div> </div>  <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 rounded-b-lg bg-accent px-4 py-2 font-medium text-background transition-all focus:top-0" data-astro-cid-3ef6ksr2>
+Skip to content
+</a> <header id="main-header" class="sticky top-0 z-40 w-full transition-colors duration-300" data-astro-cid-3ef6ksr2> <div class="header-scrolled-filter w-full" data-astro-cid-3ef6ksr2> <div class="app-layout" data-astro-cid-3ef6ksr2> <div id="top-nav-wrap" class="py-3 sm:py-5 relative w-full flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300" data-astro-cid-3ef6ksr2> <!-- Logo --> <a href="/" class="group relative z-20 flex items-center gap-2 text-xl font-bold tracking-tight sm:text-2xl shrink-0" data-astro-cid-3ef6ksr2> <!-- <span class="nav-logo-text">{SITE.title}</span> --> <svg viewBox="0 0 1000 250" xmlns:bx="https://boxy-svg.com" class="w-37.5 dark:invert" data-astro-cid-3ef6ksr2="true">
+  <g transform="matrix(1.112155, 0, 0, 1.112155, 12.50231, -14.050506)" id="object-0">
+    <text class="logo-text-left" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre;" x="0" y="176.957">Dev</text>
+    <text class="logo-sphere" style="fill: rgb(167, 90, 90); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; letter-spacing: -30px; paint-order: stroke; white-space: pre; transform-origin: 342.846px 129.448px;" x="250.711" y="176.957">{·}</text>
+    <text class="logo-text-right" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre; transform-origin: -123.373px 8.755px;"><tspan x="437.222" y="89.954" style="baseline-shift: sub;">sfera</tspan></text>
+  </g>
+  <defs>
+    <bx:export>
+      <bx:file format="svg" href="#object-0" path="Sin título.svg" />
+    </bx:export>
+  </defs>
+</svg> </a> <!-- Center Audio Player -->  <!-- Nav area --> <nav id="nav-menu" class="flex items-center sm:gap-1 shrink-0" data-astro-cid-3ef6ksr2> <!-- Mobile hamburger (animated lines) --> <button id="menu-btn" class="hamburger-btn sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="mobile-menu" data-astro-cid-3ef6ksr2> <div class="hamburger-box" data-astro-cid-3ef6ksr2> <span class="hamburger-line hamburger-line--1" data-astro-cid-3ef6ksr2></span> <span class="hamburger-line hamburger-line--2" data-astro-cid-3ef6ksr2></span> <span class="hamburger-line hamburger-line--3" data-astro-cid-3ef6ksr2></span> </div> </button> <!-- Desktop links (always visible on sm+) --> <ul class="hidden sm:flex sm:flex-row sm:items-center sm:gap-1" data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2> <a href="/posts" class="nav-link nav-active" data-astro-cid-3ef6ksr2>Posts</a> </li> <li data-astro-cid-3ef6ksr2> <a href="/tags" class="nav-link" data-astro-cid-3ef6ksr2>Tags</a> </li> <li data-astro-cid-3ef6ksr2> <a href="/about" class="nav-link" data-astro-cid-3ef6ksr2>About</a> </li> <li class="flex items-center" data-astro-cid-3ef6ksr2> <a href="/search" class="nav-link" title="Go to Search" data-astro-cid-3ef6ksr2>Search</a> </li> <li data-astro-cid-3ef6ksr2> <a tabindex="0" href="/archives" title="Archives" aria-label="archives" data-astro-cid-3ef6ksr2="true" class="group inline-flex items-center gap-1 hover:text-accent nav-link">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only" data-astro-cid-3ef6ksr2>Archives</span>  </a> </li>  <!-- Separator --> <li class="flex items-center px-1" aria-hidden="true" data-astro-cid-3ef6ksr2> <div class="h-4 w-px bg-border/30" data-astro-cid-3ef6ksr2></div> </li> <li class="flex items-center" data-astro-cid-3ef6ksr2> <button data-search-trigger class="nav-search-btn" title="Search (⌘K)" aria-label="Open search" aria-keyshortcuts="Meta+K" data-astro-cid-3ef6ksr2> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <kbd class="nav-kbd" data-astro-cid-3ef6ksr2>⌘K</kbd> </button> </li> <li class="flex items-center" data-astro-cid-3ef6ksr2> <button id="theme-btn" class="nav-icon-btn relative" title="Toggles light & dark" aria-label="auto" aria-live="polite" data-astro-cid-3ef6ksr2> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-1/2 left-1/2 -translate-1/2 scale-100 rotate-0 transition-all duration-300 dark:scale-0 dark:-rotate-90" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-1/2 left-1/2 -translate-1/2 scale-0 rotate-90 transition-all duration-300 dark:scale-100 dark:rotate-0" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </div> </div> <div id="mobile-menu" class="mobile-menu sm:hidden" aria-hidden="true" data-astro-cid-6aabv5oc> <!-- Overlay/Backdrop --> <div class="mobile-menu-backdrop" data-astro-cid-6aabv5oc></div> <!-- Floating Glass Panel --> <div class="app-layout" data-astro-cid-6aabv5oc> <div class="mobile-menu-panel relative mt-2 w-full mx-auto rounded-2xl border border-white/10 dark:border-white/5 overflow-hidden shadow-2xl" data-astro-cid-6aabv5oc> <div class="mobile-menu-inner" data-astro-cid-6aabv5oc> <nav class="mobile-nav-links" data-astro-cid-6aabv5oc> <a href="/posts" class="mobile-nav-link active" style="--i:0" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>Posts</span> </a> <a href="/tags" class="mobile-nav-link" style="--i:1" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>Tags</span> </a> <a href="/about" class="mobile-nav-link" style="--i:2" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>About</span> </a> <a href="/archives" class="mobile-nav-link" style="--i:3" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>Archives</span> </a>  </nav> <!-- Divider --> <div class="mobile-menu-divider" data-astro-cid-6aabv5oc></div> <!-- Bottom action row --> <div class="mobile-menu-actions" data-astro-cid-6aabv5oc> <button data-search-trigger class="mobile-action-btn flex-1 justify-center" title="Search (⌘K)" aria-label="Open search" data-astro-cid-6aabv5oc> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" data-astro-cid-6aabv5oc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span data-astro-cid-6aabv5oc>Search</span> </button> <button id="theme-btn-mobile" class="mobile-action-btn flex-1 justify-center" title="Toggle theme" aria-label="auto" aria-live="polite" data-astro-cid-6aabv5oc> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="block size-4 dark:hidden" data-astro-cid-6aabv5oc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden size-4 dark:block" data-astro-cid-6aabv5oc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> <span class="block dark:hidden" data-astro-cid-6aabv5oc>Dark mode</span> <span class="hidden dark:block" data-astro-cid-6aabv5oc>Light mode</span> </button> </div> </div> </div> </div> </div> <!-- Bottom border with gradient --> <div id="header-border" class="header-border-line opacity-0 transition-opacity duration-300 h-px w-full bg-linear-to-r from-transparent via-border/40 to-transparent" data-astro-cid-3ef6ksr2></div> </header>  <script type="module">let o=null,i=null;function c(){i&&i.abort(),i=new AbortController;const{signal:s}=i,e=document.getElementById("main-header"),t=document.getElementById("top-nav-wrap"),r=document.getElementById("header-border");if(!e||!t||!r)return;let n=!1;const l=()=>{n||(n=!0,requestAnimationFrame(()=>{const a=window.scrollY>15;e.classList.toggle("header-scrolled",a),t.classList.toggle("sm:py-5",!a),t.classList.toggle("sm:py-3",a),r.classList.toggle("opacity-0",!a),r.classList.toggle("opacity-100",a),n=!1}))};window.addEventListener("scroll",l,{passive:!0,signal:s}),l()}function d(){o&&o.abort(),o=new AbortController;const{signal:s}=o,e=document.querySelector("#menu-btn"),t=document.querySelector("#mobile-menu"),r=document.querySelector(".mobile-menu-backdrop");if(!e||!t)return;const n=()=>{e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","Open Menu"),t.classList.remove("is-open"),t.setAttribute("aria-hidden","true")};e.addEventListener("click",()=>{e.getAttribute("aria-expanded")==="true"?n():(e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","Close Menu"),t.classList.add("is-open"),t.setAttribute("aria-hidden","false"))},{signal:s}),r&&(r.addEventListener("click",n,{signal:s}),window.addEventListener("scroll",n,{passive:!0,signal:s})),t.querySelectorAll("a").forEach(l=>{l.addEventListener("click",n,{signal:s})})}c();d();document.addEventListener("astro:after-swap",()=>{c(),d()});</script> <nav class="app-layout mt-6 mb-2 overflow-hidden" aria-label="Contextual navigation" data-astro-cid-qaanghzh> <div class="flex items-center gap-3 justify-between" data-astro-cid-qaanghzh> <a id="back-button" href="/" class="breadcrumb-bar back-btn group flex-shrink-0 !gap-2 text-foreground/60 transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background font-cartograph text-sm" aria-label="Go back to the previous page. Current context: 0302 d05aa037" data-astro-cid-qaanghzh> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 opacity-70 transition-transform duration-200 group-hover:-translate-x-0.5 rtl:rotate-180 rtl:group-hover:translate-x-0.5" data-astro-cid-qaanghzh="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span aria-hidden="true" class="tracking-wide" data-astro-cid-qaanghzh>cd ..</span> <span class="visually-hidden" data-astro-cid-qaanghzh>Go back</span> </a> <ol class="breadcrumb-bar font-cartograph text-sm has-back" data-astro-cid-qaanghzh> <li class="breadcrumb-item is-root" data-astro-cid-qaanghzh> <a href="/" class="breadcrumb-home breadcrumb-link-soft" aria-label="Home" title="Home" data-astro-cid-qaanghzh> <span aria-hidden="true" data-astro-cid-qaanghzh>~</span> <span class="visually-hidden" data-astro-cid-qaanghzh>Home</span> </a> </li> <li class="breadcrumb-item" data-astro-cid-qaanghzh> <a href="/posts/" class="breadcrumb-link" data-astro-cid-qaanghzh> Posts </a> </li><li class="breadcrumb-item" data-astro-cid-qaanghzh> <a href="/posts/2026/" class="breadcrumb-link" data-astro-cid-qaanghzh> 2026 </a> </li><li class="breadcrumb-item is-current" data-astro-cid-qaanghzh> <span class="breadcrumb-current" aria-current="page" title="0302 d05aa037" data-astro-cid-qaanghzh> 0302 d05aa037 </span> </li> </ol> </div> </nav>  <script type="module">const c="#back-button";function a(o){if(!o)return"/";try{const t=new URL(o,window.location.origin),r=t.origin===window.location.origin,e=t.protocol==="http:"||t.protocol==="https:";return!r||!e?"/":`${t.pathname}${t.search}${t.hash}`||"/"}catch{return"/"}}function n(){const o=document.querySelector(c);if(!o)return;const t=sessionStorage.getItem("backUrl");o.href=a(t)}document.addEventListener("astro:page-load",n);n();</script><main id="main-content" class="relative app-layout pb-12" data-pagefind-body data-astro-cid-vj4tpspi> <!-- Post header section --> <header class="post-header relative mb-10 text-center" data-astro-cid-vj4tpspi> <div class="post-hero-bg" data-astro-cid-vj4tpspi></div> <div class="relative z-10 rounded-3xl border border-border/20 bg-muted/5 px-6 py-8 backdrop-blur-md sm:px-10 sm:py-12" data-astro-cid-vj4tpspi> <!-- Title --> <h1 class="post-title text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-[2.75rem]" data-astro-cid-vj4tpspi data-astro-transition-scope="astro-ti6a3mbw-1"> Prompt学习五：从工具调用到上下文工程 </h1> <!-- Tags as badges --> <div class="mt-4 flex flex-wrap justify-center gap-2" data-astro-cid-vj4tpspi> <a href="/tags/ai/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> AI </a><a href="/tags/prompt-engineering/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> Prompt Engineering </a><a href="/tags/llm/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> LLM </a><a href="/tags/ai-应用开发/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> AI 应用开发 </a> </div> <!-- Metadata row --> <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm" data-astro-cid-vj4tpspi> <!-- Author chip --> <div class="inline-flex items-center gap-1.5 rounded-lg border border-border/25 bg-muted/10 px-2.5 py-1 backdrop-blur-sm" data-astro-cid-vj4tpspi> <svg class="size-3.5 text-accent/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" data-astro-cid-vj4tpspi></path> <circle cx="12" cy="7" r="4" data-astro-cid-vj4tpspi></circle> </svg> <span class="opacity-70" data-astro-cid-vj4tpspi>轩辕十四</span> </div> <!-- Date chip --> <div class="inline-flex items-center gap-1.5 rounded-lg border border-border/25 bg-muted/10 px-2.5 py-1 backdrop-blur-sm" data-astro-cid-vj4tpspi> <svg class="size-3.5 text-accent/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <rect x="3" y="4" width="18" height="18" rx="2" ry="2" data-astro-cid-vj4tpspi></rect> <line x1="16" y1="2" x2="16" y2="6" data-astro-cid-vj4tpspi></line> <line x1="8" y1="2" x2="8" y2="6" data-astro-cid-vj4tpspi></line> <line x1="3" y1="10" x2="21" y2="10" data-astro-cid-vj4tpspi></line> </svg> <div class="flex items-center gap-x-2 text-foreground/80 opacity-70 [&#38;>svg]:hidden"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-5.5 scale-90" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg> <span class="sr-only">Published date: </span>  <time class="text-sm whitespace-nowrap" datetime="2026-03-01T16:00:00.000Z" title="2026年3月2日" aria-label="Published date: 2026年3月2日">2 Mar, 2026</time> </div> </div> <!-- Edit post -->  </div> </div> </header> <article id="article" class="app-prose mt-8 w-full max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)" data-astro-cid-vj4tpspi> <p>前四篇一直沿着同一条主线推进：先把任务说清楚，再把输出收窄，再把返回结构定义清楚，再学会把复杂任务拆成流程。继续往下，会遇到一个新的问题：<strong>当模型不只是回答问题，而是要调用工具、读取上下文、访问外部知识、在多个步骤里持续动作时，Prompt 还只是“写一句话”吗？</strong></p>
+<p>在 Function Calling、AI Workflows、AI Agents、Context Engineering 和 RAG 这些内容中，可以看到：Prompt 已经不只是输入设计，也不只是接口设计，而是在逐渐变成一种<strong>系统上下文设计能力</strong>。</p>
+<h2 id="table-of-contents">Table of contents</h2>
+<p></p><details><summary>Open Table of contents</summary><p></p>
+<ul>
+<li><a href="#function-calling-%E4%B8%8D%E6%98%AF%E7%BB%88%E7%82%B9%E8%80%8C%E6%98%AF%E7%B3%BB%E7%BB%9F%E5%8D%8F%E4%BD%9C%E7%9A%84%E8%B5%B7%E7%82%B9">Function Calling 不是终点，而是系统协作的起点</a></li>
+<li><a href="#function-call-%E5%92%8C-tool-call-%E5%88%B0%E5%BA%95%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB">Function Call 和 Tool Call 到底有什么区别</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%8E%B0%E5%9C%A8%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%A4%9A%E4%BA%BA%E6%9B%B4%E5%B8%B8%E8%AF%B4-tool-call">为什么现在越来越多人更常说 Tool Call</a></li>
+<li><a href="#%E9%82%A3%E7%AC%AC%E4%BA%94%E7%AF%87%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E4%BB%8E-function-calling-%E8%AE%B2%E8%B5%B7">那第五篇为什么还从 Function Calling 讲起</a></li>
+<li><a href="#%E7%9C%9F%E6%AD%A3%E9%9A%BE%E7%9A%84%E5%9C%B0%E6%96%B9%E4%B8%8D%E6%98%AF%E4%BC%9A%E4%B8%8D%E4%BC%9A%E8%B0%83%E5%B7%A5%E5%85%B7%E8%80%8C%E6%98%AF%E4%B8%8A%E4%B8%8B%E6%96%87%E7%BB%99%E5%BE%97%E5%AF%B9%E4%B8%8D%E5%AF%B9">真正难的地方，不是“会不会调工具”，而是“上下文给得对不对”</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E5%8F%AB%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B">什么叫上下文工程</a></li>
+<li><a href="#%E8%BF%99%E6%97%B6workflow-%E5%92%8C-ai-agent-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%89%8D%E7%9C%9F%E6%AD%A3%E5%8F%98%E5%BE%97%E9%87%8D%E8%A6%81">这时，Workflow 和 AI Agent 的区别才真正变得重要</a>
+<ul>
+<li><a href="#workflow">Workflow</a></li>
+<li><a href="#ai-agent">AI Agent</a></li>
+</ul>
+</li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E7%94%A8-workflow%E8%BF%98%E6%98%AF%E7%94%A8-agent">如何判断：用 Workflow，还是用 Agent</a></li>
+<li><a href="#rag-%E4%B8%8D%E5%8F%AA%E6%98%AF%E7%9F%A5%E8%AF%86%E5%BA%93%E9%97%AE%E7%AD%94%E8%80%8C%E6%98%AF%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BE%9B%E7%BB%99%E6%96%B9%E5%BC%8F">RAG 不只是知识库问答，而是上下文供给方式</a></li>
+<li><a href="#%E6%8A%8A-rag-%E6%94%BE%E8%BF%9B-workflow-%E5%92%8C-agent-%E9%87%8C%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%9B%B4%E6%B8%85%E6%A5%9A%E7%9A%84%E5%8C%BA%E5%88%AB">把 RAG 放进 Workflow 和 Agent 里，会看到更清楚的区别</a>
+<ul>
+<li><a href="#%E5%9C%A8-workflow-%E9%87%8C">在 Workflow 里</a></li>
+<li><a href="#%E5%9C%A8-agent-%E9%87%8C">在 Agent 里</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80%E4%B8%AA%E8%B6%8A%E6%9D%A5%E8%B6%8A%E6%B8%85%E6%A5%9A%E7%9A%84%E4%B8%BB%E7%BA%BFprompt-%E6%AD%A3%E5%9C%A8%E5%8D%87%E7%BA%A7%E6%88%90%E4%B8%8A%E4%B8%8B%E6%96%87%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">一个越来越清楚的主线：Prompt 正在升级成“上下文操作系统”</a></li>
+<li><a href="#%E8%BF%99%E7%B1%BB%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%8F%AF%E4%BB%A5%E6%80%8E%E6%A0%B7%E9%AA%8C%E6%94%B6">这类系统设计可以怎样验收</a></li>
+<li><a href="#%E6%9C%AC%E7%AF%87%E7%BB%93%E8%AE%BA">本篇结论</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3">参考文档</a></li>
+</ul>
+<p></p></details><p></p>
+<h2 id="function-calling-不是终点而是系统协作的起点">Function Calling 不是终点，而是系统协作的起点</h2>
+<p>Function Calling 容易让注意力停留在调用行为本身：</p>
+<ul>
+<li>模型能不能选对工具</li>
+<li>参数能不能传对</li>
+<li>JSON 结构稳不稳定</li>
+</ul>
+<p>这些当然都重要，但如果只停在这里，理解还是会偏浅。</p>
+<p>因为从工程角度看，Function Calling 真正打开的，不是“模型多了个功能”，而是下面这条链路：</p>
+<ol>
+<li>用户用自然语言表达意图</li>
+<li>模型根据上下文判断是否需要外部能力</li>
+<li>模型产出工具调用意图和参数</li>
+<li>程序执行真实工具</li>
+<li>工具返回结果，再进入下一步判断或回答</li>
+</ol>
+<p>这意味着，从这里开始，模型已经不再只是生成文本，而是在一个更完整的系统回路里工作了。</p>
+<p>如果换成更熟悉的软件工程语言，这一步更像是：</p>
+<ul>
+<li>LLM 不再只是“渲染答案”</li>
+<li>它开始参与“调度动作”</li>
+<li>而 Prompt / Tool Definition / Context 则一起构成了它的运行环境</li>
+</ul>
+<p>因此，Function Calling 更适合被理解成：</p>
+<blockquote>
+<p>它不是给模型加一个技巧，而是在把模型接入系统协作。</p>
+</blockquote>
+<h2 id="function-call-和-tool-call-到底有什么区别">Function Call 和 Tool Call 到底有什么区别</h2>
+<p>这一部分需要先理清一个问题：在不同平台、不同文档里，会同时看到 <code>function calling</code> 和 <code>tool calling</code> 两种说法。如果不主动区分，很容易把它们理解成完全等价的概念。</p>
+<p>这两个词的关系可以概括为：</p>
+<blockquote>
+<p><strong>Function Call 更像 Tool Call 的一个子集。</strong></p>
+</blockquote>
+<p>也就是说：</p>
+<ul>
+<li><strong>Function Call</strong>：通常特指模型去调用一个“函数式接口”——名字、描述、参数 schema 都比较清晰，输出也是结构化的。</li>
+<li><strong>Tool Call</strong>：是一个更大的概念，只要模型在运行过程中要借助外部能力，都可以算 tool call。</li>
+</ul>
+<p>从这个角度看，天气查询、搜索、数据库查询、代码执行、网页浏览、知识检索，这些都可以叫 tool use / tool call；而其中那些以函数签名、JSON schema、参数对象形式暴露给模型的能力，通常又会被单独叫作 function call。</p>
+<p>如果一定要再说得直白一点：</p>
+<ul>
+<li><strong>Function Call</strong> 强调的是“接口形态”</li>
+<li><strong>Tool Call</strong> 强调的是“系统行为”</li>
+</ul>
+<p>前者更像在说：</p>
+<blockquote>
+<p>这个外部能力是如何定义给模型看的。</p>
+</blockquote>
+<p>后者更像在说：</p>
+<blockquote>
+<p>模型在完成任务时，是否要借助外部能力采取动作。</p>
+</blockquote>
+<h2 id="为什么现在越来越多人更常说-tool-call">为什么现在越来越多人更常说 Tool Call</h2>
+<p>这里存在一个很自然的变化。</p>
+<p>如果系统能力还比较简单，只有几个结构化函数，那讲 Function Calling 没问题，因为你面对的确实就是一组函数定义。</p>
+<p>但一旦系统开始变复杂，模型能接触到的外部能力就不再只是狭义上的 function：</p>
+<ul>
+<li>检索工具</li>
+<li>浏览器操作</li>
+<li>代码执行环境</li>
+<li>数据库查询</li>
+<li>MCP 暴露出的能力</li>
+<li>其他 agent 也可能被当成“工具”使用</li>
+</ul>
+<p>这时候再全部叫 Function Calling，就会有点窄了。</p>
+<p>因为系统关心的重点，已经不只是“有没有函数 schema”，而是：</p>
+<ul>
+<li>模型什么时候该调用外部能力</li>
+<li>应该调用哪一种能力</li>
+<li>调用后如何把结果回注到上下文</li>
+<li>下一步是继续调用，还是结束回答</li>
+</ul>
+<p>到了这一步，用 Tool Call / Tool Use 来描述会更准确。因为它更贴近系统视角，而不是某一种接口封装方式。</p>
+<h2 id="那第五篇为什么还从-function-calling-讲起">那第五篇为什么还从 Function Calling 讲起</h2>
+<p>因为对学习路径来说，Function Calling 仍然是一个很好的入口。</p>
+<p>它有几个优势：</p>
+<ul>
+<li>边界清楚</li>
+<li>输入输出容易结构化</li>
+<li>很适合理解参数 schema 和工具描述</li>
+<li>很适合理解 action / observation 这条基本回路</li>
+</ul>
+<p>也就是说，Function Calling 很适合拿来建立第一层工程直觉：</p>
+<ul>
+<li>工具是怎么被定义的</li>
+<li>模型为什么会选这个工具</li>
+<li>参数为什么会填错</li>
+<li>工具结果为什么会影响下一步行为</li>
+</ul>
+<p>但继续往后学，就要把视角从 Function Calling 扩展到 Tool Calling。因为真实系统里，你设计的已经不是单个函数，而是一整套外部能力如何被模型安全、准确、低成本地使用。</p>
+<p>两者关系可以概括为：</p>
+<blockquote>
+<p>Function Calling 用于理解模型如何调用一个定义良好的接口；Tool Calling 则用于理解模型如何在系统里使用外部能力。</p>
+</blockquote>
+<h2 id="真正难的地方不是会不会调工具而是上下文给得对不对">真正难的地方，不是“会不会调工具”，而是“上下文给得对不对”</h2>
+<p>如果只看最简单的天气查询例子，Function Calling 好像很好理解：用户问天气，模型调用天气工具，结果返回给用户。</p>
+<p>但真实场景一复杂，问题就不在“能不能调用工具”，而在：</p>
+<ul>
+<li>模型知不知道什么时候该用哪个工具</li>
+<li>它拿到的当前上下文够不够做决策</li>
+<li>哪些历史信息应该保留，哪些应该丢掉</li>
+<li>工具描述是不是足够清楚</li>
+<li>工具结果回来之后，要不要继续下一步动作</li>
+</ul>
+<p>也就是说，Function Calling 背后真正难的，不是调用动作本身，而是：</p>
+<blockquote>
+<p>系统到底给了模型什么信息，使它有能力在当前这一步做出合理决策。</p>
+</blockquote>
+<p>这也解释了为什么“上下文工程”会变得重要。</p>
+<p>因为很多时候，系统表现不好，并不是模型不会，也不是工具不行，而是上下文设计出了问题：</p>
+<ul>
+<li>规则太少，模型自由发挥过度</li>
+<li>规则太多，模型变得僵硬</li>
+<li>该给的背景没给</li>
+<li>不该塞进去的噪声塞太多</li>
+<li>历史状态混乱，导致模型每一步都在错误前提上继续推理</li>
+</ul>
+<p>到这一步，Prompt 的理解可以再往前推进一层：</p>
+<p><strong>Prompt 不只是“怎么说”，而是“给模型看什么、在什么时候给、给多少、给到哪一层”。</strong></p>
+<h2 id="什么叫上下文工程">什么叫上下文工程</h2>
+<p>如果用一句最直接的话概括，上下文工程就是：</p>
+<blockquote>
+<p>为了让模型在当前任务里表现更稳定、更准确、更可控，去主动设计和管理它能看到的全部信息。</p>
+</blockquote>
+<p>这里的“上下文”已经不只是 system prompt 里那一段规则文字了。它通常包括：</p>
+<ul>
+<li>system prompt</li>
+<li>当前任务指令</li>
+<li>用户输入</li>
+<li>few-shot 示例</li>
+<li>工具定义</li>
+<li>工具返回结果</li>
+<li>历史状态</li>
+<li>外部检索得到的知识</li>
+<li>当前日期、角色、环境约束等动态信息</li>
+</ul>
+<p>也就是说，从这一步开始，Prompt 已经升级成了一个更大的问题：</p>
+<ul>
+<li>什么信息应该常驻？</li>
+<li>什么信息只在这一轮注入？</li>
+<li>什么信息应该通过工具获取，而不是直接塞进 Prompt？</li>
+<li>什么信息应该结构化表达？</li>
+<li>什么信息如果继续保留，只会污染模型判断？</li>
+</ul>
+<p>“上下文工程”这个词之所以贴切，就在于它强调的已经不是一句 Prompt 的写法，而是整套信息架构。</p>
+<h2 id="这时workflow-和-ai-agent-的区别才真正变得重要">这时，Workflow 和 AI Agent 的区别才真正变得重要</h2>
+<p>前一篇已经讨论过 Prompt Chaining，也就是把复杂任务拆成多个步骤。继续往后，一个特别重要的变化是：</p>
+<p><strong>这时不再只是在拆 Prompt，而是在选择系统应该做成 Workflow，还是做成 Agent。</strong></p>
+<p>两者的区别可以概括为：</p>
+<h3 id="workflow">Workflow</h3>
+<p>Workflow 的特点是：</p>
+<ul>
+<li>路径是预先定义好的</li>
+<li>哪一步先做、哪一步后做，基本由代码决定</li>
+<li>模型只负责完成某个局部任务</li>
+<li>系统整体更可控、更稳定、更容易调试</li>
+</ul>
+<p>比如：</p>
+<ol>
+<li>先分类用户请求</li>
+<li>再路由到对应处理链路</li>
+<li>再生成结构化输出</li>
+<li>最后经过校验后返回</li>
+</ol>
+<p>这类系统更像“固定流程”。</p>
+<h3 id="ai-agent">AI Agent</h3>
+<p>AI Agent 的特点是：</p>
+<ul>
+<li>步骤不一定提前写死</li>
+<li>模型自己决定要不要调用工具、调用哪个工具、下一步做什么</li>
+<li>系统更灵活，但也更难预测</li>
+<li>对上下文质量、工具设计和可观测性要求更高</li>
+</ul>
+<p>比如用户说：</p>
+<blockquote>
+<p>帮我整理最近 OpenAI 的开发动态，并给出可能影响前端工程师的点。</p>
+</blockquote>
+<p>这时 Agent 可能会自己决定：</p>
+<ul>
+<li>先做 web search</li>
+<li>再整理结果</li>
+<li>再判断哪些信息和前端工程师有关</li>
+<li>再输出摘要</li>
+</ul>
+<p>也就是说，Workflow 和 Agent 的差别，不只是“是不是更高级”，而是：</p>
+<blockquote>
+<p>决策权更多掌握在代码里，还是更多交给模型。</p>
+</blockquote>
+<h2 id="如何判断用-workflow还是用-agent">如何判断：用 Workflow，还是用 Agent</h2>
+<p>这部分最有帮助的地方，不是记住定义，而是建立判断标准。</p>
+<p>判断时可以先问下面几个问题：</p>
+<ol>
+<li>任务步骤是否清楚、稳定、可预定义？</li>
+<li>任务是否需要高可控性和高可调试性？</li>
+<li>如果模型自由发挥过多，业务风险大不大？</li>
+<li>这个任务是否经常出现开放式路径和动态选择？</li>
+<li>工具调用顺序是否很难提前写死？</li>
+</ol>
+<p>如果前面几个问题的答案偏向“是”，那更适合做 <strong>Workflow</strong>。</p>
+<p>如果后面几个问题的答案偏向“是”，那才更适合做 <strong>Agent</strong>。</p>
+<p>很多团队一开始就想做 Agent，但从工程角度看，这往往意味着流程设计尚未清楚，就先把控制权交给了模型。</p>
+<p>从工程角度看，更稳妥的路径通常是：</p>
+<blockquote>
+<p>先把能 Workflow 化的部分 Workflow 化，再把真的需要动态决策的部分交给 Agent。</p>
+</blockquote>
+<p>这也是一种上下文工程思想。因为本质上是在决定：<strong>模型应该在哪些边界内拥有自由度。</strong></p>
+<h2 id="rag-不只是知识库问答而是上下文供给方式">RAG 不只是知识库问答，而是上下文供给方式</h2>
+<p>如果只把 RAG 理解成“做个知识库问答”，往往会低估它在系统里的位置。</p>
+<p>把 RAG 放在上下文工程里理解，会更顺畅：</p>
+<blockquote>
+<p>RAG 的本质，不只是检索，而是在运行时为模型补充当前任务真正需要的外部知识。</p>
+</blockquote>
+<p>这个理解很关键。</p>
+<p>因为模型的参数知识是静态的，而很多任务需要的却是：</p>
+<ul>
+<li>最新信息</li>
+<li>私有文档</li>
+<li>业务规则</li>
+<li>历史记录</li>
+<li>项目上下文</li>
+</ul>
+<p>这时候，如果把所有资料都硬塞进 Prompt，不仅放不下，而且噪声会越来越大。RAG 的价值就在这里：</p>
+<ul>
+<li>先根据问题检索相关内容</li>
+<li>再把这部分内容作为上下文送给模型</li>
+<li>让模型基于“当前最相关的信息”来回答或行动</li>
+</ul>
+<p>所以 RAG 在系统里真正解决的，不是“让模型变聪明”，而是：</p>
+<p><strong>让模型在当前这一步，看到它真正需要看到的信息。</strong></p>
+<p>从这个角度看，RAG 本质上也是上下文工程的一部分。</p>
+<h2 id="把-rag-放进-workflow-和-agent-里会看到更清楚的区别">把 RAG 放进 Workflow 和 Agent 里，会看到更清楚的区别</h2>
+<p>RAG 放在不同系统里，角色其实不一样。</p>
+<h3 id="在-workflow-里">在 Workflow 里</h3>
+<p>RAG 更像一个固定步骤：</p>
+<ol>
+<li>接收问题</li>
+<li>检索相关文档</li>
+<li>拼接上下文</li>
+<li>基于上下文生成回答</li>
+</ol>
+<p>这个流程清楚、稳定、容易评估。很适合：</p>
+<ul>
+<li>文档问答</li>
+<li>FAQ</li>
+<li>内部知识检索</li>
+<li>有固定输入输出边界的场景</li>
+</ul>
+<h3 id="在-agent-里">在 Agent 里</h3>
+<p>RAG 更像一个“可选工具”：</p>
+<ul>
+<li>模型自己判断是否需要检索</li>
+<li>检索一次不够，可能继续检索第二次</li>
+<li>也可能先调用别的工具，再回来补检索</li>
+</ul>
+<p>这时候，RAG 不再只是一个固定节点，而是系统动作链的一部分。</p>
+<p>这种设计更灵活，但也更难：</p>
+<ul>
+<li>工具描述要清楚</li>
+<li>何时检索要清楚</li>
+<li>检索结果怎么回到上下文要清楚</li>
+<li>如果检索失败或证据不足，行为边界也要清楚</li>
+</ul>
+<p>也就是说，把 RAG 放进 Agent 之后，问题就不再只是“召回准不准”，而是整个上下文回路是否健康。</p>
+<h2 id="一个越来越清楚的主线prompt-正在升级成上下文操作系统">一个越来越清楚的主线：Prompt 正在升级成“上下文操作系统”</h2>
+<p>把这些内容串起来之后，可以看到一条更清楚的主线：</p>
+<ul>
+<li>前面几篇更像在学“怎么写 Prompt”</li>
+<li>到了这一篇，开始进入“怎么组织模型工作的环境”</li>
+</ul>
+<p>Function Calling 让模型可以接触外部能力；
+Workflow 帮你把稳定流程写死；
+Agent 让模型拥有有限度的动态决策权；
+RAG 让系统在运行时补充外部知识；
+而 Context Engineering 则在更高一层上，决定这一切该怎样组合。</p>
+<p>如果要给这一部分提炼一个核心问题，可以写成：</p>
+<blockquote>
+<p>当模型已经不只是回答，而是在一个系统里持续决策、持续调用、持续读取上下文时，你怎么设计它所处的整个信息环境？</p>
+</blockquote>
+<p>这就是这一阶段的真正主题。</p>
+<h2 id="这类系统设计可以怎样验收">这类系统设计可以怎样验收</h2>
+<p>这一部分之后，判断一个方案是否靠谱，关注点已经不只是 Prompt 写得好不好，而会变成这些问题：</p>
+<ul>
+<li>工具定义是否真的足够清楚？</li>
+<li>模型是否知道什么时候该调用工具，什么时候不该？</li>
+<li>上下文是越堆越多，还是按需注入？</li>
+<li>历史状态和当前任务有没有混淆？</li>
+<li>这个场景究竟更适合 Workflow 还是 Agent？</li>
+<li>RAG 注入的信息，是否真的和当前任务相关？</li>
+<li>如果系统出错，是否能够定位是 Prompt、工具、检索还是上下文拼装的问题？</li>
+</ul>
+<p>这些问题一旦被问出来，就会发现：</p>
+<p>AI 应用开发到了这里，已经越来越像系统工程，而不是 Prompt 小技巧。</p>
+<h2 id="本篇结论">本篇结论</h2>
+<p>第一篇把 Prompt 理解成结构化表达，第二篇开始理解输出稳定性，第三篇开始定义接口，第四篇开始拆流程。到了第五篇，可以进一步得到这样的结论：</p>
+<blockquote>
+<p>当模型开始调用工具、访问知识、管理状态并在多步链路里行动时，真正设计的，已经不只是 Prompt，而是上下文本身。</p>
+</blockquote>
+<p>Function Calling 只是入口，Context Engineering 才是更大的主题；Workflow 和 Agent 不是谁更高级，而是谁更适合当前问题；RAG 也不只是知识库问答，而是给模型补充高相关上下文的一种系统手段。</p>
+<p>如果说前四篇还主要在建立“如何跟模型协作”，那么这一篇开始进入“如何围绕模型设计系统环境”。这一部分的核心结论是：<strong>Prompt 的下一步，不是更会写，而是更会组织上下文。</strong></p>
+<p>下一篇将进入 Prompt 的安全、测试与维护问题，重点讨论 Prompt Injection、测试集、回归比较和版本化迭代。</p>
+<h2 id="参考文档">参考文档</h2>
+<ul>
+<li><a href="https://www.promptingguide.ai/zh/applications/function_calling">Prompt Engineering Guide - Function Calling</a></li>
+<li><a href="https://www.promptingguide.ai/en/agents/function-calling">Prompt Engineering Guide - Function Calling in AI Agents</a></li>
+<li><a href="https://www.promptingguide.ai/en/agents/context-engineering">Prompt Engineering Guide - Context Engineering for AI Agents</a></li>
+<li><a href="https://www.promptingguide.ai/en/guides/context-engineering-guide">Prompt Engineering Guide - Context Engineering Guide</a></li>
+<li><a href="https://www.promptingguide.ai/en/agents/ai-workflows-vs-ai-agents">Prompt Engineering Guide - AI Workflows vs AI Agents</a></li>
+<li><a href="https://www.promptingguide.ai/zh/techniques/rag">Prompt Engineering Guide - 检索增强生成 (RAG)</a></li>
+</ul> </article> <!-- ═══════ Post footer section ═══════ --> <div class="relative mt-12 mb-8 flex items-center justify-center gap-4" aria-hidden="true" data-astro-cid-vj4tpspi> <div class="relative h-px flex-1 bg-linear-to-r from-transparent via-border/30 to-accent/20" data-astro-cid-vj4tpspi> <div class="absolute inset-0 bg-linear-to-r from-transparent via-accent/40 to-accent/40 blur-[2px]" data-astro-cid-vj4tpspi></div> </div> <div class="relative z-10 flex items-center gap-2 font-cartograph text-[10px] tracking-widest text-accent/40 uppercase select-none" data-astro-cid-vj4tpspi> <span class="h-1.5 w-1.5 rounded-full bg-accent/50 shadow-[0_0_8px_var(--color-accent)]" data-astro-cid-vj4tpspi></span>
+end
+</div> <div class="relative h-px flex-1 bg-linear-to-l from-transparent via-border/30 to-accent/20" data-astro-cid-vj4tpspi> <div class="absolute inset-0 bg-linear-to-l from-transparent via-accent/40 to-accent/40 blur-[2px]" data-astro-cid-vj4tpspi></div> </div> </div> <!-- Tags & Share row --> <div class="mt-6 mb-8 flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-between" data-astro-cid-vj4tpspi> <!-- Tags (duplicated from header — aria-hidden to avoid double indexing) --> <div class="flex flex-wrap justify-center gap-2 sm:justify-start" aria-hidden="true" data-astro-cid-vj4tpspi> <a href="/tags/ai/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> AI </a><a href="/tags/prompt-engineering/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> Prompt Engineering </a><a href="/tags/llm/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> LLM </a><a href="/tags/ai-应用开发/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> AI 应用开发 </a> </div> <!-- Share links --> <div class="flex shrink-0 flex-col items-center gap-2 sm:items-end" data-astro-cid-wkojbtzc><span class="font-cartograph text-[10px] tracking-wider text-foreground/40 uppercase select-none" data-astro-cid-wkojbtzc>
+Share
+</span><div class="flex items-center gap-1" data-astro-cid-wkojbtzc><a tabindex="0" href="https://wa.me/?text=https://regulusleow.github.io/posts/2026/0302-d05aa037/" target="_blank" rel="noopener noreferrer" title="Envia este post por WhatsApp" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Envia este post por WhatsApp</span> </a><a tabindex="0" href="https://www.facebook.com/sharer.php?u=https://regulusleow.github.io/posts/2026/0302-d05aa037/" target="_blank" rel="noopener noreferrer" title="Comparte este post en Facebook" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post en Facebook</span> </a><a tabindex="0" href="https://x.com/intent/post?url=https://regulusleow.github.io/posts/2026/0302-d05aa037/" target="_blank" rel="noopener noreferrer" title="Comparte este post en X" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post en X</span> </a><a tabindex="0" href="https://t.me/share/url?url=https://regulusleow.github.io/posts/2026/0302-d05aa037/" target="_blank" rel="noopener noreferrer" title="Comparte este post por Telegram" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post por Telegram</span> </a><a tabindex="0" href="https://pinterest.com/pin/create/button/?url=https://regulusleow.github.io/posts/2026/0302-d05aa037/" target="_blank" rel="noopener noreferrer" title="Comparte este post en Pinterest" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post en Pinterest</span> </a><a tabindex="0" href="mailto:?subject=See%20this%20post&#38;body=https://regulusleow.github.io/posts/2026/0302-d05aa037/" target="_blank" rel="noopener noreferrer" title="Envia este post por correo" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Envia este post por correo</span> </a></div></div> </div> <!-- Decorative separator before prev/next --> <div class="my-6 flex items-center gap-3" aria-hidden="true" data-astro-cid-vj4tpspi> <div class="h-px flex-1 bg-linear-to-r from-transparent via-border/30 to-transparent" data-astro-cid-vj4tpspi></div> </div> <!-- Previous/Next Post Navigation --> <div data-pagefind-ignore class="grid grid-cols-2 gap-3" data-astro-cid-vj4tpspi> <a href="/posts/2026/0415-8c40fc45" class="post-nav-link group relative flex flex-col gap-1 rounded-2xl border border-border/20 px-5 py-4 transition-all duration-300 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5" data-astro-cid-vj4tpspi> <div class="post-nav-bg" data-astro-cid-vj4tpspi></div> <div class="flex items-center gap-1.5" data-astro-cid-vj4tpspi> <svg class="size-3.5 text-accent/50 transition-transform duration-300 group-hover:-translate-x-1 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <line x1="19" y1="12" x2="5" y2="12" data-astro-cid-vj4tpspi></line> <polyline points="12 19 5 12 12 5" data-astro-cid-vj4tpspi></polyline> </svg> <span class="font-cartograph text-[10px] tracking-wider text-foreground/35 uppercase" data-astro-cid-vj4tpspi>
+Previous
+</span> </div> <span class="line-clamp-2 text-sm leading-snug font-medium text-foreground/70 transition-colors duration-200 group-hover:text-accent" data-astro-cid-vj4tpspi> Prompt学习六：为什么写完 Prompt 还不算结束 </span> </a> <a href="/posts/2026/0226-dd8577ae" class="post-nav-link group relative col-start-2 flex flex-col items-end gap-1 rounded-2xl border border-border/20 px-5 py-4 text-end transition-all duration-300 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5" data-astro-cid-vj4tpspi> <div class="post-nav-bg" data-astro-cid-vj4tpspi></div> <div class="flex items-center gap-1.5" data-astro-cid-vj4tpspi> <span class="font-cartograph text-[10px] tracking-wider text-foreground/35 uppercase" data-astro-cid-vj4tpspi>
+Next
+</span> <svg class="size-3.5 text-accent/50 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <line x1="5" y1="12" x2="19" y2="12" data-astro-cid-vj4tpspi></line> <polyline points="12 5 19 12 12 19" data-astro-cid-vj4tpspi></polyline> </svg> </div> <span class="line-clamp-2 text-sm leading-snug font-medium text-foreground/70 transition-colors duration-200 group-hover:text-accent" data-astro-cid-vj4tpspi> Prompt学习四：为什么复杂任务不能只靠一个 Prompt </span> </a> </div> </main> <div id="btt-btn-container" aria-hidden="true" class="pointer-events-none fixed end-4 bottom-8 z-50 md:end-8 md:bottom-10 translate-y-8 opacity-0 transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none"> <button id="back-to-top-button" type="button" tabindex="-1" aria-label="Go back to top" title="Go back to top" data-button="back-to-top" class="group relative flex flex-col items-center justify-center gap-0.5 size-14 rounded-full md:size-16 border border-accent/15 bg-background/75 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.20)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.60)] hover:shadow-[0_6px_28px_rgba(0,0,0,0.30)] dark:hover:shadow-[0_6px_28px_rgba(0,0,0,0.75)] hover:scale-105 active:scale-95 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 transition-all duration-200 ease-out motion-reduce:transition-none pointer-events-auto"> <!-- 1: Progress Ring (conic-gradient) --> <span aria-hidden="true" id="progress-indicator" class="absolute inset-0 z-0 block rounded-full bg-transparent"></span> <!-- 2: Button Background, leaves 3px of the ring visible --> <span aria-hidden="true" class="absolute inset-[3px] z-10 rounded-full bg-background/95"></span> <!-- 3: Content (icon + label) --> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="relative z-20 size-5 text-accent transition-transform duration-200 group-hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 md:size-6" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M16 9l-4 -4" /><path d="M8 9l4 -4" /></svg> <span class="relative z-20 text-[9px] font-bold tracking-widest text-accent/70 uppercase">
+top
+</span> <span class="sr-only">Go back to top</span> </button> </div> <script type="module">let r=null;function f(){r&&r.abort(),r=new AbortController;const{signal:s}=r,c=document.documentElement,a=document.querySelector("#btt-btn-container"),l=document.querySelector("[data-button='back-to-top']"),d=document.querySelector("#progress-indicator");if(!a||!l||!d)return;const e=a,u=l,w=d;let i=!1,g=!1,p=-1;function h(){const o=c.scrollHeight-c.clientHeight,n=c.scrollTop||window.scrollY||0;if(o<=0)return{ratio:0,progress:0};const t=Math.min(n/o,1),T=Math.round(t*100);return{ratio:t,progress:T}}function m(){const{ratio:o,progress:n}=h();n!==p&&(w.style.setProperty("background-image",`conic-gradient(var(--accent) ${n}%, transparent ${n}%)`),p=n);const t=o>.2;t!==g&&(e.classList.toggle("opacity-100",t),e.classList.toggle("translate-y-0",t),e.classList.toggle("opacity-0",!t),e.classList.toggle("translate-y-8",!t),e.classList.toggle("pointer-events-none",!t),e.setAttribute("aria-hidden",String(!t)),u.tabIndex=t?0:-1,g=t)}function b(){i||(i=!0,window.requestAnimationFrame(()=>{m(),i=!1}))}u.addEventListener("click",()=>{const o=window.matchMedia("(prefers-reduced-motion: reduce)").matches;window.scrollTo({top:0,behavior:o?"auto":"smooth"})},{signal:s}),document.addEventListener("scroll",b,{passive:!0,signal:s}),window.addEventListener("resize",b,{passive:!0,signal:s}),m()}document.addEventListener("astro:page-load",f);f();</script> <footer class="footer-wrapper mt-auto" role="contentinfo" data-astro-cid-vj4tpspi="true" data-astro-cid-sz7xmlte> <!-- Top gradient border --> <div class="h-px w-full bg-linear-to-r from-transparent via-border/40 to-transparent" data-astro-cid-sz7xmlte></div> <div class="app-layout py-8 sm:py-10" data-astro-cid-sz7xmlte> <!-- Main footer grid --> <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-between" data-astro-cid-sz7xmlte> <!-- Brand column --> <div class="flex flex-col items-center gap-3 sm:items-start" data-astro-cid-sz7xmlte> <a href="/" aria-label="Go to home of Stellar Wake" class="group footer-home-link relative flex items-center gap-2 rounded-md text-lg font-bold tracking-tight" data-astro-cid-sz7xmlte> <svg viewBox="0 0 1000 250" xmlns:bx="https://boxy-svg.com" class="footer-logo w-28 opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105 dark:invert" data-astro-cid-sz7xmlte="true">
+  <g transform="matrix(1.112155, 0, 0, 1.112155, 12.50231, -14.050506)" id="object-0">
+    <text class="logo-text-left" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre;" x="0" y="176.957">Dev</text>
+    <text class="logo-sphere" style="fill: rgb(167, 90, 90); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; letter-spacing: -30px; paint-order: stroke; white-space: pre; transform-origin: 342.846px 129.448px;" x="250.711" y="176.957">{·}</text>
+    <text class="logo-text-right" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre; transform-origin: -123.373px 8.755px;"><tspan x="437.222" y="89.954" style="baseline-shift: sub;">sfera</tspan></text>
+  </g>
+  <defs>
+    <bx:export>
+      <bx:file format="svg" href="#object-0" path="Sin título.svg" />
+    </bx:export>
+  </defs>
+</svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake</span> </a> <p class="max-w-xs text-center text-[11px] leading-relaxed tracking-wide text-foreground/55 sm:text-start" data-astro-cid-sz7xmlte>
+每一行代码都是微芒，汇聚成光，照亮通往星辰的航线。
+</p> </div> <!-- Social links --> <nav class="flex flex-col items-center gap-3 sm:items-end" aria-labelledby="footer-social-heading" data-astro-cid-sz7xmlte> <p id="footer-social-heading" class="font-cartograph text-[10px] tracking-wider text-foreground/55 uppercase select-none" data-astro-cid-sz7xmlte>Connect</p> <ul class="flex items-center gap-2" role="list" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte> <a tabindex="0" href="https://github.com/regulusleow" target="_blank" rel="noopener noreferrer" aria-label="Stellar Wake on GitHub" title="Stellar Wake on GitHub" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake on GitHub</span>  </a> </li><li data-astro-cid-sz7xmlte> <a tabindex="0" href="https://twitter.com/regulus_wj" target="_blank" rel="noopener noreferrer" aria-label="Stellar Wake on X" title="Stellar Wake on X" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake on X</span>  </a> </li><li data-astro-cid-sz7xmlte> <a tabindex="0" href="https://t.me/regusw" target="_blank" rel="noopener noreferrer" aria-label="Stellar Wake on Telegram" title="Stellar Wake on Telegram" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake on Telegram</span>  </a> </li><li data-astro-cid-sz7xmlte> <a tabindex="0" href="mailto:wujiafengwork@gmail.com" aria-label="Send email to Stellar Wake" title="Send email to Stellar Wake" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Send email to Stellar Wake</span>  </a> </li> </ul> </nav> </div> <!-- Bottom bar --> <div class="mt-8 flex items-center gap-3" aria-hidden="true" data-astro-cid-sz7xmlte> <div class="h-px flex-1 bg-linear-to-r from-transparent via-border/25 to-transparent" data-astro-cid-sz7xmlte></div> </div> <div class="mt-4 flex flex-col items-center justify-between gap-2 sm:flex-row" data-astro-cid-sz7xmlte> <p class="font-cartograph text-[11px] tracking-wide text-foreground/50" data-astro-cid-sz7xmlte>
+&copy; 2026 Stellar Wake. All rights reserved.
+</p> <p class="font-cartograph text-[11px] tracking-wide text-foreground/45" data-astro-cid-sz7xmlte>
+Made with <span class="text-accent" data-astro-cid-sz7xmlte>&#9829;</span> and lots of coffee
+</p> </div> </div> </footer>  <!-- Search Modal Overlay --><div id="search-modal" class="search-modal-overlay" role="dialog" aria-modal="true" aria-label="Search the site" data-astro-cid-qk3db3zz> <div class="search-modal-backdrop" data-search-close data-astro-cid-qk3db3zz></div> <div class="search-modal-container" data-modal-card data-astro-cid-qk3db3zz> <!-- Aurora orbs background --> <div class="modal-aurora" aria-hidden="true" data-astro-cid-qk3db3zz> <div class="modal-aurora-orb modal-aurora-orb-1" data-astro-cid-qk3db3zz></div> <div class="modal-aurora-orb modal-aurora-orb-2" data-astro-cid-qk3db3zz></div> <div class="modal-aurora-orb modal-aurora-orb-3" data-astro-cid-qk3db3zz></div> </div> <!-- Cursor-follow glow --> <div class="modal-cursor-glow" data-modal-glow aria-hidden="true" data-astro-cid-qk3db3zz></div> <!-- Sparkles --> <div class="modal-sparkles" aria-hidden="true" data-astro-cid-qk3db3zz> <div class="sparkle sparkle-1" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-2" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-3" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-4" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-5" data-astro-cid-qk3db3zz></div> </div> <!-- Animated border glow --> <div class="modal-border-glow" aria-hidden="true" data-astro-cid-qk3db3zz></div> <!-- Header --> <div class="search-modal-header" data-astro-cid-qk3db3zz> <div class="search-modal-title" data-astro-cid-qk3db3zz> <span class="search-icon-ring" data-astro-cid-qk3db3zz> <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-qk3db3zz> <circle cx="11" cy="11" r="8" data-astro-cid-qk3db3zz></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-qk3db3zz></line> </svg> </span> <span class="search-title-text" data-astro-cid-qk3db3zz>Search</span> </div> <div class="search-modal-shortcuts" data-astro-cid-qk3db3zz> <kbd class="kbd-key" data-astro-cid-qk3db3zz>⌘</kbd> <kbd class="kbd-key" data-astro-cid-qk3db3zz>K</kbd> <span class="shortcuts-sep" data-astro-cid-qk3db3zz>·</span> <kbd class="kbd-key" data-astro-cid-qk3db3zz>esc</kbd> <span class="shortcuts-label" data-astro-cid-qk3db3zz>close</span> </div> <button class="search-modal-close" data-search-close aria-label="Close search" data-astro-cid-qk3db3zz> <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-qk3db3zz> <line x1="18" y1="6" x2="6" y2="18" data-astro-cid-qk3db3zz></line> <line x1="6" y1="6" x2="18" y2="18" data-astro-cid-qk3db3zz></line> </svg> </button> </div> <!-- Search body --> <div class="search-modal-body" data-astro-cid-qk3db3zz> <div id="modal-pagefind-search" class="premium-search" style="--pagefind-ui-scale: 0.9;" data-astro-cid-qk3db3zz></div> <!-- Empty state illustration --> <div class="search-empty-state" data-search-empty data-astro-cid-qk3db3zz> <div class="empty-icon" data-astro-cid-qk3db3zz> <svg class="size-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-qk3db3zz> <circle cx="11" cy="11" r="8" data-astro-cid-qk3db3zz></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-qk3db3zz></line> </svg> </div> <p class="empty-text" data-astro-cid-qk3db3zz>
+Type to search for articles, tutorials, and ideas...
+</p> </div> </div> <!-- Footer --> <div class="search-modal-footer" data-astro-cid-qk3db3zz> <div class="footer-hint" data-astro-cid-qk3db3zz> <span class="footer-icon" data-astro-cid-qk3db3zz>↵</span> open
+</div> <div class="footer-hint" data-astro-cid-qk3db3zz> <span class="footer-icon" data-astro-cid-qk3db3zz>↑↓</span> navigate
+</div> <div class="footer-powered" data-astro-cid-qk3db3zz>
+powered by <strong data-astro-cid-qk3db3zz>pagefind</strong> </div> </div> </div> </div> <script type="module" src="/_astro/SearchModal.astro_astro_type_script_index_0_lang.DPjkKun0.js"></script> <!-- Load full theme logic --> <script type="module">const l="theme",i="light",d="dark",h="dark";function u(){const e=localStorage.getItem(l);return e||h}let t=window.theme?.themeValue??u();function c(){localStorage.setItem(l,t),r()}function r(){document.firstElementChild?.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t);const e=document.body;if(e){const o=window.getComputedStyle(e).backgroundColor;document.querySelector("meta[name='theme-color']")?.setAttribute("content",o)}}window.theme?(window.theme.setPreference=c,window.theme.reflectPreference=r):window.theme={themeValue:t,setPreference:c,reflectPreference:r,getTheme:()=>t,setTheme:e=>{t=e}};r();function a(){r();const e=()=>{t=t===i?d:i,window.theme?.setTheme(t),c()},n=document.querySelector("#theme-btn"),o=document.querySelector("#theme-btn-mobile"),m=n?.cloneNode(!0);n&&m&&(n.replaceWith(m),m.addEventListener("click",e));const s=o?.cloneNode(!0);o&&s&&(o.replaceWith(s),s.addEventListener("click",e))}a();document.addEventListener("astro:after-swap",a);document.addEventListener("astro:before-swap",e=>{const n=e,o=document.querySelector("meta[name='theme-color']")?.getAttribute("content");o&&n.newDocument.querySelector("meta[name='theme-color']")?.setAttribute("content",o)});window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?d:i,window.theme?.setTheme(t),c()});</script> <script type="module">let f=0;document.addEventListener("astro:page-load",()=>{document.querySelectorAll(".tabs-wrapper[data-tabs-auto]").forEach(n=>{if(n.hasAttribute("data-tabs-ready"))return;n.setAttribute("data-tabs-ready",""),n.removeAttribute("data-tabs-auto");const l=Array.from(n.querySelectorAll(":scope > .tabs-panel[data-tab-label]"));if(l.length===0)return;const o=document.createElement("div");o.className="tabs-nav",o.setAttribute("role","tablist");const c=n.getAttribute("aria-label");c&&o.setAttribute("aria-label",c);const b=document.createElement("div");b.className="tabs-panels";const r=[],u=[];l.forEach((t,e)=>{const a=t.getAttribute("data-tab-label")||"";t.removeAttribute("data-tab-label"),u.push(t);const i=`tabpanel-${++f}`,d=`tab-${f}`;t.setAttribute("id",i),t.setAttribute("aria-labelledby",d),e>0&&t.setAttribute("hidden","");const s=document.createElement("button");s.setAttribute("id",d),s.setAttribute("role","tab"),s.setAttribute("aria-controls",i),s.setAttribute("aria-selected",String(e===0)),s.setAttribute("tabindex",e===0?"0":"-1"),s.className=`tabs-btn${e===0?" active":""}`,s.type="button",s.textContent=a,r.push(s),o.appendChild(s),b.appendChild(t)}),n.insertBefore(o,n.firstChild),n.appendChild(b);function A(t){const e=t.getAttribute("aria-controls");e&&(r.forEach(a=>{const i=a===t;a.classList.toggle("active",i),a.setAttribute("aria-selected",String(i)),a.setAttribute("tabindex",i?"0":"-1")}),u.forEach(a=>{a.getAttribute("id")===e?a.removeAttribute("hidden"):a.setAttribute("hidden","")}))}r.forEach(t=>{t.addEventListener("click",()=>A(t)),t.addEventListener("keydown",e=>{if(!["ArrowLeft","ArrowRight","Home","End"].includes(e.key))return;e.preventDefault();const a=r.indexOf(t),i=e.key==="Home"?0:e.key==="End"?r.length-1:e.key==="ArrowLeft"?(a-1+r.length)%r.length:(a+1)%r.length,d=r[i];d.focus(),A(d)})})})});</script> </body> </html>   <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Guard: avoid duplicating the bar on View Transitions re-runs
+    if (document.querySelector(".progress-container")) return;
+
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-50 h-1 w-full bg-background";
+
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    progressContainer.appendChild(progressBar);
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    const myBar = document.getElementById("myBar"); // cache ref once
+    if (!myBar) return;
+
+    let ticking = false;
+    document.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const winScroll = document.documentElement.scrollTop;
+            const height =
+              document.documentElement.scrollHeight -
+              document.documentElement.clientHeight;
+            myBar.style.width = ((winScroll / height) * 100) + "%";
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true } // lets the browser optimise scroll handling
+    );
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      link.ariaLabel = "link to heading";
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    // Pass 1: read all computed styles before touching the DOM
+    // (avoids a forced reflow on every iteration of the loop)
+    const topClasses = codeBlocks.map(cb =>
+      getComputedStyle(cb).getPropertyValue("--file-name-offset").trim() !== ""
+        ? "top-(--file-name-offset)"
+        : "-top-3"
+    );
+
+    // Pass 2: mutate DOM
+    codeBlocks.forEach((codeBlock, i) => {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClasses[i]} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codeblock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    });
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

@@ -1,0 +1,432 @@
+<!DOCTYPE html><html dir="ltr" lang="zh-CN" class="scroll-smooth" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/webp" sizes="32x32" href="/favicon-32x32-avatar.webp"><link rel="icon" type="image/webp" sizes="16x16" href="/favicon-16x16-avatar.webp"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-avatar.webp"><link rel="canonical" href="https://regulusleow.github.io/posts/2019/0309-f22cb42d/"><meta name="generator" content="Astro v6.1.10"><!-- Load Fonts --><!-- Only preload the primary body font. Others load async to avoid bandwidth contention. --><style>@font-face{font-family:Wotfard-1fe9c73deb2fb6a1;src:url("/_astro/fonts/599b54395ea144f1.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}:root{--font-wotfard:Wotfard-1fe9c73deb2fb6a1;}</style><style>@font-face{font-family:Sriracha-0c1557e4d8c0b1eb;src:url("/_astro/fonts/503c6623fb2bca4e.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}:root{--font-sriracha:Sriracha-0c1557e4d8c0b1eb;}</style><style>@font-face{font-family:"Cartograph CF-1a234bdfe17fc7f2";src:url("/_astro/fonts/57754488e24c2ca2.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:"Cartograph CF-1a234bdfe17fc7f2 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:400;font-style:normal;size-adjust:102.4833%;ascent-override:98.5526%;descent-override:18.5396%;}:root{--font-cartograph:"Cartograph CF-1a234bdfe17fc7f2","Cartograph CF-1a234bdfe17fc7f2 fallback: Courier New",monospace;}</style><style>@font-face{font-family:"Cascadia Code-92b4fb7167366a33";src:url("/_astro/fonts/8b0f431118263881.woff2") format("woff2");font-display:swap;font-weight:200 700;font-style:normal;}@font-face{font-family:"Cascadia Code-92b4fb7167366a33 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:200 700;font-style:normal;size-adjust:97.6404%;ascent-override:95.0155%;descent-override:24.0039%;}:root{--font-cascadia-code:"Cascadia Code-92b4fb7167366a33","Cascadia Code-92b4fb7167366a33 fallback: Courier New",monospace;}</style><!-- General Meta Tags --><title>Carthage 新手教程 | Stellar Wake</title><meta name="description" content="Cocoapods 是由来已久的 Cocoa 依赖管理工具，那么为什么 Carthage 项目被创建？ 首先，Cocoapods（默认情况下）会自动的为你的应用程序和所有依赖创建和更新 。Carthage 用  构建框架（framework）的二进制文件，但是并没有将他们整合到用户项目中。Cocoapods 的目的是让用户使用起来更简单，而 Carthage 则是更灵活，减少对项目的侵入性"><meta name="author" content="轩辕十四"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="Carthage 新手教程 | Stellar Wake"><meta property="og:description" content="Cocoapods 是由来已久的 Cocoa 依赖管理工具，那么为什么 Carthage 项目被创建？ 首先，Cocoapods（默认情况下）会自动的为你的应用程序和所有依赖创建和更新 。Carthage 用  构建框架（framework）的二进制文件，但是并没有将他们整合到用户项目中。Cocoapods 的目的是让用户使用起来更简单，而 Carthage 则是更灵活，减少对项目的侵入性"><meta property="og:url" content="https://regulusleow.github.io/posts/2019/0309-f22cb42d/"><meta property="og:image" content="https://regulusleow.github.io/posts/2019/0309-f22cb42d/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2019-03-08T16:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://regulusleow.github.io/posts/2019/0309-f22cb42d/"><meta property="twitter:title" content="Carthage 新手教程 | Stellar Wake"><meta property="twitter:description" content="Cocoapods 是由来已久的 Cocoa 依赖管理工具，那么为什么 Carthage 项目被创建？ 首先，Cocoapods（默认情况下）会自动的为你的应用程序和所有依赖创建和更新 。Carthage 用  构建框架（framework）的二进制文件，但是并没有将他们整合到用户项目中。Cocoapods 的目的是让用户使用起来更简单，而 Carthage 则是更灵活，减少对项目的侵入性"><meta property="twitter:image" content="https://regulusleow.github.io/posts/2019/0309-f22cb42d/index.png"><!-- Google JSON-LD Structured data (only on blog posts) --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Carthage 新手教程 | Stellar Wake","image":"https://regulusleow.github.io/posts/2019/0309-f22cb42d/index.png","datePublished":"2019-03-08T16:00:00.000Z","author":[{"@type":"Person","name":"轩辕十四","url":"https://github.com/regulusleow"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="Stellar Wake" href="https://regulusleow.github.io/rss.xml"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.j56hQv-j.js"></script><!-- Minimal inline script to prevent FOUC - sets theme immediately --><script>
+      (function () {
+        const initialColorScheme = ""; // "light" | "dark"
+        const currentTheme = localStorage.getItem("theme");
+
+        function getPreferTheme() {
+          if (currentTheme) return currentTheme;
+          if (initialColorScheme) return initialColorScheme;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        const themeValue = getPreferTheme();
+
+        // Set theme immediately to prevent flash
+        document.firstElementChild?.setAttribute("data-theme", themeValue);
+
+        // Export minimal API for external script
+        window.theme = {
+          themeValue: themeValue,
+          getTheme: () => window.theme.themeValue,
+          setTheme: val => {
+            window.theme.themeValue = val;
+          },
+        };
+      })();
+    </script><link rel="stylesheet" href="/_astro/Footer.96XQ-jn6.css">
+<link rel="stylesheet" href="/_astro/index@_@astro.BLobtBVd.css">
+<style>.breadcrumb-bar[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:.2rem;max-width:100%;overflow-x:auto;padding:.4rem .75rem;border:1px solid color-mix(in srgb,var(--border) 30%,transparent);border-radius:999px;background:linear-gradient(130deg,color-mix(in srgb,var(--accent) 10%,transparent) 0%,transparent 44%),color-mix(in srgb,var(--foreground) 3%,var(--background));box-shadow:inset 0 1px color-mix(in srgb,white 20%,transparent),0 10px 28px -20px color-mix(in srgb,var(--accent) 45%,transparent);-webkit-backdrop-filter:blur(10px) saturate(125%);backdrop-filter:blur(10px) saturate(125%);scrollbar-width:none;animation:breadcrumb-in .35s ease-out both}.breadcrumb-bar[data-astro-cid-qaanghzh].has-back{max-width:100%;overflow-x:auto;-webkit-backdrop-filter:blur(6px);scrollbar-width:none}.breadcrumb-bar[data-astro-cid-qaanghzh]::-webkit-scrollbar{display:none}.breadcrumb-item[data-astro-cid-qaanghzh]{flex-shrink:0;min-width:0;display:inline-flex;align-items:center}.breadcrumb-item[data-astro-cid-qaanghzh]+.breadcrumb-item[data-astro-cid-qaanghzh]:before{content:"/";margin-inline:.3rem;opacity:.6;color:color-mix(in srgb,var(--accent) 65%,var(--foreground))}.breadcrumb-home[data-astro-cid-qaanghzh],.breadcrumb-link[data-astro-cid-qaanghzh],.breadcrumb-current[data-astro-cid-qaanghzh]{display:inline-flex;align-items:center;border-radius:.45rem;line-height:1;text-decoration:none}.breadcrumb-home[data-astro-cid-qaanghzh]{justify-content:center;width:1.65rem;height:1.65rem;color:color-mix(in srgb,var(--foreground) 65%,transparent);transition:color .2s ease,background-color .2s ease,transform .2s ease}.breadcrumb-home[data-astro-cid-qaanghzh]:hover,.breadcrumb-home[data-astro-cid-qaanghzh]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent);transform:translateY(-1px)}.breadcrumb-link-soft[data-astro-cid-qaanghzh]{width:auto;height:auto;padding:.15rem .45rem;border-radius:.35rem;color:color-mix(in srgb,var(--foreground) 72%,transparent);transition:color .2s ease,background-color .2s ease}.breadcrumb-link-soft[data-astro-cid-qaanghzh]:hover,.breadcrumb-link-soft[data-astro-cid-qaanghzh]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent);transform:none}.back-btn[data-astro-cid-qaanghzh]{flex-shrink:0}.breadcrumb-link[data-astro-cid-qaanghzh],.breadcrumb-current[data-astro-cid-qaanghzh]{padding:.35rem .55rem;white-space:nowrap}.breadcrumb-link[data-astro-cid-qaanghzh]{color:color-mix(in srgb,var(--foreground) 72%,transparent);transition:color .2s ease,background-color .2s ease}.breadcrumb-link[data-astro-cid-qaanghzh]:hover,.breadcrumb-link[data-astro-cid-qaanghzh]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}.breadcrumb-current[data-astro-cid-qaanghzh]{max-width:min(34ch,64vw);overflow:hidden;text-overflow:ellipsis;color:color-mix(in srgb,var(--accent) 92%,var(--foreground));background:color-mix(in srgb,var(--accent) 11%,transparent);border:1px solid color-mix(in srgb,var(--accent) 24%,transparent)}.visually-hidden[data-astro-cid-qaanghzh]{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:640px){.breadcrumb-bar[data-astro-cid-qaanghzh].has-back .breadcrumb-item[data-astro-cid-qaanghzh]:not(.is-back):not(.is-current){display:none}}@media(prefers-reduced-motion:reduce){.breadcrumb-bar[data-astro-cid-qaanghzh],.breadcrumb-home[data-astro-cid-qaanghzh],.breadcrumb-link[data-astro-cid-qaanghzh],.back-btn[data-astro-cid-qaanghzh],.breadcrumb-link-soft[data-astro-cid-qaanghzh]{animation:none;transition:none}}@keyframes breadcrumb-in{0%{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+</style><style>[data-astro-transition-scope="astro-ti6a3mbw-1"] { view-transition-name: carthage-\65B0\624B\6559\7A0B; }@layer astro { ::view-transition-old(carthage-\65B0\624B\6559\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(carthage-\65B0\624B\6559\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(carthage-\65B0\624B\6559\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(carthage-\65B0\624B\6559\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body data-astro-cid-sckkx6r4> <!-- Global decorative backdrop (grid, glow, cursor glow, noise) --> <div class="site-backdrop pointer-events-none" aria-hidden="true" data-astro-cid-sckkx6r4 data-astro-transition-persist="astro-sus445yd-2"> <div class="site-grid" data-astro-cid-sckkx6r4></div>  <div class="site-grain" data-astro-cid-sckkx6r4></div> </div>  <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 rounded-b-lg bg-accent px-4 py-2 font-medium text-background transition-all focus:top-0" data-astro-cid-3ef6ksr2>
+Skip to content
+</a> <header id="main-header" class="sticky top-0 z-40 w-full transition-colors duration-300" data-astro-cid-3ef6ksr2> <div class="header-scrolled-filter w-full" data-astro-cid-3ef6ksr2> <div class="app-layout" data-astro-cid-3ef6ksr2> <div id="top-nav-wrap" class="py-3 sm:py-5 relative w-full flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300" data-astro-cid-3ef6ksr2> <!-- Logo --> <a href="/" class="group relative z-20 flex items-center gap-2 text-xl font-bold tracking-tight sm:text-2xl shrink-0" data-astro-cid-3ef6ksr2> <!-- <span class="nav-logo-text">{SITE.title}</span> --> <svg viewBox="0 0 1000 250" xmlns:bx="https://boxy-svg.com" class="w-37.5 dark:invert" data-astro-cid-3ef6ksr2="true">
+  <g transform="matrix(1.112155, 0, 0, 1.112155, 12.50231, -14.050506)" id="object-0">
+    <text class="logo-text-left" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre;" x="0" y="176.957">Dev</text>
+    <text class="logo-sphere" style="fill: rgb(167, 90, 90); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; letter-spacing: -30px; paint-order: stroke; white-space: pre; transform-origin: 342.846px 129.448px;" x="250.711" y="176.957">{·}</text>
+    <text class="logo-text-right" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre; transform-origin: -123.373px 8.755px;"><tspan x="437.222" y="89.954" style="baseline-shift: sub;">sfera</tspan></text>
+  </g>
+  <defs>
+    <bx:export>
+      <bx:file format="svg" href="#object-0" path="Sin título.svg" />
+    </bx:export>
+  </defs>
+</svg> </a> <!-- Center Audio Player -->  <!-- Nav area --> <nav id="nav-menu" class="flex items-center sm:gap-1 shrink-0" data-astro-cid-3ef6ksr2> <!-- Mobile hamburger (animated lines) --> <button id="menu-btn" class="hamburger-btn sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="mobile-menu" data-astro-cid-3ef6ksr2> <div class="hamburger-box" data-astro-cid-3ef6ksr2> <span class="hamburger-line hamburger-line--1" data-astro-cid-3ef6ksr2></span> <span class="hamburger-line hamburger-line--2" data-astro-cid-3ef6ksr2></span> <span class="hamburger-line hamburger-line--3" data-astro-cid-3ef6ksr2></span> </div> </button> <!-- Desktop links (always visible on sm+) --> <ul class="hidden sm:flex sm:flex-row sm:items-center sm:gap-1" data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2> <a href="/posts" class="nav-link nav-active" data-astro-cid-3ef6ksr2>Posts</a> </li> <li data-astro-cid-3ef6ksr2> <a href="/tags" class="nav-link" data-astro-cid-3ef6ksr2>Tags</a> </li> <li data-astro-cid-3ef6ksr2> <a href="/about" class="nav-link" data-astro-cid-3ef6ksr2>About</a> </li> <li class="flex items-center" data-astro-cid-3ef6ksr2> <a href="/search" class="nav-link" title="Go to Search" data-astro-cid-3ef6ksr2>Search</a> </li> <li data-astro-cid-3ef6ksr2> <a tabindex="0" href="/archives" title="Archives" aria-label="archives" data-astro-cid-3ef6ksr2="true" class="group inline-flex items-center gap-1 hover:text-accent nav-link">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only" data-astro-cid-3ef6ksr2>Archives</span>  </a> </li>  <!-- Separator --> <li class="flex items-center px-1" aria-hidden="true" data-astro-cid-3ef6ksr2> <div class="h-4 w-px bg-border/30" data-astro-cid-3ef6ksr2></div> </li> <li class="flex items-center" data-astro-cid-3ef6ksr2> <button data-search-trigger class="nav-search-btn" title="Search (⌘K)" aria-label="Open search" aria-keyshortcuts="Meta+K" data-astro-cid-3ef6ksr2> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <kbd class="nav-kbd" data-astro-cid-3ef6ksr2>⌘K</kbd> </button> </li> <li class="flex items-center" data-astro-cid-3ef6ksr2> <button id="theme-btn" class="nav-icon-btn relative" title="Toggles light & dark" aria-label="auto" aria-live="polite" data-astro-cid-3ef6ksr2> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-1/2 left-1/2 -translate-1/2 scale-100 rotate-0 transition-all duration-300 dark:scale-0 dark:-rotate-90" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-1/2 left-1/2 -translate-1/2 scale-0 rotate-90 transition-all duration-300 dark:scale-100 dark:rotate-0" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </div> </div> <div id="mobile-menu" class="mobile-menu sm:hidden" aria-hidden="true" data-astro-cid-6aabv5oc> <!-- Overlay/Backdrop --> <div class="mobile-menu-backdrop" data-astro-cid-6aabv5oc></div> <!-- Floating Glass Panel --> <div class="app-layout" data-astro-cid-6aabv5oc> <div class="mobile-menu-panel relative mt-2 w-full mx-auto rounded-2xl border border-white/10 dark:border-white/5 overflow-hidden shadow-2xl" data-astro-cid-6aabv5oc> <div class="mobile-menu-inner" data-astro-cid-6aabv5oc> <nav class="mobile-nav-links" data-astro-cid-6aabv5oc> <a href="/posts" class="mobile-nav-link active" style="--i:0" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>Posts</span> </a> <a href="/tags" class="mobile-nav-link" style="--i:1" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>Tags</span> </a> <a href="/about" class="mobile-nav-link" style="--i:2" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>About</span> </a> <a href="/archives" class="mobile-nav-link" style="--i:3" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>Archives</span> </a>  </nav> <!-- Divider --> <div class="mobile-menu-divider" data-astro-cid-6aabv5oc></div> <!-- Bottom action row --> <div class="mobile-menu-actions" data-astro-cid-6aabv5oc> <button data-search-trigger class="mobile-action-btn flex-1 justify-center" title="Search (⌘K)" aria-label="Open search" data-astro-cid-6aabv5oc> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" data-astro-cid-6aabv5oc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span data-astro-cid-6aabv5oc>Search</span> </button> <button id="theme-btn-mobile" class="mobile-action-btn flex-1 justify-center" title="Toggle theme" aria-label="auto" aria-live="polite" data-astro-cid-6aabv5oc> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="block size-4 dark:hidden" data-astro-cid-6aabv5oc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden size-4 dark:block" data-astro-cid-6aabv5oc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> <span class="block dark:hidden" data-astro-cid-6aabv5oc>Dark mode</span> <span class="hidden dark:block" data-astro-cid-6aabv5oc>Light mode</span> </button> </div> </div> </div> </div> </div> <!-- Bottom border with gradient --> <div id="header-border" class="header-border-line opacity-0 transition-opacity duration-300 h-px w-full bg-linear-to-r from-transparent via-border/40 to-transparent" data-astro-cid-3ef6ksr2></div> </header>  <script type="module">let o=null,i=null;function c(){i&&i.abort(),i=new AbortController;const{signal:s}=i,e=document.getElementById("main-header"),t=document.getElementById("top-nav-wrap"),r=document.getElementById("header-border");if(!e||!t||!r)return;let n=!1;const l=()=>{n||(n=!0,requestAnimationFrame(()=>{const a=window.scrollY>15;e.classList.toggle("header-scrolled",a),t.classList.toggle("sm:py-5",!a),t.classList.toggle("sm:py-3",a),r.classList.toggle("opacity-0",!a),r.classList.toggle("opacity-100",a),n=!1}))};window.addEventListener("scroll",l,{passive:!0,signal:s}),l()}function d(){o&&o.abort(),o=new AbortController;const{signal:s}=o,e=document.querySelector("#menu-btn"),t=document.querySelector("#mobile-menu"),r=document.querySelector(".mobile-menu-backdrop");if(!e||!t)return;const n=()=>{e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","Open Menu"),t.classList.remove("is-open"),t.setAttribute("aria-hidden","true")};e.addEventListener("click",()=>{e.getAttribute("aria-expanded")==="true"?n():(e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","Close Menu"),t.classList.add("is-open"),t.setAttribute("aria-hidden","false"))},{signal:s}),r&&(r.addEventListener("click",n,{signal:s}),window.addEventListener("scroll",n,{passive:!0,signal:s})),t.querySelectorAll("a").forEach(l=>{l.addEventListener("click",n,{signal:s})})}c();d();document.addEventListener("astro:after-swap",()=>{c(),d()});</script> <nav class="app-layout mt-6 mb-2 overflow-hidden" aria-label="Contextual navigation" data-astro-cid-qaanghzh> <div class="flex items-center gap-3 justify-between" data-astro-cid-qaanghzh> <a id="back-button" href="/" class="breadcrumb-bar back-btn group flex-shrink-0 !gap-2 text-foreground/60 transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background font-cartograph text-sm" aria-label="Go back to the previous page. Current context: 0309 f22cb42d" data-astro-cid-qaanghzh> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 opacity-70 transition-transform duration-200 group-hover:-translate-x-0.5 rtl:rotate-180 rtl:group-hover:translate-x-0.5" data-astro-cid-qaanghzh="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span aria-hidden="true" class="tracking-wide" data-astro-cid-qaanghzh>cd ..</span> <span class="visually-hidden" data-astro-cid-qaanghzh>Go back</span> </a> <ol class="breadcrumb-bar font-cartograph text-sm has-back" data-astro-cid-qaanghzh> <li class="breadcrumb-item is-root" data-astro-cid-qaanghzh> <a href="/" class="breadcrumb-home breadcrumb-link-soft" aria-label="Home" title="Home" data-astro-cid-qaanghzh> <span aria-hidden="true" data-astro-cid-qaanghzh>~</span> <span class="visually-hidden" data-astro-cid-qaanghzh>Home</span> </a> </li> <li class="breadcrumb-item" data-astro-cid-qaanghzh> <a href="/posts/" class="breadcrumb-link" data-astro-cid-qaanghzh> Posts </a> </li><li class="breadcrumb-item" data-astro-cid-qaanghzh> <a href="/posts/2019/" class="breadcrumb-link" data-astro-cid-qaanghzh> 2019 </a> </li><li class="breadcrumb-item is-current" data-astro-cid-qaanghzh> <span class="breadcrumb-current" aria-current="page" title="0309 f22cb42d" data-astro-cid-qaanghzh> 0309 f22cb42d </span> </li> </ol> </div> </nav>  <script type="module">const c="#back-button";function a(o){if(!o)return"/";try{const t=new URL(o,window.location.origin),r=t.origin===window.location.origin,e=t.protocol==="http:"||t.protocol==="https:";return!r||!e?"/":`${t.pathname}${t.search}${t.hash}`||"/"}catch{return"/"}}function n(){const o=document.querySelector(c);if(!o)return;const t=sessionStorage.getItem("backUrl");o.href=a(t)}document.addEventListener("astro:page-load",n);n();</script><main id="main-content" class="relative app-layout pb-12" data-pagefind-body data-astro-cid-vj4tpspi> <!-- Post header section --> <header class="post-header relative mb-10 text-center" data-astro-cid-vj4tpspi> <div class="post-hero-bg" data-astro-cid-vj4tpspi></div> <div class="relative z-10 rounded-3xl border border-border/20 bg-muted/5 px-6 py-8 backdrop-blur-md sm:px-10 sm:py-12" data-astro-cid-vj4tpspi> <!-- Title --> <h1 class="post-title text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-[2.75rem]" data-astro-cid-vj4tpspi data-astro-transition-scope="astro-ti6a3mbw-1"> Carthage 新手教程 </h1> <!-- Tags as badges --> <div class="mt-4 flex flex-wrap justify-center gap-2" data-astro-cid-vj4tpspi> <a href="/tags/carthage/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> Carthage </a><a href="/tags/ios/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> iOS </a><a href="/tags/包管理/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> 包管理 </a><a href="/tags/开发工具/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> 开发工具 </a> </div> <!-- Metadata row --> <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm" data-astro-cid-vj4tpspi> <!-- Author chip --> <div class="inline-flex items-center gap-1.5 rounded-lg border border-border/25 bg-muted/10 px-2.5 py-1 backdrop-blur-sm" data-astro-cid-vj4tpspi> <svg class="size-3.5 text-accent/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" data-astro-cid-vj4tpspi></path> <circle cx="12" cy="7" r="4" data-astro-cid-vj4tpspi></circle> </svg> <span class="opacity-70" data-astro-cid-vj4tpspi>轩辕十四</span> </div> <!-- Date chip --> <div class="inline-flex items-center gap-1.5 rounded-lg border border-border/25 bg-muted/10 px-2.5 py-1 backdrop-blur-sm" data-astro-cid-vj4tpspi> <svg class="size-3.5 text-accent/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <rect x="3" y="4" width="18" height="18" rx="2" ry="2" data-astro-cid-vj4tpspi></rect> <line x1="16" y1="2" x2="16" y2="6" data-astro-cid-vj4tpspi></line> <line x1="8" y1="2" x2="8" y2="6" data-astro-cid-vj4tpspi></line> <line x1="3" y1="10" x2="21" y2="10" data-astro-cid-vj4tpspi></line> </svg> <div class="flex items-center gap-x-2 text-foreground/80 opacity-70 [&#38;>svg]:hidden"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-5.5 scale-90" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg> <span class="sr-only">Published date: </span>  <time class="text-sm whitespace-nowrap" datetime="2019-03-08T16:00:00.000Z" title="2019年3月9日" aria-label="Published date: 2019年3月9日">9 Mar, 2019</time> </div> </div> <!-- Edit post -->  </div> </div> </header> <article id="article" class="app-prose mt-8 w-full max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)" data-astro-cid-vj4tpspi> <h2 id="table-of-contents">Table of contents</h2>
+<p></p><details><summary>Open Table of contents</summary><p></p>
+<ul>
+<li><a href="#carthage-%E4%B8%8E-cocoapods-%E7%9A%84%E4%B8%8D%E5%90%8C">Carthage 与 Cocoapods 的不同</a></li>
+<li><a href="#carthage-%E5%AE%89%E8%A3%85">Carthage 安装</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8-homebrew-%E5%AE%89%E8%A3%85">使用 homebrew 安装</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E7%89%88%E6%9C%AC%E5%92%8C%E5%8D%87%E7%BA%A7">查看版本和升级</a></li>
+<li><a href="#%E5%8D%B8%E8%BD%BD">卸载</a></li>
+</ul>
+</li>
+<li><a href="#carthage-%E9%85%8D%E7%BD%AE%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93iostvoswatchos">Carthage 配置第三方库（iOS，tvOS，watchOS）</a>
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA-cartfile-%E6%96%87%E4%BB%B6">创建 Cartfile 文件</a></li>
+<li><a href="#%E7%94%A8-xcode-%E6%89%93%E5%BC%80%E7%BC%96%E8%BE%91-cartfile">用 Xcode 打开/编辑 Cartfile</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%BA%93">添加依赖库</a>
+<ul>
+<li><a href="#github-repositories">GitHub Repositories</a></li>
+<li><a href="#git-repositories">Git repositories</a></li>
+<li><a href="#binary-only-frameworks">Binary only frameworks</a></li>
+</ul>
+</li>
+<li><a href="#%E7%89%88%E6%9C%AC%E8%A6%81%E6%B1%82">版本要求</a></li>
+<li><a href="#example-cartfile">Example Cartfile</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%89%E8%A3%85%E7%BC%96%E8%BE%91-cartfile-%E4%B8%AD%E7%9A%84%E9%A1%B9%E7%9B%AE">安装/编辑 Cartfile 中的项目</a>
+<ul>
+<li><a href="#clone-%E9%A1%B9%E7%9B%AE%E7%84%B6%E5%90%8E%E7%BC%96%E8%AF%91%E6%88%90-framework">clone 项目，然后编译成 <code>framework</code>：</a></li>
+<li><a href="#carthage-%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E">Carthage 文件夹中文件说明:</a>
+<ul>
+<li><a href="#cartfileresolved">Cartfile.resolved</a></li>
+<li><a href="#carthage-%E6%96%87%E4%BB%B6%E5%A4%B9">Carthage 文件夹</a></li>
+<li><a href="#with-submodules">With submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%9B%B4%E6%96%B0framework%E7%9A%84%E7%89%88%E6%9C%AC">更新Framework的版本</a>
+<ul>
+<li><a href="#%E6%89%93%E5%BC%80-cartfile">打开 Cartfile</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E7%89%88%E6%9C%AC">修改版本</a></li>
+<li><a href="#%E6%9B%B4%E6%96%B0">更新</a></li>
+<li><a href="#%E6%9B%B4%E6%96%B0%E6%8C%87%E5%AE%9A%E5%BA%93">更新指定库</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BC%95%E5%85%A5-carthage-%E4%BE%9D%E8%B5%96%E5%BA%93%E5%88%B0-xcode">引入 Carthage 依赖库到 Xcode</a></li>
+</ul>
+<p></p></details><p></p>
+<h2 id="carthage-与-cocoapods-的不同">Carthage 与 Cocoapods 的不同</h2>
+<p>Cocoapods 是由来已久的 Cocoa 依赖管理工具，那么为什么 Carthage 项目被创建？</p>
+<p>首先，Cocoapods（默认情况下）会自动的为你的应用程序和所有依赖创建和更新 <code>Xcode workspace</code>。Carthage 用 <code>xcodebuild</code> 构建框架（framework）的二进制文件，但是并没有将他们整合到用户项目中。Cocoapods 的目的是让用户使用起来更简单，而 Carthage 则是更灵活，减少对项目的侵入性。</p>
+<p>Cocoapods 的目标在其<a href="https://github.com/CocoaPods/CocoaPods/blob/1703a3464674baecf54bd7e766f4b37ed8fc43f7/README.md">README</a>文件中有如下描述：</p>
+<blockquote>
+<p>… to improve discoverability of, and engagement in, third party open-source libraries, by creating a more centralized ecosystem.</p>
+</blockquote>
+<p>对比之下，Carthage 被创建成一个松散（decentralized）的依赖管理者，没有中心项目清单，这减少了维护工作并避免了任何中心故障点（通俗的讲就是去中心化）。然而，项目被发现就变的更加困难 — 用户必须去使用 GitHub 的 <a href="https://github.com/trending?l=swift">Trending</a> 页面或者其他类似的页面（Cocoapods 就比较简单的可以在终端搜索需要使用的库）。</p>
+<p>Cocoapods 项目还必须具有所谓的 <code>podspec</code> 文件，其中包括有关项目的元数据，并指定应如何构建它。Carthage 使用 <code>xcodebuild</code> 去构建依赖，而不是将它们集成到单个工作区中，它没有类似的规范文件，但你的依赖项必须包含到自己的 Xcode 项目中，该项目描述了如何构建其产品。</p>
+<p>最终，我们创建了 Carthage，因为我们想要一个最简单的工具 — 一个可以完成工作而不必承担 Xcode 责任的依赖管理器，并且并没有为框架作者创造额外的工作。Cocoapods 提供了许多惊人的功能，但是在 Carthage 中，这些功能永远不会出现，因为这会增加额外的复杂性。</p>
+<h2 id="carthage-安装">Carthage 安装</h2>
+<h3 id="使用-homebrew-安装">使用 homebrew 安装</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>brew install carthage</span></span></code></pre>
+<h3 id="查看版本和升级">查看版本和升级</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// 查看版本：</span></span>
+<span class="line"><span>carthage version</span></span>
+<span class="line"><span>// 升级：</span></span>
+<span class="line"><span>brew upgrade carthage</span></span></code></pre>
+<h3 id="卸载">卸载</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>brew uninstall carthage</span></span></code></pre>
+<h2 id="carthage-配置第三方库iostvoswatchos">Carthage 配置第三方库（iOS，tvOS，watchOS）</h2>
+<h3 id="创建-cartfile-文件">创建 Cartfile 文件</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>cd to your project</span></span>
+<span class="line"><span>touch Cartfile</span></span></code></pre>
+<h3 id="用-xcode-打开编辑-cartfile">用 Xcode 打开/编辑 Cartfile</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>open -a Xcode Cartfile</span></span></code></pre>
+<h3 id="添加依赖库">添加依赖库</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>github "Alamofire/Alamofire" == 4.5</span></span>
+<span class="line"><span>github "Alamofire/AlamofireImage" ~> 3.2</span></span></code></pre>
+<p>现在支持的三个来源是 GitHub 存储库，Git 存储库和通过 https 提供的仅二进制框架。未来可能会添加其他可能的来源。如果你想看到具体的东西，请提 <a href="https://github.com/Carthage/Carthage/issues/new">issue</a>。</p>
+<h4 id="github-repositories">GitHub Repositories</h4>
+<p>使用 <code>github</code> 关键字指定 GitHub 存储库（<code>GitHub.com</code> 和 <code>GitHub Enterprise</code>）：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>github "ReactiveCocoa/ReactiveCocoa" # GitHub.com</span></span>
+<span class="line"><span>github "https://enterprise.local/ghe/desktop/git-error-translations" # GitHub Enterprise</span></span></code></pre>
+<p><code>github</code> 源是用于 <code>owner/repo</code> 表单指定或通过其 <code>web API</code> 使用预构建的二进制下载功能，因此对 <code>github</code> 源 使用 <code>git</code> 或 <code>ssh</code> 协议是没有意义的，并且这是一个错误。</p>
+<h4 id="git-repositories">Git repositories</h4>
+<p>其他 Git 存储库使用 <code>git</code> 关键字指定：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git "https://enterprise.local/desktop/git-error-translations2.git"</span></span></code></pre>
+<h4 id="binary-only-frameworks">Binary only frameworks</h4>
+<p>仅作为已编译的二进制文件 <code>.frameworks</code> 提供的依赖项使用 <code>binary</code> 关键字和 <code>https：//</code> 链接，<code>file：//</code> 链接，或没有方案的相对或绝对路径，返回<a href="https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#binary-project-specification">二进制项目规范</a>：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>binary "https://my.domain.com/release/MyFramework.json"   // Remote Hosted</span></span>
+<span class="line"><span>binary "file:///some/Path/MyFramework.json"               // Locally hosted at file path</span></span>
+<span class="line"><span>binary "relative/path/MyFramework.json"                   // Locally hosted at relative path to CWD</span></span>
+<span class="line"><span>binary "/absolute/path/MyFramework.json"                  // Locally hosted at absolute path</span></span></code></pre>
+<h3 id="版本要求">版本要求</h3>
+<p>Carthage 支持多种版本要求：</p>
+<ol>
+<li><code>>= 1.0</code> 指“1.0 及以上版本”。</li>
+<li><code>~> 1.0</code> 指“1.x 版本”</li>
+<li><code>== 1.0</code> 指“版本为 1.0”</li>
+<li><code>"some-branch-or-tag-or-commit"</code> 特指 <code>git</code> 对象（<code>git rev-parse</code> 任何内容都被允许）。
+<ul>
+<li>Note：<code>二进制源</code> 不支持这种形式。</li>
+</ul>
+</li>
+</ol>
+<p>如果没有指定任何版本，任何版本的依赖都将被允许（默认使用最新版本）。</p>
+<h3 id="example-cartfile">Example Cartfile</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span># Require version 2.3.1 or later</span></span>
+<span class="line"><span>github "ReactiveCocoa/ReactiveCocoa" >= 2.3.1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Require version 1.x</span></span>
+<span class="line"><span>github "Mantle/Mantle" ~> 1.0    # (1.0 or later, but less than 2.0)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Require exactly version 0.4.1</span></span>
+<span class="line"><span>github "jspahrsummers/libextobjc" == 0.4.1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Use the latest version</span></span>
+<span class="line"><span>github "jspahrsummers/xcconfigs"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Use the branch</span></span>
+<span class="line"><span>github "jspahrsummers/xcconfigs" "branch"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Use a project from GitHub Enterprise</span></span>
+<span class="line"><span>github "https://enterprise.local/ghe/desktop/git-error-translations"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Use a project from any arbitrary server, on the "development" branch</span></span>
+<span class="line"><span>git "https://enterprise.local/desktop/git-error-translations2.git" "development"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Use a local project</span></span>
+<span class="line"><span>git "file:///directory/to/project" "branch"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># A binary only framework</span></span>
+<span class="line"><span>binary "https://my.domain.com/release/MyFramework.json" ~> 2.3</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># A binary only framework via file: url</span></span>
+<span class="line"><span>binary "file:///some/local/path/MyFramework.json" ~> 2.3</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># A binary only framework via local relative path from Current Working Directory to binary project specification</span></span>
+<span class="line"><span>binary "relative/path/MyFramework.json" ~> 2.3</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># A binary only framework via absolute path to binary project specification</span></span>
+<span class="line"><span>binary "/absolute/path/MyFramework.json" ~> 2.3</span></span></code></pre>
+<h2 id="安装编辑-cartfile-中的项目">安装/编辑 Cartfile 中的项目</h2>
+<h3 id="clone-项目然后编译成-framework">clone 项目，然后编译成 <code>framework</code>：</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// 不指定 platform 会为所有的平台编译（Mac / iOS / tvOS / watchOS）</span></span>
+<span class="line"><span>// 查看更多关于 update 命令的选项：`carthage help update`</span></span>
+<span class="line"><span>carthage update --platform iOS</span></span></code></pre>
+<p>Cartfile 利用 <code>xcode-select</code> 命令来编译 <code>framework</code>，如果你想用其他版的 Xcode 进行编译，执行下面这条命令，把 <code>xcode-select</code> 的路径改为另一版本 Xcode 就可以。</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>sudo xcode-select -s /Applications/Xcode-beta.app/Contents/Developer</span></span></code></pre>
+<p>所有的文件会被编译到当前路径的 Carthage 文件夹中：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// 打开文件夹</span></span>
+<span class="line"><span>open Carthage</span></span></code></pre>
+<h3 id="carthage-文件夹中文件说明">Carthage 文件夹中文件说明:</h3>
+<p><img src="/images/20190309/1.png" alt=""></p>
+<h4 id="cartfileresolved">Cartfile.resolved</h4>
+<p>运行 <code>carthage update --platform iOS</code> 命令后，一个叫 <code>Cartfile.resolved</code> 的文件将会被创建到 Cartfile 同级目录下。此文件准确指定了每个依赖项选择的版本，并列出了所有依赖项（甚至是嵌套的版本）。</p>
+<p>强烈建议将该文件加入到版本控制中，告知其他开发者，当前使用的版本。</p>
+<p>虽然 <code>Cartfile.resolved</code> 文件是人类可读和可扩展的，但你不能修改它。文件的格式非常严格，列出依赖项的顺序对于构建过程很重要。</p>
+<h4 id="carthage-文件夹">Carthage 文件夹</h4>
+<ul>
+<li>Build
+包含对应平台编译好的Framework</li>
+<li>Checkouts
+包含编译 <code>framework</code> 所使用的源代码（除非你使用 <a href="https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#with-submodules">submodules</a> ，否则不要修改这里的代码，<code>carthage update</code> 和 <code>carthage checkout</code> 会覆盖这里的代码，清除你的修改）。</li>
+</ul>
+<h4 id="with-submodules">With submodules</h4>
+<p>如果在引导项目的依赖项时给出了 <code>--use-submodules</code> 标志，<code>updated</code> 或者 <code>checked out</code> <code>Carthage/Checkouts</code> 中的依赖项将作为 <code>Git</code> 子模块（submodules）提供。这允许你对依赖项进行更改，并提交这些更改。</p>
+<h2 id="更新framework的版本">更新Framework的版本</h2>
+<h3 id="打开-cartfile">打开 Cartfile</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>open -a Xcode Cartfile</span></span></code></pre>
+<h3 id="修改版本">修改版本</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// github "Alamofire/Alamofire" == 4.5</span></span>
+<span class="line"><span>github "Alamofire/Alamofire" ~> 4.5.0</span></span></code></pre>
+<h3 id="更新">更新</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>carthage update --platform iOS</span></span></code></pre>
+<h3 id="更新指定库">更新指定库</h3>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>carthage update SVProgressHUD --platform iOS</span></span></code></pre>
+<h2 id="引入-carthage-依赖库到-xcode">引入 Carthage 依赖库到 Xcode</h2>
+<ol>
+<li>在 <code>Carthage -> Build</code> 中找到需要添加的 <code>framework</code>。</li>
+<li>拖拽对应的 <code>framework</code> 到 Xcode 工程的 <code>Linked Frameworks and Libraries</code> 中。</li>
+</ol>
+<p><img src="/images/20190309/2.gif" alt=""></p>
+<ol start="3">
+<li>进入工程的 <code>target -> Build Phases</code>，点击 <code>+</code>，添加 <code>New Run Script Phase</code>:</li>
+</ol>
+<p><img src="/images/20190309/3.png" alt=""></p>
+<p>添加如下脚本命令：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>/usr/local/bin/carthage copy-frameworks</span></span></code></pre>
+<p>在 <code>Input Files</code> 下添加要使用的框架的路径。例如：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework</span></span></code></pre>
+<p>将复制框架的路径添加到 <code>Output Files</code>。例如：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework</span></span></code></pre>
+<p>为什么需要指定 <code>Output Files</code>。</p>
+<p>使用 Carthage 来管理第三方库，在编译并运行 App 的时候，会有一个阶段叫：<code>Carthage Copy Frameworks</code>。这个阶段通过跑一个脚本的形式把所有依赖的第三方库都复制到 App 的目录里。</p>
+<p>这个阶段通常会花 1~x 秒不等，这取决于你的 App 依赖的第三方库数量。默认情况下，每次你 <code>Build &#x26; Run</code> 的时候，都会进行一次这个操作——尽管你的第三方库没有任何改变。</p>
+<p>所以我们需要指定 <code>Output Files</code>，在 <code>Output Files</code> 指定输出文件的情况下，Xcode 只会在 <code>framework</code> 发生更改时去进行 <code>copy framework</code> 操作，这样就节省了时间。</p> </article> <!-- ═══════ Post footer section ═══════ --> <div class="relative mt-12 mb-8 flex items-center justify-center gap-4" aria-hidden="true" data-astro-cid-vj4tpspi> <div class="relative h-px flex-1 bg-linear-to-r from-transparent via-border/30 to-accent/20" data-astro-cid-vj4tpspi> <div class="absolute inset-0 bg-linear-to-r from-transparent via-accent/40 to-accent/40 blur-[2px]" data-astro-cid-vj4tpspi></div> </div> <div class="relative z-10 flex items-center gap-2 font-cartograph text-[10px] tracking-widest text-accent/40 uppercase select-none" data-astro-cid-vj4tpspi> <span class="h-1.5 w-1.5 rounded-full bg-accent/50 shadow-[0_0_8px_var(--color-accent)]" data-astro-cid-vj4tpspi></span>
+end
+</div> <div class="relative h-px flex-1 bg-linear-to-l from-transparent via-border/30 to-accent/20" data-astro-cid-vj4tpspi> <div class="absolute inset-0 bg-linear-to-l from-transparent via-accent/40 to-accent/40 blur-[2px]" data-astro-cid-vj4tpspi></div> </div> </div> <!-- Tags & Share row --> <div class="mt-6 mb-8 flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-between" data-astro-cid-vj4tpspi> <!-- Tags (duplicated from header — aria-hidden to avoid double indexing) --> <div class="flex flex-wrap justify-center gap-2 sm:justify-start" aria-hidden="true" data-astro-cid-vj4tpspi> <a href="/tags/carthage/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> Carthage </a><a href="/tags/ios/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> iOS </a><a href="/tags/包管理/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> 包管理 </a><a href="/tags/开发工具/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> 开发工具 </a> </div> <!-- Share links --> <div class="flex shrink-0 flex-col items-center gap-2 sm:items-end" data-astro-cid-wkojbtzc><span class="font-cartograph text-[10px] tracking-wider text-foreground/40 uppercase select-none" data-astro-cid-wkojbtzc>
+Share
+</span><div class="flex items-center gap-1" data-astro-cid-wkojbtzc><a tabindex="0" href="https://wa.me/?text=https://regulusleow.github.io/posts/2019/0309-f22cb42d/" target="_blank" rel="noopener noreferrer" title="Envia este post por WhatsApp" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Envia este post por WhatsApp</span> </a><a tabindex="0" href="https://www.facebook.com/sharer.php?u=https://regulusleow.github.io/posts/2019/0309-f22cb42d/" target="_blank" rel="noopener noreferrer" title="Comparte este post en Facebook" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post en Facebook</span> </a><a tabindex="0" href="https://x.com/intent/post?url=https://regulusleow.github.io/posts/2019/0309-f22cb42d/" target="_blank" rel="noopener noreferrer" title="Comparte este post en X" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post en X</span> </a><a tabindex="0" href="https://t.me/share/url?url=https://regulusleow.github.io/posts/2019/0309-f22cb42d/" target="_blank" rel="noopener noreferrer" title="Comparte este post por Telegram" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post por Telegram</span> </a><a tabindex="0" href="https://pinterest.com/pin/create/button/?url=https://regulusleow.github.io/posts/2019/0309-f22cb42d/" target="_blank" rel="noopener noreferrer" title="Comparte este post en Pinterest" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post en Pinterest</span> </a><a tabindex="0" href="mailto:?subject=See%20this%20post&#38;body=https://regulusleow.github.io/posts/2019/0309-f22cb42d/" target="_blank" rel="noopener noreferrer" title="Envia este post por correo" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Envia este post por correo</span> </a></div></div> </div> <!-- Decorative separator before prev/next --> <div class="my-6 flex items-center gap-3" aria-hidden="true" data-astro-cid-vj4tpspi> <div class="h-px flex-1 bg-linear-to-r from-transparent via-border/30 to-transparent" data-astro-cid-vj4tpspi></div> </div> <!-- Previous/Next Post Navigation --> <div data-pagefind-ignore class="grid grid-cols-2 gap-3" data-astro-cid-vj4tpspi> <a href="/posts/2019/0402-d7f0cf30" class="post-nav-link group relative flex flex-col gap-1 rounded-2xl border border-border/20 px-5 py-4 transition-all duration-300 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5" data-astro-cid-vj4tpspi> <div class="post-nav-bg" data-astro-cid-vj4tpspi></div> <div class="flex items-center gap-1.5" data-astro-cid-vj4tpspi> <svg class="size-3.5 text-accent/50 transition-transform duration-300 group-hover:-translate-x-1 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <line x1="19" y1="12" x2="5" y2="12" data-astro-cid-vj4tpspi></line> <polyline points="12 19 5 12 12 5" data-astro-cid-vj4tpspi></polyline> </svg> <span class="font-cartograph text-[10px] tracking-wider text-foreground/35 uppercase" data-astro-cid-vj4tpspi>
+Previous
+</span> </div> <span class="line-clamp-2 text-sm leading-snug font-medium text-foreground/70 transition-colors duration-200 group-hover:text-accent" data-astro-cid-vj4tpspi> layerClass </span> </a> <a href="/posts/2019/0208-1c9a0ab0" class="post-nav-link group relative col-start-2 flex flex-col items-end gap-1 rounded-2xl border border-border/20 px-5 py-4 text-end transition-all duration-300 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5" data-astro-cid-vj4tpspi> <div class="post-nav-bg" data-astro-cid-vj4tpspi></div> <div class="flex items-center gap-1.5" data-astro-cid-vj4tpspi> <span class="font-cartograph text-[10px] tracking-wider text-foreground/35 uppercase" data-astro-cid-vj4tpspi>
+Next
+</span> <svg class="size-3.5 text-accent/50 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <line x1="5" y1="12" x2="19" y2="12" data-astro-cid-vj4tpspi></line> <polyline points="12 5 19 12 12 19" data-astro-cid-vj4tpspi></polyline> </svg> </div> <span class="line-clamp-2 text-sm leading-snug font-medium text-foreground/70 transition-colors duration-200 group-hover:text-accent" data-astro-cid-vj4tpspi> Python 学习二之函数 </span> </a> </div> </main> <div id="btt-btn-container" aria-hidden="true" class="pointer-events-none fixed end-4 bottom-8 z-50 md:end-8 md:bottom-10 translate-y-8 opacity-0 transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none"> <button id="back-to-top-button" type="button" tabindex="-1" aria-label="Go back to top" title="Go back to top" data-button="back-to-top" class="group relative flex flex-col items-center justify-center gap-0.5 size-14 rounded-full md:size-16 border border-accent/15 bg-background/75 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.20)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.60)] hover:shadow-[0_6px_28px_rgba(0,0,0,0.30)] dark:hover:shadow-[0_6px_28px_rgba(0,0,0,0.75)] hover:scale-105 active:scale-95 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 transition-all duration-200 ease-out motion-reduce:transition-none pointer-events-auto"> <!-- 1: Progress Ring (conic-gradient) --> <span aria-hidden="true" id="progress-indicator" class="absolute inset-0 z-0 block rounded-full bg-transparent"></span> <!-- 2: Button Background, leaves 3px of the ring visible --> <span aria-hidden="true" class="absolute inset-[3px] z-10 rounded-full bg-background/95"></span> <!-- 3: Content (icon + label) --> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="relative z-20 size-5 text-accent transition-transform duration-200 group-hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 md:size-6" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M16 9l-4 -4" /><path d="M8 9l4 -4" /></svg> <span class="relative z-20 text-[9px] font-bold tracking-widest text-accent/70 uppercase">
+top
+</span> <span class="sr-only">Go back to top</span> </button> </div> <script type="module">let r=null;function f(){r&&r.abort(),r=new AbortController;const{signal:s}=r,c=document.documentElement,a=document.querySelector("#btt-btn-container"),l=document.querySelector("[data-button='back-to-top']"),d=document.querySelector("#progress-indicator");if(!a||!l||!d)return;const e=a,u=l,w=d;let i=!1,g=!1,p=-1;function h(){const o=c.scrollHeight-c.clientHeight,n=c.scrollTop||window.scrollY||0;if(o<=0)return{ratio:0,progress:0};const t=Math.min(n/o,1),T=Math.round(t*100);return{ratio:t,progress:T}}function m(){const{ratio:o,progress:n}=h();n!==p&&(w.style.setProperty("background-image",`conic-gradient(var(--accent) ${n}%, transparent ${n}%)`),p=n);const t=o>.2;t!==g&&(e.classList.toggle("opacity-100",t),e.classList.toggle("translate-y-0",t),e.classList.toggle("opacity-0",!t),e.classList.toggle("translate-y-8",!t),e.classList.toggle("pointer-events-none",!t),e.setAttribute("aria-hidden",String(!t)),u.tabIndex=t?0:-1,g=t)}function b(){i||(i=!0,window.requestAnimationFrame(()=>{m(),i=!1}))}u.addEventListener("click",()=>{const o=window.matchMedia("(prefers-reduced-motion: reduce)").matches;window.scrollTo({top:0,behavior:o?"auto":"smooth"})},{signal:s}),document.addEventListener("scroll",b,{passive:!0,signal:s}),window.addEventListener("resize",b,{passive:!0,signal:s}),m()}document.addEventListener("astro:page-load",f);f();</script> <footer class="footer-wrapper mt-auto" role="contentinfo" data-astro-cid-vj4tpspi="true" data-astro-cid-sz7xmlte> <!-- Top gradient border --> <div class="h-px w-full bg-linear-to-r from-transparent via-border/40 to-transparent" data-astro-cid-sz7xmlte></div> <div class="app-layout py-8 sm:py-10" data-astro-cid-sz7xmlte> <!-- Main footer grid --> <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-between" data-astro-cid-sz7xmlte> <!-- Brand column --> <div class="flex flex-col items-center gap-3 sm:items-start" data-astro-cid-sz7xmlte> <a href="/" aria-label="Go to home of Stellar Wake" class="group footer-home-link relative flex items-center gap-2 rounded-md text-lg font-bold tracking-tight" data-astro-cid-sz7xmlte> <svg viewBox="0 0 1000 250" xmlns:bx="https://boxy-svg.com" class="footer-logo w-28 opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105 dark:invert" data-astro-cid-sz7xmlte="true">
+  <g transform="matrix(1.112155, 0, 0, 1.112155, 12.50231, -14.050506)" id="object-0">
+    <text class="logo-text-left" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre;" x="0" y="176.957">Dev</text>
+    <text class="logo-sphere" style="fill: rgb(167, 90, 90); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; letter-spacing: -30px; paint-order: stroke; white-space: pre; transform-origin: 342.846px 129.448px;" x="250.711" y="176.957">{·}</text>
+    <text class="logo-text-right" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre; transform-origin: -123.373px 8.755px;"><tspan x="437.222" y="89.954" style="baseline-shift: sub;">sfera</tspan></text>
+  </g>
+  <defs>
+    <bx:export>
+      <bx:file format="svg" href="#object-0" path="Sin título.svg" />
+    </bx:export>
+  </defs>
+</svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake</span> </a> <p class="max-w-xs text-center text-[11px] leading-relaxed tracking-wide text-foreground/55 sm:text-start" data-astro-cid-sz7xmlte>
+每一行代码都是微芒，汇聚成光，照亮通往星辰的航线。
+</p> </div> <!-- Social links --> <nav class="flex flex-col items-center gap-3 sm:items-end" aria-labelledby="footer-social-heading" data-astro-cid-sz7xmlte> <p id="footer-social-heading" class="font-cartograph text-[10px] tracking-wider text-foreground/55 uppercase select-none" data-astro-cid-sz7xmlte>Connect</p> <ul class="flex items-center gap-2" role="list" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte> <a tabindex="0" href="https://github.com/regulusleow" target="_blank" rel="noopener noreferrer" aria-label="Stellar Wake on GitHub" title="Stellar Wake on GitHub" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake on GitHub</span>  </a> </li><li data-astro-cid-sz7xmlte> <a tabindex="0" href="https://twitter.com/regulus_wj" target="_blank" rel="noopener noreferrer" aria-label="Stellar Wake on X" title="Stellar Wake on X" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake on X</span>  </a> </li><li data-astro-cid-sz7xmlte> <a tabindex="0" href="https://t.me/regusw" target="_blank" rel="noopener noreferrer" aria-label="Stellar Wake on Telegram" title="Stellar Wake on Telegram" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake on Telegram</span>  </a> </li><li data-astro-cid-sz7xmlte> <a tabindex="0" href="mailto:wujiafengwork@gmail.com" aria-label="Send email to Stellar Wake" title="Send email to Stellar Wake" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Send email to Stellar Wake</span>  </a> </li> </ul> </nav> </div> <!-- Bottom bar --> <div class="mt-8 flex items-center gap-3" aria-hidden="true" data-astro-cid-sz7xmlte> <div class="h-px flex-1 bg-linear-to-r from-transparent via-border/25 to-transparent" data-astro-cid-sz7xmlte></div> </div> <div class="mt-4 flex flex-col items-center justify-between gap-2 sm:flex-row" data-astro-cid-sz7xmlte> <p class="font-cartograph text-[11px] tracking-wide text-foreground/50" data-astro-cid-sz7xmlte>
+&copy; 2026 Stellar Wake. All rights reserved.
+</p> <p class="font-cartograph text-[11px] tracking-wide text-foreground/45" data-astro-cid-sz7xmlte>
+Made with <span class="text-accent" data-astro-cid-sz7xmlte>&#9829;</span> and lots of coffee
+</p> </div> </div> </footer>  <!-- Search Modal Overlay --><div id="search-modal" class="search-modal-overlay" role="dialog" aria-modal="true" aria-label="Search the site" data-astro-cid-qk3db3zz> <div class="search-modal-backdrop" data-search-close data-astro-cid-qk3db3zz></div> <div class="search-modal-container" data-modal-card data-astro-cid-qk3db3zz> <!-- Aurora orbs background --> <div class="modal-aurora" aria-hidden="true" data-astro-cid-qk3db3zz> <div class="modal-aurora-orb modal-aurora-orb-1" data-astro-cid-qk3db3zz></div> <div class="modal-aurora-orb modal-aurora-orb-2" data-astro-cid-qk3db3zz></div> <div class="modal-aurora-orb modal-aurora-orb-3" data-astro-cid-qk3db3zz></div> </div> <!-- Cursor-follow glow --> <div class="modal-cursor-glow" data-modal-glow aria-hidden="true" data-astro-cid-qk3db3zz></div> <!-- Sparkles --> <div class="modal-sparkles" aria-hidden="true" data-astro-cid-qk3db3zz> <div class="sparkle sparkle-1" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-2" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-3" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-4" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-5" data-astro-cid-qk3db3zz></div> </div> <!-- Animated border glow --> <div class="modal-border-glow" aria-hidden="true" data-astro-cid-qk3db3zz></div> <!-- Header --> <div class="search-modal-header" data-astro-cid-qk3db3zz> <div class="search-modal-title" data-astro-cid-qk3db3zz> <span class="search-icon-ring" data-astro-cid-qk3db3zz> <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-qk3db3zz> <circle cx="11" cy="11" r="8" data-astro-cid-qk3db3zz></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-qk3db3zz></line> </svg> </span> <span class="search-title-text" data-astro-cid-qk3db3zz>Search</span> </div> <div class="search-modal-shortcuts" data-astro-cid-qk3db3zz> <kbd class="kbd-key" data-astro-cid-qk3db3zz>⌘</kbd> <kbd class="kbd-key" data-astro-cid-qk3db3zz>K</kbd> <span class="shortcuts-sep" data-astro-cid-qk3db3zz>·</span> <kbd class="kbd-key" data-astro-cid-qk3db3zz>esc</kbd> <span class="shortcuts-label" data-astro-cid-qk3db3zz>close</span> </div> <button class="search-modal-close" data-search-close aria-label="Close search" data-astro-cid-qk3db3zz> <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-qk3db3zz> <line x1="18" y1="6" x2="6" y2="18" data-astro-cid-qk3db3zz></line> <line x1="6" y1="6" x2="18" y2="18" data-astro-cid-qk3db3zz></line> </svg> </button> </div> <!-- Search body --> <div class="search-modal-body" data-astro-cid-qk3db3zz> <div id="modal-pagefind-search" class="premium-search" style="--pagefind-ui-scale: 0.9;" data-astro-cid-qk3db3zz></div> <!-- Empty state illustration --> <div class="search-empty-state" data-search-empty data-astro-cid-qk3db3zz> <div class="empty-icon" data-astro-cid-qk3db3zz> <svg class="size-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-qk3db3zz> <circle cx="11" cy="11" r="8" data-astro-cid-qk3db3zz></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-qk3db3zz></line> </svg> </div> <p class="empty-text" data-astro-cid-qk3db3zz>
+Type to search for articles, tutorials, and ideas...
+</p> </div> </div> <!-- Footer --> <div class="search-modal-footer" data-astro-cid-qk3db3zz> <div class="footer-hint" data-astro-cid-qk3db3zz> <span class="footer-icon" data-astro-cid-qk3db3zz>↵</span> open
+</div> <div class="footer-hint" data-astro-cid-qk3db3zz> <span class="footer-icon" data-astro-cid-qk3db3zz>↑↓</span> navigate
+</div> <div class="footer-powered" data-astro-cid-qk3db3zz>
+powered by <strong data-astro-cid-qk3db3zz>pagefind</strong> </div> </div> </div> </div> <script type="module" src="/_astro/SearchModal.astro_astro_type_script_index_0_lang.DPjkKun0.js"></script> <!-- Load full theme logic --> <script type="module">const l="theme",i="light",d="dark",h="dark";function u(){const e=localStorage.getItem(l);return e||h}let t=window.theme?.themeValue??u();function c(){localStorage.setItem(l,t),r()}function r(){document.firstElementChild?.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t);const e=document.body;if(e){const o=window.getComputedStyle(e).backgroundColor;document.querySelector("meta[name='theme-color']")?.setAttribute("content",o)}}window.theme?(window.theme.setPreference=c,window.theme.reflectPreference=r):window.theme={themeValue:t,setPreference:c,reflectPreference:r,getTheme:()=>t,setTheme:e=>{t=e}};r();function a(){r();const e=()=>{t=t===i?d:i,window.theme?.setTheme(t),c()},n=document.querySelector("#theme-btn"),o=document.querySelector("#theme-btn-mobile"),m=n?.cloneNode(!0);n&&m&&(n.replaceWith(m),m.addEventListener("click",e));const s=o?.cloneNode(!0);o&&s&&(o.replaceWith(s),s.addEventListener("click",e))}a();document.addEventListener("astro:after-swap",a);document.addEventListener("astro:before-swap",e=>{const n=e,o=document.querySelector("meta[name='theme-color']")?.getAttribute("content");o&&n.newDocument.querySelector("meta[name='theme-color']")?.setAttribute("content",o)});window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?d:i,window.theme?.setTheme(t),c()});</script> <script type="module">let f=0;document.addEventListener("astro:page-load",()=>{document.querySelectorAll(".tabs-wrapper[data-tabs-auto]").forEach(n=>{if(n.hasAttribute("data-tabs-ready"))return;n.setAttribute("data-tabs-ready",""),n.removeAttribute("data-tabs-auto");const l=Array.from(n.querySelectorAll(":scope > .tabs-panel[data-tab-label]"));if(l.length===0)return;const o=document.createElement("div");o.className="tabs-nav",o.setAttribute("role","tablist");const c=n.getAttribute("aria-label");c&&o.setAttribute("aria-label",c);const b=document.createElement("div");b.className="tabs-panels";const r=[],u=[];l.forEach((t,e)=>{const a=t.getAttribute("data-tab-label")||"";t.removeAttribute("data-tab-label"),u.push(t);const i=`tabpanel-${++f}`,d=`tab-${f}`;t.setAttribute("id",i),t.setAttribute("aria-labelledby",d),e>0&&t.setAttribute("hidden","");const s=document.createElement("button");s.setAttribute("id",d),s.setAttribute("role","tab"),s.setAttribute("aria-controls",i),s.setAttribute("aria-selected",String(e===0)),s.setAttribute("tabindex",e===0?"0":"-1"),s.className=`tabs-btn${e===0?" active":""}`,s.type="button",s.textContent=a,r.push(s),o.appendChild(s),b.appendChild(t)}),n.insertBefore(o,n.firstChild),n.appendChild(b);function A(t){const e=t.getAttribute("aria-controls");e&&(r.forEach(a=>{const i=a===t;a.classList.toggle("active",i),a.setAttribute("aria-selected",String(i)),a.setAttribute("tabindex",i?"0":"-1")}),u.forEach(a=>{a.getAttribute("id")===e?a.removeAttribute("hidden"):a.setAttribute("hidden","")}))}r.forEach(t=>{t.addEventListener("click",()=>A(t)),t.addEventListener("keydown",e=>{if(!["ArrowLeft","ArrowRight","Home","End"].includes(e.key))return;e.preventDefault();const a=r.indexOf(t),i=e.key==="Home"?0:e.key==="End"?r.length-1:e.key==="ArrowLeft"?(a-1+r.length)%r.length:(a+1)%r.length,d=r[i];d.focus(),A(d)})})})});</script> </body> </html>   <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Guard: avoid duplicating the bar on View Transitions re-runs
+    if (document.querySelector(".progress-container")) return;
+
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-50 h-1 w-full bg-background";
+
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    progressContainer.appendChild(progressBar);
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    const myBar = document.getElementById("myBar"); // cache ref once
+    if (!myBar) return;
+
+    let ticking = false;
+    document.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const winScroll = document.documentElement.scrollTop;
+            const height =
+              document.documentElement.scrollHeight -
+              document.documentElement.clientHeight;
+            myBar.style.width = ((winScroll / height) * 100) + "%";
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true } // lets the browser optimise scroll handling
+    );
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      link.ariaLabel = "link to heading";
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    // Pass 1: read all computed styles before touching the DOM
+    // (avoids a forced reflow on every iteration of the loop)
+    const topClasses = codeBlocks.map(cb =>
+      getComputedStyle(cb).getPropertyValue("--file-name-offset").trim() !== ""
+        ? "top-(--file-name-offset)"
+        : "-top-3"
+    );
+
+    // Pass 2: mutate DOM
+    codeBlocks.forEach((codeBlock, i) => {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClasses[i]} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codeblock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    });
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

@@ -1,0 +1,845 @@
+<!DOCTYPE html><html dir="ltr" lang="zh-CN" class="scroll-smooth" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/webp" sizes="32x32" href="/favicon-32x32-avatar.webp"><link rel="icon" type="image/webp" sizes="16x16" href="/favicon-16x16-avatar.webp"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-avatar.webp"><link rel="canonical" href="https://regulusleow.github.io/posts/2023/0420-28968d5c/"><meta name="generator" content="Astro v6.1.10"><!-- Load Fonts --><!-- Only preload the primary body font. Others load async to avoid bandwidth contention. --><style>@font-face{font-family:Wotfard-1fe9c73deb2fb6a1;src:url("/_astro/fonts/599b54395ea144f1.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}:root{--font-wotfard:Wotfard-1fe9c73deb2fb6a1;}</style><style>@font-face{font-family:Sriracha-0c1557e4d8c0b1eb;src:url("/_astro/fonts/503c6623fb2bca4e.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}:root{--font-sriracha:Sriracha-0c1557e4d8c0b1eb;}</style><style>@font-face{font-family:"Cartograph CF-1a234bdfe17fc7f2";src:url("/_astro/fonts/57754488e24c2ca2.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:"Cartograph CF-1a234bdfe17fc7f2 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:400;font-style:normal;size-adjust:102.4833%;ascent-override:98.5526%;descent-override:18.5396%;}:root{--font-cartograph:"Cartograph CF-1a234bdfe17fc7f2","Cartograph CF-1a234bdfe17fc7f2 fallback: Courier New",monospace;}</style><style>@font-face{font-family:"Cascadia Code-92b4fb7167366a33";src:url("/_astro/fonts/8b0f431118263881.woff2") format("woff2");font-display:swap;font-weight:200 700;font-style:normal;}@font-face{font-family:"Cascadia Code-92b4fb7167366a33 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:200 700;font-style:normal;size-adjust:97.6404%;ascent-override:95.0155%;descent-override:24.0039%;}:root{--font-cascadia-code:"Cascadia Code-92b4fb7167366a33","Cascadia Code-92b4fb7167366a33 fallback: Courier New",monospace;}</style><!-- General Meta Tags --><title>如何使用 Git 进行高效的版本控制 | Stellar Wake</title><meta name="description" content="Git 是一款分布式版本控制系统，于 2005 年由 Linus Torvalds 创造并开源发布。Git 的设计初衷是为了更好地管理 Linux 内核代码，它的分布式特性使得多人协作开发和大型项目的版本控制变得更加高效和可靠。现在，Git 已经成为了开源社区和软件开发领域中最受欢迎的版本控制工具之一。"><meta name="author" content="轩辕十四"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="如何使用 Git 进行高效的版本控制 | Stellar Wake"><meta property="og:description" content="Git 是一款分布式版本控制系统，于 2005 年由 Linus Torvalds 创造并开源发布。Git 的设计初衷是为了更好地管理 Linux 内核代码，它的分布式特性使得多人协作开发和大型项目的版本控制变得更加高效和可靠。现在，Git 已经成为了开源社区和软件开发领域中最受欢迎的版本控制工具之一。"><meta property="og:url" content="https://regulusleow.github.io/posts/2023/0420-28968d5c/"><meta property="og:image" content="https://regulusleow.github.io/posts/2023/0420-28968d5c/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2023-04-19T16:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://regulusleow.github.io/posts/2023/0420-28968d5c/"><meta property="twitter:title" content="如何使用 Git 进行高效的版本控制 | Stellar Wake"><meta property="twitter:description" content="Git 是一款分布式版本控制系统，于 2005 年由 Linus Torvalds 创造并开源发布。Git 的设计初衷是为了更好地管理 Linux 内核代码，它的分布式特性使得多人协作开发和大型项目的版本控制变得更加高效和可靠。现在，Git 已经成为了开源社区和软件开发领域中最受欢迎的版本控制工具之一。"><meta property="twitter:image" content="https://regulusleow.github.io/posts/2023/0420-28968d5c/index.png"><!-- Google JSON-LD Structured data (only on blog posts) --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何使用 Git 进行高效的版本控制 | Stellar Wake","image":"https://regulusleow.github.io/posts/2023/0420-28968d5c/index.png","datePublished":"2023-04-19T16:00:00.000Z","author":[{"@type":"Person","name":"轩辕十四","url":"https://github.com/regulusleow"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="Stellar Wake" href="https://regulusleow.github.io/rss.xml"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.j56hQv-j.js"></script><!-- Minimal inline script to prevent FOUC - sets theme immediately --><script>
+      (function () {
+        const initialColorScheme = ""; // "light" | "dark"
+        const currentTheme = localStorage.getItem("theme");
+
+        function getPreferTheme() {
+          if (currentTheme) return currentTheme;
+          if (initialColorScheme) return initialColorScheme;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        const themeValue = getPreferTheme();
+
+        // Set theme immediately to prevent flash
+        document.firstElementChild?.setAttribute("data-theme", themeValue);
+
+        // Export minimal API for external script
+        window.theme = {
+          themeValue: themeValue,
+          getTheme: () => window.theme.themeValue,
+          setTheme: val => {
+            window.theme.themeValue = val;
+          },
+        };
+      })();
+    </script><link rel="stylesheet" href="/_astro/Footer.96XQ-jn6.css">
+<link rel="stylesheet" href="/_astro/index@_@astro.BLobtBVd.css">
+<style>.breadcrumb-bar[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:.2rem;max-width:100%;overflow-x:auto;padding:.4rem .75rem;border:1px solid color-mix(in srgb,var(--border) 30%,transparent);border-radius:999px;background:linear-gradient(130deg,color-mix(in srgb,var(--accent) 10%,transparent) 0%,transparent 44%),color-mix(in srgb,var(--foreground) 3%,var(--background));box-shadow:inset 0 1px color-mix(in srgb,white 20%,transparent),0 10px 28px -20px color-mix(in srgb,var(--accent) 45%,transparent);-webkit-backdrop-filter:blur(10px) saturate(125%);backdrop-filter:blur(10px) saturate(125%);scrollbar-width:none;animation:breadcrumb-in .35s ease-out both}.breadcrumb-bar[data-astro-cid-qaanghzh].has-back{max-width:100%;overflow-x:auto;-webkit-backdrop-filter:blur(6px);scrollbar-width:none}.breadcrumb-bar[data-astro-cid-qaanghzh]::-webkit-scrollbar{display:none}.breadcrumb-item[data-astro-cid-qaanghzh]{flex-shrink:0;min-width:0;display:inline-flex;align-items:center}.breadcrumb-item[data-astro-cid-qaanghzh]+.breadcrumb-item[data-astro-cid-qaanghzh]:before{content:"/";margin-inline:.3rem;opacity:.6;color:color-mix(in srgb,var(--accent) 65%,var(--foreground))}.breadcrumb-home[data-astro-cid-qaanghzh],.breadcrumb-link[data-astro-cid-qaanghzh],.breadcrumb-current[data-astro-cid-qaanghzh]{display:inline-flex;align-items:center;border-radius:.45rem;line-height:1;text-decoration:none}.breadcrumb-home[data-astro-cid-qaanghzh]{justify-content:center;width:1.65rem;height:1.65rem;color:color-mix(in srgb,var(--foreground) 65%,transparent);transition:color .2s ease,background-color .2s ease,transform .2s ease}.breadcrumb-home[data-astro-cid-qaanghzh]:hover,.breadcrumb-home[data-astro-cid-qaanghzh]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent);transform:translateY(-1px)}.breadcrumb-link-soft[data-astro-cid-qaanghzh]{width:auto;height:auto;padding:.15rem .45rem;border-radius:.35rem;color:color-mix(in srgb,var(--foreground) 72%,transparent);transition:color .2s ease,background-color .2s ease}.breadcrumb-link-soft[data-astro-cid-qaanghzh]:hover,.breadcrumb-link-soft[data-astro-cid-qaanghzh]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent);transform:none}.back-btn[data-astro-cid-qaanghzh]{flex-shrink:0}.breadcrumb-link[data-astro-cid-qaanghzh],.breadcrumb-current[data-astro-cid-qaanghzh]{padding:.35rem .55rem;white-space:nowrap}.breadcrumb-link[data-astro-cid-qaanghzh]{color:color-mix(in srgb,var(--foreground) 72%,transparent);transition:color .2s ease,background-color .2s ease}.breadcrumb-link[data-astro-cid-qaanghzh]:hover,.breadcrumb-link[data-astro-cid-qaanghzh]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}.breadcrumb-current[data-astro-cid-qaanghzh]{max-width:min(34ch,64vw);overflow:hidden;text-overflow:ellipsis;color:color-mix(in srgb,var(--accent) 92%,var(--foreground));background:color-mix(in srgb,var(--accent) 11%,transparent);border:1px solid color-mix(in srgb,var(--accent) 24%,transparent)}.visually-hidden[data-astro-cid-qaanghzh]{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:640px){.breadcrumb-bar[data-astro-cid-qaanghzh].has-back .breadcrumb-item[data-astro-cid-qaanghzh]:not(.is-back):not(.is-current){display:none}}@media(prefers-reduced-motion:reduce){.breadcrumb-bar[data-astro-cid-qaanghzh],.breadcrumb-home[data-astro-cid-qaanghzh],.breadcrumb-link[data-astro-cid-qaanghzh],.back-btn[data-astro-cid-qaanghzh],.breadcrumb-link-soft[data-astro-cid-qaanghzh]{animation:none;transition:none}}@keyframes breadcrumb-in{0%{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+</style><style>[data-astro-transition-scope="astro-ti6a3mbw-1"] { view-transition-name: \5982\4F55\4F7F\7528-git-\8FDB\884C\9AD8\6548\7684\7248\672C\63A7\5236; }@layer astro { ::view-transition-old(\5982\4F55\4F7F\7528-git-\8FDB\884C\9AD8\6548\7684\7248\672C\63A7\5236) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(\5982\4F55\4F7F\7528-git-\8FDB\884C\9AD8\6548\7684\7248\672C\63A7\5236) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(\5982\4F55\4F7F\7528-git-\8FDB\884C\9AD8\6548\7684\7248\672C\63A7\5236) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(\5982\4F55\4F7F\7528-git-\8FDB\884C\9AD8\6548\7684\7248\672C\63A7\5236) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-ti6a3mbw-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-ti6a3mbw-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body data-astro-cid-sckkx6r4> <!-- Global decorative backdrop (grid, glow, cursor glow, noise) --> <div class="site-backdrop pointer-events-none" aria-hidden="true" data-astro-cid-sckkx6r4 data-astro-transition-persist="astro-sus445yd-2"> <div class="site-grid" data-astro-cid-sckkx6r4></div>  <div class="site-grain" data-astro-cid-sckkx6r4></div> </div>  <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 rounded-b-lg bg-accent px-4 py-2 font-medium text-background transition-all focus:top-0" data-astro-cid-3ef6ksr2>
+Skip to content
+</a> <header id="main-header" class="sticky top-0 z-40 w-full transition-colors duration-300" data-astro-cid-3ef6ksr2> <div class="header-scrolled-filter w-full" data-astro-cid-3ef6ksr2> <div class="app-layout" data-astro-cid-3ef6ksr2> <div id="top-nav-wrap" class="py-3 sm:py-5 relative w-full flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300" data-astro-cid-3ef6ksr2> <!-- Logo --> <a href="/" class="group relative z-20 flex items-center gap-2 text-xl font-bold tracking-tight sm:text-2xl shrink-0" data-astro-cid-3ef6ksr2> <!-- <span class="nav-logo-text">{SITE.title}</span> --> <svg viewBox="0 0 1000 250" xmlns:bx="https://boxy-svg.com" class="w-37.5 dark:invert" data-astro-cid-3ef6ksr2="true">
+  <g transform="matrix(1.112155, 0, 0, 1.112155, 12.50231, -14.050506)" id="object-0">
+    <text class="logo-text-left" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre;" x="0" y="176.957">Dev</text>
+    <text class="logo-sphere" style="fill: rgb(167, 90, 90); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; letter-spacing: -30px; paint-order: stroke; white-space: pre; transform-origin: 342.846px 129.448px;" x="250.711" y="176.957">{·}</text>
+    <text class="logo-text-right" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre; transform-origin: -123.373px 8.755px;"><tspan x="437.222" y="89.954" style="baseline-shift: sub;">sfera</tspan></text>
+  </g>
+  <defs>
+    <bx:export>
+      <bx:file format="svg" href="#object-0" path="Sin título.svg" />
+    </bx:export>
+  </defs>
+</svg> </a> <!-- Center Audio Player -->  <!-- Nav area --> <nav id="nav-menu" class="flex items-center sm:gap-1 shrink-0" data-astro-cid-3ef6ksr2> <!-- Mobile hamburger (animated lines) --> <button id="menu-btn" class="hamburger-btn sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="mobile-menu" data-astro-cid-3ef6ksr2> <div class="hamburger-box" data-astro-cid-3ef6ksr2> <span class="hamburger-line hamburger-line--1" data-astro-cid-3ef6ksr2></span> <span class="hamburger-line hamburger-line--2" data-astro-cid-3ef6ksr2></span> <span class="hamburger-line hamburger-line--3" data-astro-cid-3ef6ksr2></span> </div> </button> <!-- Desktop links (always visible on sm+) --> <ul class="hidden sm:flex sm:flex-row sm:items-center sm:gap-1" data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2> <a href="/posts" class="nav-link nav-active" data-astro-cid-3ef6ksr2>Posts</a> </li> <li data-astro-cid-3ef6ksr2> <a href="/tags" class="nav-link" data-astro-cid-3ef6ksr2>Tags</a> </li> <li data-astro-cid-3ef6ksr2> <a href="/about" class="nav-link" data-astro-cid-3ef6ksr2>About</a> </li> <li class="flex items-center" data-astro-cid-3ef6ksr2> <a href="/search" class="nav-link" title="Go to Search" data-astro-cid-3ef6ksr2>Search</a> </li> <li data-astro-cid-3ef6ksr2> <a tabindex="0" href="/archives" title="Archives" aria-label="archives" data-astro-cid-3ef6ksr2="true" class="group inline-flex items-center gap-1 hover:text-accent nav-link">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only" data-astro-cid-3ef6ksr2>Archives</span>  </a> </li>  <!-- Separator --> <li class="flex items-center px-1" aria-hidden="true" data-astro-cid-3ef6ksr2> <div class="h-4 w-px bg-border/30" data-astro-cid-3ef6ksr2></div> </li> <li class="flex items-center" data-astro-cid-3ef6ksr2> <button data-search-trigger class="nav-search-btn" title="Search (⌘K)" aria-label="Open search" aria-keyshortcuts="Meta+K" data-astro-cid-3ef6ksr2> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <kbd class="nav-kbd" data-astro-cid-3ef6ksr2>⌘K</kbd> </button> </li> <li class="flex items-center" data-astro-cid-3ef6ksr2> <button id="theme-btn" class="nav-icon-btn relative" title="Toggles light & dark" aria-label="auto" aria-live="polite" data-astro-cid-3ef6ksr2> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-1/2 left-1/2 -translate-1/2 scale-100 rotate-0 transition-all duration-300 dark:scale-0 dark:-rotate-90" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-1/2 left-1/2 -translate-1/2 scale-0 rotate-90 transition-all duration-300 dark:scale-100 dark:rotate-0" data-astro-cid-3ef6ksr2="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </div> </div> <div id="mobile-menu" class="mobile-menu sm:hidden" aria-hidden="true" data-astro-cid-6aabv5oc> <!-- Overlay/Backdrop --> <div class="mobile-menu-backdrop" data-astro-cid-6aabv5oc></div> <!-- Floating Glass Panel --> <div class="app-layout" data-astro-cid-6aabv5oc> <div class="mobile-menu-panel relative mt-2 w-full mx-auto rounded-2xl border border-white/10 dark:border-white/5 overflow-hidden shadow-2xl" data-astro-cid-6aabv5oc> <div class="mobile-menu-inner" data-astro-cid-6aabv5oc> <nav class="mobile-nav-links" data-astro-cid-6aabv5oc> <a href="/posts" class="mobile-nav-link active" style="--i:0" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>Posts</span> </a> <a href="/tags" class="mobile-nav-link" style="--i:1" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>Tags</span> </a> <a href="/about" class="mobile-nav-link" style="--i:2" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>About</span> </a> <a href="/archives" class="mobile-nav-link" style="--i:3" data-astro-cid-6aabv5oc> <span class="mobile-nav-indicator" data-astro-cid-6aabv5oc></span> <span data-astro-cid-6aabv5oc>Archives</span> </a>  </nav> <!-- Divider --> <div class="mobile-menu-divider" data-astro-cid-6aabv5oc></div> <!-- Bottom action row --> <div class="mobile-menu-actions" data-astro-cid-6aabv5oc> <button data-search-trigger class="mobile-action-btn flex-1 justify-center" title="Search (⌘K)" aria-label="Open search" data-astro-cid-6aabv5oc> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" data-astro-cid-6aabv5oc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span data-astro-cid-6aabv5oc>Search</span> </button> <button id="theme-btn-mobile" class="mobile-action-btn flex-1 justify-center" title="Toggle theme" aria-label="auto" aria-live="polite" data-astro-cid-6aabv5oc> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="block size-4 dark:hidden" data-astro-cid-6aabv5oc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden size-4 dark:block" data-astro-cid-6aabv5oc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> <span class="block dark:hidden" data-astro-cid-6aabv5oc>Dark mode</span> <span class="hidden dark:block" data-astro-cid-6aabv5oc>Light mode</span> </button> </div> </div> </div> </div> </div> <!-- Bottom border with gradient --> <div id="header-border" class="header-border-line opacity-0 transition-opacity duration-300 h-px w-full bg-linear-to-r from-transparent via-border/40 to-transparent" data-astro-cid-3ef6ksr2></div> </header>  <script type="module">let o=null,i=null;function c(){i&&i.abort(),i=new AbortController;const{signal:s}=i,e=document.getElementById("main-header"),t=document.getElementById("top-nav-wrap"),r=document.getElementById("header-border");if(!e||!t||!r)return;let n=!1;const l=()=>{n||(n=!0,requestAnimationFrame(()=>{const a=window.scrollY>15;e.classList.toggle("header-scrolled",a),t.classList.toggle("sm:py-5",!a),t.classList.toggle("sm:py-3",a),r.classList.toggle("opacity-0",!a),r.classList.toggle("opacity-100",a),n=!1}))};window.addEventListener("scroll",l,{passive:!0,signal:s}),l()}function d(){o&&o.abort(),o=new AbortController;const{signal:s}=o,e=document.querySelector("#menu-btn"),t=document.querySelector("#mobile-menu"),r=document.querySelector(".mobile-menu-backdrop");if(!e||!t)return;const n=()=>{e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","Open Menu"),t.classList.remove("is-open"),t.setAttribute("aria-hidden","true")};e.addEventListener("click",()=>{e.getAttribute("aria-expanded")==="true"?n():(e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","Close Menu"),t.classList.add("is-open"),t.setAttribute("aria-hidden","false"))},{signal:s}),r&&(r.addEventListener("click",n,{signal:s}),window.addEventListener("scroll",n,{passive:!0,signal:s})),t.querySelectorAll("a").forEach(l=>{l.addEventListener("click",n,{signal:s})})}c();d();document.addEventListener("astro:after-swap",()=>{c(),d()});</script> <nav class="app-layout mt-6 mb-2 overflow-hidden" aria-label="Contextual navigation" data-astro-cid-qaanghzh> <div class="flex items-center gap-3 justify-between" data-astro-cid-qaanghzh> <a id="back-button" href="/" class="breadcrumb-bar back-btn group flex-shrink-0 !gap-2 text-foreground/60 transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background font-cartograph text-sm" aria-label="Go back to the previous page. Current context: 0420 28968d5c" data-astro-cid-qaanghzh> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 opacity-70 transition-transform duration-200 group-hover:-translate-x-0.5 rtl:rotate-180 rtl:group-hover:translate-x-0.5" data-astro-cid-qaanghzh="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span aria-hidden="true" class="tracking-wide" data-astro-cid-qaanghzh>cd ..</span> <span class="visually-hidden" data-astro-cid-qaanghzh>Go back</span> </a> <ol class="breadcrumb-bar font-cartograph text-sm has-back" data-astro-cid-qaanghzh> <li class="breadcrumb-item is-root" data-astro-cid-qaanghzh> <a href="/" class="breadcrumb-home breadcrumb-link-soft" aria-label="Home" title="Home" data-astro-cid-qaanghzh> <span aria-hidden="true" data-astro-cid-qaanghzh>~</span> <span class="visually-hidden" data-astro-cid-qaanghzh>Home</span> </a> </li> <li class="breadcrumb-item" data-astro-cid-qaanghzh> <a href="/posts/" class="breadcrumb-link" data-astro-cid-qaanghzh> Posts </a> </li><li class="breadcrumb-item" data-astro-cid-qaanghzh> <a href="/posts/2023/" class="breadcrumb-link" data-astro-cid-qaanghzh> 2023 </a> </li><li class="breadcrumb-item is-current" data-astro-cid-qaanghzh> <span class="breadcrumb-current" aria-current="page" title="0420 28968d5c" data-astro-cid-qaanghzh> 0420 28968d5c </span> </li> </ol> </div> </nav>  <script type="module">const c="#back-button";function a(o){if(!o)return"/";try{const t=new URL(o,window.location.origin),r=t.origin===window.location.origin,e=t.protocol==="http:"||t.protocol==="https:";return!r||!e?"/":`${t.pathname}${t.search}${t.hash}`||"/"}catch{return"/"}}function n(){const o=document.querySelector(c);if(!o)return;const t=sessionStorage.getItem("backUrl");o.href=a(t)}document.addEventListener("astro:page-load",n);n();</script><main id="main-content" class="relative app-layout pb-12" data-pagefind-body data-astro-cid-vj4tpspi> <!-- Post header section --> <header class="post-header relative mb-10 text-center" data-astro-cid-vj4tpspi> <div class="post-hero-bg" data-astro-cid-vj4tpspi></div> <div class="relative z-10 rounded-3xl border border-border/20 bg-muted/5 px-6 py-8 backdrop-blur-md sm:px-10 sm:py-12" data-astro-cid-vj4tpspi> <!-- Title --> <h1 class="post-title text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-[2.75rem]" data-astro-cid-vj4tpspi data-astro-transition-scope="astro-ti6a3mbw-1"> 如何使用 Git 进行高效的版本控制 </h1> <!-- Tags as badges --> <div class="mt-4 flex flex-wrap justify-center gap-2" data-astro-cid-vj4tpspi> <a href="/tags/git/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> Git </a><a href="/tags/开发工具/" class="post-tag-badge inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 font-cartograph text-xs text-accent transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:shadow-sm hover:shadow-accent/10" data-astro-cid-vj4tpspi> <span class="opacity-50" data-astro-cid-vj4tpspi>#</span> 开发工具 </a> </div> <!-- Metadata row --> <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm" data-astro-cid-vj4tpspi> <!-- Author chip --> <div class="inline-flex items-center gap-1.5 rounded-lg border border-border/25 bg-muted/10 px-2.5 py-1 backdrop-blur-sm" data-astro-cid-vj4tpspi> <svg class="size-3.5 text-accent/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" data-astro-cid-vj4tpspi></path> <circle cx="12" cy="7" r="4" data-astro-cid-vj4tpspi></circle> </svg> <span class="opacity-70" data-astro-cid-vj4tpspi>轩辕十四</span> </div> <!-- Date chip --> <div class="inline-flex items-center gap-1.5 rounded-lg border border-border/25 bg-muted/10 px-2.5 py-1 backdrop-blur-sm" data-astro-cid-vj4tpspi> <svg class="size-3.5 text-accent/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <rect x="3" y="4" width="18" height="18" rx="2" ry="2" data-astro-cid-vj4tpspi></rect> <line x1="16" y1="2" x2="16" y2="6" data-astro-cid-vj4tpspi></line> <line x1="8" y1="2" x2="8" y2="6" data-astro-cid-vj4tpspi></line> <line x1="3" y1="10" x2="21" y2="10" data-astro-cid-vj4tpspi></line> </svg> <div class="flex items-center gap-x-2 text-foreground/80 opacity-70 [&#38;>svg]:hidden"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-5.5 scale-90" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg> <span class="sr-only">Published date: </span>  <time class="text-sm whitespace-nowrap" datetime="2023-04-19T16:00:00.000Z" title="2023年4月20日" aria-label="Published date: 2023年4月20日">20 Apr, 2023</time> </div> </div> <!-- Edit post -->  </div> </div> </header> <article id="article" class="app-prose mt-8 w-full max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)" data-astro-cid-vj4tpspi> <p>Git 是一款分布式版本控制系统，于 2005 年由 Linus Torvalds 创造并开源发布。Git 的设计初衷是为了更好地管理 Linux 内核代码，它的分布式特性使得多人协作开发和大型项目的版本控制变得更加高效和可靠。现在，Git 已经成为了开源社区和软件开发领域中最受欢迎的版本控制工具之一。</p>
+<h2 id="table-of-contents">Table of contents</h2>
+<p></p><details><summary>Open Table of contents</summary><p></p>
+<ul>
+<li><a href="#git-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8C%85%E6%8B%AC">Git 的基本概念包括：</a>
+<ul>
+<li><a href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">版本控制</a></li>
+<li><a href="#%E5%88%86%E6%94%AF">分支</a></li>
+<li><a href="#%E6%8F%90%E4%BA%A4">提交</a></li>
+<li><a href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93">远程仓库</a></li>
+<li><a href="#%E5%90%88%E5%B9%B6">合并</a></li>
+<li><a href="#%E8%A1%A5%E4%B8%81">补丁</a></li>
+</ul>
+</li>
+<li><a href="#git-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4">Git 基本命令</a>
+<ul>
+<li><a href="#git-init">git init</a></li>
+<li><a href="#git-add">git add</a></li>
+<li><a href="#git-commit">git commit</a></li>
+<li><a href="#git-status">git status</a></li>
+<li><a href="#git-diff">git diff</a></li>
+<li><a href="#git-log">git log</a></li>
+</ul>
+</li>
+<li><a href="#git-%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4">Git 分支操作命令</a>
+<ul>
+<li><a href="#git-branch">git branch</a></li>
+<li><a href="#git-checkout">git checkout</a></li>
+<li><a href="#git-merge">git merge</a></li>
+<li><a href="#git-rebase">git rebase</a></li>
+</ul>
+</li>
+<li><a href="#git-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%91%BD%E4%BB%A4">Git 远程仓库命令</a>
+<ul>
+<li><a href="#git-clone">git clone</a></li>
+<li><a href="#git-push">git push</a></li>
+<li><a href="#git-pull">git pull</a></li>
+<li><a href="#git-fetch">git fetch</a></li>
+</ul>
+</li>
+<li><a href="#git-%E9%AB%98%E7%BA%A7%E5%91%BD%E4%BB%A4">Git 高级命令</a>
+<ul>
+<li><a href="#git-stash">git stash</a></li>
+<li><a href="#git-cherry-pick">git cherry-pick</a></li>
+<li><a href="#git-reset">git reset</a></li>
+<li><a href="#git-revert">git revert</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+<p></p></details><p></p>
+<h2 id="git-的基本概念包括">Git 的基本概念包括：</h2>
+<h3 id="版本控制">版本控制</h3>
+<p>版本控制是指对文件或代码的修改历史进行记录和管理，以便于多人协作开发和版本回溯。Git 通过记录每次提交的快照来实现版本控制，并提供了一系列的命令和工具来管理版本库。</p>
+<h3 id="分支">分支</h3>
+<p>分支是指从一个代码库中派生出来的独立代码线。在 Git 中，每个分支都是一个独立的代码库，可以在分支上进行修改和提交，而不影响主线代码的开发。分支在多人协作和复杂项目的版本控制中起到了重要作用。</p>
+<h3 id="提交">提交</h3>
+<p>提交是指将代码库中的修改保存到版本库中的操作。每次提交都会创建一个新的版本快照，并记录下该次提交的作者、时间、提交信息等相关信息。</p>
+<h3 id="远程仓库">远程仓库</h3>
+<p>远程仓库是指存放在网络上的代码库，通常由多人协作开发的团队使用。Git 通过远程仓库来实现分布式版本控制，可以将代码库复制到本地进行修改和提交，然后将修改推送到远程仓库中。</p>
+<h3 id="合并">合并</h3>
+<p>合并是指将两个不同的代码库中的修改合并到一个新的代码库中的操作。在多人协作开发中，当两个人在同一个文件的同一个位置做了修改时，就会产生冲突。Git 提供了合并功能来解决冲突，可以将两个不同的修改合并到一个新的代码库中。</p>
+<h3 id="补丁">补丁</h3>
+<p>补丁是指在不修改原有代码的情况下，通过对代码库进行修改来实现功能的操作。在 Git 中，补丁通常由 <code>diff</code> 命令生成，可以通过 <code>patch</code> 命令来应用补丁。</p>
+<p>Git 的这些基本概念是 Git 理解和使用的基础，掌握这些概念有助于更好地理解 Git 的命令和工作原理。</p>
+<h2 id="git-基本命令">Git 基本命令</h2>
+<h3 id="git-init">git init</h3>
+<p><code>git init</code>是一个初始化 Git 仓库的命令。在执行该命令后，Git 会在当前目录下创建一个新的 <code>.git</code> 目录，这个目录包含了 Git 仓库所需要的所有元数据，比如说分支(branch)、提交(commit)、远程仓库(remote)等。</p>
+<p>常用参数:</p>
+<ul>
+<li><code>--bare</code>: 初始化一个裸仓库，即不包含工作目录。</li>
+<li><code>--template=&#x3C;template_directory></code>: 使用指定目录作为模板来初始化仓库。</li>
+</ul>
+<p>举例说明:</p>
+<ol>
+<li>在当前目录下创建一个新的Git仓库，可以使用以下命令：</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> init</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<ol start="2">
+<li>初始化一个裸仓库：</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> init</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --bare</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<ol start="3">
+<li>使用指定目录作为模板来初始化仓库：</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> init</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --template=</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">&#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF">template_directory</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<h3 id="git-add">git add</h3>
+<p><code>git add</code> 命令将更改的文件添加到 Git 仓库的暂存区，使这些更改准备好被记录在一个新的提交中。</p>
+<p>常用参数包括：</p>
+<ul>
+<li><code>-u</code> 或 <code>--update</code>：将已跟踪的文件的更改添加到暂存区，同时不包括新文件和被删除的文件</li>
+<li><code>-A</code> 或 <code>--all</code>：将所有更改，包括新文件、被删除的文件和已跟踪的文件的更改添加到暂存区</li>
+<li><code>&#x3C;pathspec></code>：指定要添加的文件路径，可以使用通配符匹配多个文件</li>
+</ul>
+<p>例如，我们新建了一个名为 <code>example.txt</code> 的文件，我们可以使用以下命令将该文件添加到暂存区：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> add</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> example.txt</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>如果我们想要将所有更改的文件都添加到暂存区，可以使用以下命令：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> add</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -A</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>如果我们只想要将已跟踪的文件的更改添加到暂存区，同时不包括新文件和被删除的文件，可以使用以下命令：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> add</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -u</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<h3 id="git-commit">git commit</h3>
+<p><code>git commit</code> 命令用于将已暂存的更改保存为一个新的提交对象。它是 Git 中最基本的命令之一，经常用于提交代码和记录版本变更历史。以下是该命令的一些常用参数：</p>
+<ul>
+<li><code>-m</code>：使用一行消息来描述本次提交，例如 <code>git commit -m "fix bug in login page"</code>。</li>
+<li><code>-a</code>：跳过 <code>git add</code> 步骤直接提交已经被追踪的文件更改，不包括未被追踪的文件，例如 <code>git commit -a -m "update readme file"</code>。</li>
+<li><code>-am</code>：上述两个参数的合并形式，可以同时提交已经被追踪的文件更改并附带一行消息，例如 <code>git commit -am "update readme file"</code>。</li>
+<li><code>--amend</code>：修改上一个提交，通常用于修改提交消息或添加遗漏的文件，例如 <code>git commit --amend -m "update readme file"</code>。</li>
+</ul>
+<p>示例：</p>
+<ol>
+<li>
+<p>提交所有暂存的更改并附带一行消息：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> commit</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -m</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> "add new feature"</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>跳过 <code>git add</code> 步骤，提交已经被追踪的文件更改并附带一行消息：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> commit</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -a</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -m</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> "fix bug"</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>修改上一个提交的提交消息：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> commit</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --amend</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -m</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> "fix typo"</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+</ol>
+<h3 id="git-status">git status</h3>
+<p><code>git status</code> 命令用于查看当前工作区状态和暂存区状态，可以帮助开发者确定下一步操作。命令格式为：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> [-s</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">|</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">--short]</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> [--branch] [--porcelain] [--long] [--untracked-files[</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">=&#x3C;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">mode</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">]] [--ignore-submodules[</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">=&#x3C;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">when</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">]] [--ignored] [</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">&#x3C;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">pathspec</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">...]</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>常用参数包括：</p>
+<ul>
+<li><code>-s|--short</code>：使用短格式输出。</li>
+<li><code>--branch</code>：在输出中包括分支信息。</li>
+<li><code>--porcelain</code>：使用机器可读格式输出。</li>
+<li><code>--long</code>：使用详细格式输出。</li>
+<li><code>--untracked-files[=&#x3C;mode>]</code>：包括未跟踪的文件。<code>mode</code> 可选参数包括 <code>no</code>、<code>normal</code> 和 <code>all</code>。</li>
+<li><code>--ignore-submodules[=&#x3C;when>]</code>：是否忽略子模块状态。<code>when</code> 可选参数包括 <code>none</code>、<code>untracked</code>、<code>dirty</code> 和 <code>all</code>。</li>
+<li><code>--ignored</code>：包括被忽略的文件。</li>
+<li><code>&#x3C;pathspec>...</code>：指定要显示状态的文件。</li>
+</ul>
+<p>例如：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 查看当前工作区和暂存区状态</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 查看当前工作区和暂存区状态，使用短格式输出</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -s</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 查看当前工作区和暂存区状态，包括分支信息</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --branch</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 查看当前工作区和暂存区状态，使用机器可读格式输出</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --porcelain</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 查看当前工作区和暂存区状态，使用详细格式输出</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --long</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 查看所有未跟踪的文件</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --untracked-files=all</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 忽略子模块状态</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --ignore-submodules=dirty</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 查看指定文件的状态</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> README.md</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p><code>git status</code> 命令的输出结果通常包括：</p>
+<ul>
+<li>当前所在的分支</li>
+<li>已修改但未添加至暂存区的文件</li>
+<li>已添加至暂存区但未提交的文件</li>
+<li>上游分支与本地分支之间的差异</li>
+<li>各个分支之间的差异</li>
+<li>存在冲突的文件</li>
+<li>忽略的文件</li>
+</ul>
+<p>根据输出结果，可以进行相应的操作，如添加、提交、撤销等。</p>
+<h3 id="git-diff">git diff</h3>
+<p><code>git diff</code>命令可以用于比较工作目录和暂存区域的差异，或者比较已提交的版本和暂存区域的差异。下面介绍几种常用的用法及其参数：</p>
+<ol>
+<li>
+<p>比较工作目录和暂存区域的差异</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> diff</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>运行这个命令会显示工作目录和暂存区域的差异。如果没有任何参数，<code>git diff</code>会显示所有已修改但未添加到暂存区域的文件的差异。</p>
+<p>举个例子，假设我们修改了<code>file.txt</code>文件并保存了修改，但是还没有使用<code>git add</code>将修改添加到暂存区域。此时，如果运行<code>git diff</code>命令，会显示出<code>file.txt</code>文件的差异。</p>
+</li>
+<li>
+<p>比较暂存区域和已提交的版本的差异</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> diff</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --staged</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>这个命令会显示暂存区域和已提交的版本的差异。如果没有任何参数，<code>git diff</code>会显示所有已修改但未添加到暂存区域的文件的差异。</p>
+<p>举个例子，假设我们修改了<code>file.txt</code>文件并使用<code>git add</code>将修改添加到暂存区域，但是还没有使用<code>git commit</code>将修改提交到版本库。此时，如果运行<code>git diff --staged</code>命令，会显示出<code>file.txt</code>文件的差异。</p>
+</li>
+<li>
+<p>比较两个已提交的版本之间的差异</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> diff</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">commit</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">1></span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">commit</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">2></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>这个命令会显示两个已提交的版本之间的差异。<code>&#x3C;commit1></code>和<code>&#x3C;commit2></code>可以是版本号、分支名或标签名等。</p>
+<p>举个例子，假设我们想要比较<code>v1.0</code>标签和<code>v2.0</code>标签之间的差异，可以使用以下命令：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> diff</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> v1.0</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> v2.0</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>显示文件的修改历史记录</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">filenam</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">e</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>这个命令会显示指定文件的修改历史记录。</p>
+<p>举个例子，假设我们想要查看<code>file.txt</code>文件的修改历史记录，可以使用以下命令：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> file.txt</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+</ol>
+<p>以上就是<code>git diff</code>命令的常用用法及其参数的介绍，可以帮助我们更好地了解工作目录、暂存区域和版本库之间的差异，以及文件的修改历史记录。</p>
+<h3 id="git-log">git log</h3>
+<p><code>git log</code> 用于查看 Git 仓库中的提交记录。可以使用该命令查看当前分支的提交记录，也可以查看某个分支或某个特定提交的提交记录。默认情况下，<code>git log</code> 会按照时间顺序列出所有提交记录。</p>
+<p>常用的参数包括：</p>
+<ul>
+<li><code>-n</code> 或 <code>--max-count=&#x3C;n></code>：限制显示的提交记录数量。</li>
+<li><code>--since</code> 和 <code>--until</code>：按时间过滤提交记录。</li>
+<li><code>--author</code>：按作者过滤提交记录。</li>
+<li><code>--grep</code>：按提交说明过滤提交记录。</li>
+</ul>
+<p>以下是一些使用示例：</p>
+<ol>
+<li>
+<p>显示当前分支的所有提交记录：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>显示指定分支的所有提交记录：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">branch-nam</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">e</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>显示某个文件的提交记录：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">file-nam</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">e</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>限制显示最近的 n 条提交记录：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -n</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">n</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>显示某个时间段内的提交记录：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --since=</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">&#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF">date</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">1></span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --until=</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">&#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF">date</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">2></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>显示某个作者的提交记录：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --author=</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">&#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF">author-name</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>按提交说明搜索提交记录：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --grep=</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">&#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF">commit-message</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+</ol>
+<p><code>git log</code> 常用于查看项目的提交历史和了解每个提交所做的更改。通过对提交记录的分析，可以更好地理解项目的发展过程，并且可以帮助开发人员更有效地进行合并和回滚操作。</p>
+<h2 id="git-分支操作命令">Git 分支操作命令</h2>
+<h3 id="git-branch">git branch</h3>
+<p>git branch 命令用于列出、创建、重命名或删除分支。下面详细介绍其常用参数和示例：</p>
+<p>常用参数：</p>
+<ul>
+<li><code>-a</code>：列出所有本地和远程分支。</li>
+<li><code>-d</code> 或 <code>--delete</code>：删除指定的分支。</li>
+<li><code>-D</code>：强制删除指定的分支。</li>
+<li><code>-m</code> 或 <code>--move</code>：重命名指定的分支。</li>
+<li><code>-M</code>：强制重命名指定的分支。</li>
+</ul>
+<p>示例：</p>
+<ol>
+<li>列出本地分支</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>输出结果为：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">  master</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> dev</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">  feature</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>上述命令表示列出当前所在仓库的所有本地分支，<code>*</code> 符号代表当前所在分支。</p>
+<ol start="2">
+<li>创建分支</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> feature</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>上述命令表示创建一个名为 <code>feature</code> 的分支。</p>
+<ol start="3">
+<li>切换分支</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> feature</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>上述命令表示切换到名为 <code>feature</code> 的分支。</p>
+<ol start="4">
+<li>删除分支</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -d</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> feature</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>上述命令表示删除名为 <code>feature</code> 的分支，如果该分支还有未合并的提交，删除操作将失败。如果一定要删除该分支，可以使用 <code>-D</code> 参数，它会强制删除分支：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -D</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> feature</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<ol start="5">
+<li>重命名分支</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -m</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> feature</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> new-feature</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>上述命令表示将名为 <code>feature</code> 的分支重命名为 <code>new-feature</code>。</p>
+<ol start="6">
+<li>列出所有分支</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -a</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>上述命令表示列出当前所在仓库的所有本地和远程分支。</p>
+<h3 id="git-checkout">git checkout</h3>
+<p><code>git checkout</code> 命令用于切换分支或还原工作目录中的文件。它的常用参数包括：</p>
+<ul>
+<li><code>-b &#x3C;new_branch></code>: 创建并切换到新分支。</li>
+<li><code>-f</code> 或 <code>--force</code>: 强制切换分支或还原文件，可能会丢失未保存的更改。</li>
+<li><code>-p</code>: 交互式地选择要丢弃的更改。</li>
+<li><code>&#x3C;commit></code>: 切换到指定的提交，创建一个分离头指针。</li>
+</ul>
+<p>以下是一些示例：</p>
+<ol>
+<li>
+<p>切换分支：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> dev</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">Switched</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> to</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> 'dev'</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>创建并切换到新分支：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -b</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> feature-branch</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">Switched</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> to</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> a</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> new</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> 'feature-branch'</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>还原单个文件：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> file.txt</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>还原整个目录：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> .</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>切换到特定提交：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> 1a2b3c4d</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">Note:</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checking</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> out</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> '1a2b3c4d'</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">.</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">You</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> are</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> in</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> 'detached HEAD'</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> state.</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> You</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> can</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> look</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> around,</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> make</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> experimental</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">changes</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> and</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> commit</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> them,</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> and</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> you</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> can</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> discard</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> any</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> commits</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> you</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> make</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> in</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> this</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">state</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> without</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> impacting</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> any</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branches</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> by</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> performing</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> another</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout.</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">If</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> you</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> want</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> to</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> create</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> a</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> new</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> to</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> retain</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> commits</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> you</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> create,</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> you</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> may</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">do</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657"> so</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> (now </span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">or</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> later</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">) by using -b with the checkout command again. Example:</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">  git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -b</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> new_branch_name</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">HEAD</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> is</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> now</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> at</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> 1a2b3c4d...</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> Initial</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> commit</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+</ol>
+<h3 id="git-merge">git merge</h3>
+<p><code>git merge</code> 命令用于将一个分支的更改合并到当前分支中。它有以下常用参数：</p>
+<ul>
+<li><code>-m</code>：指定合并时使用的提交信息。如果省略该参数，Git 将自动使用默认信息。</li>
+<li><code>--no-ff</code>：创建一个新的合并提交，而不是使用快进模式合并分支。这将保留分支历史信息，并防止将更改直接合并到主线分支。</li>
+<li><code>--abort</code>：取消合并操作，恢复到合并之前的状态。</li>
+<li><code>--continue</code>：在解决合并冲突后继续进行合并操作。</li>
+</ul>
+<p>下面是一个示例：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 创建一个新分支</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -b</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> my-branch</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 在 my-branch 上进行更改并提交</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> add</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> .</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> commit</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -m</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> "Added new feature to my-branch"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 切换到主分支并进行合并</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> main</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> merge</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> my-branch</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#8B949E"># 如果发生合并冲突，则需要解决冲突后再进行合并</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> status</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> diff</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> add</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> .</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> commit</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -m</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> "Resolved merge conflict"</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> merge</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --continue</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>在这个示例中，我们首先创建了一个名为 <code>my-branch</code> 的新分支，并在该分支上进行了一些更改和提交。然后我们切换到主分支，并使用 <code>git merge</code> 命令将 <code>my-branch</code> 分支合并到主分支中。如果发生合并冲突，我们需要解决冲突并继续合并操作。最后，我们完成了合并并提交了一个新的合并提交。</p>
+<h3 id="git-rebase">git rebase</h3>
+<p><code>git rebase</code> 是 Git 中一个非常强大的命令，它可以在合并分支的时候，将多个提交整合成一次提交，从而保持分支的整洁性。</p>
+<p>具体来说，<code>git rebase</code> 的作用是将当前分支上的提交复制到另一个分支上，这个过程中，Git 会先将当前分支的提交暂存起来，然后切换到目标分支，将暂存的提交依次应用到目标分支上，并产生新的提交，最后再切换回原来的分支。</p>
+<p>常用参数包括：</p>
+<ul>
+<li><code>-i</code>：交互式 rebase，可以手动调整提交的顺序、合并提交等操作。</li>
+<li><code>-p</code>：保留 commit 中的时间戳、作者等信息。</li>
+<li><code>-s/--strategy</code>：选择 rebase 的策略，常用的策略有 <code>merge</code>（默认）、<code>ours</code>、<code>theirs</code> 等。</li>
+</ul>
+<p>举个例子，假设我们有一个分支 <code>feature-branch</code>，它基于 <code>master</code> 分支并已经存在多个提交。现在我们需要将 <code>master</code> 分支的更改合并到 <code>feature-branch</code>，可以通过以下命令：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> feature-branch</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> rebase</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> master</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>这样，Git 会将 <code>feature-branch</code> 分支上的所有提交复制到 <code>master</code> 分支上，并在 <code>master</code> 分支上产生一次新的提交，保持分支的整洁性。在这个过程中，如果出现冲突，需要手动解决冲突并使用 <code>git add</code> 命令来标记解决冲突后的文件，然后使用 <code>git rebase --continue</code> 命令来继续 rebase 过程。</p>
+<h2 id="git-远程仓库命令">Git 远程仓库命令</h2>
+<h3 id="git-clone">git clone</h3>
+<p><code>git clone</code> 命令用于从远程 Git 存储库克隆项目到本地机器上。它会复制整个存储库，包括所有分支和版本历史记录。这使得它成为在新机器上开始工作或与他人共享项目的理想选择。</p>
+<p>该命令的基本语法如下所示：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> clone</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">ur</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">l</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>其中，<code>url</code> 是要克隆的 Git 存储库的 URL 地址。还可以通过添加其他选项来定制克隆过程：</p>
+<ul>
+<li><code>-b</code> 或 <code>--branch</code>：指定要克隆的分支，默认为 <code>master</code>。</li>
+<li><code>-depth</code>：仅克隆指定深度的历史记录，以减少下载时间和磁盘空间的使用量。</li>
+<li><code>--recursive</code>：在克隆时也初始化和更新任何子模块。</li>
+</ul>
+<p>以下是一些常见的用法和例子：</p>
+<ol>
+<li>克隆名为 <code>my-project</code> 的存储库：</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> clone</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> https://github.com/my-username/my-project.git</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<ol start="2">
+<li>克隆名为 <code>my-project</code> 的存储库中的 <code>development</code> 分支：</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> clone</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --branch</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> development</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> https://github.com/my-username/my-project.git</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<ol start="3">
+<li>仅克隆存储库的最近 5 次提交：</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> clone</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --depth</span><span style="--shiki-light:#1976D2;--shiki-dark:#79C0FF"> 5</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> https://github.com/my-username/my-project.git</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<ol start="4">
+<li>克隆一个包含子模块的存储库：</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> clone</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --recursive</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> https://github.com/my-username/my-project.git</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<h3 id="git-push">git push</h3>
+<p>git push是用于将本地代码推送到远程代码库的命令。它的一般语法为：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> push</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">remot</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">e</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">branc</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">h</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>其中<code>&#x3C;remote></code>是要推送到的远程代码库的名称，<code>&#x3C;branch></code>是要推送的本地分支名称。如果省略<code>&#x3C;branch></code>，则会将当前本地分支推送到远程代码库的同名分支。</p>
+<p>常用参数：</p>
+<ul>
+<li><code>-u</code>：将本地分支与远程分支关联，这样以后就可以使用<code>git push</code>命令推送代码了。</li>
+<li><code>--force</code>：强制推送本地代码到远程分支，即使远程分支的代码比本地代码更新。</li>
+</ul>
+<p>示例：</p>
+<ol>
+<li>
+<p>将本地分支<code>main</code>推送到远程代码库<code>origin</code>的<code>main</code>分支：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> push</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> origin</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> main</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>将本地分支<code>feature</code>推送到远程代码库<code>origin</code>的<code>dev</code>分支，并将本地分支与远程分支关联：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> push</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> -u</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> origin</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> feature:dev</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>强制将本地分支<code>main</code>推送到远程代码库<code>origin</code>的<code>main</code>分支，即使远程分支的代码比本地代码更新：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> push</span><span style="--shiki-light:#2B5581;--shiki-dark:#79C0FF"> --force</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> origin</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> main</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+</ol>
+<h3 id="git-pull">git pull</h3>
+<p><code>git pull</code>命令用于从远程仓库中获取最新的代码并合并到本地分支中，实现代码同步。它实际上是<code>git fetch</code>和<code>git merge</code>两个命令的组合。</p>
+<p>常用参数：</p>
+<ul>
+<li><code>-r</code>或<code>--rebase</code>：使用<code>git pull --rebase</code>可以将本地的修改放到最新的远程提交后面，以避免由于本地修改引起的合并冲突。</li>
+</ul>
+<p>举例说明：</p>
+<p>假设你的本地分支与远程分支存在差异，并且你想要获取远程分支的最新代码并将其合并到本地分支中，可以执行以下命令：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> pull</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> origin</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> master</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>这会从远程仓库中获取master分支的最新代码并将其合并到当前的本地分支。如果本地分支和远程分支之间有冲突，则需要解决冲突后再次提交。如果你想使用rebase方式进行合并，可以使用<code>git pull --rebase origin master</code>命令。</p>
+<h3 id="git-fetch">git fetch</h3>
+<p><code>git fetch</code> 命令用于从远程仓库中下载最新的代码到本地仓库，但是不会自动将代码合并到当前分支中。它会将远程仓库的代码更新到本地仓库的“远程跟踪分支”中。可以使用 <code>git merge</code> 或者 <code>git rebase</code> 将这些更新合并到本地分支中。</p>
+<p>常用的参数包括：</p>
+<ul>
+<li><code>&#x3C;remote></code>：指定要获取代码的远程仓库，默认为 <code>origin</code>。</li>
+<li><code>&#x3C;branch></code>：指定要获取的分支名。默认为当前所在分支。</li>
+</ul>
+<p>举例来说，要从远程仓库 <code>origin</code> 的 <code>main</code> 分支中获取最新代码，可以使用以下命令：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> fetch</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> origin</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> main</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>这将会将最新的 <code>main</code> 分支代码更新到本地仓库中的 <code>origin/main</code> 远程跟踪分支中，但是不会将代码合并到当前分支中。如果需要将这些更新合并到当前分支中，可以使用 <code>git merge</code> 或 <code>git rebase</code> 命令。</p>
+<h2 id="git-高级命令">Git 高级命令</h2>
+<h3 id="git-stash">git stash</h3>
+<p><code>git stash</code>命令可用于将未提交的更改保存到一个临时区域（称为“stash”），以便稍后恢复。这在需要快速更改分支或修复错误时非常有用。</p>
+<p>常用的参数和选项包括：</p>
+<ul>
+<li><code>git stash save [&#x3C;message>]</code>：将未提交的更改存储到一个新的stash，并可选地为存储添加描述信息。</li>
+<li><code>git stash list</code>：列出当前存储的stash。</li>
+<li><code>git stash apply [&#x3C;stash>]</code>：将最新的stash应用到当前分支。如果指定了一个stash，将应用指定的stash。</li>
+<li><code>git stash drop [&#x3C;stash>]</code>：从列表中删除指定的stash。如果没有指定，则删除最新的stash。</li>
+<li><code>git stash pop [&#x3C;stash>]</code>：将最新的stash应用到当前分支，并从列表中删除它。如果指定了一个stash，将应用指定的stash并将其从列表中删除。</li>
+<li><code>git stash branch &#x3C;branchname> [&#x3C;stash>]</code>：从指定的stash创建一个新分支，并将其应用到该分支。如果没有指定，则使用最新的stash。</li>
+</ul>
+<p>以下是一个使用<code>git stash</code>命令的示例：</p>
+<ol>
+<li>
+<p>修改文件并添加到暂存区</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> add</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> .</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>对文件进行修改</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> vim</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> file.txt</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>对文件进行另一些修改，但还没有提交</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> vim</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> file.txt</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>现在您需要切换分支，但不能提交尚未完成的工作。 使用git stash将更改保存在暂存区。</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> stash</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> save</span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF"> "my work in progress"</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>您可以通过git stash list查看保存的stash</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> stash</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> list</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">stash@</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">{0}</span><span style="--shiki-light:#6F42C1;--shiki-dark:#79C0FF">:</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> On</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> master:</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> my</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> work</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> in</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> progress</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>现在可以切换到其他分支，进行其他工作。</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> other-branch</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>回到之前的分支，并应用之前保存的stash</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> master</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> stash</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> apply</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>或者，您可以创建一个新分支并将stash应用到该分支</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> stash</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> branch</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> new-branch</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+</ol>
+<h3 id="git-cherry-pick">git cherry-pick</h3>
+<p><code>git cherry-pick</code> 命令用于将指定的提交应用于当前分支，它可以将单个或多个提交从其他分支或当前分支的不同位置应用到当前分支。它可以用来复制特定的提交或解决特定的问题。</p>
+<p>该命令的基本语法为：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> cherry-pick</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">commit-has</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">h</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>其中 <code>&#x3C;commit-hash></code> 是要应用的提交的哈希值。可以使用 <code>git log</code> 命令来查找要应用的提交的哈希值。另外，可以一次选择多个提交来应用。</p>
+<p><code>git cherry-pick</code> 命令还支持以下常用参数：</p>
+<ul>
+<li><code>-e</code> 或 <code>--edit</code>：打开编辑器以编辑提交信息；</li>
+<li><code>-n</code> 或 <code>--no-commit</code>：将更改应用到工作目录和暂存区，但不自动提交；</li>
+<li><code>-x</code>：在提交信息中包含从哪个提交进行的 Cherry-pick 信息；</li>
+<li><code>-s</code> 或 <code>--signoff</code>：在提交信息末尾添加 Signed-off-by 行。</li>
+</ul>
+<p>下面是一个使用 <code>git cherry-pick</code> 命令的示例：</p>
+<ol>
+<li>
+<p>假设我们有一个名为 <code>feature-branch</code> 的分支，我们要将该分支上的一个提交应用到 <code>main</code> 分支上。首先，我们需要切换到 <code>main</code> 分支：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> checkout</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> main</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>然后，我们可以使用 <code>git log</code> 命令来查找要应用的提交的哈希值：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> log</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> feature-branch</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>找到要应用的提交的哈希值后，我们可以使用 <code>git cherry-pick</code> 命令将其应用到当前分支：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> cherry-pick</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72"> &#x3C;</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF">commit-has</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">h</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+</li>
+<li>
+<p>如果该提交没有冲突，则会自动应用。如果有冲突，则需要手动解决冲突并使用 <code>git add</code> 命令将更改标记为已解决。然后，可以使用 <code>git cherry-pick --continue</code> 命令继续应用提交。如果想放弃 cherry-pick，则可以使用 <code>git cherry-pick --abort</code> 命令。</p>
+</li>
+</ol>
+<h3 id="git-reset">git reset</h3>
+<p><code>git reset</code> 命令可以将 HEAD 指针指向指定的提交记录，并把这个提交记录之后的提交记录从暂存区和工作区中移除。它可以用来撤销已提交的更改，恢复之前的版本。常用参数如下：</p>
+<ul>
+<li><code>--soft</code>：将 HEAD 指针移动到指定的提交记录，但是不会修改暂存区和工作区，这意味着你可以重新提交这些更改。</li>
+<li><code>--mixed</code>：这是默认选项，将 HEAD 指针移动到指定的提交记录，并将暂存区恢复为该提交的状态，但不修改工作区，这意味着你需要再次使用 <code>git add</code> 命令将需要提交的更改加入暂存区。</li>
+<li><code>--hard</code>：将 HEAD 指针移动到指定的提交记录，并将暂存区和工作区都恢复为该提交的状态。这意味着之前的更改将被完全删除，慎用该选项。</li>
+</ul>
+<p>常见用法包括：</p>
+<ul>
+<li>恢复到之前某个提交版本，例如 <code>git reset HEAD~1</code> 表示回到上一个提交版本。</li>
+<li>撤销之前的提交，例如 <code>git reset HEAD~1 --soft</code> 表示将 HEAD 指针指向上一个提交版本，但是保留之前提交的更改，可以重新修改并再次提交。</li>
+</ul>
+<p>注意，<code>git reset</code> 命令改变了 Git 的提交历史记录，因此如果已经推送到远程仓库，需要慎重使用该命令，否则可能导致协作中的其他人产生困惑。</p>
+<h3 id="git-revert">git revert</h3>
+<p><code>git revert</code>命令用于撤销一个或多个提交，它会生成一个新的提交，该提交将逆转先前的提交更改。</p>
+<p>常用的参数包括：</p>
+<ul>
+<li><code>-n, --no-commit</code>: 撤销提交时不自动生成新的提交。</li>
+<li><code>-m parent-num</code>: 用于撤销一个合并提交，指定合并提交中要撤销的父提交的序号。</li>
+</ul>
+<p>例如，假设我们有一个提交历史记录如下：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> 1f024d6 (</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">HEAD</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> -</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> main</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">) add file3.txt</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> 6c66a89 add file2.txt</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> 8f75d27 add file1.txt</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>如果我们想要撤销 <code>add file2.txt</code> 这个提交，可以使用以下命令：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">$</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> git</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> revert</span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> 6c66a89</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>Git会自动生成一个新的提交，将之前 <code>add file2.txt</code> 提交中的更改逆转。这将导致提交历史记录如下所示：</p>
+<pre class="astro-code astro-code-themes min-light github-dark-default mt-8" style="--shiki-light:#24292eff;--shiki-dark:#e6edf3;--shiki-light-bg:#ffffff;--shiki-dark-bg:#0d1117; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> a438432 (</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">HEAD</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> -</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">></span><span style="--shiki-light:#2B5581;--shiki-dark:#A5D6FF"> main</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3">) Revert </span><span style="--shiki-light:#22863A;--shiki-dark:#A5D6FF">"add file2.txt"</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> 1f024d6 add file3.txt</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> 6c66a89 add file2.txt</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#FF7B72">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#E6EDF3"> 8f75d27 add file1.txt</span></span></code><span class="absolute py-1 text-foreground text-xs font-medium leading-4 pl-4 pr-2 before:inline-block before:size-1 before:bg-green-500 before:rounded-full before:absolute before:top-[45%] before:left-2 left-2 top-(--file-name-offset) border rounded-md bg-background">bash</span></pre>
+<p>注意，使用 <code>git revert</code> 不会从代码库中删除任何东西，只是生成一个新的提交来撤销之前的更改。如果要完全删除某个提交及其更改，可以使用 <code>git reset</code> 或 <code>git rebase</code> 命令。</p>
+<h2 id="总结">总结</h2>
+<p>本文介绍了 Git 常用的基础命令及其用法，并给出了相应的示例。</p>
+<p>Git初始化</p>
+<ul>
+<li><code>git init</code> 初始化一个 Git 仓库</li>
+</ul>
+<p>Git管理文件</p>
+<ul>
+<li><code>git add [file]</code> 将文件添加到 Git 索引中</li>
+<li><code>git commit -m "message"</code> 提交索引中的文件并添加提交消息</li>
+</ul>
+<p>Git状态查询</p>
+<ul>
+<li><code>git status</code> 显示 Git 仓库的当前状态</li>
+<li><code>git diff</code> 显示未暂存文件与上次提交版本的差异</li>
+<li><code>git log</code> 显示提交日志</li>
+</ul>
+<p>Git分支管理</p>
+<ul>
+<li><code>git branch</code> 显示本地分支列表</li>
+<li><code>git checkout [branch]</code> 切换到目标分支</li>
+<li><code>git merge [branch]</code> 合并指定分支到当前分支</li>
+<li><code>git rebase [branch]</code> 将当前分支变基到目标分支</li>
+</ul>
+<p>Git远程仓库管理</p>
+<ul>
+<li><code>git clone [url]</code> 从远程仓库克隆代码到本地</li>
+<li><code>git push [remote] [branch]</code> 将本地分支推送到远程仓库</li>
+<li><code>git pull [remote] [branch]</code> 从远程仓库拉取最新代码到本地</li>
+<li><code>git fetch [remote]</code> 从远程仓库获取最新代码</li>
+</ul>
+<p>Git其他命令</p>
+<ul>
+<li><code>git stash</code> 暂存当前工作进度</li>
+<li><code>git cherry-pick [commit]</code> 从指定提交中提取更改并应用于当前分支</li>
+<li><code>git reset [commit]</code> 撤销到指定的提交</li>
+<li><code>git revert [commit]</code> 撤销指定的提交</li>
+</ul>
+<p>推荐最佳实践</p>
+<ul>
+<li>使用分支进行开发，不要直接在 <code>master</code> 分支上进行开发。</li>
+<li>提交信息要详细，不要简单地写 “修改” 或 “更新” 等不具体的描述。</li>
+<li>定期将本地分支与远程分支同步，避免出现代码冲突。</li>
+<li>使用 Git 工作流程管理开发流程，如 Git Flow 等。</li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://git-scm.com/book/en/v2">Pro Git book</a></li>
+<li><a href="https://git-scm.com/doc">Git official documentation</a></li>
+</ul> </article> <!-- ═══════ Post footer section ═══════ --> <div class="relative mt-12 mb-8 flex items-center justify-center gap-4" aria-hidden="true" data-astro-cid-vj4tpspi> <div class="relative h-px flex-1 bg-linear-to-r from-transparent via-border/30 to-accent/20" data-astro-cid-vj4tpspi> <div class="absolute inset-0 bg-linear-to-r from-transparent via-accent/40 to-accent/40 blur-[2px]" data-astro-cid-vj4tpspi></div> </div> <div class="relative z-10 flex items-center gap-2 font-cartograph text-[10px] tracking-widest text-accent/40 uppercase select-none" data-astro-cid-vj4tpspi> <span class="h-1.5 w-1.5 rounded-full bg-accent/50 shadow-[0_0_8px_var(--color-accent)]" data-astro-cid-vj4tpspi></span>
+end
+</div> <div class="relative h-px flex-1 bg-linear-to-l from-transparent via-border/30 to-accent/20" data-astro-cid-vj4tpspi> <div class="absolute inset-0 bg-linear-to-l from-transparent via-accent/40 to-accent/40 blur-[2px]" data-astro-cid-vj4tpspi></div> </div> </div> <!-- Tags & Share row --> <div class="mt-6 mb-8 flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-between" data-astro-cid-vj4tpspi> <!-- Tags (duplicated from header — aria-hidden to avoid double indexing) --> <div class="flex flex-wrap justify-center gap-2 sm:justify-start" aria-hidden="true" data-astro-cid-vj4tpspi> <a href="/tags/git/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> Git </a><a href="/tags/开发工具/" tabindex="-1" class="inline-flex items-center gap-1 rounded-full border border-border/25 bg-muted/10 px-2.5 py-1 font-cartograph text-xs transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-accent" data-astro-cid-vj4tpspi> <span class="opacity-40" data-astro-cid-vj4tpspi>#</span> 开发工具 </a> </div> <!-- Share links --> <div class="flex shrink-0 flex-col items-center gap-2 sm:items-end" data-astro-cid-wkojbtzc><span class="font-cartograph text-[10px] tracking-wider text-foreground/40 uppercase select-none" data-astro-cid-wkojbtzc>
+Share
+</span><div class="flex items-center gap-1" data-astro-cid-wkojbtzc><a tabindex="0" href="https://wa.me/?text=https://regulusleow.github.io/posts/2023/0420-28968d5c/" target="_blank" rel="noopener noreferrer" title="Envia este post por WhatsApp" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Envia este post por WhatsApp</span> </a><a tabindex="0" href="https://www.facebook.com/sharer.php?u=https://regulusleow.github.io/posts/2023/0420-28968d5c/" target="_blank" rel="noopener noreferrer" title="Comparte este post en Facebook" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post en Facebook</span> </a><a tabindex="0" href="https://x.com/intent/post?url=https://regulusleow.github.io/posts/2023/0420-28968d5c/" target="_blank" rel="noopener noreferrer" title="Comparte este post en X" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post en X</span> </a><a tabindex="0" href="https://t.me/share/url?url=https://regulusleow.github.io/posts/2023/0420-28968d5c/" target="_blank" rel="noopener noreferrer" title="Comparte este post por Telegram" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post por Telegram</span> </a><a tabindex="0" href="https://pinterest.com/pin/create/button/?url=https://regulusleow.github.io/posts/2023/0420-28968d5c/" target="_blank" rel="noopener noreferrer" title="Comparte este post en Pinterest" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Comparte este post en Pinterest</span> </a><a tabindex="0" href="mailto:?subject=See%20this%20post&#38;body=https://regulusleow.github.io/posts/2023/0420-28968d5c/" target="_blank" rel="noopener noreferrer" title="Envia este post por correo" data-astro-cid-wkojbtzc="true" class="group inline-flex items-center gap-1 hover:text-accent share-btn inline-flex size-8 items-center justify-center rounded-lg border border-border/20 bg-muted/5 transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-sm hover:shadow-accent/10"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 fill-transparent stroke-current stroke-2" data-astro-cid-wkojbtzc="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg><span class="sr-only" data-astro-cid-wkojbtzc>Envia este post por correo</span> </a></div></div> </div> <!-- Decorative separator before prev/next --> <div class="my-6 flex items-center gap-3" aria-hidden="true" data-astro-cid-vj4tpspi> <div class="h-px flex-1 bg-linear-to-r from-transparent via-border/30 to-transparent" data-astro-cid-vj4tpspi></div> </div> <!-- Previous/Next Post Navigation --> <div data-pagefind-ignore class="grid grid-cols-2 gap-3" data-astro-cid-vj4tpspi> <a href="/posts/2023/0502-fcece820" class="post-nav-link group relative flex flex-col gap-1 rounded-2xl border border-border/20 px-5 py-4 transition-all duration-300 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5" data-astro-cid-vj4tpspi> <div class="post-nav-bg" data-astro-cid-vj4tpspi></div> <div class="flex items-center gap-1.5" data-astro-cid-vj4tpspi> <svg class="size-3.5 text-accent/50 transition-transform duration-300 group-hover:-translate-x-1 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <line x1="19" y1="12" x2="5" y2="12" data-astro-cid-vj4tpspi></line> <polyline points="12 19 5 12 12 5" data-astro-cid-vj4tpspi></polyline> </svg> <span class="font-cartograph text-[10px] tracking-wider text-foreground/35 uppercase" data-astro-cid-vj4tpspi>
+Previous
+</span> </div> <span class="line-clamp-2 text-sm leading-snug font-medium text-foreground/70 transition-colors duration-200 group-hover:text-accent" data-astro-cid-vj4tpspi> GitHub 使用命令行同步 fork 仓库 </span> </a> <a href="/posts/2023/0411-543ae15f" class="post-nav-link group relative col-start-2 flex flex-col items-end gap-1 rounded-2xl border border-border/20 px-5 py-4 text-end transition-all duration-300 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5" data-astro-cid-vj4tpspi> <div class="post-nav-bg" data-astro-cid-vj4tpspi></div> <div class="flex items-center gap-1.5" data-astro-cid-vj4tpspi> <span class="font-cartograph text-[10px] tracking-wider text-foreground/35 uppercase" data-astro-cid-vj4tpspi>
+Next
+</span> <svg class="size-3.5 text-accent/50 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-vj4tpspi> <line x1="5" y1="12" x2="19" y2="12" data-astro-cid-vj4tpspi></line> <polyline points="12 5 19 12 12 19" data-astro-cid-vj4tpspi></polyline> </svg> </div> <span class="line-clamp-2 text-sm leading-snug font-medium text-foreground/70 transition-colors duration-200 group-hover:text-accent" data-astro-cid-vj4tpspi> C 语言重拾【七】存储类别、链接和内存管理 </span> </a> </div> </main> <div id="btt-btn-container" aria-hidden="true" class="pointer-events-none fixed end-4 bottom-8 z-50 md:end-8 md:bottom-10 translate-y-8 opacity-0 transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none"> <button id="back-to-top-button" type="button" tabindex="-1" aria-label="Go back to top" title="Go back to top" data-button="back-to-top" class="group relative flex flex-col items-center justify-center gap-0.5 size-14 rounded-full md:size-16 border border-accent/15 bg-background/75 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.20)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.60)] hover:shadow-[0_6px_28px_rgba(0,0,0,0.30)] dark:hover:shadow-[0_6px_28px_rgba(0,0,0,0.75)] hover:scale-105 active:scale-95 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 transition-all duration-200 ease-out motion-reduce:transition-none pointer-events-auto"> <!-- 1: Progress Ring (conic-gradient) --> <span aria-hidden="true" id="progress-indicator" class="absolute inset-0 z-0 block rounded-full bg-transparent"></span> <!-- 2: Button Background, leaves 3px of the ring visible --> <span aria-hidden="true" class="absolute inset-[3px] z-10 rounded-full bg-background/95"></span> <!-- 3: Content (icon + label) --> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="relative z-20 size-5 text-accent transition-transform duration-200 group-hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 md:size-6" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M16 9l-4 -4" /><path d="M8 9l4 -4" /></svg> <span class="relative z-20 text-[9px] font-bold tracking-widest text-accent/70 uppercase">
+top
+</span> <span class="sr-only">Go back to top</span> </button> </div> <script type="module">let r=null;function f(){r&&r.abort(),r=new AbortController;const{signal:s}=r,c=document.documentElement,a=document.querySelector("#btt-btn-container"),l=document.querySelector("[data-button='back-to-top']"),d=document.querySelector("#progress-indicator");if(!a||!l||!d)return;const e=a,u=l,w=d;let i=!1,g=!1,p=-1;function h(){const o=c.scrollHeight-c.clientHeight,n=c.scrollTop||window.scrollY||0;if(o<=0)return{ratio:0,progress:0};const t=Math.min(n/o,1),T=Math.round(t*100);return{ratio:t,progress:T}}function m(){const{ratio:o,progress:n}=h();n!==p&&(w.style.setProperty("background-image",`conic-gradient(var(--accent) ${n}%, transparent ${n}%)`),p=n);const t=o>.2;t!==g&&(e.classList.toggle("opacity-100",t),e.classList.toggle("translate-y-0",t),e.classList.toggle("opacity-0",!t),e.classList.toggle("translate-y-8",!t),e.classList.toggle("pointer-events-none",!t),e.setAttribute("aria-hidden",String(!t)),u.tabIndex=t?0:-1,g=t)}function b(){i||(i=!0,window.requestAnimationFrame(()=>{m(),i=!1}))}u.addEventListener("click",()=>{const o=window.matchMedia("(prefers-reduced-motion: reduce)").matches;window.scrollTo({top:0,behavior:o?"auto":"smooth"})},{signal:s}),document.addEventListener("scroll",b,{passive:!0,signal:s}),window.addEventListener("resize",b,{passive:!0,signal:s}),m()}document.addEventListener("astro:page-load",f);f();</script> <footer class="footer-wrapper mt-auto" role="contentinfo" data-astro-cid-vj4tpspi="true" data-astro-cid-sz7xmlte> <!-- Top gradient border --> <div class="h-px w-full bg-linear-to-r from-transparent via-border/40 to-transparent" data-astro-cid-sz7xmlte></div> <div class="app-layout py-8 sm:py-10" data-astro-cid-sz7xmlte> <!-- Main footer grid --> <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-between" data-astro-cid-sz7xmlte> <!-- Brand column --> <div class="flex flex-col items-center gap-3 sm:items-start" data-astro-cid-sz7xmlte> <a href="/" aria-label="Go to home of Stellar Wake" class="group footer-home-link relative flex items-center gap-2 rounded-md text-lg font-bold tracking-tight" data-astro-cid-sz7xmlte> <svg viewBox="0 0 1000 250" xmlns:bx="https://boxy-svg.com" class="footer-logo w-28 opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105 dark:invert" data-astro-cid-sz7xmlte="true">
+  <g transform="matrix(1.112155, 0, 0, 1.112155, 12.50231, -14.050506)" id="object-0">
+    <text class="logo-text-left" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre;" x="0" y="176.957">Dev</text>
+    <text class="logo-sphere" style="fill: rgb(167, 90, 90); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; letter-spacing: -30px; paint-order: stroke; white-space: pre; transform-origin: 342.846px 129.448px;" x="250.711" y="176.957">{·}</text>
+    <text class="logo-text-right" style="fill: rgb(51, 51, 51); font-family: var(--font-cascadia-code), 'Cascadia Code', monospace; font-size: 150px; font-weight: 600; white-space: pre; transform-origin: -123.373px 8.755px;"><tspan x="437.222" y="89.954" style="baseline-shift: sub;">sfera</tspan></text>
+  </g>
+  <defs>
+    <bx:export>
+      <bx:file format="svg" href="#object-0" path="Sin título.svg" />
+    </bx:export>
+  </defs>
+</svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake</span> </a> <p class="max-w-xs text-center text-[11px] leading-relaxed tracking-wide text-foreground/55 sm:text-start" data-astro-cid-sz7xmlte>
+每一行代码都是微芒，汇聚成光，照亮通往星辰的航线。
+</p> </div> <!-- Social links --> <nav class="flex flex-col items-center gap-3 sm:items-end" aria-labelledby="footer-social-heading" data-astro-cid-sz7xmlte> <p id="footer-social-heading" class="font-cartograph text-[10px] tracking-wider text-foreground/55 uppercase select-none" data-astro-cid-sz7xmlte>Connect</p> <ul class="flex items-center gap-2" role="list" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte> <a tabindex="0" href="https://github.com/regulusleow" target="_blank" rel="noopener noreferrer" aria-label="Stellar Wake on GitHub" title="Stellar Wake on GitHub" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake on GitHub</span>  </a> </li><li data-astro-cid-sz7xmlte> <a tabindex="0" href="https://twitter.com/regulus_wj" target="_blank" rel="noopener noreferrer" aria-label="Stellar Wake on X" title="Stellar Wake on X" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake on X</span>  </a> </li><li data-astro-cid-sz7xmlte> <a tabindex="0" href="https://t.me/regusw" target="_blank" rel="noopener noreferrer" aria-label="Stellar Wake on Telegram" title="Stellar Wake on Telegram" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Stellar Wake on Telegram</span>  </a> </li><li data-astro-cid-sz7xmlte> <a tabindex="0" href="mailto:wujiafengwork@gmail.com" aria-label="Send email to Stellar Wake" title="Send email to Stellar Wake" data-astro-cid-sz7xmlte="true" class="group inline-flex items-center gap-1 hover:text-accent footer-social-btn group relative flex size-9 items-center justify-center rounded-xl border border-border/20 bg-muted/20 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4.5 fill-transparent stroke-foreground/60 stroke-[1.5px] transition-all duration-300 group-hover:stroke-accent" data-astro-cid-sz7xmlte="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only" data-astro-cid-sz7xmlte>Send email to Stellar Wake</span>  </a> </li> </ul> </nav> </div> <!-- Bottom bar --> <div class="mt-8 flex items-center gap-3" aria-hidden="true" data-astro-cid-sz7xmlte> <div class="h-px flex-1 bg-linear-to-r from-transparent via-border/25 to-transparent" data-astro-cid-sz7xmlte></div> </div> <div class="mt-4 flex flex-col items-center justify-between gap-2 sm:flex-row" data-astro-cid-sz7xmlte> <p class="font-cartograph text-[11px] tracking-wide text-foreground/50" data-astro-cid-sz7xmlte>
+&copy; 2026 Stellar Wake. All rights reserved.
+</p> <p class="font-cartograph text-[11px] tracking-wide text-foreground/45" data-astro-cid-sz7xmlte>
+Made with <span class="text-accent" data-astro-cid-sz7xmlte>&#9829;</span> and lots of coffee
+</p> </div> </div> </footer>  <!-- Search Modal Overlay --><div id="search-modal" class="search-modal-overlay" role="dialog" aria-modal="true" aria-label="Search the site" data-astro-cid-qk3db3zz> <div class="search-modal-backdrop" data-search-close data-astro-cid-qk3db3zz></div> <div class="search-modal-container" data-modal-card data-astro-cid-qk3db3zz> <!-- Aurora orbs background --> <div class="modal-aurora" aria-hidden="true" data-astro-cid-qk3db3zz> <div class="modal-aurora-orb modal-aurora-orb-1" data-astro-cid-qk3db3zz></div> <div class="modal-aurora-orb modal-aurora-orb-2" data-astro-cid-qk3db3zz></div> <div class="modal-aurora-orb modal-aurora-orb-3" data-astro-cid-qk3db3zz></div> </div> <!-- Cursor-follow glow --> <div class="modal-cursor-glow" data-modal-glow aria-hidden="true" data-astro-cid-qk3db3zz></div> <!-- Sparkles --> <div class="modal-sparkles" aria-hidden="true" data-astro-cid-qk3db3zz> <div class="sparkle sparkle-1" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-2" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-3" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-4" data-astro-cid-qk3db3zz></div> <div class="sparkle sparkle-5" data-astro-cid-qk3db3zz></div> </div> <!-- Animated border glow --> <div class="modal-border-glow" aria-hidden="true" data-astro-cid-qk3db3zz></div> <!-- Header --> <div class="search-modal-header" data-astro-cid-qk3db3zz> <div class="search-modal-title" data-astro-cid-qk3db3zz> <span class="search-icon-ring" data-astro-cid-qk3db3zz> <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-qk3db3zz> <circle cx="11" cy="11" r="8" data-astro-cid-qk3db3zz></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-qk3db3zz></line> </svg> </span> <span class="search-title-text" data-astro-cid-qk3db3zz>Search</span> </div> <div class="search-modal-shortcuts" data-astro-cid-qk3db3zz> <kbd class="kbd-key" data-astro-cid-qk3db3zz>⌘</kbd> <kbd class="kbd-key" data-astro-cid-qk3db3zz>K</kbd> <span class="shortcuts-sep" data-astro-cid-qk3db3zz>·</span> <kbd class="kbd-key" data-astro-cid-qk3db3zz>esc</kbd> <span class="shortcuts-label" data-astro-cid-qk3db3zz>close</span> </div> <button class="search-modal-close" data-search-close aria-label="Close search" data-astro-cid-qk3db3zz> <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-qk3db3zz> <line x1="18" y1="6" x2="6" y2="18" data-astro-cid-qk3db3zz></line> <line x1="6" y1="6" x2="18" y2="18" data-astro-cid-qk3db3zz></line> </svg> </button> </div> <!-- Search body --> <div class="search-modal-body" data-astro-cid-qk3db3zz> <div id="modal-pagefind-search" class="premium-search" style="--pagefind-ui-scale: 0.9;" data-astro-cid-qk3db3zz></div> <!-- Empty state illustration --> <div class="search-empty-state" data-search-empty data-astro-cid-qk3db3zz> <div class="empty-icon" data-astro-cid-qk3db3zz> <svg class="size-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-qk3db3zz> <circle cx="11" cy="11" r="8" data-astro-cid-qk3db3zz></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-qk3db3zz></line> </svg> </div> <p class="empty-text" data-astro-cid-qk3db3zz>
+Type to search for articles, tutorials, and ideas...
+</p> </div> </div> <!-- Footer --> <div class="search-modal-footer" data-astro-cid-qk3db3zz> <div class="footer-hint" data-astro-cid-qk3db3zz> <span class="footer-icon" data-astro-cid-qk3db3zz>↵</span> open
+</div> <div class="footer-hint" data-astro-cid-qk3db3zz> <span class="footer-icon" data-astro-cid-qk3db3zz>↑↓</span> navigate
+</div> <div class="footer-powered" data-astro-cid-qk3db3zz>
+powered by <strong data-astro-cid-qk3db3zz>pagefind</strong> </div> </div> </div> </div> <script type="module" src="/_astro/SearchModal.astro_astro_type_script_index_0_lang.DPjkKun0.js"></script> <!-- Load full theme logic --> <script type="module">const l="theme",i="light",d="dark",h="dark";function u(){const e=localStorage.getItem(l);return e||h}let t=window.theme?.themeValue??u();function c(){localStorage.setItem(l,t),r()}function r(){document.firstElementChild?.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t);const e=document.body;if(e){const o=window.getComputedStyle(e).backgroundColor;document.querySelector("meta[name='theme-color']")?.setAttribute("content",o)}}window.theme?(window.theme.setPreference=c,window.theme.reflectPreference=r):window.theme={themeValue:t,setPreference:c,reflectPreference:r,getTheme:()=>t,setTheme:e=>{t=e}};r();function a(){r();const e=()=>{t=t===i?d:i,window.theme?.setTheme(t),c()},n=document.querySelector("#theme-btn"),o=document.querySelector("#theme-btn-mobile"),m=n?.cloneNode(!0);n&&m&&(n.replaceWith(m),m.addEventListener("click",e));const s=o?.cloneNode(!0);o&&s&&(o.replaceWith(s),s.addEventListener("click",e))}a();document.addEventListener("astro:after-swap",a);document.addEventListener("astro:before-swap",e=>{const n=e,o=document.querySelector("meta[name='theme-color']")?.getAttribute("content");o&&n.newDocument.querySelector("meta[name='theme-color']")?.setAttribute("content",o)});window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?d:i,window.theme?.setTheme(t),c()});</script> <script type="module">let f=0;document.addEventListener("astro:page-load",()=>{document.querySelectorAll(".tabs-wrapper[data-tabs-auto]").forEach(n=>{if(n.hasAttribute("data-tabs-ready"))return;n.setAttribute("data-tabs-ready",""),n.removeAttribute("data-tabs-auto");const l=Array.from(n.querySelectorAll(":scope > .tabs-panel[data-tab-label]"));if(l.length===0)return;const o=document.createElement("div");o.className="tabs-nav",o.setAttribute("role","tablist");const c=n.getAttribute("aria-label");c&&o.setAttribute("aria-label",c);const b=document.createElement("div");b.className="tabs-panels";const r=[],u=[];l.forEach((t,e)=>{const a=t.getAttribute("data-tab-label")||"";t.removeAttribute("data-tab-label"),u.push(t);const i=`tabpanel-${++f}`,d=`tab-${f}`;t.setAttribute("id",i),t.setAttribute("aria-labelledby",d),e>0&&t.setAttribute("hidden","");const s=document.createElement("button");s.setAttribute("id",d),s.setAttribute("role","tab"),s.setAttribute("aria-controls",i),s.setAttribute("aria-selected",String(e===0)),s.setAttribute("tabindex",e===0?"0":"-1"),s.className=`tabs-btn${e===0?" active":""}`,s.type="button",s.textContent=a,r.push(s),o.appendChild(s),b.appendChild(t)}),n.insertBefore(o,n.firstChild),n.appendChild(b);function A(t){const e=t.getAttribute("aria-controls");e&&(r.forEach(a=>{const i=a===t;a.classList.toggle("active",i),a.setAttribute("aria-selected",String(i)),a.setAttribute("tabindex",i?"0":"-1")}),u.forEach(a=>{a.getAttribute("id")===e?a.removeAttribute("hidden"):a.setAttribute("hidden","")}))}r.forEach(t=>{t.addEventListener("click",()=>A(t)),t.addEventListener("keydown",e=>{if(!["ArrowLeft","ArrowRight","Home","End"].includes(e.key))return;e.preventDefault();const a=r.indexOf(t),i=e.key==="Home"?0:e.key==="End"?r.length-1:e.key==="ArrowLeft"?(a-1+r.length)%r.length:(a+1)%r.length,d=r[i];d.focus(),A(d)})})})});</script> </body> </html>   <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Guard: avoid duplicating the bar on View Transitions re-runs
+    if (document.querySelector(".progress-container")) return;
+
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-50 h-1 w-full bg-background";
+
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    progressContainer.appendChild(progressBar);
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    const myBar = document.getElementById("myBar"); // cache ref once
+    if (!myBar) return;
+
+    let ticking = false;
+    document.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const winScroll = document.documentElement.scrollTop;
+            const height =
+              document.documentElement.scrollHeight -
+              document.documentElement.clientHeight;
+            myBar.style.width = ((winScroll / height) * 100) + "%";
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true } // lets the browser optimise scroll handling
+    );
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      link.ariaLabel = "link to heading";
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    // Pass 1: read all computed styles before touching the DOM
+    // (avoids a forced reflow on every iteration of the loop)
+    const topClasses = codeBlocks.map(cb =>
+      getComputedStyle(cb).getPropertyValue("--file-name-offset").trim() !== ""
+        ? "top-(--file-name-offset)"
+        : "-top-3"
+    );
+
+    // Pass 2: mutate DOM
+    codeBlocks.forEach((codeBlock, i) => {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClasses[i]} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codeblock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    });
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
